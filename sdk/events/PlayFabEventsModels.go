@@ -14,7 +14,7 @@ type EntityKeyModel struct {
 type EventContentsModel struct {
     // Entity entity associated with the event. If null, the event will apply to the calling entity.
     Entity EntityKeyModel `json:"Entity,omitempty"`
-    // EventNamespace the namespace in which the event is defined. It must be prepended with 'com.playfab.events.'
+    // EventNamespace the namespace in which the event is defined. It must begin with 'com.playfab.events.'
     EventNamespace string `json:"EventNamespace,omitempty"`
     // Name the name of this event.
     Name string `json:"Name,omitempty"`

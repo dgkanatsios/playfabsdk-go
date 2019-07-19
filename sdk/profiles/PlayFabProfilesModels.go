@@ -61,6 +61,10 @@ type EntityPermissionStatementModel struct {
 
 // EntityProfileBody 
 type EntityProfileBodyModel struct {
+    // AvatarUrl avatar URL for the entity.
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
+    // Created the creation time of this profile in UTC.
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName the display name of the entity. This field may serve different purposes for different entity types. i.e.: for a title
 // player account it could represent the display name of the player, whereas on a character it could be character's name.
     DisplayName string `json:"DisplayName,omitempty"`
@@ -72,6 +76,8 @@ type EntityProfileBodyModel struct {
     Files map[string]EntityProfileFileMetadataModel `json:"Files,omitempty"`
     // Language the language on this profile.
     Language string `json:"Language,omitempty"`
+    // LeaderboardMetadata leaderboard metadata for the entity.
+    LeaderboardMetadata string `json:"LeaderboardMetadata,omitempty"`
     // Lineage the lineage of this profile.
     Lineage EntityLineageModel `json:"Lineage,omitempty"`
     // Objects the objects on this profile.
@@ -79,6 +85,8 @@ type EntityProfileBodyModel struct {
     // Permissions the permissions that govern access to this entity profile and its properties. Only includes permissions set on this
 // profile, not global statements from titles and namespaces.
     Permissions []EntityPermissionStatementModel `json:"Permissions,omitempty"`
+    // Statistics the statistics on this profile.
+    Statistics map[string]EntityStatisticValueModel `json:"Statistics,omitempty"`
     // VersionNumber the version number of the profile in persistent storage at the time of the read. Used for optional optimistic
 // concurrency during update.
     VersionNumber int32 `json:"VersionNumber,omitempty"`
@@ -94,6 +102,30 @@ type EntityProfileFileMetadataModel struct {
     LastModified time.Time `json:"LastModified,omitempty"`
     // Size storage service's reported byte count
     Size int32 `json:"Size,omitempty"`
+}
+
+// EntityStatisticChildValue 
+type EntityStatisticChildValueModel struct {
+    // ChildName child name value, if child statistic
+    ChildName string `json:"ChildName,omitempty"`
+    // Metadata child statistic metadata
+    Metadata string `json:"Metadata,omitempty"`
+    // Value child statistic value
+    Value int32 `json:"Value,omitempty"`
+}
+
+// EntityStatisticValue 
+type EntityStatisticValueModel struct {
+    // ChildStatistics child statistic values
+    ChildStatistics map[string]EntityStatisticChildValueModel `json:"ChildStatistics,omitempty"`
+    // Metadata statistic metadata
+    Metadata string `json:"Metadata,omitempty"`
+    // Name statistic name
+    Name string `json:"Name,omitempty"`
+    // Value statistic value
+    Value int32 `json:"Value,omitempty"`
+    // Version statistic version
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetEntityProfileRequest given an entity type and entity identifier will retrieve the profile from the entity store. If the profile being
@@ -142,6 +174,20 @@ type GetGlobalPolicyResponseModel struct {
     Permissions []EntityPermissionStatementModel `json:"Permissions,omitempty"`
 }
 
+// GetTitlePlayersFromMasterPlayerAccountIdsRequest given a master player account id (PlayFab ID), returns all title player accounts associated with it.
+type GetTitlePlayersFromMasterPlayerAccountIdsRequestModel struct {
+    // MasterPlayerAccountIds master player account ids.
+    MasterPlayerAccountIds []string `json:"MasterPlayerAccountIds,omitempty"`
+    // TitleId id of title to get players from.
+    TitleId string `json:"TitleId,omitempty"`
+}
+
+// GetTitlePlayersFromMasterPlayerAccountIdsResponse 
+type GetTitlePlayersFromMasterPlayerAccountIdsResponseModel struct {
+    // TitlePlayerAccounts dictionary of master player ids mapped to title player entity keys and id pairs
+    TitlePlayerAccounts map[string]EntityKeyModel `json:"TitlePlayerAccounts,omitempty"`
+}
+
 // OperationTypes 
 type OperationTypes string
   
@@ -178,7 +224,7 @@ type SetGlobalPolicyRequestModel struct {
 type SetGlobalPolicyResponseModel struct {
 }
 
-// SetProfileLanguageRequest given an entity profile, will update its language to the one passed in if the profile's version is at least the one
+// SetProfileLanguageRequest given an entity profile, will update its language to the one passed in if the profile's version is equal to the one
 // passed in.
 type SetProfileLanguageRequestModel struct {
     // Entity the entity to perform this action on.

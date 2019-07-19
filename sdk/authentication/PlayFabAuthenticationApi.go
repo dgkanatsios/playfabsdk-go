@@ -166,5 +166,41 @@ func GetEntityTokenWithSecretKey(settings *playfab.Settings, postData *GetEntity
     return result, nil
 }
 
+// ValidateEntityToken method for a server to validate a client provided EntityToken. Only callable by the title entity.
+// https://api.playfab.com/Documentation/Authentication/method/ValidateEntityToken
+func ValidateEntityToken(settings *playfab.Settings, postData *ValidateEntityTokenRequestModel, entityToken string) (*ValidateEntityTokenResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Authentication/ValidateEntityToken", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ValidateEntityTokenResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 
 

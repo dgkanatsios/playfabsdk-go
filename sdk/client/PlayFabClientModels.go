@@ -90,10 +90,10 @@ type AddUsernamePasswordRequestModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// AddUsernamePasswordResult each account must have a unique username and email address in the PlayFab service. Once created, the
-// account may be associated with additional accounts (Steam, Facebook, Game Center, etc.),
-// allowing for added social network lists and achievements systems.
-// This can also be used to provide a recovery method if the user loses their original means of access.
+// AddUsernamePasswordResult each account must have a unique username and email address in the PlayFab service. Once created, the account may be
+// associated with additional accounts (Steam, Facebook, Game Center, etc.), allowing for added social network lists and
+// achievements systems. This can also be used to provide a recovery method if the user loses their original means of
+// access.
 type AddUsernamePasswordResultModel struct {
     // Username playFab unique user name.
     Username string `json:"Username,omitempty"`
@@ -107,11 +107,9 @@ type AddUserVirtualCurrencyRequestModel struct {
     VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
-// AndroidDevicePushNotificationRegistrationRequest more information can be found on configuring your game for the
-// Google Cloud Messaging service in the Google developer documentation, here:
-// http://developer.android.com/google/gcm/client.html.
-// The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:
-// https://api.playfab.com/docs/pushCrashCourse/.
+// AndroidDevicePushNotificationRegistrationRequest more information can be found on configuring your game for the Google Cloud Messaging service in the Google developer
+// documentation, here: http://developer.android.com/google/gcm/client.html. The steps to configure and send Push
+// Notifications is described in the PlayFab tutorials, here: https://api.playfab.com/docs/pushCrashCourse/.
 type AndroidDevicePushNotificationRegistrationRequestModel struct {
     // ConfirmationMessage message to display when confirming push notification.
     ConfirmationMessage string `json:"ConfirmationMessage,omitempty"`
@@ -126,8 +124,8 @@ type AndroidDevicePushNotificationRegistrationRequestModel struct {
 type AndroidDevicePushNotificationRegistrationResultModel struct {
 }
 
-// AttributeInstallRequest if you have an ad attribution partner enabled, this will post an install to their service
-// to track the device. It uses the given device id to match based on clicks on ads.
+// AttributeInstallRequest if you have an ad attribution partner enabled, this will post an install to their service to track the device. It uses
+// the given device id to match based on clicks on ads.
 type AttributeInstallRequestModel struct {
     // Adid the adid for this device.
     Adid string `json:"Adid,omitempty"`
@@ -316,23 +314,20 @@ type CollectionFilterModel struct {
     Includes []Container_Dictionary_String_StringModel `json:"Includes,omitempty"`
 }
 
-// ConfirmPurchaseRequest the final step in the purchasing process, this API finalizes the purchase with the payment provider, where
-// applicable, adding virtual goods to the player inventory (including random drop table resolution and recursive addition
-// of bundled items)
-// and adjusting virtual currency balances for funds used or added. Note that this is a pull operation, and should be
-// polled regularly when a
-// purchase is in progress. Please note that the processing time for inventory grants and purchases increases fractionally
-// the more items are
-// in the inventory, and the more items are in the grant/purchase operation.
+// ConfirmPurchaseRequest the final step in the purchasing process, this API finalizes the purchase with the payment provider, where applicable,
+// adding virtual goods to the player inventory (including random drop table resolution and recursive addition of bundled
+// items) and adjusting virtual currency balances for funds used or added. Note that this is a pull operation, and should
+// be polled regularly when a purchase is in progress. Please note that the processing time for inventory grants and
+// purchases increases fractionally the more items are in the inventory, and the more items are in the grant/purchase
+// operation.
 type ConfirmPurchaseRequestModel struct {
     // OrderId purchase order identifier returned from StartPurchase.
     OrderId string `json:"OrderId,omitempty"`
 }
 
-// ConfirmPurchaseResult when the FailedByPaymentProvider error is returned, it's important to check the ProviderErrorCode,
-// ProviderErrorMessage, and ProviderErrorDetails to understand the specific reason the payment was rejected, as in some
-// rare cases, this
-// may mean that the provider hasn't completed some operation required to finalize the purchase.
+// ConfirmPurchaseResult when the FailedByPaymentProvider error is returned, it's important to check the ProviderErrorCode, ProviderErrorMessage,
+// and ProviderErrorDetails to understand the specific reason the payment was rejected, as in some rare cases, this may
+// mean that the provider hasn't completed some operation required to finalize the purchase.
 type ConfirmPurchaseResultModel struct {
     // Items array of items purchased.
     Items []ItemInstanceModel `json:"Items,omitempty"`
@@ -670,8 +665,8 @@ const (
      CountryCodeZM CountryCode = "ZM"
      CountryCodeZW CountryCode = "ZW"
       )
-// CreateSharedGroupRequest if SharedGroupId is specified, the service will attempt to create a group with that identifier, and will
-// return an error if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
+// CreateSharedGroupRequest if SharedGroupId is specified, the service will attempt to create a group with that identifier, and will return an error
+// if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
 type CreateSharedGroupRequestModel struct {
     // SharedGroupId unique identifier for the shared group (a random identifier will be assigned, if one is not specified).
     SharedGroupId string `json:"SharedGroupId,omitempty"`
@@ -981,8 +976,6 @@ type FacebookPlayFabIdPairModel struct {
 
 // FriendInfo 
 type FriendInfoModel struct {
-    // CurrentMatchmakerLobbyId this field is not populated.
-    CurrentMatchmakerLobbyId string `json:"CurrentMatchmakerLobbyId,omitempty"`
     // FacebookInfo available Facebook information (if the user and PlayFab friend are also connected in Facebook).
     FacebookInfo UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
     // FriendPlayFabId playFab unique identifier for this friend.
@@ -1101,14 +1094,11 @@ type GetAccountInfoRequestModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// GetAccountInfoResult this API retrieves details regarding the player in the PlayFab service. Note that when this call is used
-// to retrieve data about another player (not the one signed into the local client), some data, such as Personally
-// Identifying Information
-// (PII), will be omitted for privacy reasons or to comply with the requirements of the platform belongs to. The user
-// account returned
-// will be based on the identifier provided in priority order: PlayFabId, Username, Email, then TitleDisplayName. If no
-// identifier is
-// specified, the currently signed in user's information will be returned.
+// GetAccountInfoResult this API retrieves details regarding the player in the PlayFab service. Note that when this call is used to retrieve
+// data about another player (not the one signed into the local client), some data, such as Personally Identifying
+// Information (PII), will be omitted for privacy reasons or to comply with the requirements of the platform belongs to.
+// The user account returned will be based on the identifier provided in priority order: PlayFabId, Username, Email, then
+// TitleDisplayName. If no identifier is specified, the currently signed in user's information will be returned.
 type GetAccountInfoResultModel struct {
     // AccountInfo account information for the local user.
     AccountInfo UserAccountInfoModel `json:"AccountInfo,omitempty"`
@@ -1120,16 +1110,15 @@ type GetCatalogItemsRequestModel struct {
     CatalogVersion string `json:"CatalogVersion,omitempty"`
 }
 
-// GetCatalogItemsResult if CatalogVersion is not specified, only inventory items associated with the most recent version of
-// the catalog will be returned.
+// GetCatalogItemsResult if CatalogVersion is not specified, only inventory items associated with the most recent version of the catalog will be
+// returned.
 type GetCatalogItemsResultModel struct {
     // Catalog array of items which can be purchased.
     Catalog []CatalogItemModel `json:"Catalog,omitempty"`
 }
 
-// GetCharacterDataRequest data is stored as JSON key-value pairs. If the Keys parameter is provided,
-// the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full
-// set of custom character data will be returned.
+// GetCharacterDataRequest data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain
+// the data specific to the indicated Keys. Otherwise, the full set of custom character data will be returned.
 type GetCharacterDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -1153,10 +1142,9 @@ type GetCharacterDataResultModel struct {
     DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
-// GetCharacterInventoryRequest all items currently in the character inventory will be returned, irrespective of how they were acquired
-// (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not
-// considered to be
-// in the user's current inventory, and so will not be not included. Also returns their virtual currency balances.
+// GetCharacterInventoryRequest all items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing,
+// grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the
+// user's current inventory, and so will not be not included. Also returns their virtual currency balances.
 type GetCharacterInventoryRequestModel struct {
     // CatalogVersion used to limit results to only those from a specific catalog version.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -1427,7 +1415,7 @@ type GetPlayerCombinedInfoRequestParamsModel struct {
     GetCharacterInventories bool `json:"GetCharacterInventories,omitempty"`
     // GetCharacterList whether to get the list of characters. Defaults to false.
     GetCharacterList bool `json:"GetCharacterList,omitempty"`
-    // GetPlayerProfile whether to get player profile. Defaults to false.
+    // GetPlayerProfile whether to get player profile. Defaults to false. Has no effect for a new player.
     GetPlayerProfile bool `json:"GetPlayerProfile,omitempty"`
     // GetPlayerStatistics whether to get player statistics. Defaults to false.
     GetPlayerStatistics bool `json:"GetPlayerStatistics,omitempty"`
@@ -1456,9 +1444,9 @@ type GetPlayerCombinedInfoRequestParamsModel struct {
     UserReadOnlyDataKeys []string `json:"UserReadOnlyDataKeys,omitempty"`
 }
 
-// GetPlayerCombinedInfoResult returns whatever info is requested in the response for the user. If no user is explicitly requested
-// this defaults to the authenticated user. If the user is the same as the requester, PII (like email address, facebook id)
-// is returned if available. Otherwise, only public information is returned. All parameters default to false.
+// GetPlayerCombinedInfoResult returns whatever info is requested in the response for the user. If no user is explicitly requested this defaults to the
+// authenticated user. If the user is the same as the requester, PII (like email address, facebook id) is returned if
+// available. Otherwise, only public information is returned. All parameters default to false.
 type GetPlayerCombinedInfoResultModel struct {
     // InfoResultPayload results for requested info.
     InfoResultPayload GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
@@ -1497,12 +1485,10 @@ type GetPlayerCombinedInfoResultPayloadModel struct {
     UserVirtualCurrencyRechargeTimes map[string]VirtualCurrencyRechargeTimeModel `json:"UserVirtualCurrencyRechargeTimes,omitempty"`
 }
 
-// GetPlayerProfileRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of
-// customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so
-// care should be
+// GetPlayerProfileRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support.
+// Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be
 // taken in how this data is stored and managed. Since this call will always return the relevant information for users who
-// have accessed
-// the title, the recommendation is to not store this data locally.
+// have accessed the title, the recommendation is to not store this data locally.
 type GetPlayerProfileRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
@@ -1726,12 +1712,9 @@ type GetPlayFabIDsFromXboxLiveIDsResultModel struct {
 }
 
 // GetPublisherDataRequest this API is designed to return publisher-specific values which can be read, but not written to, by the client. This data
-// is shared across all
-// titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a
-// publisher can use this API.
-// For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data
-// and this API call returning
-// the newest value.
+// is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles
+// assigned to a publisher can use this API. For more information email devrel@playfab.com. Note that there may up to a
+// minute delay in between updating title data and this API call returning the newest value.
 type GetPublisherDataRequestModel struct {
     // Keys array of keys to get back data from the Publisher data blob, set by the admin tools
     Keys []string `json:"Keys,omitempty"`
@@ -1792,15 +1775,15 @@ type GetSharedGroupDataResultModel struct {
     Members []string `json:"Members,omitempty"`
 }
 
-// GetStoreItemsRequest a store contains an array of references to items defined in one or more catalog
-// versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices
-// act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be
-// defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed.
-// This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not
-// all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices
-// defined in the catalog and store definitions for the item are considered valid, and that a compromised client can
-// be made to send a request for an item based upon any of these definitions. If no price is specified in the store
-// for an item, the price set in the catalog should be displayed to the user.
+// GetStoreItemsRequest a store contains an array of references to items defined in one or more catalog versions of the game, along with the
+// prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in
+// the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated
+// properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for
+// different purposes (in order to simplify showing some, but not all catalog items to users, based upon different
+// characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the
+// item are considered valid, and that a compromised client can be made to send a request for an item based upon any of
+// these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed
+// to the user.
 type GetStoreItemsRequestModel struct {
     // CatalogVersion catalog version to store items from. Use default catalog version if null
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -1823,8 +1806,7 @@ type GetStoreItemsResultModel struct {
 }
 
 // GetTimeRequest this query retrieves the current time from one of the servers in PlayFab. Please note that due to clock drift between
-// servers,
-// there is a potential variance of up to 5 seconds.
+// servers, there is a potential variance of up to 5 seconds.
 type GetTimeRequestModel struct {
 }
 
@@ -1835,12 +1817,10 @@ type GetTimeResultModel struct {
 }
 
 // GetTitleDataRequest this API is designed to return title specific values which can be read, but not written to, by the client. For example,
-// a developer
-// could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement
-// speeds, etc. This allows a developer to update
-// the title without the need to create, test, and ship a new build. Note that there may up to a minute delay in between
-// updating title data and this API call returning
-// the newest value.
+// a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths,
+// movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new
+// build. Note that there may up to a minute delay in between updating title data and this API call returning the newest
+// value.
 type GetTitleDataRequestModel struct {
     // Keys specific keys to search for in the title data (leave null to get all keys)
     Keys []string `json:"Keys,omitempty"`
@@ -1900,12 +1880,9 @@ type GetTradeStatusResponseModel struct {
 }
 
 // GetUserDataRequest data is stored as JSON key-value pairs. Every time the data is updated via any source, the version counter is
-// incremented. If the
-// Version parameter is provided, then this call will only return data if the current version on the system is greater than
-// the value provided.
-// If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys.
-// Otherwise, the full set of custom user
-// data will be returned.
+// incremented. If the Version parameter is provided, then this call will only return data if the current version on the
+// system is greater than the value provided. If the Keys parameter is provided, the data object returned will only contain
+// the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 type GetUserDataRequestModel struct {
     // IfChangedFromDataVersion the version that currently exists according to the caller. The call will return the data for all of the keys if the
 // version in the system is greater than this.
@@ -1930,10 +1907,9 @@ type GetUserDataResultModel struct {
 type GetUserInventoryRequestModel struct {
 }
 
-// GetUserInventoryResult all items currently in the user inventory will be returned, irrespective of how they were acquired
-// (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not
-// considered to be
-// in the user's current inventory, and so will not be not included.
+// GetUserInventoryResult all items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing,
+// grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the
+// user's current inventory, and so will not be not included.
 type GetUserInventoryResultModel struct {
     // Inventory array of inventory items belonging to the user.
     Inventory []ItemInstanceModel `json:"Inventory,omitempty"`
@@ -1966,9 +1942,9 @@ type GooglePlayFabIdPairModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
-// GrantCharacterToUserRequest grants a character to the user of the type specified by the item ID. The user must
-// already have an instance of this item in their inventory in order to allow character creation. This item can come
-// from a purchase or grant, which must be done before calling to create the character.
+// GrantCharacterToUserRequest grants a character to the user of the type specified by the item ID. The user must already have an instance of this item
+// in their inventory in order to allow character creation. This item can come from a purchase or grant, which must be done
+// before calling to create the character.
 type GrantCharacterToUserRequestModel struct {
     // CatalogVersion catalog version from which items are to be granted.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -2087,16 +2063,13 @@ type LinkedPlatformAccountModelModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// LinkFacebookAccountRequest facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token
-// can be found in the Facebook developer documentation
-// (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity,
-// for example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. Note that titles should
-// never re-use the
-// same Facebook applications between PlayFab Title IDs, as Facebook provides unique user IDs per application and doing so
-// can result
-// in issues with the Facebook ID for the user in their PlayFab account information. If you must re-use an application in a
-// new PlayFab
-// Title ID, please be sure to first unlink all accounts from Facebook, or delete all users in the first Title ID.
+// LinkFacebookAccountRequest facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token can be found in the
+// Facebook developer documentation (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity, for
+// example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. Note that titles should never
+// re-use the same Facebook applications between PlayFab Title IDs, as Facebook provides unique user IDs per application
+// and doing so can result in issues with the Facebook ID for the user in their PlayFab account information. If you must
+// re-use an application in a new PlayFab Title ID, please be sure to first unlink all accounts from Facebook, or delete
+// all users in the first Title ID.
 type LinkFacebookAccountRequestModel struct {
     // AccessToken unique identifier from Facebook for the user.
     AccessToken string `json:"AccessToken,omitempty"`
@@ -2126,6 +2099,15 @@ type LinkGameCenterAccountRequestModel struct {
     ForceLink bool `json:"ForceLink,omitempty"`
     // GameCenterId game Center identifier for the player account to be linked.
     GameCenterId string `json:"GameCenterId,omitempty"`
+    // PublicKeyUrl the URL for the public encryption key that will be used to verify the signature.
+    PublicKeyUrl string `json:"PublicKeyUrl,omitempty"`
+    // Salt a random value used to compute the hash and keep it randomized.
+    Salt string `json:"Salt,omitempty"`
+    // Signature the verification signature of the authentication payload.
+    Signature string `json:"Signature,omitempty"`
+    // Timestamp the integer representation of date and time that the signature was created on. PlayFab will reject authentication
+// signatures not within 10 minutes of the server's current time.
+    Timestamp string `json:"Timestamp,omitempty"`
 }
 
 // LinkGameCenterAccountResult 
@@ -2215,13 +2197,11 @@ type LinkPSNAccountRequestModel struct {
 type LinkPSNAccountResultModel struct {
 }
 
-// LinkSteamAccountRequest steam authentication is accomplished with the Steam Session Ticket. More information on the Ticket can be
-// found in the Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam
-// authentication
-// to work, the title must be configured with the Steam Application ID and Publisher Key in the PlayFab Game Manager (under
-// Properties).
-// Information on creating a Publisher Key (referred to as the Secret Key in PlayFab) for your title can be found here:
-// https://partner.steamgames.com/documentation/webapi#publisherkey.
+// LinkSteamAccountRequest steam authentication is accomplished with the Steam Session Ticket. More information on the Ticket can be found in the
+// Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam
+// authentication to work, the title must be configured with the Steam Application ID and Publisher Key in the PlayFab Game
+// Manager (under Properties). Information on creating a Publisher Key (referred to as the Secret Key in PlayFab) for your
+// title can be found here: https://partner.steamgames.com/documentation/webapi#publisherkey.
 type LinkSteamAccountRequestModel struct {
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink,omitempty"`
@@ -2343,22 +2323,16 @@ type LoginResultModel struct {
     SettingsForUser UserSettingsModel `json:"SettingsForUser,omitempty"`
 }
 
-// LoginWithAndroidDeviceIDRequest on Android devices, the recommendation is to use the Settings.Secure.ANDROID_ID as the
-// AndroidDeviceId, as described in this blog post
-// (http://android-developers.blogspot.com/2011/03/identifying-app-installations.html).
-// More information on this identifier can be found in the Android documentation
-// (http://developer.android.com/reference/android/provider/Settings.Secure.html).
-// If this is the first time a user has signed in with the Android device and CreateAccount is set to true, a new PlayFab
-// account
-// will be created and linked to the Android device ID. In this case, no email or username will be associated with the
-// PlayFab account.
-// Otherwise, if no PlayFab account is linked to the Android device, an error indicating this will be returned, so that the
-// title can
-// guide the user through creation of a PlayFab account. Please note that while multiple devices of this type can be linked
-// to a single
-// user account, only the one most recently used to login (or most recently linked) will be reflected in the user's account
-// information.
-// We will be updating to show all linked devices in a future release.
+// LoginWithAndroidDeviceIDRequest on Android devices, the recommendation is to use the Settings.Secure.ANDROID_ID as the AndroidDeviceId, as described in
+// this blog post (http://android-developers.blogspot.com/2011/03/identifying-app-installations.html). More information on
+// this identifier can be found in the Android documentation
+// (http://developer.android.com/reference/android/provider/Settings.Secure.html). If this is the first time a user has
+// signed in with the Android device and CreateAccount is set to true, a new PlayFab account will be created and linked to
+// the Android device ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no
+// PlayFab account is linked to the Android device, an error indicating this will be returned, so that the title can guide
+// the user through creation of a PlayFab account. Please note that while multiple devices of this type can be linked to a
+// single user account, only the one most recently used to login (or most recently linked) will be reflected in the user's
+// account information. We will be updating to show all linked devices in a future release.
 type LoginWithAndroidDeviceIDRequestModel struct {
     // AndroidDevice specific model of the user's device.
     AndroidDevice string `json:"AndroidDevice,omitempty"`
@@ -2379,12 +2353,11 @@ type LoginWithAndroidDeviceIDRequestModel struct {
     TitleId string `json:"TitleId,omitempty"`
 }
 
-// LoginWithCustomIDRequest it is highly recommended that developers ensure that it is extremely unlikely that
-// a customer could generate an ID which is already in use by another customer. If this is the first time a user has
-// signed in with the Custom ID and CreateAccount is set to true, a new PlayFab account will be created and linked
-// to the Custom ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if
-// no PlayFab account is linked to the Custom ID, an error indicating this will be returned, so that the title can
-// guide the user through creation of a PlayFab account.
+// LoginWithCustomIDRequest it is highly recommended that developers ensure that it is extremely unlikely that a customer could generate an ID which
+// is already in use by another customer. If this is the first time a user has signed in with the Custom ID and
+// CreateAccount is set to true, a new PlayFab account will be created and linked to the Custom ID. In this case, no email
+// or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Custom ID, an
+// error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
 type LoginWithCustomIDRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -2401,10 +2374,9 @@ type LoginWithCustomIDRequestModel struct {
     TitleId string `json:"TitleId,omitempty"`
 }
 
-// LoginWithEmailAddressRequest email address and password lengths are provided for information purposes. The server will validate
-// that data passed in conforms to the field definition and report errors appropriately. It is recommended that developers
-// not
-// perform this validation locally, so that future updates do not require client updates.
+// LoginWithEmailAddressRequest email address and password lengths are provided for information purposes. The server will validate that data passed in
+// conforms to the field definition and report errors appropriately. It is recommended that developers not perform this
+// validation locally, so that future updates do not require client updates.
 type LoginWithEmailAddressRequestModel struct {
     // Email email address for the account.
     Email string `json:"Email,omitempty"`
@@ -2434,24 +2406,17 @@ type LoginWithFacebookInstantGamesIdRequestModel struct {
     TitleId string `json:"TitleId,omitempty"`
 }
 
-// LoginWithFacebookRequest facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token
-// can be found in the Facebook developer documentation
-// (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity,
-// for example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. If this is the first time a
-// user has
-// signed in with the Facebook account and CreateAccount is set to true, a new PlayFab account will be created and linked
-// to the
-// provided account's Facebook ID. In this case, no email or username will be associated with the PlayFab account.
-// Otherwise, if no
-// PlayFab account is linked to the Facebook account, an error indicating this will be returned, so that the title can
-// guide the user
-// through creation of a PlayFab account. Note that titles should never re-use the same Facebook applications between
-// PlayFab Title IDs,
-// as Facebook provides unique user IDs per application and doing so can result in issues with the Facebook ID for the user
-// in their
-// PlayFab account information. If you must re-use an application in a new PlayFab Title ID, please be sure to first unlink
-// all accounts
-// from Facebook, or delete all users in the first Title ID.
+// LoginWithFacebookRequest facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token can be found in the
+// Facebook developer documentation (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity, for
+// example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. If this is the first time a user
+// has signed in with the Facebook account and CreateAccount is set to true, a new PlayFab account will be created and
+// linked to the provided account's Facebook ID. In this case, no email or username will be associated with the PlayFab
+// account. Otherwise, if no PlayFab account is linked to the Facebook account, an error indicating this will be returned,
+// so that the title can guide the user through creation of a PlayFab account. Note that titles should never re-use the
+// same Facebook applications between PlayFab Title IDs, as Facebook provides unique user IDs per application and doing so
+// can result in issues with the Facebook ID for the user in their PlayFab account information. If you must re-use an
+// application in a new PlayFab Title ID, please be sure to first unlink all accounts from Facebook, or delete all users in
+// the first Title ID.
 type LoginWithFacebookRequestModel struct {
     // AccessToken unique identifier from Facebook for the user.
     AccessToken string `json:"AccessToken,omitempty"`
@@ -2471,16 +2436,11 @@ type LoginWithFacebookRequestModel struct {
 // LoginWithGameCenterRequest the Game Center player identifier
 // (https://developer.apple.com/library/ios/documentation/Accounts/Reference/ACAccountClassRef/index.html#//apple_ref/occ/instp/ACAccount/identifier)
 // is a generated string which is stored on the local device. As with device identifiers, care must be taken to never
-// expose a
-// player's Game Center identifier to end users, as that could result in a user's account being compromised. If this is the
-// first
-// time a user has signed in with Game Center and CreateAccount is set to true, a new PlayFab account will be created and
-// linked
-// to the Game Center identifier. In this case, no email or username will be associated with the PlayFab account.
-// Otherwise, if
-// no PlayFab account is linked to the Game Center account, an error indicating this will be returned, so that the title
-// can
-// guide the user through creation of a PlayFab account.
+// expose a player's Game Center identifier to end users, as that could result in a user's account being compromised. If
+// this is the first time a user has signed in with Game Center and CreateAccount is set to true, a new PlayFab account
+// will be created and linked to the Game Center identifier. In this case, no email or username will be associated with the
+// PlayFab account. Otherwise, if no PlayFab account is linked to the Game Center account, an error indicating this will be
+// returned, so that the title can guide the user through creation of a PlayFab account.
 type LoginWithGameCenterRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -2492,30 +2452,34 @@ type LoginWithGameCenterRequestModel struct {
     PlayerId string `json:"PlayerId,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
+    // PublicKeyUrl the URL for the public encryption key that will be used to verify the signature.
+    PublicKeyUrl string `json:"PublicKeyUrl,omitempty"`
+    // Salt a random value used to compute the hash and keep it randomized.
+    Salt string `json:"Salt,omitempty"`
+    // Signature the verification signature of the authentication payload.
+    Signature string `json:"Signature,omitempty"`
+    // Timestamp the integer representation of date and time that the signature was created on. PlayFab will reject authentication
+// signatures not within 10 minutes of the server's current time.
+    Timestamp string `json:"Timestamp,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
     TitleId string `json:"TitleId,omitempty"`
 }
 
 // LoginWithGoogleAccountRequest google sign-in is accomplished by obtaining a Google OAuth 2.0 credential using the Google sign-in for Android APIs on
-// the device and passing it to this API.
-// If this is the first time a user has signed in with the Google account and CreateAccount is
-// set to true, a new PlayFab account will be created and linked to the Google account. Otherwise, if no PlayFab account is
-// linked to the Google account, an error indicating this will be returned, so
-// that the title can guide the user through creation of a PlayFab account.
-// The current (recommended) method for obtaining a Google account credential in an Android application is to call
-// GoogleSignInAccount.getServerAuthCode() and send the auth code as the ServerAuthCode parameter of this API.
-// Before doing this, you must create an OAuth 2.0 web application client ID in the Google API Console and configure its
-// client ID and secret in the PlayFab Game Manager Google Add-on
-// for your title. This method does not require prompting of the user for additional Google account permissions, resulting
-// in a user experience with the least possible friction.
-// For more information about obtaining the server auth code, see
-// https://developers.google.com/identity/sign-in/android/offline-access.
-// The previous (deprecated) method was to obtain an OAuth access token by calling GetAccessToken() on the client and
-// passing it as the AccessToken parameter to this API.
-// for the with the Google OAuth 2.0 Access Token. More information on this change can be
-// found in the Google developer documentation
-// (https://android-developers.googleblog.com/2016/01/play-games-permissions-are-changing-in.html).
+// the device and passing it to this API. If this is the first time a user has signed in with the Google account and
+// CreateAccount is set to true, a new PlayFab account will be created and linked to the Google account. Otherwise, if no
+// PlayFab account is linked to the Google account, an error indicating this will be returned, so that the title can guide
+// the user through creation of a PlayFab account. The current (recommended) method for obtaining a Google account
+// credential in an Android application is to call GoogleSignInAccount.getServerAuthCode() and send the auth code as the
+// ServerAuthCode parameter of this API. Before doing this, you must create an OAuth 2.0 web application client ID in the
+// Google API Console and configure its client ID and secret in the PlayFab Game Manager Google Add-on for your title. This
+// method does not require prompting of the user for additional Google account permissions, resulting in a user experience
+// with the least possible friction. For more information about obtaining the server auth code, see
+// https://developers.google.com/identity/sign-in/android/offline-access. The previous (deprecated) method was to obtain an
+// OAuth access token by calling GetAccessToken() on the client and passing it as the AccessToken parameter to this API.
+// for the with the Google OAuth 2.0 Access Token. More information on this change can be found in the Google developer
+// documentation (https://android-developers.googleblog.com/2016/01/play-games-permissions-are-changing-in.html).
 type LoginWithGoogleAccountRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -2536,20 +2500,13 @@ type LoginWithGoogleAccountRequestModel struct {
 // LoginWithIOSDeviceIDRequest on iOS devices, the identifierForVendor
 // (https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/index.html#//apple_ref/occ/instp/UIDevice/identifierForVendor)
 // must be used as the DeviceId, as the UIDevice uniqueIdentifier has been deprecated as of iOS 5, and use of the
-// advertisingIdentifier
-// for this purpose will result in failure of Apple's certification process. If this is the first time a user has signed in
-// with the iOS
-// device and CreateAccount is set to true, a new PlayFab account will be created and linked to the vendor-specific iOS
-// device ID. In
-// this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked
-// to the iOS
-// device, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab
-// account. Please
-// note that while multiple devices of this type can be linked to a single user account, only the one most recently used to
-// login (or
-// most recently linked) will be reflected in the user's account information. We will be updating to show all linked
-// devices in a future
-// release.
+// advertisingIdentifier for this purpose will result in failure of Apple's certification process. If this is the first
+// time a user has signed in with the iOS device and CreateAccount is set to true, a new PlayFab account will be created
+// and linked to the vendor-specific iOS device ID. In this case, no email or username will be associated with the PlayFab
+// account. Otherwise, if no PlayFab account is linked to the iOS device, an error indicating this will be returned, so
+// that the title can guide the user through creation of a PlayFab account. Please note that while multiple devices of this
+// type can be linked to a single user account, only the one most recently used to login (or most recently linked) will be
+// reflected in the user's account information. We will be updating to show all linked devices in a future release.
 type LoginWithIOSDeviceIDRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -2571,13 +2528,12 @@ type LoginWithIOSDeviceIDRequestModel struct {
 }
 
 // LoginWithKongregateRequest more details regarding Kongregate and their game authentication system can be found at
-// http://developers.kongregate.com/docs/virtual-goods/authentication. Developers must provide the Kongregate user ID
-// and auth token that are generated using the Kongregate client library. PlayFab will combine these identifiers
-// with the title's unique Kongregate app ID to log the player into the Kongregate system. If CreateAccount is set
-// to true and there is not already a user matched to this Kongregate ID, then PlayFab will create a new account for this
-// user
-// and link the ID. In this case, no email or username will be associated with the PlayFab account. If there is already
-// a different PlayFab user linked with this account, then an error will be returned.
+// http://developers.kongregate.com/docs/virtual-goods/authentication. Developers must provide the Kongregate user ID and
+// auth token that are generated using the Kongregate client library. PlayFab will combine these identifiers with the
+// title's unique Kongregate app ID to log the player into the Kongregate system. If CreateAccount is set to true and there
+// is not already a user matched to this Kongregate ID, then PlayFab will create a new account for this user and link the
+// ID. In this case, no email or username will be associated with the PlayFab account. If there is already a different
+// PlayFab user linked with this account, then an error will be returned.
 type LoginWithKongregateRequestModel struct {
     // AuthTicket token issued by Kongregate's client API for the user.
     AuthTicket string `json:"AuthTicket,omitempty"`
@@ -2633,10 +2589,9 @@ type LoginWithOpenIdConnectRequestModel struct {
     TitleId string `json:"TitleId,omitempty"`
 }
 
-// LoginWithPlayFabRequest username and password lengths are provided for information purposes. The server will validate
-// that data passed in conforms to the field definition and report errors appropriately. It is recommended that developers
-// not
-// perform this validation locally, so that future updates to the username or password do not require client updates.
+// LoginWithPlayFabRequest username and password lengths are provided for information purposes. The server will validate that data passed in
+// conforms to the field definition and report errors appropriately. It is recommended that developers not perform this
+// validation locally, so that future updates to the username or password do not require client updates.
 type LoginWithPlayFabRequestModel struct {
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
@@ -2649,11 +2604,9 @@ type LoginWithPlayFabRequestModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// LoginWithPSNRequest if this is the first time a user has signed in with the PlayStation Network account and CreateAccount
-// is set to true, a new PlayFab account will be created and linked to the PSN account. In this case, no email or username
-// will be
-// associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the PSN account, an error indicating
-// this will
+// LoginWithPSNRequest if this is the first time a user has signed in with the PlayStation Network account and CreateAccount is set to true, a
+// new PlayFab account will be created and linked to the PSN account. In this case, no email or username will be associated
+// with the PlayFab account. Otherwise, if no PlayFab account is linked to the PSN account, an error indicating this will
 // be returned, so that the title can guide the user through creation of a PlayFab account.
 type LoginWithPSNRequestModel struct {
     // AuthCode auth code provided by the PSN OAuth provider.
@@ -2675,20 +2628,15 @@ type LoginWithPSNRequestModel struct {
     TitleId string `json:"TitleId,omitempty"`
 }
 
-// LoginWithSteamRequest steam sign-in is accomplished with the Steam Session Ticket. More information on the Ticket can be
-// found in the Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam
-// authentication
-// to work, the title must be configured with the Steam Application ID and Web API Key in the PlayFab Game Manager (under
-// Steam in the
-// Add-ons Marketplace). You can obtain a Web API Key from the Permissions page of any Group associated with your App ID in
-// the Steamworks
-// site. If this is the first time a user has signed in with the Steam account and CreateAccount is set to true, a new
-// PlayFab account
-// will be created and linked to the provided account's Steam ID. In this case, no email or username will be associated
-// with the PlayFab
-// account. Otherwise, if no PlayFab account is linked to the Steam account, an error indicating this will be returned, so
-// that the title
-// can guide the user through creation of a PlayFab account.
+// LoginWithSteamRequest steam sign-in is accomplished with the Steam Session Ticket. More information on the Ticket can be found in the
+// Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam
+// authentication to work, the title must be configured with the Steam Application ID and Web API Key in the PlayFab Game
+// Manager (under Steam in the Add-ons Marketplace). You can obtain a Web API Key from the Permissions page of any Group
+// associated with your App ID in the Steamworks site. If this is the first time a user has signed in with the Steam
+// account and CreateAccount is set to true, a new PlayFab account will be created and linked to the provided account's
+// Steam ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab
+// account is linked to the Steam account, an error indicating this will be returned, so that the title can guide the user
+// through creation of a PlayFab account.
 type LoginWithSteamRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -2710,9 +2658,9 @@ type LoginWithSteamRequestModel struct {
 // https://github.com/justintv/Twitch-API/blob/master/authentication.md. Developers must provide the Twitch access token
 // that is generated using one of the Twitch authentication flows. PlayFab will use the title's unique Twitch Client ID to
 // authenticate the token and log in to the PlayFab system. If CreateAccount is set to true and there is not already a user
-// matched to the Twitch username that generated the token, then PlayFab will create a new account for this user
-// and link the ID. In this case, no email or username will be associated with the PlayFab account. If there is already
-// a different PlayFab user linked with this account, then an error will be returned.
+// matched to the Twitch username that generated the token, then PlayFab will create a new account for this user and link
+// the ID. In this case, no email or username will be associated with the PlayFab account. If there is already a different
+// PlayFab user linked with this account, then an error will be returned.
 type LoginWithTwitchRequestModel struct {
     // AccessToken token issued by Twitch's API for the user.
     AccessToken string `json:"AccessToken,omitempty"`
@@ -2742,12 +2690,10 @@ type LoginWithWindowsHelloRequestModel struct {
     TitleId string `json:"TitleId,omitempty"`
 }
 
-// LoginWithXboxRequest if this is the first time a user has signed in with the Xbox Live account and CreateAccount
-// is set to true, a new PlayFab account will be created and linked to the Xbox Live account. In this case, no email or
-// username will be
+// LoginWithXboxRequest if this is the first time a user has signed in with the Xbox Live account and CreateAccount is set to true, a new
+// PlayFab account will be created and linked to the Xbox Live account. In this case, no email or username will be
 // associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Xbox Live account, an error
-// indicating this will
-// be returned, so that the title can guide the user through creation of a PlayFab account.
+// indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
 type LoginWithXboxRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -3048,10 +2994,8 @@ type PSNAccountPlayFabIdPairModel struct {
     PSNAccountId string `json:"PSNAccountId,omitempty"`
 }
 
-// PurchaseItemRequest please note that the processing time for inventory grants and purchases increases fractionally
-// the more items are in the inventory, and the more items are in the grant/purchase operation (with each item in a bundle
-// being a
-// distinct add).
+// PurchaseItemRequest please note that the processing time for inventory grants and purchases increases fractionally the more items are in the
+// inventory, and the more items are in the grant/purchase operation (with each item in a bundle being a distinct add).
 type PurchaseItemRequestModel struct {
     // CatalogVersion catalog version for the items to be purchased (defaults to most recent version.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -3088,10 +3032,9 @@ type PushNotificationRegistrationModelModel struct {
     Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
-// RedeemCouponRequest coupon codes can be created for any item, or set of items, in the catalog for the title. This
-// operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an
-// already
-// consumed code, or a code which has not yet been created in the service, will result in an error.
+// RedeemCouponRequest coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the
+// coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code,
+// or a code which has not yet been created in the service, will result in an error.
 type RedeemCouponRequestModel struct {
     // CatalogVersion catalog version of the coupon. If null, uses the default catalog
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -3181,9 +3124,9 @@ type RegisterPlayFabUserRequestModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// RegisterPlayFabUserResult each account must have a unique email address in the PlayFab service. Once created, the
-// account may be associated with additional accounts (Steam, Facebook, Game Center, etc.), allowing for added social
-// network lists and achievements systems.
+// RegisterPlayFabUserResult each account must have a unique email address in the PlayFab service. Once created, the account may be associated with
+// additional accounts (Steam, Facebook, Game Center, etc.), allowing for added social network lists and achievements
+// systems.
 type RegisterPlayFabUserResultModel struct {
     // EntityToken if LoginTitlePlayerAccountEntity flag is set on the login request the title_player_account will also be logged in and
 // returned.
@@ -3272,11 +3215,9 @@ type ReportPlayerClientResultModel struct {
     SubmissionsRemaining int32 `json:"SubmissionsRemaining,omitempty"`
 }
 
-// RestoreIOSPurchasesRequest the title should obtain a refresh receipt via restoreCompletedTransactions in the SKPaymentQueue
-// of the Apple StoreKit and pass that in to this call. The resultant receipt contains new receipt instances for all
-// non-consumable
-// goods previously purchased by the user. This API call iterates through every purchase in the receipt and restores the
-// items if
+// RestoreIOSPurchasesRequest the title should obtain a refresh receipt via restoreCompletedTransactions in the SKPaymentQueue of the Apple StoreKit
+// and pass that in to this call. The resultant receipt contains new receipt instances for all non-consumable goods
+// previously purchased by the user. This API call iterates through every purchase in the receipt and restores the items if
 // they still exist in the catalog and can be validated.
 type RestoreIOSPurchasesRequestModel struct {
     // ReceiptData base64 encoded receipt data, passed back by the App Store as a result of a successful purchase.
@@ -3315,10 +3256,9 @@ type SendAccountRecoveryEmailRequestModel struct {
 type SendAccountRecoveryEmailResultModel struct {
 }
 
-// SetFriendTagsRequest this operation is not additive. It will completely replace the tag list for the specified user.
-// Please note that only users in the PlayFab friends list can be assigned tags. Attempting to set a tag on a friend only
-// included
-// in the friends list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
+// SetFriendTagsRequest this operation is not additive. It will completely replace the tag list for the specified user. Please note that only
+// users in the PlayFab friends list can be assigned tags. Attempting to set a tag on a friend only included in the friends
+// list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
 type SetFriendTagsRequestModel struct {
     // FriendPlayFabId playFab identifier of the friend account to which the tag(s) should be applied.
     FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
@@ -3805,7 +3745,7 @@ type UnlockContainerItemRequestModel struct {
     ContainerItemId string `json:"ContainerItemId,omitempty"`
 }
 
-// UnlockContainerItemResult the items and vc found within the container.  These will be added and stacked in the appropriate inventory.
+// UnlockContainerItemResult the items and vc found within the container. These will be added and stacked in the appropriate inventory.
 type UnlockContainerItemResultModel struct {
     // GrantedItems items granted to the player as a result of unlocking the container.
     GrantedItems []ItemInstanceModel `json:"GrantedItems,omitempty"`
@@ -3823,11 +3763,10 @@ type UpdateAvatarUrlRequestModel struct {
     ImageUrl string `json:"ImageUrl,omitempty"`
 }
 
-// UpdateCharacterDataRequest this function performs an additive update of the arbitrary strings
-// containing the custom data for the character. In updating the custom data object, keys which already
-// exist in the object will have their values overwritten, while keys with null values will be removed.
-// New keys will be added, with the given values. No other key-value pairs will be changed apart from
-// those specified in the call.
+// UpdateCharacterDataRequest this function performs an additive update of the arbitrary strings containing the custom data for the character. In
+// updating the custom data object, keys which already exist in the object will have their values overwritten, while keys
+// with null values will be removed. New keys will be added, with the given values. No other key-value pairs will be
+// changed apart from those specified in the call.
 type UpdateCharacterDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -3849,15 +3788,14 @@ type UpdateCharacterDataResultModel struct {
 }
 
 // UpdateCharacterStatisticsRequest enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title.
-// However, this is not best practice, as this data will no longer be safely controlled by the server.
-// This operation is additive.  Character Statistics not currently defined will be added, while those already defined will
-// be updated with the given values.
-// All other user statistics will remain unchanged.  Character statistics are used by the character-leaderboard apis, and
-// accessible for custom game-logic.
+// However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is
+// additive. Character Statistics not currently defined will be added, while those already defined will be updated with the
+// given values. All other user statistics will remain unchanged. Character statistics are used by the
+// character-leaderboard apis, and accessible for custom game-logic.
 type UpdateCharacterStatisticsRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
-    // CharacterStatistics statistics to be updated with the provided values.
+    // CharacterStatistics statistics to be updated with the provided values, in the Key(string), Value(int) pattern.
     CharacterStatistics map[string]int32 `json:"CharacterStatistics,omitempty"`
 }
 
@@ -3867,14 +3805,11 @@ type UpdateCharacterStatisticsResultModel struct {
 
 // UpdatePlayerStatisticsRequest enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title.
 // However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is
-// additive.  Statistics not
-// currently defined will be added, while those already defined will be updated with the given values. All other user
-// statistics will remain
-// unchanged.  Note that if the statistic is intended to have a reset period, the UpdatePlayerStatisticDefinition API call
-// can be used to define
-// that reset period. Once a statistic has been versioned (reset), the now-previous version can still be written to for up
-// a
-// short, pre-defined period (currently 10 seconds), using the Version parameter in this call.
+// additive. Statistics not currently defined will be added, while those already defined will be updated with the given
+// values. All other user statistics will remain unchanged. Note that if the statistic is intended to have a reset period,
+// the UpdatePlayerStatisticDefinition API call can be used to define that reset period. Once a statistic has been
+// versioned (reset), the now-previous version can still be written to for up a short, pre-defined period (currently 10
+// seconds), using the Version parameter in this call.
 type UpdatePlayerStatisticsRequestModel struct {
     // Statistics statistics to be updated with the provided values
     Statistics []StatisticUpdateModel `json:"Statistics,omitempty"`
@@ -3884,11 +3819,10 @@ type UpdatePlayerStatisticsRequestModel struct {
 type UpdatePlayerStatisticsResultModel struct {
 }
 
-// UpdateSharedGroupDataRequest note that in the case of multiple calls to write to the same shared group data keys, the
-// last write received by the PlayFab service will determine the value available to subsequent read operations. For
-// scenarios
-// requiring coordination of data updates, it is recommended that titles make use of user data with read permission set to
-// public, or a combination of user data and shared group data.
+// UpdateSharedGroupDataRequest note that in the case of multiple calls to write to the same shared group data keys, the last write received by the
+// PlayFab service will determine the value available to subsequent read operations. For scenarios requiring coordination
+// of data updates, it is recommended that titles make use of user data with read permission set to public, or a
+// combination of user data and shared group data.
 type UpdateSharedGroupDataRequestModel struct {
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
@@ -3906,11 +3840,10 @@ type UpdateSharedGroupDataRequestModel struct {
 type UpdateSharedGroupDataResultModel struct {
 }
 
-// UpdateUserDataRequest this function performs an additive update of the arbitrary strings containing the custom data for the user.
-// In updating the custom data object, keys which already exist in the object will have their values overwritten, while
-// keys with null values will
-// be removed. New keys will be added, with the given values. No other key-value pairs will be changed apart from those
-// specified in the call.
+// UpdateUserDataRequest this function performs an additive update of the arbitrary strings containing the custom data for the user. In updating
+// the custom data object, keys which already exist in the object will have their values overwritten, while keys with null
+// values will be removed. New keys will be added, with the given values. No other key-value pairs will be changed apart
+// from those specified in the call.
 type UpdateUserDataRequestModel struct {
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
@@ -3930,9 +3863,8 @@ type UpdateUserDataResultModel struct {
     DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
-// UpdateUserTitleDisplayNameRequest in addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier,
-// but specific to the title. This allows for unique names which more closely match the theme or genre of a title, for
-// example.
+// UpdateUserTitleDisplayNameRequest in addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier, but
+// specific to the title. This allows for unique names which more closely match the theme or genre of a title, for example.
 type UpdateUserTitleDisplayNameRequestModel struct {
     // DisplayName new title display name for the user - must be between 3 and 25 characters.
     DisplayName string `json:"DisplayName,omitempty"`
@@ -4049,6 +3981,8 @@ type UserGoogleInfoModel struct {
     GoogleId string `json:"GoogleId,omitempty"`
     // GoogleLocale locale of the Google account
     GoogleLocale string `json:"GoogleLocale,omitempty"`
+    // GoogleName name of the Google account user
+    GoogleName string `json:"GoogleName,omitempty"`
 }
 
 // UserIosDeviceInfo 
@@ -4142,6 +4076,8 @@ type UserSteamInfoModel struct {
     SteamCurrency Currency `json:"SteamCurrency,omitempty"`
     // SteamId steam identifier
     SteamId string `json:"SteamId,omitempty"`
+    // SteamName steam display name
+    SteamName string `json:"SteamName,omitempty"`
 }
 
 // UserTitleInfo 
@@ -4207,12 +4143,10 @@ type ValidateAmazonReceiptResultModel struct {
 }
 
 // ValidateGooglePlayPurchaseRequest the packageName and productId are defined in the GooglePlay store. The productId must match the ItemId of the inventory
-// item
-// in the PlayFab catalog for the title. This enables the PlayFab service to securely validate that the purchase is for the
-// correct item, in order to prevent
-// uses from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being
-// for a $19.99 purchase, for example).
-// Each receipt may be validated only once to avoid granting the same item over and over from a single purchase.
+// item in the PlayFab catalog for the title. This enables the PlayFab service to securely validate that the purchase is
+// for the correct item, in order to prevent uses from passing valid receipts as being for more expensive items (passing a
+// receipt for a 99-cent purchase as being for a $19.99 purchase, for example). Each receipt may be validated only once to
+// avoid granting the same item over and over from a single purchase.
 type ValidateGooglePlayPurchaseRequestModel struct {
     // CurrencyCode currency used for the purchase.
     CurrencyCode string `json:"CurrencyCode,omitempty"`
@@ -4231,10 +4165,9 @@ type ValidateGooglePlayPurchaseResultModel struct {
 
 // ValidateIOSReceiptRequest the CurrencyCode and PurchasePrice must match the price which was set up for the item in the Apple store. In addition,
 // The ItemId of the inventory in the PlayFab Catalog must match the Product ID as it was set up in the Apple store. This
-// enables the PlayFab service to
-// securely validate that the purchase is for the correct item, in order to prevent uses from passing valid receipts as
-// being for more expensive items
-// (passing a receipt for a 99-cent purchase as being for a $19.99 purchase, for example).
+// enables the PlayFab service to securely validate that the purchase is for the correct item, in order to prevent uses
+// from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being for a
+// $19.99 purchase, for example).
 type ValidateIOSReceiptRequestModel struct {
     // CurrencyCode currency used for the purchase.
     CurrencyCode string `json:"CurrencyCode,omitempty"`

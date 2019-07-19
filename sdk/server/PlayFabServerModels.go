@@ -49,6 +49,14 @@ type AddFriendRequestModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
+// AddGenericIDRequest 
+type AddGenericIDRequestModel struct {
+    // GenericId generic service identifier to add to the player account.
+    GenericId GenericServiceIdModel `json:"GenericId,omitempty"`
+    // PlayFabId playFabId of the user to link.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
 // AddPlayerTagRequest this API will trigger a player_tag_added event and add a tag with the given TagName and PlayFabID to the corresponding
 // player profile. TagName can be used for segmentation and it is limited to 256 characters. Also there is a limit on the
 // number of tags a title can have.
@@ -96,8 +104,7 @@ type AdvancedPushPlatformMsgModel struct {
 
 // AuthenticateSessionTicketRequest note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be
 // taken in how this data is stored and managed. Since this call will always return the relevant information for users who
-// have accessed
-// the title, the recommendation is to not store this data locally.
+// have accessed the title, the recommendation is to not store this data locally.
 type AuthenticateSessionTicketRequestModel struct {
     // SessionTicket session ticket as issued by a PlayFab client login API.
     SessionTicket string `json:"SessionTicket,omitempty"`
@@ -618,9 +625,8 @@ const (
      CountryCodeZM CountryCode = "ZM"
      CountryCodeZW CountryCode = "ZW"
       )
-// CreateSharedGroupRequest if SharedGroupId is specified, the service will attempt to create a group with that
-// identifier, and will return an error if it is already in use. If no SharedGroupId is specified, a random identifier will
-// be assigned.
+// CreateSharedGroupRequest if SharedGroupId is specified, the service will attempt to create a group with that identifier, and will return an error
+// if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
 type CreateSharedGroupRequestModel struct {
     // SharedGroupId unique identifier for the shared group (a random identifier will be assigned, if one is not specified).
     SharedGroupId string `json:"SharedGroupId,omitempty"`
@@ -799,9 +805,9 @@ const (
      CurrencyZMW Currency = "ZMW"
      CurrencyZWD Currency = "ZWD"
       )
-// DeleteCharacterFromUserRequest this function will delete the specified character from the list allowed by the user, and
-// will also delete any inventory or VC currently held by that character. It will NOT delete any statistics
-// associated for this character, in order to preserve leaderboard integrity.
+// DeleteCharacterFromUserRequest this function will delete the specified character from the list allowed by the user, and will also delete any inventory
+// or VC currently held by that character. It will NOT delete any statistics associated for this character, in order to
+// preserve leaderboard integrity.
 type DeleteCharacterFromUserRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -817,17 +823,13 @@ type DeleteCharacterFromUserResultModel struct {
 }
 
 // DeletePlayerRequest deletes all data associated with the player, including statistics, custom data, inventory, purchases, virtual currency
-// balances,
-// characters and shared group memberships. Removes the player from all leaderboards and player search
-// indexes. Does not delete PlayStream event history associated with the player.
-// Does not delete the publisher user account that created the player in the title nor associated data
-// such as username, password, email address, account linkages, or friends list.
-// Note, this API queues the player for deletion and returns immediately. It may take several minutes
-// or more before all player data is fully deleted.
-// Until the player data is fully deleted, attempts to recreate the player with the same user account
-// in the same title will fail with the 'AccountDeleted' error.
-// This API must be enabled for use as an option in the game manager website. It is disabled by
-// default.
+// balances, characters and shared group memberships. Removes the player from all leaderboards and player search indexes.
+// Does not delete PlayStream event history associated with the player. Does not delete the publisher user account that
+// created the player in the title nor associated data such as username, password, email address, account linkages, or
+// friends list. Note, this API queues the player for deletion and returns immediately. It may take several minutes or more
+// before all player data is fully deleted. Until the player data is fully deleted, attempts to recreate the player with
+// the same user account in the same title will fail with the 'AccountDeleted' error. This API must be enabled for use as
+// an option in the game manager website. It is disabled by default.
 type DeletePlayerRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
@@ -835,6 +837,16 @@ type DeletePlayerRequestModel struct {
 
 // DeletePlayerResult 
 type DeletePlayerResultModel struct {
+}
+
+// DeletePushNotificationTemplateRequest represents the request to delete a push notification template.
+type DeletePushNotificationTemplateRequestModel struct {
+    // PushNotificationTemplateId id of the push notification template to be deleted.
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
+}
+
+// DeletePushNotificationTemplateResult 
+type DeletePushNotificationTemplateResultModel struct {
 }
 
 // DeleteSharedGroupRequest 
@@ -863,6 +875,10 @@ const (
       )
 // EmptyResponse 
 type EmptyResponseModel struct {
+}
+
+// EmptyResult 
+type EmptyResultModel struct {
 }
 
 // EntityKey combined entity type and ID structure which uniquely identifies a single entity.
@@ -968,8 +984,6 @@ type FacebookPlayFabIdPairModel struct {
 
 // FriendInfo 
 type FriendInfoModel struct {
-    // CurrentMatchmakerLobbyId this field is not populated.
-    CurrentMatchmakerLobbyId string `json:"CurrentMatchmakerLobbyId,omitempty"`
     // FacebookInfo available Facebook information (if the user and PlayFab friend are also connected in Facebook).
     FacebookInfo UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
     // FriendPlayFabId playFab unique identifier for this friend.
@@ -1394,8 +1408,7 @@ const (
      GenericErrorCodesEntityProfileConstraintValidationFailed GenericErrorCodes = "EntityProfileConstraintValidationFailed"
      GenericErrorCodesTelemetryIngestionKeyPending GenericErrorCodes = "TelemetryIngestionKeyPending"
      GenericErrorCodesTelemetryIngestionKeyNotFound GenericErrorCodes = "TelemetryIngestionKeyNotFound"
-     GenericErrorCodesStatisticTagRequired GenericErrorCodes = "StatisticTagRequired"
-     GenericErrorCodesStatisticTagInvalid GenericErrorCodes = "StatisticTagInvalid"
+     GenericErrorCodesStatisticChildNameInvalid GenericErrorCodes = "StatisticChildNameInvalid"
      GenericErrorCodesDataIntegrityError GenericErrorCodes = "DataIntegrityError"
      GenericErrorCodesVirtualCurrencyCannotBeSetToOlderVersion GenericErrorCodes = "VirtualCurrencyCannotBeSetToOlderVersion"
      GenericErrorCodesVirtualCurrencyMustBeWithinIntegerRange GenericErrorCodes = "VirtualCurrencyMustBeWithinIntegerRange"
@@ -1421,48 +1434,139 @@ const (
      GenericErrorCodesTitleNewsMissingTitleOrBody GenericErrorCodes = "TitleNewsMissingTitleOrBody"
      GenericErrorCodesTitleNewsInvalidLanguage GenericErrorCodes = "TitleNewsInvalidLanguage"
      GenericErrorCodesEmailRecipientBlacklisted GenericErrorCodes = "EmailRecipientBlacklisted"
+     GenericErrorCodesInvalidGameCenterAuthRequest GenericErrorCodes = "InvalidGameCenterAuthRequest"
+     GenericErrorCodesGameCenterAuthenticationFailed GenericErrorCodes = "GameCenterAuthenticationFailed"
+     GenericErrorCodesCannotEnablePartiesForTitle GenericErrorCodes = "CannotEnablePartiesForTitle"
+     GenericErrorCodesPartyError GenericErrorCodes = "PartyError"
+     GenericErrorCodesPartyRequests GenericErrorCodes = "PartyRequests"
+     GenericErrorCodesPartyNoContent GenericErrorCodes = "PartyNoContent"
+     GenericErrorCodesPartyBadRequest GenericErrorCodes = "PartyBadRequest"
+     GenericErrorCodesPartyUnauthorized GenericErrorCodes = "PartyUnauthorized"
+     GenericErrorCodesPartyForbidden GenericErrorCodes = "PartyForbidden"
+     GenericErrorCodesPartyNotFound GenericErrorCodes = "PartyNotFound"
+     GenericErrorCodesPartyConflict GenericErrorCodes = "PartyConflict"
+     GenericErrorCodesPartyInternalServerError GenericErrorCodes = "PartyInternalServerError"
+     GenericErrorCodesPartyUnavailable GenericErrorCodes = "PartyUnavailable"
+     GenericErrorCodesPartyTooManyRequests GenericErrorCodes = "PartyTooManyRequests"
+     GenericErrorCodesPushNotificationTemplateMissingName GenericErrorCodes = "PushNotificationTemplateMissingName"
+     GenericErrorCodesCannotEnableMultiplayerServersForTitle GenericErrorCodes = "CannotEnableMultiplayerServersForTitle"
+     GenericErrorCodesWriteAttemptedDuringExport GenericErrorCodes = "WriteAttemptedDuringExport"
+     GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded GenericErrorCodes = "MultiplayerServerTitleQuotaCoresExceeded"
+     GenericErrorCodesAutomationRuleNotFound GenericErrorCodes = "AutomationRuleNotFound"
+     GenericErrorCodesEntityAPIKeyLimitExceeded GenericErrorCodes = "EntityAPIKeyLimitExceeded"
+     GenericErrorCodesEntityAPIKeyNotFound GenericErrorCodes = "EntityAPIKeyNotFound"
+     GenericErrorCodesEntityAPIKeyOrSecretInvalid GenericErrorCodes = "EntityAPIKeyOrSecretInvalid"
+     GenericErrorCodesEconomyServiceUnavailable GenericErrorCodes = "EconomyServiceUnavailable"
+     GenericErrorCodesEconomyServiceInternalError GenericErrorCodes = "EconomyServiceInternalError"
+     GenericErrorCodesQueryRateLimitExceeded GenericErrorCodes = "QueryRateLimitExceeded"
+     GenericErrorCodesEntityAPIKeyCreationDisabledForEntity GenericErrorCodes = "EntityAPIKeyCreationDisabledForEntity"
+     GenericErrorCodesForbiddenByEntityPolicy GenericErrorCodes = "ForbiddenByEntityPolicy"
+     GenericErrorCodesStudioCreationRateLimited GenericErrorCodes = "StudioCreationRateLimited"
+     GenericErrorCodesStudioCreationInProgress GenericErrorCodes = "StudioCreationInProgress"
+     GenericErrorCodesDuplicateStudioName GenericErrorCodes = "DuplicateStudioName"
+     GenericErrorCodesStudioNotFound GenericErrorCodes = "StudioNotFound"
+     GenericErrorCodesStudioDeleted GenericErrorCodes = "StudioDeleted"
+     GenericErrorCodesStudioDeactivated GenericErrorCodes = "StudioDeactivated"
+     GenericErrorCodesStudioActivated GenericErrorCodes = "StudioActivated"
+     GenericErrorCodesTitleCreationRateLimited GenericErrorCodes = "TitleCreationRateLimited"
+     GenericErrorCodesTitleCreationInProgress GenericErrorCodes = "TitleCreationInProgress"
+     GenericErrorCodesDuplicateTitleName GenericErrorCodes = "DuplicateTitleName"
+     GenericErrorCodesTitleActivationRateLimited GenericErrorCodes = "TitleActivationRateLimited"
+     GenericErrorCodesTitleActivationInProgress GenericErrorCodes = "TitleActivationInProgress"
+     GenericErrorCodesTitleDeactivated GenericErrorCodes = "TitleDeactivated"
+     GenericErrorCodesTitleActivated GenericErrorCodes = "TitleActivated"
+     GenericErrorCodesCloudScriptAzureFunctionsExecutionTimeLimitExceeded GenericErrorCodes = "CloudScriptAzureFunctionsExecutionTimeLimitExceeded"
+     GenericErrorCodesCloudScriptAzureFunctionsArgumentSizeExceeded GenericErrorCodes = "CloudScriptAzureFunctionsArgumentSizeExceeded"
+     GenericErrorCodesCloudScriptAzureFunctionsReturnSizeExceeded GenericErrorCodes = "CloudScriptAzureFunctionsReturnSizeExceeded"
+     GenericErrorCodesCloudScriptAzureFunctionsHTTPRequestError GenericErrorCodes = "CloudScriptAzureFunctionsHTTPRequestError"
+     GenericErrorCodesVirtualCurrencyBetaGetError GenericErrorCodes = "VirtualCurrencyBetaGetError"
+     GenericErrorCodesVirtualCurrencyBetaCreateError GenericErrorCodes = "VirtualCurrencyBetaCreateError"
+     GenericErrorCodesVirtualCurrencyBetaInitialDepositSaveError GenericErrorCodes = "VirtualCurrencyBetaInitialDepositSaveError"
+     GenericErrorCodesVirtualCurrencyBetaSaveError GenericErrorCodes = "VirtualCurrencyBetaSaveError"
+     GenericErrorCodesVirtualCurrencyBetaDeleteError GenericErrorCodes = "VirtualCurrencyBetaDeleteError"
+     GenericErrorCodesVirtualCurrencyBetaRestoreError GenericErrorCodes = "VirtualCurrencyBetaRestoreError"
+     GenericErrorCodesVirtualCurrencyBetaSaveConflict GenericErrorCodes = "VirtualCurrencyBetaSaveConflict"
+     GenericErrorCodesVirtualCurrencyBetaUpdateError GenericErrorCodes = "VirtualCurrencyBetaUpdateError"
      GenericErrorCodesMatchmakingEntityInvalid GenericErrorCodes = "MatchmakingEntityInvalid"
      GenericErrorCodesMatchmakingPlayerAttributesInvalid GenericErrorCodes = "MatchmakingPlayerAttributesInvalid"
-     GenericErrorCodesMatchmakingCreateRequestMissing GenericErrorCodes = "MatchmakingCreateRequestMissing"
-     GenericErrorCodesMatchmakingCreateRequestCreatorMissing GenericErrorCodes = "MatchmakingCreateRequestCreatorMissing"
-     GenericErrorCodesMatchmakingCreateRequestCreatorIdMissing GenericErrorCodes = "MatchmakingCreateRequestCreatorIdMissing"
-     GenericErrorCodesMatchmakingCreateRequestUserListMissing GenericErrorCodes = "MatchmakingCreateRequestUserListMissing"
-     GenericErrorCodesMatchmakingCreateRequestGiveUpAfterInvalid GenericErrorCodes = "MatchmakingCreateRequestGiveUpAfterInvalid"
-     GenericErrorCodesMatchmakingTicketIdMissing GenericErrorCodes = "MatchmakingTicketIdMissing"
-     GenericErrorCodesMatchmakingMatchIdMissing GenericErrorCodes = "MatchmakingMatchIdMissing"
-     GenericErrorCodesMatchmakingMatchIdIdMissing GenericErrorCodes = "MatchmakingMatchIdIdMissing"
-     GenericErrorCodesMatchmakingQueueNameMissing GenericErrorCodes = "MatchmakingQueueNameMissing"
-     GenericErrorCodesMatchmakingTitleIdMissing GenericErrorCodes = "MatchmakingTitleIdMissing"
-     GenericErrorCodesMatchmakingTicketIdIdMissing GenericErrorCodes = "MatchmakingTicketIdIdMissing"
-     GenericErrorCodesMatchmakingPlayerIdMissing GenericErrorCodes = "MatchmakingPlayerIdMissing"
-     GenericErrorCodesMatchmakingJoinRequestUserMissing GenericErrorCodes = "MatchmakingJoinRequestUserMissing"
-     GenericErrorCodesMatchmakingQueueConfigNotFound GenericErrorCodes = "MatchmakingQueueConfigNotFound"
+     GenericErrorCodesMatchmakingQueueNotFound GenericErrorCodes = "MatchmakingQueueNotFound"
      GenericErrorCodesMatchmakingMatchNotFound GenericErrorCodes = "MatchmakingMatchNotFound"
      GenericErrorCodesMatchmakingTicketNotFound GenericErrorCodes = "MatchmakingTicketNotFound"
-     GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid GenericErrorCodes = "MatchmakingCreateTicketServerIdentityInvalid"
-     GenericErrorCodesMatchmakingCreateTicketClientIdentityInvalid GenericErrorCodes = "MatchmakingCreateTicketClientIdentityInvalid"
-     GenericErrorCodesMatchmakingGetTicketUserMismatch GenericErrorCodes = "MatchmakingGetTicketUserMismatch"
-     GenericErrorCodesMatchmakingJoinTicketServerIdentityInvalid GenericErrorCodes = "MatchmakingJoinTicketServerIdentityInvalid"
-     GenericErrorCodesMatchmakingJoinTicketUserIdentityMismatch GenericErrorCodes = "MatchmakingJoinTicketUserIdentityMismatch"
-     GenericErrorCodesMatchmakingCancelTicketServerIdentityInvalid GenericErrorCodes = "MatchmakingCancelTicketServerIdentityInvalid"
-     GenericErrorCodesMatchmakingCancelTicketUserIdentityMismatch GenericErrorCodes = "MatchmakingCancelTicketUserIdentityMismatch"
-     GenericErrorCodesMatchmakingGetMatchIdentityMismatch GenericErrorCodes = "MatchmakingGetMatchIdentityMismatch"
-     GenericErrorCodesMatchmakingPlayerIdentityMismatch GenericErrorCodes = "MatchmakingPlayerIdentityMismatch"
      GenericErrorCodesMatchmakingAlreadyJoinedTicket GenericErrorCodes = "MatchmakingAlreadyJoinedTicket"
      GenericErrorCodesMatchmakingTicketAlreadyCompleted GenericErrorCodes = "MatchmakingTicketAlreadyCompleted"
-     GenericErrorCodesMatchmakingQueueNameInvalid GenericErrorCodes = "MatchmakingQueueNameInvalid"
      GenericErrorCodesMatchmakingQueueConfigInvalid GenericErrorCodes = "MatchmakingQueueConfigInvalid"
      GenericErrorCodesMatchmakingMemberProfileInvalid GenericErrorCodes = "MatchmakingMemberProfileInvalid"
-     GenericErrorCodesWriteAttemptedDuringExport GenericErrorCodes = "WriteAttemptedDuringExport"
      GenericErrorCodesNintendoSwitchDeviceIdNotLinked GenericErrorCodes = "NintendoSwitchDeviceIdNotLinked"
      GenericErrorCodesMatchmakingNotEnabled GenericErrorCodes = "MatchmakingNotEnabled"
-     GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid GenericErrorCodes = "MatchmakingGetStatisticsIdentityInvalid"
-     GenericErrorCodesMatchmakingStatisticsIdMissing GenericErrorCodes = "MatchmakingStatisticsIdMissing"
-     GenericErrorCodesCannotEnableMultiplayerServersForTitle GenericErrorCodes = "CannotEnableMultiplayerServersForTitle"
+     GenericErrorCodesMatchmakingPlayerAttributesTooLarge GenericErrorCodes = "MatchmakingPlayerAttributesTooLarge"
+     GenericErrorCodesMatchmakingNumberOfPlayersInTicketTooLarge GenericErrorCodes = "MatchmakingNumberOfPlayersInTicketTooLarge"
+     GenericErrorCodesMatchmakingAttributeInvalid GenericErrorCodes = "MatchmakingAttributeInvalid"
+     GenericErrorCodesMatchmakingPlayerHasNotJoinedTicket GenericErrorCodes = "MatchmakingPlayerHasNotJoinedTicket"
+     GenericErrorCodesMatchmakingRateLimitExceeded GenericErrorCodes = "MatchmakingRateLimitExceeded"
+     GenericErrorCodesMatchmakingTicketMembershipLimitExceeded GenericErrorCodes = "MatchmakingTicketMembershipLimitExceeded"
+     GenericErrorCodesMatchmakingUnauthorized GenericErrorCodes = "MatchmakingUnauthorized"
+     GenericErrorCodesMatchmakingQueueLimitExceeded GenericErrorCodes = "MatchmakingQueueLimitExceeded"
+     GenericErrorCodesMatchmakingRequestTypeMismatch GenericErrorCodes = "MatchmakingRequestTypeMismatch"
+     GenericErrorCodesMatchmakingBadRequest GenericErrorCodes = "MatchmakingBadRequest"
      GenericErrorCodesTitleConfigNotFound GenericErrorCodes = "TitleConfigNotFound"
      GenericErrorCodesTitleConfigUpdateConflict GenericErrorCodes = "TitleConfigUpdateConflict"
      GenericErrorCodesTitleConfigSerializationError GenericErrorCodes = "TitleConfigSerializationError"
+     GenericErrorCodesCatalogEntityInvalid GenericErrorCodes = "CatalogEntityInvalid"
+     GenericErrorCodesCatalogTitleIdMissing GenericErrorCodes = "CatalogTitleIdMissing"
+     GenericErrorCodesCatalogPlayerIdMissing GenericErrorCodes = "CatalogPlayerIdMissing"
+     GenericErrorCodesCatalogClientIdentityInvalid GenericErrorCodes = "CatalogClientIdentityInvalid"
+     GenericErrorCodesCatalogOneOrMoreFilesInvalid GenericErrorCodes = "CatalogOneOrMoreFilesInvalid"
+     GenericErrorCodesCatalogItemMetadataInvalid GenericErrorCodes = "CatalogItemMetadataInvalid"
+     GenericErrorCodesCatalogItemIdInvalid GenericErrorCodes = "CatalogItemIdInvalid"
+     GenericErrorCodesCatalogSearchParameterInvalid GenericErrorCodes = "CatalogSearchParameterInvalid"
+     GenericErrorCodesCatalogFeatureDisabled GenericErrorCodes = "CatalogFeatureDisabled"
+     GenericErrorCodesCatalogConfigInvalid GenericErrorCodes = "CatalogConfigInvalid"
+     GenericErrorCodesCatalogUnauthorized GenericErrorCodes = "CatalogUnauthorized"
+     GenericErrorCodesCatalogItemTypeInvalid GenericErrorCodes = "CatalogItemTypeInvalid"
+     GenericErrorCodesExportInvalidStatusUpdate GenericErrorCodes = "ExportInvalidStatusUpdate"
+     GenericErrorCodesExportInvalidPrefix GenericErrorCodes = "ExportInvalidPrefix"
+     GenericErrorCodesExportBlobContainerDoesNotExist GenericErrorCodes = "ExportBlobContainerDoesNotExist"
+     GenericErrorCodesExportNotFound GenericErrorCodes = "ExportNotFound"
+     GenericErrorCodesExportCouldNotUpdate GenericErrorCodes = "ExportCouldNotUpdate"
+     GenericErrorCodesExportInvalidStorageType GenericErrorCodes = "ExportInvalidStorageType"
+     GenericErrorCodesExportAmazonBucketDoesNotExist GenericErrorCodes = "ExportAmazonBucketDoesNotExist"
+     GenericErrorCodesExportInvalidBlobStorage GenericErrorCodes = "ExportInvalidBlobStorage"
+     GenericErrorCodesExportKustoException GenericErrorCodes = "ExportKustoException"
+     GenericErrorCodesExportKustoConnectionFailed GenericErrorCodes = "ExportKustoConnectionFailed"
+     GenericErrorCodesExportUnknownError GenericErrorCodes = "ExportUnknownError"
+     GenericErrorCodesExportCantEditPendingExport GenericErrorCodes = "ExportCantEditPendingExport"
+     GenericErrorCodesExportLimitExports GenericErrorCodes = "ExportLimitExports"
+     GenericErrorCodesExportLimitEvents GenericErrorCodes = "ExportLimitEvents"
+     GenericErrorCodesTitleNotEnabledForParty GenericErrorCodes = "TitleNotEnabledForParty"
+     GenericErrorCodesPartyVersionNotFound GenericErrorCodes = "PartyVersionNotFound"
+     GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue GenericErrorCodes = "MultiplayerServerBuildReferencedByMatchmakingQueue"
+     GenericErrorCodesExperimentationExperimentStopped GenericErrorCodes = "ExperimentationExperimentStopped"
+     GenericErrorCodesExperimentationExperimentRunning GenericErrorCodes = "ExperimentationExperimentRunning"
+     GenericErrorCodesExperimentationExperimentNotFound GenericErrorCodes = "ExperimentationExperimentNotFound"
+     GenericErrorCodesExperimentationExperimentNeverStarted GenericErrorCodes = "ExperimentationExperimentNeverStarted"
+     GenericErrorCodesExperimentationExperimentDeleted GenericErrorCodes = "ExperimentationExperimentDeleted"
+     GenericErrorCodesExperimentationClientTimeout GenericErrorCodes = "ExperimentationClientTimeout"
+     GenericErrorCodesExperimentationExceededVariantNameLength GenericErrorCodes = "ExperimentationExceededVariantNameLength"
+     GenericErrorCodesExperimentationExceededMaxVariantLength GenericErrorCodes = "ExperimentationExceededMaxVariantLength"
+     GenericErrorCodesExperimentInvalidId GenericErrorCodes = "ExperimentInvalidId"
+     GenericErrorCodesSnapshotNotFound GenericErrorCodes = "SnapshotNotFound"
       )
+// GenericPlayFabIdPair 
+type GenericPlayFabIdPairModel struct {
+    // GenericId unique generic service identifier for a user.
+    GenericId GenericServiceIdModel `json:"GenericId,omitempty"`
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the given generic identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// GenericServiceId 
+type GenericServiceIdModel struct {
+    // ServiceName name of the service for which the player has a unique identifier.
+    ServiceName string `json:"ServiceName,omitempty"`
+    // UserId unique identifier of the player in that service.
+    UserId string `json:"UserId,omitempty"`
+}
+
 // GetAllSegmentsRequest request has no paramaters.
 type GetAllSegmentsRequestModel struct {
 }
@@ -1485,9 +1589,8 @@ type GetCatalogItemsResultModel struct {
     Catalog []CatalogItemModel `json:"Catalog,omitempty"`
 }
 
-// GetCharacterDataRequest data is stored as JSON key-value pairs. If the Keys parameter is provided,
-// the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set
-// of custom user data will be returned.
+// GetCharacterDataRequest data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain
+// the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 type GetCharacterDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -1513,10 +1616,9 @@ type GetCharacterDataResultModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
-// GetCharacterInventoryRequest all items currently in the character inventory will be returned, irrespective of how they were acquired
-// (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not
-// considered to be
-// in the user's current inventory, and so will not be not included. Also returns their virtual currency balances.
+// GetCharacterInventoryRequest all items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing,
+// grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the
+// user's current inventory, and so will not be not included. Also returns their virtual currency balances.
 type GetCharacterInventoryRequestModel struct {
     // CatalogVersion used to limit results to only those from a specific catalog version.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -1558,9 +1660,9 @@ type GetCharacterLeaderboardResultModel struct {
     Leaderboard []CharacterLeaderboardEntryModel `json:"Leaderboard,omitempty"`
 }
 
-// GetCharacterStatisticsRequest character statistics are similar to user statistics in that they are numeric values which
-// may only be updated by a server operation, in order to minimize the opportunity for unauthorized changes. In addition to
-// being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
+// GetCharacterStatisticsRequest character statistics are similar to user statistics in that they are numeric values which may only be updated by a
+// server operation, in order to minimize the opportunity for unauthorized changes. In addition to being available for use
+// by the title, the statistics are used for all leaderboard operations in PlayFab.
 type GetCharacterStatisticsRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -1747,7 +1849,7 @@ type GetPlayerCombinedInfoRequestParamsModel struct {
     GetCharacterInventories bool `json:"GetCharacterInventories,omitempty"`
     // GetCharacterList whether to get the list of characters. Defaults to false.
     GetCharacterList bool `json:"GetCharacterList,omitempty"`
-    // GetPlayerProfile whether to get player profile. Defaults to false.
+    // GetPlayerProfile whether to get player profile. Defaults to false. Has no effect for a new player.
     GetPlayerProfile bool `json:"GetPlayerProfile,omitempty"`
     // GetPlayerStatistics whether to get player statistics. Defaults to false.
     GetPlayerStatistics bool `json:"GetPlayerStatistics,omitempty"`
@@ -1815,12 +1917,10 @@ type GetPlayerCombinedInfoResultPayloadModel struct {
     UserVirtualCurrencyRechargeTimes map[string]VirtualCurrencyRechargeTimeModel `json:"UserVirtualCurrencyRechargeTimes,omitempty"`
 }
 
-// GetPlayerProfileRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of
-// customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so
-// care should be
+// GetPlayerProfileRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support.
+// Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be
 // taken in how this data is stored and managed. Since this call will always return the relevant information for users who
-// have accessed
-// the title, the recommendation is to not store this data locally.
+// have accessed the title, the recommendation is to not store this data locally.
 type GetPlayerProfileRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
@@ -1951,6 +2051,19 @@ type GetPlayFabIDsFromFacebookInstantGamesIdsResultModel struct {
     Data []FacebookInstantGamesPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
+// GetPlayFabIDsFromGenericIDsRequest 
+type GetPlayFabIDsFromGenericIDsRequestModel struct {
+    // GenericIDs array of unique generic service identifiers for which the title needs to get PlayFab identifiers. Currently limited to a
+// maximum of 10 in a single request.
+    GenericIDs []GenericServiceIdModel `json:"GenericIDs,omitempty"`
+}
+
+// GetPlayFabIDsFromGenericIDsResult for generic service identifiers which have not been linked to PlayFab accounts, null will be returned.
+type GetPlayFabIDsFromGenericIDsResultModel struct {
+    // Data mapping of generic service identifiers to PlayFab identifiers.
+    Data []GenericPlayFabIdPairModel `json:"Data,omitempty"`
+}
+
 // GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest 
 type GetPlayFabIDsFromNintendoSwitchDeviceIdsRequestModel struct {
     // NintendoSwitchDeviceIds array of unique Nintendo Switch Device identifiers for which the title needs to get PlayFab identifiers.
@@ -2004,12 +2117,9 @@ type GetPlayFabIDsFromXboxLiveIDsResultModel struct {
 }
 
 // GetPublisherDataRequest this API is designed to return publisher-specific values which can be read, but not written to, by the client. This data
-// is shared across all
-// titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a
-// publisher can use this API.
-// For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data
-// and this API call returning
-// the newest value.
+// is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles
+// assigned to a publisher can use this API. For more information email devrel@playfab.com. Note that there may up to a
+// minute delay in between updating title data and this API call returning the newest value.
 type GetPublisherDataRequestModel struct {
     // Keys array of keys to get back data from the Publisher data blob, set by the admin tools
     Keys []string `json:"Keys,omitempty"`
@@ -2080,8 +2190,7 @@ type GetSharedGroupDataResultModel struct {
 }
 
 // GetTimeRequest this query retrieves the current time from one of the servers in PlayFab. Please note that due to clock drift between
-// servers,
-// there is a potential variance of up to 5 seconds.
+// servers, there is a potential variance of up to 5 seconds.
 type GetTimeRequestModel struct {
 }
 
@@ -2092,12 +2201,10 @@ type GetTimeResultModel struct {
 }
 
 // GetTitleDataRequest this API is designed to return title specific values which can be read, but not written to, by the client. For example,
-// a developer
-// could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement
-// speeds, etc. This allows a developer to update
-// the title without the need to create, test, and ship a new build. Note that there may up to a minute delay in between
-// updating title data and this API call returning
-// the newest value.
+// a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths,
+// movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new
+// build. Note that there may up to a minute delay in between updating title data and this API call returning the newest
+// value.
 type GetTitleDataRequestModel struct {
     // Keys specific keys to search for in the title data (leave null to get all keys)
     Keys []string `json:"Keys,omitempty"`
@@ -2121,12 +2228,10 @@ type GetTitleNewsResultModel struct {
     News []TitleNewsItemModel `json:"News,omitempty"`
 }
 
-// GetUserAccountInfoRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of
-// customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so
-// care should be
+// GetUserAccountInfoRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support.
+// Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be
 // taken in how this data is stored and managed. Since this call will always return the relevant information for users who
-// have accessed
-// the title, the recommendation is to not store this data locally.
+// have accessed the title, the recommendation is to not store this data locally.
 type GetUserAccountInfoRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
@@ -2150,10 +2255,8 @@ type GetUserBansResultModel struct {
     BanData []BanInfoModel `json:"BanData,omitempty"`
 }
 
-// GetUserDataRequest data is stored as JSON key-value pairs. If the Keys parameter is provided,
-// the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom
-// user
-// data will be returned.
+// GetUserDataRequest data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain
+// the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 type GetUserDataRequestModel struct {
     // IfChangedFromDataVersion the version that currently exists according to the caller. The call will return the data for all of the keys if the
 // version in the system is greater than this.
@@ -2175,10 +2278,9 @@ type GetUserDataResultModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
-// GetUserInventoryRequest all items currently in the user inventory will be returned, irrespective of how they were acquired
-// (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not
-// considered to be
-// in the user's current inventory, and so will not be not included.
+// GetUserInventoryRequest all items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing,
+// grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the
+// user's current inventory, and so will not be not included.
 type GetUserInventoryRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
@@ -2253,10 +2355,10 @@ type GrantedItemInstanceModel struct {
     UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
-// GrantItemsToCharacterRequest this function directly adds inventory items to the character's inventories. As
-// a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item
-// catalog definition. Please note that the processing time for inventory grants and purchases increases fractionally
-// the more items are in the inventory, and the more items are in the grant/purchase operation.
+// GrantItemsToCharacterRequest this function directly adds inventory items to the character's inventories. As a result of this operations, the user
+// will not be charged any transaction fee, regardless of the inventory item catalog definition. Please note that the
+// processing time for inventory grants and purchases increases fractionally the more items are in the inventory, and the
+// more items are in the grant/purchase operation.
 type GrantItemsToCharacterRequestModel struct {
     // Annotation string detailing any additional information concerning this operation.
     Annotation string `json:"Annotation,omitempty"`
@@ -2276,12 +2378,10 @@ type GrantItemsToCharacterResultModel struct {
     ItemGrantResults []GrantedItemInstanceModel `json:"ItemGrantResults,omitempty"`
 }
 
-// GrantItemsToUserRequest this function directly adds inventory items to the user's inventories. As a result of this operations, the user
-// will not be charged any transaction fee, regardless of the inventory item catalog definition. Please note that the
-// processing time for
-// inventory grants and purchases increases fractionally the more items are in the inventory, and the more items are in the
-// grant/purchase
-// operation.
+// GrantItemsToUserRequest this function directly adds inventory items to the user's inventories. As a result of this operations, the user will not
+// be charged any transaction fee, regardless of the inventory item catalog definition. Please note that the processing
+// time for inventory grants and purchases increases fractionally the more items are in the inventory, and the more items
+// are in the grant/purchase operation.
 type GrantItemsToUserRequestModel struct {
     // Annotation string detailing any additional information concerning this operation.
     Annotation string `json:"Annotation,omitempty"`
@@ -2299,12 +2399,10 @@ type GrantItemsToUserResultModel struct {
     ItemGrantResults []GrantedItemInstanceModel `json:"ItemGrantResults,omitempty"`
 }
 
-// GrantItemsToUsersRequest this function directly adds inventory items to user inventories. As a result of this operations, the user
-// will not be charged any transaction fee, regardless of the inventory item catalog definition. Please note that the
-// processing time for
-// inventory grants and purchases increases fractionally the more items are in the inventory, and the more items are in the
-// grant/purchase
-// operation.
+// GrantItemsToUsersRequest this function directly adds inventory items to user inventories. As a result of this operations, the user will not be
+// charged any transaction fee, regardless of the inventory item catalog definition. Please note that the processing time
+// for inventory grants and purchases increases fractionally the more items are in the inventory, and the more items are in
+// the grant/purchase operation.
 type GrantItemsToUsersRequestModel struct {
     // CatalogVersion catalog version from which items are to be granted.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -2386,6 +2484,20 @@ type LinkedPlatformAccountModelModel struct {
     Username string `json:"Username,omitempty"`
 }
 
+// LinkServerCustomIdRequest 
+type LinkServerCustomIdRequestModel struct {
+    // ForceLink if another user is already linked to the custom ID, unlink the other user and re-link.
+    ForceLink bool `json:"ForceLink,omitempty"`
+    // PlayFabId unique PlayFab identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+    // ServerCustomId unique server custom identifier for this player.
+    ServerCustomId string `json:"ServerCustomId,omitempty"`
+}
+
+// LinkServerCustomIdResult 
+type LinkServerCustomIdResultModel struct {
+}
+
 // LinkXboxAccountRequest 
 type LinkXboxAccountRequestModel struct {
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
@@ -2410,6 +2522,14 @@ type ListUsersCharactersRequestModel struct {
 type ListUsersCharactersResultModel struct {
     // Characters the requested list of characters.
     Characters []CharacterResultModel `json:"Characters,omitempty"`
+}
+
+// LocalizedPushNotificationProperties contains the localized push notification content.
+type LocalizedPushNotificationPropertiesModel struct {
+    // Message message of the localized push notification template.
+    Message string `json:"Message,omitempty"`
+    // Subject subject of the localized push notification template.
+    Subject string `json:"Subject,omitempty"`
 }
 
 // LocationModel 
@@ -2462,12 +2582,10 @@ type LoginWithServerCustomIdRequestModel struct {
     ServerCustomId string `json:"ServerCustomId,omitempty"`
 }
 
-// LoginWithXboxRequest if this is the first time a user has signed in with the Xbox Live account and CreateAccount
-// is set to true, a new PlayFab account will be created and linked to the Xbox Live account. In this case, no email or
-// username will be
+// LoginWithXboxRequest if this is the first time a user has signed in with the Xbox Live account and CreateAccount is set to true, a new
+// PlayFab account will be created and linked to the Xbox Live account. In this case, no email or username will be
 // associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Xbox Live account, an error
-// indicating this will
-// be returned, so that the title can guide the user through creation of a PlayFab account.
+// indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
 type LoginWithXboxRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount,omitempty"`
@@ -2542,9 +2660,9 @@ type ModifyUserVirtualCurrencyResultModel struct {
     VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
-// MoveItemToCharacterFromCharacterRequest transfers an item from a character to another character that is owned by the same
-// user. This will remove the item from the character's inventory (until and unless it is moved back), and will enable the
-// other character to make use of the item instead.
+// MoveItemToCharacterFromCharacterRequest transfers an item from a character to another character that is owned by the same user. This will remove the item from
+// the character's inventory (until and unless it is moved back), and will enable the other character to make use of the
+// item instead.
 type MoveItemToCharacterFromCharacterRequestModel struct {
     // GivingCharacterId unique identifier of the character that currently has the item.
     GivingCharacterId string `json:"GivingCharacterId,omitempty"`
@@ -2560,9 +2678,8 @@ type MoveItemToCharacterFromCharacterRequestModel struct {
 type MoveItemToCharacterFromCharacterResultModel struct {
 }
 
-// MoveItemToCharacterFromUserRequest transfers an item from a user to a character she owns. This will remove
-// the item from the user's inventory (until and unless it is moved back), and will enable the
-// character to make use of the item instead.
+// MoveItemToCharacterFromUserRequest transfers an item from a user to a character she owns. This will remove the item from the user's inventory (until and
+// unless it is moved back), and will enable the character to make use of the item instead.
 type MoveItemToCharacterFromUserRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -2576,9 +2693,8 @@ type MoveItemToCharacterFromUserRequestModel struct {
 type MoveItemToCharacterFromUserResultModel struct {
 }
 
-// MoveItemToUserFromCharacterRequest transfers an item from a character to the owning user. This will remove
-// the item from the character's inventory (until and unless it is moved back), and will enable the
-// user to make use of the item instead.
+// MoveItemToUserFromCharacterRequest transfers an item from a character to the owning user. This will remove the item from the character's inventory (until
+// and unless it is moved back), and will enable the user to make use of the item instead.
 type MoveItemToUserFromCharacterRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -2871,10 +2987,9 @@ type RandomResultTableListingModel struct {
     TableId string `json:"TableId,omitempty"`
 }
 
-// RedeemCouponRequest coupon codes can be created for any item, or set of items, in the catalog for the title. This
-// operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an
-// already
-// consumed code, or a code which has not yet been created in the service, will result in an error.
+// RedeemCouponRequest coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the
+// coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code,
+// or a code which has not yet been created in the service, will result in an error.
 type RedeemCouponRequestModel struct {
     // CatalogVersion catalog version of the coupon.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -2892,16 +3007,13 @@ type RedeemCouponResultModel struct {
     GrantedItems []ItemInstanceModel `json:"GrantedItems,omitempty"`
 }
 
-// RedeemMatchmakerTicketRequest this function is used by a Game Server Instance to validate with the PlayFab service that a user has been
-// registered as connected to the server. The Ticket is provided to the client either as a result of a call to StartGame or
-// Matchmake, each
-// of which return a Ticket specific to the Game Server Instance. This function will fail in any case where the Ticket
-// presented is not valid
-// for the specific Game Server Instance making the call. Note that data returned may be Personally Identifying Information
-// (PII), such as
-// email address, and so care should be taken in how this data is stored and managed. Since this call will always return
-// the relevant information
-// for users who have accessed the title, the recommendation is to not store this data locally.
+// RedeemMatchmakerTicketRequest this function is used by a Game Server Instance to validate with the PlayFab service that a user has been registered as
+// connected to the server. The Ticket is provided to the client either as a result of a call to StartGame or Matchmake,
+// each of which return a Ticket specific to the Game Server Instance. This function will fail in any case where the Ticket
+// presented is not valid for the specific Game Server Instance making the call. Note that data returned may be Personally
+// Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and
+// managed. Since this call will always return the relevant information for users who have accessed the title, the
+// recommendation is to not store this data locally.
 type RedeemMatchmakerTicketRequestModel struct {
     // LobbyId unique identifier of the Game Server Instance that is asking for validation of the authorization ticket.
     LobbyId string `json:"LobbyId,omitempty"`
@@ -2977,6 +3089,14 @@ type RemoveFriendRequestModel struct {
     // FriendPlayFabId playFab identifier of the friend account which is to be removed.
     FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// RemoveGenericIDRequest 
+type RemoveGenericIDRequestModel struct {
+    // GenericId generic service identifier to be removed from the player.
+    GenericId GenericServiceIdModel `json:"GenericId,omitempty"`
+    // PlayFabId playFabId of the user to remove.
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
@@ -3111,6 +3231,26 @@ type RevokeItemErrorModel struct {
     Item RevokeInventoryItemModel `json:"Item,omitempty"`
 }
 
+// SavePushNotificationTemplateRequest represents the save push notification template request.
+type SavePushNotificationTemplateRequestModel struct {
+    // AndroidPayload android JSON for the notification template.
+    AndroidPayload string `json:"AndroidPayload,omitempty"`
+    // Id id of the push notification template.
+    Id string `json:"Id,omitempty"`
+    // IOSPayload iOS JSON for the notification template.
+    IOSPayload string `json:"IOSPayload,omitempty"`
+    // LocalizedPushNotificationTemplates dictionary of localized push notification templates with the language as the key.
+    LocalizedPushNotificationTemplates map[string]LocalizedPushNotificationPropertiesModel `json:"LocalizedPushNotificationTemplates,omitempty"`
+    // Name name of the push notification template.
+    Name string `json:"Name,omitempty"`
+}
+
+// SavePushNotificationTemplateResult represents the save push notification template result.
+type SavePushNotificationTemplateResultModel struct {
+    // PushNotificationTemplateId id of the push notification template that was saved.
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
+}
+
 // ScriptExecutionError 
 type ScriptExecutionErrorModel struct {
     // Error error code, such as CloudScriptNotFound, JavascriptException, CloudScriptFunctionArgumentSizeExceeded,
@@ -3148,6 +3288,14 @@ type SendEmailFromTemplateRequestModel struct {
 
 // SendEmailFromTemplateResult 
 type SendEmailFromTemplateResultModel struct {
+}
+
+// SendPushNotificationFromTemplateRequest represents the request for sending a push notification template to a recipient.
+type SendPushNotificationFromTemplateRequestModel struct {
+    // PushNotificationTemplateId id of the push notification template.
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
+    // Recipient playFabId of the push notification recipient.
+    Recipient string `json:"Recipient,omitempty"`
 }
 
 // SendPushNotificationRequest 
@@ -3199,10 +3347,9 @@ type ServerLoginResultModel struct {
     SettingsForUser UserSettingsModel `json:"SettingsForUser,omitempty"`
 }
 
-// SetFriendTagsRequest this operation is not additive. It will completely replace the tag list for the specified user.
-// Please note that only users in the PlayFab friends list can be assigned tags. Attempting to set a tag on a friend only
-// included
-// in the friends list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
+// SetFriendTagsRequest this operation is not additive. It will completely replace the tag list for the specified user. Please note that only
+// users in the PlayFab friends list can be assigned tags. Attempting to set a tag on a friend only included in the friends
+// list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
 type SetFriendTagsRequestModel struct {
     // FriendPlayFabId playFab identifier of the friend account to which the tag(s) should be applied.
     FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
@@ -3267,12 +3414,10 @@ type SetPlayerSecretResultModel struct {
 }
 
 // SetPublisherDataRequest this API is designed to store publisher-specific values which can be read, but not written to, by the client. This data
-// is shared across all
-// titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a
-// publisher can use this API. This operation is additive.
-// If a Key does not exist in the current dataset, it will be added with
-// the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more
-// information email devrel@playfab.com
+// is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles
+// assigned to a publisher can use this API. This operation is additive. If a Key does not exist in the current dataset, it
+// will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new
+// Value. For more information email devrel@playfab.com
 type SetPublisherDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
@@ -3286,12 +3431,10 @@ type SetPublisherDataResultModel struct {
 }
 
 // SetTitleDataRequest this API is designed to store title specific values which can be read, but not written to, by the client. For example, a
-// developer
-// could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement
-// speeds, etc. This allows a developer to update
-// the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in
-// the current dataset, it will be added with
-// the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
+// developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths,
+// movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new
+// build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified
+// Value. If it already exists, the Value for that key will be overwritten with the new Value.
 type SetTitleDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
@@ -3444,6 +3587,18 @@ type TitleNewsItemModel struct {
     Title string `json:"Title,omitempty"`
 }
 
+// UnlinkServerCustomIdRequest 
+type UnlinkServerCustomIdRequestModel struct {
+    // PlayFabId unique PlayFab identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+    // ServerCustomId unique server custom identifier for this player.
+    ServerCustomId string `json:"ServerCustomId,omitempty"`
+}
+
+// UnlinkServerCustomIdResult 
+type UnlinkServerCustomIdResultModel struct {
+}
+
 // UnlinkXboxAccountRequest 
 type UnlinkXboxAccountRequestModel struct {
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Xbox Live identifier.
@@ -3485,7 +3640,7 @@ type UnlockContainerItemRequestModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
-// UnlockContainerItemResult the items and vc found within the container.  These will be added and stacked in your inventory as appropriate.
+// UnlockContainerItemResult the items and vc found within the container. These will be added and stacked in your inventory as appropriate.
 type UnlockContainerItemResultModel struct {
     // GrantedItems items granted to the player as a result of unlocking the container.
     GrantedItems []ItemInstanceModel `json:"GrantedItems,omitempty"`
@@ -3536,10 +3691,9 @@ type UpdateBansResultModel struct {
     BanData []BanInfoModel `json:"BanData,omitempty"`
 }
 
-// UpdateCharacterDataRequest this function performs an additive update of the arbitrary JSON object containing
-// the custom data for the user. In updating the custom data object, keys which already exist in the object will have
-// their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart
-// from those specified in the call.
+// UpdateCharacterDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user. In
+// updating the custom data object, keys which already exist in the object will have their values overwritten, while keys
+// with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 type UpdateCharacterDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -3562,9 +3716,9 @@ type UpdateCharacterDataResultModel struct {
     DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
-// UpdateCharacterStatisticsRequest character statistics are similar to user statistics in that they are numeric values which
-// may only be updated by a server operation, in order to minimize the opportunity for unauthorized changes. In addition to
-// being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
+// UpdateCharacterStatisticsRequest character statistics are similar to user statistics in that they are numeric values which may only be updated by a
+// server operation, in order to minimize the opportunity for unauthorized changes. In addition to being available for use
+// by the title, the statistics are used for all leaderboard operations in PlayFab.
 type UpdateCharacterStatisticsRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -3578,8 +3732,8 @@ type UpdateCharacterStatisticsRequestModel struct {
 type UpdateCharacterStatisticsResultModel struct {
 }
 
-// UpdatePlayerStatisticsRequest this operation is additive. Statistics not currently defined will be added,
-// while those already defined will be updated with the given values. All other user statistics will remain unchanged.
+// UpdatePlayerStatisticsRequest this operation is additive. Statistics not currently defined will be added, while those already defined will be updated
+// with the given values. All other user statistics will remain unchanged.
 type UpdatePlayerStatisticsRequestModel struct {
     // ForceUpdate indicates whether the statistics provided should be set, regardless of the aggregation method set on the statistic.
 // Default is false.
@@ -3594,11 +3748,10 @@ type UpdatePlayerStatisticsRequestModel struct {
 type UpdatePlayerStatisticsResultModel struct {
 }
 
-// UpdateSharedGroupDataRequest note that in the case of multiple calls to write to the same shared group data keys, the
-// last write received by the PlayFab service will determine the value available to subsequent read operations. For
-// scenarios
-// requiring coordination of data updates, it is recommended that titles make use of user data with read permission set to
-// public, or a combination of user data and shared group data.
+// UpdateSharedGroupDataRequest note that in the case of multiple calls to write to the same shared group data keys, the last write received by the
+// PlayFab service will determine the value available to subsequent read operations. For scenarios requiring coordination
+// of data updates, it is recommended that titles make use of user data with read permission set to public, or a
+// combination of user data and shared group data.
 type UpdateSharedGroupDataRequestModel struct {
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
@@ -3616,10 +3769,9 @@ type UpdateSharedGroupDataRequestModel struct {
 type UpdateSharedGroupDataResultModel struct {
 }
 
-// UpdateUserDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user.
-// In updating the custom data object, keys which already exist in the object will have their values overwritten, while
-// keys with null values will
-// be removed. No other key-value pairs will be changed apart from those specified in the call.
+// UpdateUserDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user. In
+// updating the custom data object, keys which already exist in the object will have their values overwritten, while keys
+// with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 type UpdateUserDataRequestModel struct {
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
@@ -3640,10 +3792,9 @@ type UpdateUserDataResultModel struct {
     DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
-// UpdateUserInternalDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user.
-// In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with
-// null values will be
-// removed. No other key-value pairs will be changed apart from those specified in the call.
+// UpdateUserInternalDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user. In
+// updating the custom data object, keys which already exist in the object will have their values overwritten, keys with
+// null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 type UpdateUserInternalDataRequestModel struct {
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
@@ -3657,8 +3808,8 @@ type UpdateUserInternalDataRequestModel struct {
 
 // UpdateUserInventoryItemDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the item instance
 // which belongs to the specified user. In updating the custom data object, keys which already exist in the object will
-// have their values overwritten, while
-// keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+// have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed
+// apart from those specified in the call.
 type UpdateUserInventoryItemDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
@@ -3779,6 +3930,8 @@ type UserGoogleInfoModel struct {
     GoogleId string `json:"GoogleId,omitempty"`
     // GoogleLocale locale of the Google account
     GoogleLocale string `json:"GoogleLocale,omitempty"`
+    // GoogleName name of the Google account user
+    GoogleName string `json:"GoogleName,omitempty"`
 }
 
 // UserIosDeviceInfo 
@@ -3872,6 +4025,8 @@ type UserSteamInfoModel struct {
     SteamCurrency Currency `json:"SteamCurrency,omitempty"`
     // SteamId steam identifier
     SteamId string `json:"SteamId,omitempty"`
+    // SteamName steam display name
+    SteamName string `json:"SteamName,omitempty"`
 }
 
 // UserTitleInfo 

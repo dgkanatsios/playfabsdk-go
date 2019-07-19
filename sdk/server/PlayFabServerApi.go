@@ -83,6 +83,44 @@ func AddFriend(settings *playfab.Settings, postData *AddFriendRequestModel, deve
     return result, nil
 }
 
+// AddGenericID adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab
+// ID lookup of any arbitrary service identifier a title wants to add. This identifier should never be used as
+// authentication credentials, as the intent is that it is easily accessible by other players.
+// https://api.playfab.com/Documentation/Server/method/AddGenericID
+func AddGenericID(settings *playfab.Settings, postData *AddGenericIDRequestModel, developerSecretKey string) (*EmptyResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/AddGenericID", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // AddPlayerTag adds a given tag to a player profile. The tag's namespace is automatically generated based on the source of the tag.
 // https://api.playfab.com/Documentation/Server/method/AddPlayerTag
 func AddPlayerTag(settings *playfab.Settings, postData *AddPlayerTagRequestModel, developerSecretKey string) (*AddPlayerTagResultModel, error) {
@@ -429,6 +467,42 @@ func DeletePlayer(settings *playfab.Settings, postData *DeletePlayerRequestModel
     }
     
     result := &DeletePlayerResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// DeletePushNotificationTemplate deletes push notification template for title
+// https://api.playfab.com/Documentation/Server/method/DeletePushNotificationTemplate
+func DeletePushNotificationTemplate(settings *playfab.Settings, postData *DeletePushNotificationTemplateRequestModel, developerSecretKey string) (*DeletePushNotificationTemplateResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/DeletePushNotificationTemplate", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &DeletePushNotificationTemplateResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1508,6 +1582,44 @@ func GetPlayFabIDsFromFacebookInstantGamesIds(settings *playfab.Settings, postDa
     return result, nil
 }
 
+// GetPlayFabIDsFromGenericIDs retrieves the unique PlayFab identifiers for the given set of generic service identifiers. A generic identifier is the
+// service name plus the service-specific ID for the player, as specified by the title when the generic identifier was
+// added to the player account.
+// https://api.playfab.com/Documentation/Server/method/GetPlayFabIDsFromGenericIDs
+func GetPlayFabIDsFromGenericIDs(settings *playfab.Settings, postData *GetPlayFabIDsFromGenericIDsRequestModel, developerSecretKey string) (*GetPlayFabIDsFromGenericIDsResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/GetPlayFabIDsFromGenericIDs", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetPlayFabIDsFromGenericIDsResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetPlayFabIDsFromNintendoSwitchDeviceIds retrieves the unique PlayFab identifiers for the given set of Nintendo Switch Device identifiers.
 // https://api.playfab.com/Documentation/Server/method/GetPlayFabIDsFromNintendoSwitchDeviceIds
 func GetPlayFabIDsFromNintendoSwitchDeviceIds(settings *playfab.Settings, postData *GetPlayFabIDsFromNintendoSwitchDeviceIdsRequestModel, developerSecretKey string) (*GetPlayFabIDsFromNintendoSwitchDeviceIdsResultModel, error) {
@@ -2413,6 +2525,42 @@ func GrantItemsToUsers(settings *playfab.Settings, postData *GrantItemsToUsersRe
     return result, nil
 }
 
+// LinkServerCustomId links the custom server identifier, generated by the title, to the user's PlayFab account.
+// https://api.playfab.com/Documentation/Server/method/LinkServerCustomId
+func LinkServerCustomId(settings *playfab.Settings, postData *LinkServerCustomIdRequestModel, developerSecretKey string) (*LinkServerCustomIdResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LinkServerCustomId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LinkServerCustomIdResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // LinkXboxAccount links the Xbox Live account associated with the provided access code to the user's PlayFab account
 // https://api.playfab.com/Documentation/Server/method/LinkXboxAccount
 func LinkXboxAccount(settings *playfab.Settings, postData *LinkXboxAccountRequestModel, developerSecretKey string) (*LinkXboxAccountResultModel, error) {
@@ -2884,6 +3032,42 @@ func RemoveFriend(settings *playfab.Settings, postData *RemoveFriendRequestModel
     return result, nil
 }
 
+// RemoveGenericID removes the specified generic service identifier from the player's PlayFab account.
+// https://api.playfab.com/Documentation/Server/method/RemoveGenericID
+func RemoveGenericID(settings *playfab.Settings, postData *RemoveGenericIDRequestModel, developerSecretKey string) (*EmptyResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/RemoveGenericID", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // RemovePlayerTag remove a given tag from a player profile. The tag's namespace is automatically generated based on the source of the tag.
 // https://api.playfab.com/Documentation/Server/method/RemovePlayerTag
 func RemovePlayerTag(settings *playfab.Settings, postData *RemovePlayerTagRequestModel, developerSecretKey string) (*RemovePlayerTagResultModel, error) {
@@ -3140,6 +3324,42 @@ func RevokeInventoryItems(settings *playfab.Settings, postData *RevokeInventoryI
     return result, nil
 }
 
+// SavePushNotificationTemplate saves push notification template for title
+// https://api.playfab.com/Documentation/Server/method/SavePushNotificationTemplate
+func SavePushNotificationTemplate(settings *playfab.Settings, postData *SavePushNotificationTemplateRequestModel, developerSecretKey string) (*SavePushNotificationTemplateResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/SavePushNotificationTemplate", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &SavePushNotificationTemplateResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // SendCustomAccountRecoveryEmail forces an email to be sent to the registered contact email address for the user's account based on an account recovery
 // email template
 // https://api.playfab.com/Documentation/Server/method/SendCustomAccountRecoveryEmail
@@ -3226,6 +3446,43 @@ func SendPushNotification(settings *playfab.Settings, postData *SendPushNotifica
     }
 
     sourceMap, err := playfab.Request(settings, b, "/Server/SendPushNotification", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &SendPushNotificationResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// SendPushNotificationFromTemplate sends an iOS/Android Push Notification template to a specific user, if that user's device has been configured for Push
+// Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
+// https://api.playfab.com/Documentation/Server/method/SendPushNotificationFromTemplate
+func SendPushNotificationFromTemplate(settings *playfab.Settings, postData *SendPushNotificationFromTemplateRequestModel, developerSecretKey string) (*SendPushNotificationResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/SendPushNotificationFromTemplate", "X-SecretKey", developerSecretKey)
     if err != nil {
         return nil, err
     }
@@ -3594,6 +3851,42 @@ func SubtractUserVirtualCurrency(settings *playfab.Settings, postData *SubtractU
     }
     
     result := &ModifyUserVirtualCurrencyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UnlinkServerCustomId unlinks the custom server identifier from the user's PlayFab account.
+// https://api.playfab.com/Documentation/Server/method/UnlinkServerCustomId
+func UnlinkServerCustomId(settings *playfab.Settings, postData *UnlinkServerCustomIdRequestModel, developerSecretKey string) (*UnlinkServerCustomIdResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/UnlinkServerCustomId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &UnlinkServerCustomIdResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,

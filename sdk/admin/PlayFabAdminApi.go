@@ -408,6 +408,42 @@ func CreateCloudScriptTask(settings *playfab.Settings, postData *CreateCloudScri
     return result, nil
 }
 
+// CreateOpenIdConnection registers a relationship between a title and an Open ID Connect provider.
+// https://api.playfab.com/Documentation/Admin/method/CreateOpenIdConnection
+func CreateOpenIdConnection(settings *playfab.Settings, postData *CreateOpenIdConnectionRequestModel, developerSecretKey string) (*EmptyResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/CreateOpenIdConnection", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // CreatePlayerSharedSecret creates a new Player Shared Secret Key. It may take up to 5 minutes for this key to become generally available after
 // this API returns.
 // https://api.playfab.com/Documentation/Admin/method/CreatePlayerSharedSecret
@@ -535,6 +571,42 @@ func DeleteMasterPlayerAccount(settings *playfab.Settings, postData *DeleteMaste
     }
     
     result := &DeleteMasterPlayerAccountResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// DeleteOpenIdConnection removes a relationship between a title and an OpenID Connect provider.
+// https://api.playfab.com/Documentation/Admin/method/DeleteOpenIdConnection
+func DeleteOpenIdConnection(settings *playfab.Settings, postData *DeleteOpenIdConnectionRequestModel, developerSecretKey string) (*EmptyResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/DeleteOpenIdConnection", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -2292,6 +2364,42 @@ func IncrementPlayerStatisticVersion(settings *playfab.Settings, postData *Incre
     return result, nil
 }
 
+// ListOpenIdConnection retrieves a list of all Open ID Connect providers registered to a title.
+// https://api.playfab.com/Documentation/Admin/method/ListOpenIdConnection
+func ListOpenIdConnection(settings *playfab.Settings, postData *ListOpenIdConnectionRequestModel, developerSecretKey string) (*ListOpenIdConnectionResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/ListOpenIdConnection", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ListOpenIdConnectionResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // ListServerBuilds retrieves the build details for all game server executables which are currently defined for the title
 // https://api.playfab.com/Documentation/Admin/method/ListServerBuilds
 func ListServerBuilds(settings *playfab.Settings, postData *ListBuildsRequestModel, developerSecretKey string) (*ListBuildsResultModel, error) {
@@ -3359,6 +3467,42 @@ func UpdateCloudScript(settings *playfab.Settings, postData *UpdateCloudScriptRe
     }
     
     result := &UpdateCloudScriptResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UpdateOpenIdConnection modifies data and credentials for an existing relationship between a title and an Open ID Connect provider
+// https://api.playfab.com/Documentation/Admin/method/UpdateOpenIdConnection
+func UpdateOpenIdConnection(settings *playfab.Settings, postData *UpdateOpenIdConnectionRequestModel, developerSecretKey string) (*EmptyResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/UpdateOpenIdConnection", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
