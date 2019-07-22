@@ -3918,7 +3918,7 @@ type UserTitleInfoModel struct {
 // events, such as issuing a beta key to the user, can associate the title to the user)
     FirstLogin time.Time `json:"FirstLogin,omitempty"`
     // isBanned boolean indicating whether or not the user is currently banned for a title
-    isBanned bool `json:"isBanned,omitempty"`
+    IsBanned bool `json:"isBanned,omitempty"`
     // LastLogin timestamp for the last user login for this title
     LastLogin time.Time `json:"LastLogin,omitempty"`
     // Origination source by which the user first joined the game, if known
