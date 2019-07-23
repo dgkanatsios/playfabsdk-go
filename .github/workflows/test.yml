@@ -1,0 +1,23 @@
+on: [push, pull_request]
+name: Test
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [1.12.x, 1.13.x]
+        platform: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Unit Tests
+      run: cd sdk && go test ./...
+    - name: e2e Test
+      env: 
+        TitleID: ${{ secrets.TitleID }}
+        DeveloperSecretKey: ${{ secrets.DeveloperSecretKey }}
+      run: cd e2e && go mod init github.com/dgkanatsios/playfabsdk-go/e2e && go get github.com/dgkanatsios/playfabsdk-go/sdk@latest && go run main.go

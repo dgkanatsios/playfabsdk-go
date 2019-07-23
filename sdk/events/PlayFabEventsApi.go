@@ -10,7 +10,7 @@ import (
     "github.com/mitchellh/mapstructure"
 )
 
-// WriteEvents write batches of entity based events to PlayStream.
+// WriteEvents write batches of entity based events to PlayStream. The namespace of the Event must start with 'com.playfab.events.'
 // https://api.playfab.com/Documentation/Events/method/WriteEvents
 func WriteEvents(settings *playfab.Settings, postData *WriteEventsRequestModel, entityToken string) (*WriteEventsResponseModel, error) {
     if entityToken == "" {
@@ -46,7 +46,8 @@ func WriteEvents(settings *playfab.Settings, postData *WriteEventsRequestModel, 
     return result, nil
 }
 
-// WriteTelemetryEvents write batches of entity based events to as Telemetry events (bypass PlayStream).
+// WriteTelemetryEvents write batches of entity based events to as Telemetry events (bypass PlayStream). The namespace must be 'custom' or start
+// with 'custom.'
 // https://api.playfab.com/Documentation/Events/method/WriteTelemetryEvents
 func WriteTelemetryEvents(settings *playfab.Settings, postData *WriteEventsRequestModel, entityToken string) (*WriteEventsResponseModel, error) {
     if entityToken == "" {

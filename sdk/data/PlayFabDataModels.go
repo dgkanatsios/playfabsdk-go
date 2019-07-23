@@ -5,7 +5,7 @@ import "time"
 // AbortFileUploadsRequest aborts the pending upload of the requested files.
 type AbortFileUploadsRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // FileNames names of the files to have their pending uploads aborted.
     FileNames []string `json:"FileNames,omitempty"`
     // ProfileVersion the expected version of the profile, if set and doesn't match the current version of the profile the operation will not
@@ -16,7 +16,7 @@ type AbortFileUploadsRequestModel struct {
 // AbortFileUploadsResponse 
 type AbortFileUploadsResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
     ProfileVersion int32 `json:"ProfileVersion,omitempty"`
 }
@@ -24,7 +24,7 @@ type AbortFileUploadsResponseModel struct {
 // DeleteFilesRequest deletes the requested files from the entity's profile.
 type DeleteFilesRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // FileNames names of the files to be deleted.
     FileNames []string `json:"FileNames,omitempty"`
     // ProfileVersion the expected version of the profile, if set and doesn't match the current version of the profile the operation will not
@@ -35,7 +35,7 @@ type DeleteFilesRequestModel struct {
 // DeleteFilesResponse 
 type DeleteFilesResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
     ProfileVersion int32 `json:"ProfileVersion,omitempty"`
 }
@@ -44,7 +44,7 @@ type DeleteFilesResponseModel struct {
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
@@ -52,7 +52,7 @@ type EntityKeyModel struct {
 // pointers from pending to live.
 type FinalizeFileUploadsRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // FileNames names of the files to be finalized. Restricted to a-Z, 0-9, '(', ')', '_', '-' and '.'
     FileNames []string `json:"FileNames,omitempty"`
 }
@@ -60,7 +60,7 @@ type FinalizeFileUploadsRequestModel struct {
 // FinalizeFileUploadsResponse 
 type FinalizeFileUploadsResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Metadata collection of metadata for the entity's files
     Metadata map[string]GetFileMetadataModel `json:"Metadata,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
@@ -86,13 +86,13 @@ type GetFileMetadataModel struct {
 // nothing.
 type GetFilesRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // GetFilesResponse 
 type GetFilesResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Metadata collection of metadata for the entity's files
     Metadata map[string]GetFileMetadataModel `json:"Metadata,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
@@ -102,7 +102,7 @@ type GetFilesResponseModel struct {
 // GetObjectsRequest gets JSON objects from an entity profile and returns it.
 type GetObjectsRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // EscapeObject determines whether the object will be returned as an escaped JSON string or as a un-escaped JSON object. Default is JSON
 // object.
     EscapeObject bool `json:"EscapeObject,omitempty"`
@@ -111,7 +111,7 @@ type GetObjectsRequestModel struct {
 // GetObjectsResponse 
 type GetObjectsResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Objects requested objects that the calling entity has access to
     Objects map[string]ObjectResultModel `json:"Objects,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
@@ -130,7 +130,7 @@ type InitiateFileUploadMetadataModel struct {
 // FinalizeFileUploads must be called to move the file status from pending to live.
 type InitiateFileUploadsRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // FileNames names of the files to be set. Restricted to a-Z, 0-9, '(', ')', '_', '-' and '.'
     FileNames []string `json:"FileNames,omitempty"`
     // ProfileVersion the expected version of the profile, if set and doesn't match the current version of the profile the operation will not
@@ -141,7 +141,7 @@ type InitiateFileUploadsRequestModel struct {
 // InitiateFileUploadsResponse 
 type InitiateFileUploadsResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
     ProfileVersion int32 `json:"ProfileVersion,omitempty"`
     // UploadDetails collection of file names and upload urls
@@ -198,7 +198,7 @@ type SetObjectInfoModel struct {
 // to update the same profile.
 type SetObjectsRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // ExpectedProfileVersion optional field used for concurrency control. By specifying the previously returned value of ProfileVersion from
 // GetProfile API, you can ensure that the object set will only be performed if the profile has not been updated by any
 // other clients since the version you last loaded.

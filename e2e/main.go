@@ -1,10 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 
@@ -21,42 +18,16 @@ const (
 	testNumberInt int    = 15
 
 	testStatName    string = "xp"
-	testStatVersion uint32 = 1
+	testStatVersion uint32 = 0
 	testStatValue   int32  = 800
 )
 
-type titleData struct {
-	TitleId            string `json:"titleId"`
-	DeveloperSecretKey string `json:"developerSecretKey"`
-}
-
-func getTitleData() titleData {
-	// open and read the JSON file
-	jsonFile, err := os.Open("testTitleData.json")
-	if err != nil {
-		log.Fatalf("cannot find testTitleData.json: %s", err.Error())
-	}
-	defer jsonFile.Close()
-
-	byteValue, err := ioutil.ReadAll(jsonFile)
-	if err != nil {
-		log.Fatalf("cannot read testTitleData.json: %s", err.Error())
-	}
-
-	var data titleData
-	err = json.Unmarshal(byteValue, &data)
-	if err != nil {
-		log.Fatalf("cannot unmarshal testTitleData.json: %s", err.Error())
-	}
-	return data
-}
-
 func main() {
 
-	myTitleData := getTitleData()
+	titleID := os.Getenv("TitleID")
+	developerSecretKey := os.Getenv("DeveloperSecretKey")
 
-	settings := playfab.NewSettingsWithDefaultOptions(myTitleData.TitleId)
-	developerSecretKey := myTitleData.DeveloperSecretKey
+	settings := playfab.NewSettingsWithDefaultOptions(titleID)
 
 	// CLIENT API - try to login with wrong credentials
 	l := &client.LoginWithEmailAddressRequestModel{
@@ -253,7 +224,7 @@ func main() {
 	entity := res15.Entity
 
 	// ENTITY API - Test a sequence of calls that modifies entity objects
-	l16 := &data.SetObjectsRequestModel{Entity: data.EntityKeyModel{
+	l16 := &data.SetObjectsRequestModel{Entity: &data.EntityKeyModel{
 		Id:   entity.Id,
 		Type: entity.Type,
 	}, Objects: []data.SetObjectModel{
@@ -267,7 +238,7 @@ func main() {
 		handleFail(fmt.Sprintf("SetObjects should not return err, Error:%s", err.Error()))
 	}
 
-	l17 := &data.GetObjectsRequestModel{Entity: data.EntityKeyModel{
+	l17 := &data.GetObjectsRequestModel{Entity: &data.EntityKeyModel{
 		Id:   entity.Id,
 		Type: entity.Type,
 	}, EscapeObject: true}

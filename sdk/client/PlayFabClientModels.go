@@ -16,7 +16,7 @@ type AcceptTradeRequestModel struct {
 // AcceptTradeResponse 
 type AcceptTradeResponseModel struct {
     // Trade details about trade which was just accepted.
-    Trade TradeInfoModel `json:"Trade,omitempty"`
+    Trade* TradeInfoModel `json:"Trade,omitempty"`
 }
 
 // AdCampaignAttributionModel 
@@ -50,7 +50,7 @@ type AddFriendResultModel struct {
 // AddGenericIDRequest 
 type AddGenericIDRequestModel struct {
     // GenericId generic service identifier to add to the player account.
-    GenericId GenericServiceIdModel `json:"GenericId,omitempty"`
+    GenericId* GenericServiceIdModel `json:"GenericId,omitempty"`
 }
 
 // AddGenericIDResult 
@@ -109,7 +109,8 @@ type AddUserVirtualCurrencyRequestModel struct {
 
 // AndroidDevicePushNotificationRegistrationRequest more information can be found on configuring your game for the Google Cloud Messaging service in the Google developer
 // documentation, here: http://developer.android.com/google/gcm/client.html. The steps to configure and send Push
-// Notifications is described in the PlayFab tutorials, here: https://api.playfab.com/docs/pushCrashCourse/.
+// Notifications is described in the PlayFab tutorials, here:
+// https://docs.microsoft.com/gaming/playfab/features/engagement/push-notifications/quickstart.
 type AndroidDevicePushNotificationRegistrationRequestModel struct {
     // ConfirmationMessage message to display when confirming push notification.
     ConfirmationMessage string `json:"ConfirmationMessage,omitempty"`
@@ -146,7 +147,7 @@ type CancelTradeRequestModel struct {
 // CancelTradeResponse 
 type CancelTradeResponseModel struct {
     // Trade details about trade which was just canceled.
-    Trade TradeInfoModel `json:"Trade,omitempty"`
+    Trade* TradeInfoModel `json:"Trade,omitempty"`
 }
 
 // CartItem 
@@ -173,16 +174,16 @@ type CartItemModel struct {
 type CatalogItemModel struct {
     // Bundle defines the bundle properties for the item - bundles are items which contain other items, including random drop tables
 // and virtual currencies
-    Bundle CatalogItemBundleInfoModel `json:"Bundle,omitempty"`
+    Bundle* CatalogItemBundleInfoModel `json:"Bundle,omitempty"`
     // CanBecomeCharacter if true, then an item instance of this type can be used to grant a character to a user.
     CanBecomeCharacter bool `json:"CanBecomeCharacter,omitempty"`
     // CatalogVersion catalog version for this item
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // Consumable defines the consumable properties (number of uses, timeout) for the item
-    Consumable CatalogItemConsumableInfoModel `json:"Consumable,omitempty"`
+    Consumable* CatalogItemConsumableInfoModel `json:"Consumable,omitempty"`
     // Container defines the container properties for the item - what items it contains, including random drop tables and virtual
 // currencies, and what item (if any) is required to open it via the UnlockContainerItem API
-    Container CatalogItemContainerInfoModel `json:"Container,omitempty"`
+    Container* CatalogItemContainerInfoModel `json:"Container,omitempty"`
     // CustomData game specific custom data
     CustomData string `json:"CustomData,omitempty"`
     // Description text description of item, to show in-game
@@ -373,7 +374,7 @@ type ConsumePSNEntitlementsResultModel struct {
 type ConsumeXboxEntitlementsRequestModel struct {
     // CatalogVersion catalog version to use
     CatalogVersion string `json:"CatalogVersion,omitempty"`
-    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com/", "").
     XboxToken string `json:"XboxToken,omitempty"`
 }
 
@@ -856,7 +857,7 @@ type CurrentGamesRequestModel struct {
     // StatisticName statistic name to find statistic-based matches.
     StatisticName string `json:"StatisticName,omitempty"`
     // TagFilter filter to include and/or exclude Game Server Instances associated with certain tags.
-    TagFilter CollectionFilterModel `json:"TagFilter,omitempty"`
+    TagFilter* CollectionFilterModel `json:"TagFilter,omitempty"`
 }
 
 // CurrentGamesResult 
@@ -895,14 +896,14 @@ type EmptyResultModel struct {
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
 // EntityTokenResponse 
 type EntityTokenResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // EntityToken the token used to set X-EntityToken for all entity based API calls.
     EntityToken string `json:"EntityToken,omitempty"`
     // TokenExpiration the time the token will expire, if it is an expiring token, in UTC.
@@ -931,7 +932,7 @@ type ExecuteCloudScriptResultModel struct {
     // APIRequestsIssued number of PlayFab API requests issued by the CloudScript function
     APIRequestsIssued int32 `json:"APIRequestsIssued,omitempty"`
     // Error information about the error, if any, that occurred during execution
-    Error ScriptExecutionErrorModel `json:"Error,omitempty"`
+    Error* ScriptExecutionErrorModel `json:"Error,omitempty"`
     // ExecutionTimeSeconds 
     ExecutionTimeSeconds float64 `json:"ExecutionTimeSeconds,omitempty"`
     // FunctionName the name of the function that executed
@@ -977,17 +978,17 @@ type FacebookPlayFabIdPairModel struct {
 // FriendInfo 
 type FriendInfoModel struct {
     // FacebookInfo available Facebook information (if the user and PlayFab friend are also connected in Facebook).
-    FacebookInfo UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
+    FacebookInfo* UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
     // FriendPlayFabId playFab unique identifier for this friend.
     FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
     // GameCenterInfo available Game Center information (if the user and PlayFab friend are also connected in Game Center).
-    GameCenterInfo UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
+    GameCenterInfo* UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // Profile the profile of the user, if requested.
-    Profile PlayerProfileModelModel `json:"Profile,omitempty"`
+    Profile* PlayerProfileModelModel `json:"Profile,omitempty"`
     // PSNInfo available PSN information, if the user and PlayFab friend are both connected to PSN.
-    PSNInfo UserPsnInfoModel `json:"PSNInfo,omitempty"`
+    PSNInfo* UserPsnInfoModel `json:"PSNInfo,omitempty"`
     // SteamInfo available Steam information (if the user and PlayFab friend are also connected in Steam).
-    SteamInfo UserSteamInfoModel `json:"SteamInfo,omitempty"`
+    SteamInfo* UserSteamInfoModel `json:"SteamInfo,omitempty"`
     // Tags tags which have been associated with this friend.
     Tags []string `json:"Tags,omitempty"`
     // TitleDisplayName title-specific display name for this friend.
@@ -995,7 +996,7 @@ type FriendInfoModel struct {
     // Username playFab unique username for this friend.
     Username string `json:"Username,omitempty"`
     // XboxInfo available Xbox information, if the user and PlayFab friend are both connected to Xbox Live.
-    XboxInfo UserXboxInfoModel `json:"XboxInfo,omitempty"`
+    XboxInfo* UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
 
 // GameCenterPlayFabIdPair 
@@ -1067,7 +1068,7 @@ type GameServerRegionsResultModel struct {
 // GenericPlayFabIdPair 
 type GenericPlayFabIdPairModel struct {
     // GenericId unique generic service identifier for a user.
-    GenericId GenericServiceIdModel `json:"GenericId,omitempty"`
+    GenericId* GenericServiceIdModel `json:"GenericId,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the given generic identifier.
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
@@ -1101,7 +1102,7 @@ type GetAccountInfoRequestModel struct {
 // TitleDisplayName. If no identifier is specified, the currently signed in user's information will be returned.
 type GetAccountInfoResultModel struct {
     // AccountInfo account information for the local user.
-    AccountInfo UserAccountInfoModel `json:"AccountInfo,omitempty"`
+    AccountInfo* UserAccountInfoModel `json:"AccountInfo,omitempty"`
 }
 
 // GetCatalogItemsRequest 
@@ -1224,7 +1225,7 @@ type GetFriendLeaderboardAroundPlayerRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StatisticName statistic used to rank players for this leaderboard.
     StatisticName string `json:"StatisticName,omitempty"`
     // Version the version of the leaderboard to get.
@@ -1256,7 +1257,7 @@ type GetFriendLeaderboardRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StartPosition position in the leaderboard to start this listing (defaults to the first entry).
     StartPosition int32 `json:"StartPosition,omitempty"`
     // StatisticName statistic used to rank friends for this leaderboard.
@@ -1276,7 +1277,7 @@ type GetFriendsListRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // XboxToken xbox token if Xbox friends should be included. Requires Xbox be configured on PlayFab.
     XboxToken string `json:"XboxToken,omitempty"`
 }
@@ -1317,7 +1318,7 @@ type GetLeaderboardAroundPlayerRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StatisticName statistic used to rank players for this leaderboard.
     StatisticName string `json:"StatisticName,omitempty"`
     // Version the version of the leaderboard to get.
@@ -1343,7 +1344,9 @@ type GetLeaderboardForUsersCharactersRequestModel struct {
     StatisticName string `json:"StatisticName,omitempty"`
 }
 
-// GetLeaderboardForUsersCharactersResult note that the Position of the character in the results is for the overall leaderboard.
+// GetLeaderboardForUsersCharactersResult nOTE: The position of the character in the results is relative to the other characters for that specific user. This mean
+// the values will always be between 0 and one less than the number of characters returned regardless of the size of the
+// actual leaderboard.
 type GetLeaderboardForUsersCharactersResultModel struct {
     // Leaderboard ordered list of leaderboard entries.
     Leaderboard []CharacterLeaderboardEntryModel `json:"Leaderboard,omitempty"`
@@ -1356,7 +1359,7 @@ type GetLeaderboardRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StartPosition position in the leaderboard to start this listing (defaults to the first entry).
     StartPosition int32 `json:"StartPosition,omitempty"`
     // StatisticName statistic used to rank players for this leaderboard.
@@ -1404,7 +1407,7 @@ type GetPhotonAuthenticationTokenResultModel struct {
 // GetPlayerCombinedInfoRequest 
 type GetPlayerCombinedInfoRequestModel struct {
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayFabId playFabId of the user whose data will be returned. If not filled included, we return the data for the calling player.
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
@@ -1434,7 +1437,7 @@ type GetPlayerCombinedInfoRequestParamsModel struct {
     // PlayerStatisticNames specific statistics to retrieve. Leave null to get all keys. Has no effect if GetPlayerStatistics is false
     PlayerStatisticNames []string `json:"PlayerStatisticNames,omitempty"`
     // ProfileConstraints specifies the properties to return from the player profile. Defaults to returning the player's display name.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // TitleDataKeys specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetTitleData is false
     TitleDataKeys []string `json:"TitleDataKeys,omitempty"`
     // UserDataKeys specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetUserData is false
@@ -1449,7 +1452,7 @@ type GetPlayerCombinedInfoRequestParamsModel struct {
 // available. Otherwise, only public information is returned. All parameters default to false.
 type GetPlayerCombinedInfoResultModel struct {
     // InfoResultPayload results for requested info.
-    InfoResultPayload GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
+    InfoResultPayload* GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
@@ -1457,14 +1460,14 @@ type GetPlayerCombinedInfoResultModel struct {
 // GetPlayerCombinedInfoResultPayload 
 type GetPlayerCombinedInfoResultPayloadModel struct {
     // AccountInfo account information for the user. This is always retrieved.
-    AccountInfo UserAccountInfoModel `json:"AccountInfo,omitempty"`
+    AccountInfo* UserAccountInfoModel `json:"AccountInfo,omitempty"`
     // CharacterInventories inventories for each character for the user.
     CharacterInventories []CharacterInventoryModel `json:"CharacterInventories,omitempty"`
     // CharacterList list of characters for the user.
     CharacterList []CharacterResultModel `json:"CharacterList,omitempty"`
     // PlayerProfile the profile of the players. This profile is not guaranteed to be up-to-date. For a new player, this profile will not
 // exist.
-    PlayerProfile PlayerProfileModelModel `json:"PlayerProfile,omitempty"`
+    PlayerProfile* PlayerProfileModelModel `json:"PlayerProfile,omitempty"`
     // PlayerStatistics list of statistics for this player.
     PlayerStatistics []StatisticValueModel `json:"PlayerStatistics,omitempty"`
     // TitleData title data for this title.
@@ -1495,14 +1498,14 @@ type GetPlayerProfileRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
 }
 
 // GetPlayerProfileResult 
 type GetPlayerProfileResultModel struct {
     // PlayerProfile the profile of the player. This profile is not guaranteed to be up-to-date. For a new player, this profile will not
 // exist.
-    PlayerProfile PlayerProfileModelModel `json:"PlayerProfile,omitempty"`
+    PlayerProfile* PlayerProfileModelModel `json:"PlayerProfile,omitempty"`
 }
 
 // GetPlayerSegmentsRequest 
@@ -1796,7 +1799,7 @@ type GetStoreItemsResultModel struct {
     // CatalogVersion the base catalog that this store is a part of.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // MarketingData additional data about the store.
-    MarketingData StoreMarketingModelModel `json:"MarketingData,omitempty"`
+    MarketingData* StoreMarketingModelModel `json:"MarketingData,omitempty"`
     // Source how the store was last updated (Admin or a third party).
     Source SourceType `json:"Source,omitempty"`
     // Store array of items which can be purchased from this store.
@@ -1876,7 +1879,7 @@ type GetTradeStatusRequestModel struct {
 // GetTradeStatusResponse 
 type GetTradeStatusResponseModel struct {
     // Trade information about the requested trade.
-    Trade TradeInfoModel `json:"Trade,omitempty"`
+    Trade* TradeInfoModel `json:"Trade,omitempty"`
 }
 
 // GetUserDataRequest data is stored as JSON key-value pairs. Every time the data is updated via any source, the version counter is
@@ -1948,7 +1951,7 @@ type GooglePlayFabIdPairModel struct {
 type GrantCharacterToUserRequestModel struct {
     // CatalogVersion catalog version from which items are to be granted.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
-    // CharacterName non-unique display name of the character being granted (1-20 characters in length).
+    // CharacterName non-unique display name of the character being granted (1-40 characters in length).
     CharacterName string `json:"CharacterName,omitempty"`
     // ItemId catalog item identifier of the item in the user's inventory that corresponds to the character in the catalog to be
 // created.
@@ -1965,10 +1968,11 @@ type GrantCharacterToUserResultModel struct {
     Result bool `json:"Result,omitempty"`
 }
 
-// ItemInstance a unique instance of an item in a user's inventory. Note, to retrieve additional information for an item instance (such
-// as Tags, Description, or Custom Data that are set on the root catalog item), a call to GetCatalogItems is required. The
-// Item ID of the instance can then be matched to a catalog entry, which contains the additional information. Also note
-// that Custom Data is only set here from a call to UpdateUserInventoryItemCustomData.
+// ItemInstance a unique instance of an item in a user's inventory. Note, to retrieve additional information for an item such as Tags,
+// Description that are the same across all instances of the item, a call to GetCatalogItems is required. The ItemID of can
+// be matched to a catalog entry, which contains the additional information. Also note that Custom Data is only set when
+// the User's specific instance has updated the CustomData via a call to UpdateUserInventoryItemCustomData. Other fields
+// such as UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type ItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
     Annotation string `json:"Annotation,omitempty"`
@@ -1979,7 +1983,8 @@ type ItemInstanceModel struct {
     BundleParent string `json:"BundleParent,omitempty"`
     // CatalogVersion catalog version for the inventory item, when this instance was created.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
-    // CustomData a set of custom key-value pairs on the inventory item.
+    // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
+// item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
     DisplayName string `json:"DisplayName,omitempty"`
@@ -1995,9 +2000,9 @@ type ItemInstanceModel struct {
     PurchaseDate time.Time `json:"PurchaseDate,omitempty"`
     // RemainingUses total number of remaining uses, if this is a consumable item.
     RemainingUses int32 `json:"RemainingUses,omitempty"`
-    // UnitCurrency currency type for the cost of the catalog item.
+    // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
     UnitCurrency string `json:"UnitCurrency,omitempty"`
-    // UnitPrice cost of the catalog item in the given currency.
+    // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
     UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
     UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
@@ -2246,7 +2251,7 @@ type LinkWindowsHelloAccountResponseModel struct {
 type LinkXboxAccountRequestModel struct {
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink,omitempty"`
-    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com/", "").
     XboxToken string `json:"XboxToken,omitempty"`
 }
 
@@ -2308,9 +2313,9 @@ const (
 type LoginResultModel struct {
     // EntityToken if LoginTitlePlayerAccountEntity flag is set on the login request the title_player_account will also be logged in and
 // returned.
-    EntityToken EntityTokenResponseModel `json:"EntityToken,omitempty"`
+    EntityToken* EntityTokenResponseModel `json:"EntityToken,omitempty"`
     // InfoResultPayload results for requested info.
-    InfoResultPayload GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
+    InfoResultPayload* GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
     // LastLoginTime the time of this user's previous login. If there was no previous login, then it's DateTime.MinValue
     LastLoginTime time.Time `json:"LastLoginTime,omitempty"`
     // NewlyCreated true if the account was newly created on this login.
@@ -2320,7 +2325,9 @@ type LoginResultModel struct {
     // SessionTicket unique token authorizing the user and game at the server level, for the current session.
     SessionTicket string `json:"SessionTicket,omitempty"`
     // SettingsForUser settings specific to this user.
-    SettingsForUser UserSettingsModel `json:"SettingsForUser,omitempty"`
+    SettingsForUser* UserSettingsModel `json:"SettingsForUser,omitempty"`
+    // TreatmentAssignment the experimentation treatments for this user at the time of login.
+    TreatmentAssignment* TreatmentAssignmentModel `json:"TreatmentAssignment,omitempty"`
 }
 
 // LoginWithAndroidDeviceIDRequest on Android devices, the recommendation is to use the Settings.Secure.ANDROID_ID as the AndroidDeviceId, as described in
@@ -2343,7 +2350,7 @@ type LoginWithAndroidDeviceIDRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // OS specific Operating System version for the user's device.
     OS string `json:"OS,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -2366,7 +2373,7 @@ type LoginWithCustomIDRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2381,7 +2388,7 @@ type LoginWithEmailAddressRequestModel struct {
     // Email email address for the account.
     Email string `json:"Email,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // Password password for the PlayFab account (6-100 characters)
     Password string `json:"Password,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2398,7 +2405,7 @@ type LoginWithFacebookInstantGamesIdRequestModel struct {
     // FacebookInstantGamesSignature facebook Instant Games signature for the user.
     FacebookInstantGamesSignature string `json:"FacebookInstantGamesSignature,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2425,7 +2432,7 @@ type LoginWithFacebookRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2447,7 +2454,7 @@ type LoginWithGameCenterRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerId unique Game Center player id.
     PlayerId string `json:"PlayerId,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -2486,7 +2493,7 @@ type LoginWithGoogleAccountRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // ServerAuthCode oAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode()
@@ -2517,7 +2524,7 @@ type LoginWithIOSDeviceIDRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // OS specific Operating System version for the user's device.
     OS string `json:"OS,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -2542,7 +2549,7 @@ type LoginWithKongregateRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // KongregateId numeric user ID assigned by Kongregate
     KongregateId string `json:"KongregateId,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -2559,7 +2566,7 @@ type LoginWithNintendoSwitchDeviceIdRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // NintendoSwitchDeviceId nintendo Switch unique identifier for the user's device.
     NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -2581,7 +2588,7 @@ type LoginWithOpenIdConnectRequestModel struct {
 // identity provider's response.
     IdToken string `json:"IdToken,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2594,7 +2601,7 @@ type LoginWithOpenIdConnectRequestModel struct {
 // validation locally, so that future updates to the username or password do not require client updates.
 type LoginWithPlayFabRequestModel struct {
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // Password password for the PlayFab account (6-100 characters)
     Password string `json:"Password,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2616,7 +2623,7 @@ type LoginWithPSNRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
     IssuerId int32 `json:"IssuerId,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -2643,7 +2650,7 @@ type LoginWithSteamRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // SteamTicket authentication token for the user, returned as a byte array from Steam, and converted to a string (for example, the byte
@@ -2669,7 +2676,7 @@ type LoginWithTwitchRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2682,7 +2689,7 @@ type LoginWithWindowsHelloRequestModel struct {
     // ChallengeSignature the signed response from the user for the Challenge.
     ChallengeSignature string `json:"ChallengeSignature,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PublicKeyHint sHA256 hash of the PublicKey generated by Windows Hello.
     PublicKeyHint string `json:"PublicKeyHint,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
@@ -2700,13 +2707,13 @@ type LoginWithXboxRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
     TitleId string `json:"TitleId,omitempty"`
-    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com/", "").
     XboxToken string `json:"XboxToken,omitempty"`
 }
 
@@ -2737,7 +2744,7 @@ type MatchmakeRequestModel struct {
     // StatisticName player statistic to use in finding a match. May be null for no stat-based matching.
     StatisticName string `json:"StatisticName,omitempty"`
     // TagFilter filter to include and/or exclude Game Server Instances associated with certain Tags
-    TagFilter CollectionFilterModel `json:"TagFilter,omitempty"`
+    TagFilter* CollectionFilterModel `json:"TagFilter,omitempty"`
 }
 
 // MatchmakeResult 
@@ -2822,7 +2829,7 @@ type OpenTradeRequestModel struct {
 // OpenTradeResponse 
 type OpenTradeResponseModel struct {
     // Trade the information about the trade that was just opened.
-    Trade TradeInfoModel `json:"Trade,omitempty"`
+    Trade* TradeInfoModel `json:"Trade,omitempty"`
 }
 
 // PayForPurchaseRequest this is the second step in the purchasing process, initiating the purchase transaction with the payment provider (if
@@ -2886,7 +2893,7 @@ type PlayerLeaderboardEntryModel struct {
     // Position user's overall position in the leaderboard.
     Position int32 `json:"Position,omitempty"`
     // Profile the profile of the user, if requested.
-    Profile PlayerProfileModelModel `json:"Profile,omitempty"`
+    Profile* PlayerProfileModelModel `json:"Profile,omitempty"`
     // StatValue specific value of the user's statistic.
     StatValue int32 `json:"StatValue,omitempty"`
 }
@@ -2905,6 +2912,8 @@ type PlayerProfileModelModel struct {
     Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
     DisplayName string `json:"DisplayName,omitempty"`
+    // ExperimentVariants list of experiment variants for the player.
+    ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
     LastLogin time.Time `json:"LastLogin,omitempty"`
     // LinkedAccounts list of all authentication systems linked to this player account
@@ -2948,6 +2957,8 @@ type PlayerProfileViewConstraintsModel struct {
     ShowCreated bool `json:"ShowCreated,omitempty"`
     // ShowDisplayName whether to show the display name. Defaults to false
     ShowDisplayName bool `json:"ShowDisplayName,omitempty"`
+    // ShowExperimentVariants whether to show player's experiment variants. Defaults to false
+    ShowExperimentVariants bool `json:"ShowExperimentVariants,omitempty"`
     // ShowLastLogin whether to show the last login time. Defaults to false
     ShowLastLogin bool `json:"ShowLastLogin,omitempty"`
     // ShowLinkedAccounts whether to show the linked accounts. Defaults to false
@@ -3015,6 +3026,21 @@ type PurchaseItemRequestModel struct {
 type PurchaseItemResultModel struct {
     // Items details for the items purchased.
     Items []ItemInstanceModel `json:"Items,omitempty"`
+}
+
+// PurchaseReceiptFulfillment 
+type PurchaseReceiptFulfillmentModel struct {
+    // FulfilledItems items granted to the player in fulfillment of the validated receipt.
+    FulfilledItems []ItemInstanceModel `json:"FulfilledItems,omitempty"`
+    // RecordedPriceSource source of the payment price information for the recorded purchase transaction. A value of 'Request' indicates that the
+// price specified in the request was used, whereas a value of 'Catalog' indicates that the real-money price of the catalog
+// item matching the product ID in the validated receipt transaction and the currency specified in the request (defaulting
+// to USD) was used.
+    RecordedPriceSource string `json:"RecordedPriceSource,omitempty"`
+    // RecordedTransactionCurrency currency used to purchase the items (ISO 4217 currency code).
+    RecordedTransactionCurrency string `json:"RecordedTransactionCurrency,omitempty"`
+    // RecordedTransactionTotal amount of the stated currency paid for the items, in centesimal units
+    RecordedTransactionTotal uint32 `json:"RecordedTransactionTotal,omitempty"`
 }
 
 // PushNotificationPlatform 
@@ -3085,7 +3111,7 @@ type RegionInfoModel struct {
 }
 
 // RegisterForIOSPushNotificationRequest the steps to configure and send Push Notifications is described in the PlayFab tutorials, here:
-// https://api.playfab.com/docs/pushCrashCourse/
+// https://docs.microsoft.com/gaming/playfab/features/engagement/push-notifications/quickstart
 type RegisterForIOSPushNotificationRequestModel struct {
     // ConfirmationMessage message to display when confirming push notification.
     ConfirmationMessage string `json:"ConfirmationMessage,omitempty"`
@@ -3108,7 +3134,7 @@ type RegisterPlayFabUserRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // Password password for the PlayFab account (6-100 characters)
     Password string `json:"Password,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
@@ -3130,13 +3156,13 @@ type RegisterPlayFabUserRequestModel struct {
 type RegisterPlayFabUserResultModel struct {
     // EntityToken if LoginTitlePlayerAccountEntity flag is set on the login request the title_player_account will also be logged in and
 // returned.
-    EntityToken EntityTokenResponseModel `json:"EntityToken,omitempty"`
+    EntityToken* EntityTokenResponseModel `json:"EntityToken,omitempty"`
     // PlayFabId playFab unique identifier for this newly created account.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // SessionTicket unique token identifying the user and game at the server level, for the current session.
     SessionTicket string `json:"SessionTicket,omitempty"`
     // SettingsForUser settings specific to this user.
-    SettingsForUser UserSettingsModel `json:"SettingsForUser,omitempty"`
+    SettingsForUser* UserSettingsModel `json:"SettingsForUser,omitempty"`
     // Username playFab unique user name.
     Username string `json:"Username,omitempty"`
 }
@@ -3148,7 +3174,7 @@ type RegisterWithWindowsHelloRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // PublicKey publicKey generated by Windows Hello.
@@ -3181,7 +3207,7 @@ type RemoveFriendResultModel struct {
 // RemoveGenericIDRequest 
 type RemoveGenericIDRequestModel struct {
     // GenericId generic service identifier to be removed from the player.
-    GenericId GenericServiceIdModel `json:"GenericId,omitempty"`
+    GenericId* GenericServiceIdModel `json:"GenericId,omitempty"`
 }
 
 // RemoveGenericIDResult 
@@ -3220,12 +3246,16 @@ type ReportPlayerClientResultModel struct {
 // previously purchased by the user. This API call iterates through every purchase in the receipt and restores the items if
 // they still exist in the catalog and can be validated.
 type RestoreIOSPurchasesRequestModel struct {
+    // CatalogVersion catalog version of the restored items. If null, defaults to primary catalog.
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // ReceiptData base64 encoded receipt data, passed back by the App Store as a result of a successful purchase.
     ReceiptData string `json:"ReceiptData,omitempty"`
 }
 
 // RestoreIOSPurchasesResult once verified, the valid items will be restored into the user's inventory.
 type RestoreIOSPurchasesResultModel struct {
+    // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
+    Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
 }
 
 // ScriptExecutionError 
@@ -3577,6 +3607,14 @@ const (
      TransactionStatusOther TransactionStatus = "Other"
      TransactionStatusFailed TransactionStatus = "Failed"
       )
+// TreatmentAssignment 
+type TreatmentAssignmentModel struct {
+    // Variables list of the experiment variables.
+    Variables []VariableModel `json:"Variables,omitempty"`
+    // Variants list of the experiment variants.
+    Variants []string `json:"Variants,omitempty"`
+}
+
 // TwitchPlayFabIdPair 
 type TwitchPlayFabIdPairModel struct {
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Twitch identifier.
@@ -3712,7 +3750,7 @@ type UnlinkWindowsHelloAccountResponseModel struct {
 
 // UnlinkXboxAccountRequest 
 type UnlinkXboxAccountRequestModel struct {
-    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+    // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com/", "").
     XboxToken string `json:"XboxToken,omitempty"`
 }
 
@@ -3879,45 +3917,45 @@ type UpdateUserTitleDisplayNameResultModel struct {
 // UserAccountInfo 
 type UserAccountInfoModel struct {
     // AndroidDeviceInfo user Android device information, if an Android device has been linked
-    AndroidDeviceInfo UserAndroidDeviceInfoModel `json:"AndroidDeviceInfo,omitempty"`
+    AndroidDeviceInfo* UserAndroidDeviceInfoModel `json:"AndroidDeviceInfo,omitempty"`
     // Created timestamp indicating when the user account was created
     Created time.Time `json:"Created,omitempty"`
     // CustomIdInfo custom ID information, if a custom ID has been assigned
-    CustomIdInfo UserCustomIdInfoModel `json:"CustomIdInfo,omitempty"`
+    CustomIdInfo* UserCustomIdInfoModel `json:"CustomIdInfo,omitempty"`
     // FacebookInfo user Facebook information, if a Facebook account has been linked
-    FacebookInfo UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
+    FacebookInfo* UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
     // FacebookInstantGamesIdInfo facebook Instant Games account information, if a Facebook Instant Games account has been linked
-    FacebookInstantGamesIdInfo UserFacebookInstantGamesIdInfoModel `json:"FacebookInstantGamesIdInfo,omitempty"`
+    FacebookInstantGamesIdInfo* UserFacebookInstantGamesIdInfoModel `json:"FacebookInstantGamesIdInfo,omitempty"`
     // GameCenterInfo user Gamecenter information, if a Gamecenter account has been linked
-    GameCenterInfo UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
+    GameCenterInfo* UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // GoogleInfo user Google account information, if a Google account has been linked
-    GoogleInfo UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
+    GoogleInfo* UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
     // IosDeviceInfo user iOS device information, if an iOS device has been linked
-    IosDeviceInfo UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
+    IosDeviceInfo* UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
     // KongregateInfo user Kongregate account information, if a Kongregate account has been linked
-    KongregateInfo UserKongregateInfoModel `json:"KongregateInfo,omitempty"`
+    KongregateInfo* UserKongregateInfoModel `json:"KongregateInfo,omitempty"`
     // NintendoSwitchDeviceIdInfo nintendo Switch account information, if a Nintendo Switch account has been linked
-    NintendoSwitchDeviceIdInfo UserNintendoSwitchDeviceIdInfoModel `json:"NintendoSwitchDeviceIdInfo,omitempty"`
+    NintendoSwitchDeviceIdInfo* UserNintendoSwitchDeviceIdInfoModel `json:"NintendoSwitchDeviceIdInfo,omitempty"`
     // OpenIdInfo openID Connect information, if any OpenID Connect accounts have been linked
     OpenIdInfo []UserOpenIdInfoModel `json:"OpenIdInfo,omitempty"`
     // PlayFabId unique identifier for the user account
     PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
-    PrivateInfo UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
+    PrivateInfo* UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
     // PsnInfo user PSN account information, if a PSN account has been linked
-    PsnInfo UserPsnInfoModel `json:"PsnInfo,omitempty"`
+    PsnInfo* UserPsnInfoModel `json:"PsnInfo,omitempty"`
     // SteamInfo user Steam information, if a Steam account has been linked
-    SteamInfo UserSteamInfoModel `json:"SteamInfo,omitempty"`
+    SteamInfo* UserSteamInfoModel `json:"SteamInfo,omitempty"`
     // TitleInfo title-specific information for the user account
-    TitleInfo UserTitleInfoModel `json:"TitleInfo,omitempty"`
+    TitleInfo* UserTitleInfoModel `json:"TitleInfo,omitempty"`
     // TwitchInfo user Twitch account information, if a Twitch account has been linked
-    TwitchInfo UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
+    TwitchInfo* UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
     Username string `json:"Username,omitempty"`
     // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
-    WindowsHelloInfo UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
+    WindowsHelloInfo* UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
-    XboxInfo UserXboxInfoModel `json:"XboxInfo,omitempty"`
+    XboxInfo* UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
 
 // UserAndroidDeviceInfo 
@@ -4099,7 +4137,7 @@ type UserTitleInfoModel struct {
     // Origination source by which the user first joined the game, if known
     Origination UserOrigination `json:"Origination,omitempty"`
     // TitlePlayerAccount title player account entity for this user
-    TitlePlayerAccount EntityKeyModel `json:"TitlePlayerAccount,omitempty"`
+    TitlePlayerAccount* EntityKeyModel `json:"TitlePlayerAccount,omitempty"`
 }
 
 // UserTwitchInfo 
@@ -4126,11 +4164,11 @@ type UserXboxInfoModel struct {
 
 // ValidateAmazonReceiptRequest 
 type ValidateAmazonReceiptRequestModel struct {
-    // CatalogVersion catalog version to use when granting receipt item. If null, defaults to primary catalog.
+    // CatalogVersion catalog version of the fulfilled items. If null, defaults to the primary catalog.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
-    // CurrencyCode currency used for the purchase.
+    // CurrencyCode currency used to pay for the purchase (ISO 4217 currency code).
     CurrencyCode string `json:"CurrencyCode,omitempty"`
-    // PurchasePrice amount of the stated currency paid for the object.
+    // PurchasePrice amount of the stated currency paid, in centesimal units.
     PurchasePrice int32 `json:"PurchasePrice,omitempty"`
     // ReceiptId receiptId returned by the Amazon App Store in-app purchase API
     ReceiptId string `json:"ReceiptId,omitempty"`
@@ -4140,6 +4178,8 @@ type ValidateAmazonReceiptRequestModel struct {
 
 // ValidateAmazonReceiptResult once verified, the catalog item matching the Amazon item name will be added to the user's inventory.
 type ValidateAmazonReceiptResultModel struct {
+    // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
+    Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
 }
 
 // ValidateGooglePlayPurchaseRequest the packageName and productId are defined in the GooglePlay store. The productId must match the ItemId of the inventory
@@ -4148,9 +4188,11 @@ type ValidateAmazonReceiptResultModel struct {
 // receipt for a 99-cent purchase as being for a $19.99 purchase, for example). Each receipt may be validated only once to
 // avoid granting the same item over and over from a single purchase.
 type ValidateGooglePlayPurchaseRequestModel struct {
-    // CurrencyCode currency used for the purchase.
+    // CatalogVersion catalog version of the fulfilled items. If null, defaults to the primary catalog.
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
+    // CurrencyCode currency used to pay for the purchase (ISO 4217 currency code).
     CurrencyCode string `json:"CurrencyCode,omitempty"`
-    // PurchasePrice amount of the stated currency paid for the object.
+    // PurchasePrice amount of the stated currency paid, in centesimal units.
     PurchasePrice uint32 `json:"PurchasePrice,omitempty"`
     // ReceiptJson original JSON string returned by the Google Play IAB API.
     ReceiptJson string `json:"ReceiptJson,omitempty"`
@@ -4161,6 +4203,8 @@ type ValidateGooglePlayPurchaseRequestModel struct {
 // ValidateGooglePlayPurchaseResult once verified, the catalog item (ItemId) matching the GooglePlay store item (productId) will be added to the user's
 // inventory.
 type ValidateGooglePlayPurchaseResultModel struct {
+    // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
+    Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
 }
 
 // ValidateIOSReceiptRequest the CurrencyCode and PurchasePrice must match the price which was set up for the item in the Apple store. In addition,
@@ -4169,9 +4213,11 @@ type ValidateGooglePlayPurchaseResultModel struct {
 // from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being for a
 // $19.99 purchase, for example).
 type ValidateIOSReceiptRequestModel struct {
-    // CurrencyCode currency used for the purchase.
+    // CatalogVersion catalog version of the fulfilled items. If null, defaults to the primary catalog.
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
+    // CurrencyCode currency used to pay for the purchase (ISO 4217 currency code).
     CurrencyCode string `json:"CurrencyCode,omitempty"`
-    // PurchasePrice amount of the stated currency paid for the object.
+    // PurchasePrice amount of the stated currency paid, in centesimal units.
     PurchasePrice int32 `json:"PurchasePrice,omitempty"`
     // ReceiptData base64 encoded receipt data, passed back by the App Store as a result of a successful purchase.
     ReceiptData string `json:"ReceiptData,omitempty"`
@@ -4179,15 +4225,17 @@ type ValidateIOSReceiptRequestModel struct {
 
 // ValidateIOSReceiptResult once verified, the catalog item matching the iTunes item name will be added to the user's inventory.
 type ValidateIOSReceiptResultModel struct {
+    // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
+    Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
 }
 
 // ValidateWindowsReceiptRequest 
 type ValidateWindowsReceiptRequestModel struct {
-    // CatalogVersion catalog version to use when granting receipt item. If null, defaults to primary catalog.
+    // CatalogVersion catalog version of the fulfilled items. If null, defaults to the primary catalog.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
-    // CurrencyCode currency used for the purchase.
+    // CurrencyCode currency used to pay for the purchase (ISO 4217 currency code).
     CurrencyCode string `json:"CurrencyCode,omitempty"`
-    // PurchasePrice amount of the stated currency paid for the object.
+    // PurchasePrice amount of the stated currency paid, in centesimal units.
     PurchasePrice uint32 `json:"PurchasePrice,omitempty"`
     // Receipt xML Receipt returned by the Windows App Store in-app purchase API
     Receipt string `json:"Receipt,omitempty"`
@@ -4195,6 +4243,8 @@ type ValidateWindowsReceiptRequestModel struct {
 
 // ValidateWindowsReceiptResult once verified, the catalog item matching the Product name will be added to the user's inventory.
 type ValidateWindowsReceiptResultModel struct {
+    // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
+    Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
 }
 
 // ValueToDateModel 
@@ -4207,6 +4257,14 @@ type ValueToDateModelModel struct {
     // TotalValueAsDecimal total value of the purchases in a string representation of decimal monetary units. For example, '9.99' indicates nine
 // dollars and ninety-nine cents when Currency is 'USD'.
     TotalValueAsDecimal string `json:"TotalValueAsDecimal,omitempty"`
+}
+
+// Variable 
+type VariableModel struct {
+    // Name name of the variable.
+    Name string `json:"Name,omitempty"`
+    // Value value of the variable.
+    Value string `json:"Value,omitempty"`
 }
 
 // VirtualCurrencyRechargeTime 
@@ -4232,7 +4290,7 @@ type WriteClientCharacterEventRequestModel struct {
     // EventName the name of the event, within the namespace scoped to the title. The naming convention is up to the caller, but it
 // commonly follows the subject_verb_object pattern (e.g. player_logged_in).
     EventName string `json:"EventName,omitempty"`
-    // Timestamp the time (in UTC) associated with this event. The value dafaults to the current time.
+    // Timestamp the time (in UTC) associated with this event. The value defaults to the current time.
     Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 
@@ -4245,7 +4303,7 @@ type WriteClientPlayerEventRequestModel struct {
     // EventName the name of the event, within the namespace scoped to the title. The naming convention is up to the caller, but it
 // commonly follows the subject_verb_object pattern (e.g. player_logged_in).
     EventName string `json:"EventName,omitempty"`
-    // Timestamp the time (in UTC) associated with this event. The value dafaults to the current time.
+    // Timestamp the time (in UTC) associated with this event. The value defaults to the current time.
     Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 
@@ -4265,7 +4323,7 @@ type WriteTitleEventRequestModel struct {
     // EventName the name of the event, within the namespace scoped to the title. The naming convention is up to the caller, but it
 // commonly follows the subject_verb_object pattern (e.g. player_logged_in).
     EventName string `json:"EventName,omitempty"`
-    // Timestamp the time (in UTC) associated with this event. The value dafaults to the current time.
+    // Timestamp the time (in UTC) associated with this event. The value defaults to the current time.
     Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 

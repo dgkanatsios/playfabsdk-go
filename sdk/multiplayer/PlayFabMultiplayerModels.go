@@ -86,15 +86,37 @@ const (
      AzureVmSizeStandard_A3 AzureVmSize = "Standard_A3"
      AzureVmSizeStandard_A4 AzureVmSize = "Standard_A4"
       )
+// BuildAliasDetailsResponse 
+type BuildAliasDetailsResponseModel struct {
+    // AliasId the guid string alias Id of the alias to be created or updated.
+    AliasId string `json:"AliasId,omitempty"`
+    // AliasName the alias name.
+    AliasName string `json:"AliasName,omitempty"`
+    // BuildSelectionCriteria array of build selection criteria.
+    BuildSelectionCriteria []BuildSelectionCriterionModel `json:"BuildSelectionCriteria,omitempty"`
+    // PageSize the page size on the response.
+    PageSize int32 `json:"PageSize,omitempty"`
+    // SkipToken the skip token for the paged response.
+    SkipToken string `json:"SkipToken,omitempty"`
+}
+
+// BuildAliasParams 
+type BuildAliasParamsModel struct {
+    // AliasId the guid string alias ID to use for the request.
+    AliasId string `json:"AliasId,omitempty"`
+}
+
 // BuildRegion 
 type BuildRegionModel struct {
     // CurrentServerStats the current multiplayer server stats for the region.
-    CurrentServerStats CurrentServerStatsModel `json:"CurrentServerStats,omitempty"`
+    CurrentServerStats* CurrentServerStatsModel `json:"CurrentServerStats,omitempty"`
+    // DynamicStandbySettings optional settings to control dynamic adjustment of standby target
+    DynamicStandbySettings* DynamicStandbySettingsModel `json:"DynamicStandbySettings,omitempty"`
     // MaxServers the maximum number of multiplayer servers for the region.
     MaxServers int32 `json:"MaxServers,omitempty"`
     // Region the build region.
-    Region AzureRegion `json:"Region,omitempty"`
-    // StandbyServers the number of standby multiplayer servers for the region.
+    Region string `json:"Region,omitempty"`
+    // StandbyServers the target number of standby multiplayer servers for the region.
     StandbyServers int32 `json:"StandbyServers,omitempty"`
     // Status the status of multiplayer servers in the build region. Valid values are - Unknown, Initialized, Deploying, Deployed,
 // Unhealthy.
@@ -103,12 +125,20 @@ type BuildRegionModel struct {
 
 // BuildRegionParams 
 type BuildRegionParamsModel struct {
+    // DynamicStandbySettings optional settings to control dynamic adjustment of standby target. If not specified, dynamic standby is disabled
+    DynamicStandbySettings* DynamicStandbySettingsModel `json:"DynamicStandbySettings,omitempty"`
     // MaxServers the maximum number of multiplayer servers for the region.
     MaxServers int32 `json:"MaxServers,omitempty"`
     // Region the build region.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // StandbyServers the number of standby multiplayer servers for the region.
     StandbyServers int32 `json:"StandbyServers,omitempty"`
+}
+
+// BuildSelectionCriterion 
+type BuildSelectionCriterionModel struct {
+    // BuildWeightDistribution dictionary of build ids and their respective weights for distribution of allocation requests.
+    BuildWeightDistribution map[string]uint32 `json:"BuildWeightDistribution,omitempty"`
 }
 
 // BuildSummary 
@@ -131,13 +161,27 @@ type BuildSummaryModel struct {
 // tickets for other people. The Entity field is required if the caller is a server (authenticated as the title).
 type CancelAllMatchmakingTicketsForPlayerRequestModel struct {
     // Entity the entity key of the player whose tickets should be canceled.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // QueueName the name of the queue from which a player's tickets should be canceled.
     QueueName string `json:"QueueName,omitempty"`
 }
 
 // CancelAllMatchmakingTicketsForPlayerResult 
 type CancelAllMatchmakingTicketsForPlayerResultModel struct {
+}
+
+// CancelAllServerBackfillTicketsForPlayerRequest cancels all backfill tickets of which the player is a member in a given queue that are not cancelled or matched. This
+// API is useful if you lose track of what tickets the player is a member of (if the server crashes for instance) and want
+// to "reset".
+type CancelAllServerBackfillTicketsForPlayerRequestModel struct {
+    // Entity the entity key of the player whose backfill tickets should be canceled.
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
+    // QueueName the name of the queue from which a player's backfill tickets should be canceled.
+    QueueName string `json:"QueueName,omitempty"`
+}
+
+// CancelAllServerBackfillTicketsForPlayerResult 
+type CancelAllServerBackfillTicketsForPlayerResultModel struct {
 }
 
 // CancellationReason 
@@ -166,6 +210,23 @@ type CancelMatchmakingTicketRequestModel struct {
 
 // CancelMatchmakingTicketResult 
 type CancelMatchmakingTicketResultModel struct {
+}
+
+// CancelServerBackfillTicketRequest only servers can cancel a backfill ticket. The ticket can be in three different states when it is cancelled. 1: the
+// ticket is matching. If the ticket is cancelled, it will stop matching. 2: the ticket is matched. A matched ticket cannot
+// be cancelled. 3: the ticket is already cancelled and nothing happens. There may be race conditions between the ticket
+// getting matched and the server making a cancellation request. The server must handle the possibility that the cancel
+// request fails if a match is found before the cancellation request is processed. We do not allow resubmitting a cancelled
+// ticket. Create a new ticket instead.
+type CancelServerBackfillTicketRequestModel struct {
+    // QueueName the name of the queue the ticket is in.
+    QueueName string `json:"QueueName,omitempty"`
+    // TicketId the Id of the ticket to find a match for.
+    TicketId string `json:"TicketId,omitempty"`
+}
+
+// CancelServerBackfillTicketResult 
+type CancelServerBackfillTicketResultModel struct {
 }
 
 // Certificate 
@@ -214,11 +275,19 @@ type CoreCapacityModel struct {
     // Available the available core capacity for the (Region, VmFamily)
     Available int32 `json:"Available,omitempty"`
     // Region the AzureRegion
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // Total the total core capacity for the (Region, VmFamily)
     Total int32 `json:"Total,omitempty"`
     // VmFamily the AzureVmFamily
     VmFamily AzureVmFamily `json:"VmFamily,omitempty"`
+}
+
+// CreateBuildAliasRequest creates a multiplayer server build alias and returns the created alias.
+type CreateBuildAliasRequestModel struct {
+    // AliasName the alias name.
+    AliasName string `json:"AliasName,omitempty"`
+    // BuildSelectionCriteria array of build selection criteria.
+    BuildSelectionCriteria []BuildSelectionCriterionModel `json:"BuildSelectionCriteria,omitempty"`
 }
 
 // CreateBuildWithCustomContainerRequest creates a multiplayer server build with a custom container and returns information about the build creation request.
@@ -228,7 +297,7 @@ type CreateBuildWithCustomContainerRequestModel struct {
     // ContainerFlavor the flavor of container to create a build from.
     ContainerFlavor ContainerFlavor `json:"ContainerFlavor,omitempty"`
     // ContainerImageReference the container reference, consisting of the image name and tag.
-    ContainerImageReference ContainerImageReferenceModel `json:"ContainerImageReference,omitempty"`
+    ContainerImageReference* ContainerImageReferenceModel `json:"ContainerImageReference,omitempty"`
     // ContainerRunCommand the container command to run when the multiplayer server has been allocated, including any arguments.
     ContainerRunCommand string `json:"ContainerRunCommand,omitempty"`
     // GameAssetReferences the list of game assets related to the build.
@@ -236,7 +305,7 @@ type CreateBuildWithCustomContainerRequestModel struct {
     // GameCertificateReferences the game certificates for the build.
     GameCertificateReferences []GameCertificateReferenceParamsModel `json:"GameCertificateReferences,omitempty"`
     // Metadata metadata to tag the build. The keys are case insensitive. The build metadata is made available to the server through
-// Game Server SDK (GSDK).
+// Game Server SDK (GSDK).Constraints: Maximum number of keys: 30, Maximum key length: 50, Maximum value length: 100
     Metadata map[string]string `json:"Metadata,omitempty"`
     // MultiplayerServerCountPerVm the number of multiplayer servers to host on a single VM.
     MultiplayerServerCountPerVm int32 `json:"MultiplayerServerCountPerVm,omitempty"`
@@ -261,7 +330,7 @@ type CreateBuildWithCustomContainerResponseModel struct {
     // CreationTime the time the build was created in UTC.
     CreationTime time.Time `json:"CreationTime,omitempty"`
     // CustomGameContainerImage the custom game container image reference information.
-    CustomGameContainerImage ContainerImageReferenceModel `json:"CustomGameContainerImage,omitempty"`
+    CustomGameContainerImage* ContainerImageReferenceModel `json:"CustomGameContainerImage,omitempty"`
     // GameAssetReferences the game assets for the build.
     GameAssetReferences []AssetReferenceModel `json:"GameAssetReferences,omitempty"`
     // GameCertificateReferences the game certificates for the build.
@@ -288,8 +357,10 @@ type CreateBuildWithManagedContainerRequestModel struct {
     GameAssetReferences []AssetReferenceParamsModel `json:"GameAssetReferences,omitempty"`
     // GameCertificateReferences the game certificates for the build.
     GameCertificateReferences []GameCertificateReferenceParamsModel `json:"GameCertificateReferences,omitempty"`
+    // InstrumentationConfiguration the instrumentation configuration for the build.
+    InstrumentationConfiguration* InstrumentationConfigurationModel `json:"InstrumentationConfiguration,omitempty"`
     // Metadata metadata to tag the build. The keys are case insensitive. The build metadata is made available to the server through
-// Game Server SDK (GSDK).
+// Game Server SDK (GSDK).Constraints: Maximum number of keys: 30, Maximum key length: 50, Maximum value length: 100
     Metadata map[string]string `json:"Metadata,omitempty"`
     // MultiplayerServerCountPerVm the number of multiplayer servers to host on a single VM.
     MultiplayerServerCountPerVm int32 `json:"MultiplayerServerCountPerVm,omitempty"`
@@ -317,6 +388,8 @@ type CreateBuildWithManagedContainerResponseModel struct {
     GameAssetReferences []AssetReferenceModel `json:"GameAssetReferences,omitempty"`
     // GameCertificateReferences the game certificates for the build.
     GameCertificateReferences []GameCertificateReferenceModel `json:"GameCertificateReferences,omitempty"`
+    // InstrumentationConfiguration the instrumentation configuration for this build.
+    InstrumentationConfiguration* InstrumentationConfigurationModel `json:"InstrumentationConfiguration,omitempty"`
     // Metadata the metadata of the build.
     Metadata map[string]string `json:"Metadata,omitempty"`
     // MultiplayerServerCountPerVm the number of multiplayer servers to host on a single VM of the build.
@@ -334,7 +407,7 @@ type CreateBuildWithManagedContainerResponseModel struct {
 // CreateMatchmakingTicketRequest the client specifies the creator's attributes and optionally a list of other users to match with.
 type CreateMatchmakingTicketRequestModel struct {
     // Creator the User who created this ticket.
-    Creator MatchmakingPlayerModel `json:"Creator,omitempty"`
+    Creator* MatchmakingPlayerModel `json:"Creator,omitempty"`
     // GiveUpAfterSeconds how long to attempt matching this ticket in seconds.
     GiveUpAfterSeconds int32 `json:"GiveUpAfterSeconds,omitempty"`
     // MembersToMatchWith a list of Entity Keys of other users to match with.
@@ -357,7 +430,7 @@ type CreateRemoteUserRequestModel struct {
     // ExpirationTime the expiration time for the remote user created. Defaults to expiring in one day if not specified.
     ExpirationTime time.Time `json:"ExpirationTime,omitempty"`
     // Region the region of virtual machine to create the remote user for.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // Username the username to create the remote user with.
     Username string `json:"Username,omitempty"`
     // VmId the virtual machine ID the multiplayer server is located on.
@@ -372,6 +445,24 @@ type CreateRemoteUserResponseModel struct {
     Password string `json:"Password,omitempty"`
     // Username the username for the remote user that was created.
     Username string `json:"Username,omitempty"`
+}
+
+// CreateServerBackfillTicketRequest the server specifies all the members, their teams and their attributes, and the server details if applicable.
+type CreateServerBackfillTicketRequestModel struct {
+    // GiveUpAfterSeconds how long to attempt matching this ticket in seconds.
+    GiveUpAfterSeconds int32 `json:"GiveUpAfterSeconds,omitempty"`
+    // Members the users who will be part of this ticket, along with their team assignments.
+    Members []MatchmakingPlayerWithTeamAssignmentModel `json:"Members,omitempty"`
+    // QueueName the Id of a match queue.
+    QueueName string `json:"QueueName,omitempty"`
+    // ServerDetails the details of the server the members are connected to.
+    ServerDetails* ServerDetailsModel `json:"ServerDetails,omitempty"`
+}
+
+// CreateServerBackfillTicketResult 
+type CreateServerBackfillTicketResultModel struct {
+    // TicketId the Id of the ticket to find a match for.
+    TicketId string `json:"TicketId,omitempty"`
 }
 
 // CreateServerMatchmakingTicketRequest the server specifies all the members and their attributes.
@@ -402,6 +493,12 @@ type DeleteAssetRequestModel struct {
     FileName string `json:"FileName,omitempty"`
 }
 
+// DeleteBuildAliasRequest deletes a multiplayer server build alias.
+type DeleteBuildAliasRequestModel struct {
+    // AliasId the guid string alias ID of the alias to perform the action on.
+    AliasId string `json:"AliasId,omitempty"`
+}
+
 // DeleteBuildRequest deletes a multiplayer server build.
 type DeleteBuildRequestModel struct {
     // BuildId the guid string build ID of the build to delete.
@@ -420,11 +517,30 @@ type DeleteRemoteUserRequestModel struct {
     // BuildId the guid string build ID of the multiplayer server where the remote user is to delete.
     BuildId string `json:"BuildId,omitempty"`
     // Region the region of the multiplayer server where the remote user is to delete.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // Username the username of the remote user to delete.
     Username string `json:"Username,omitempty"`
     // VmId the virtual machine ID the multiplayer server is located on.
     VmId string `json:"VmId,omitempty"`
+}
+
+// DynamicStandbySettings 
+type DynamicStandbySettingsModel struct {
+    // DynamicFloorMultiplierThresholds list of auto standing by trigger values and corresponding standing by multiplier. Defaults to 1.5X at 50%, 3X at 25%,
+// and 4X at 5%
+    DynamicFloorMultiplierThresholds []DynamicStandbyThresholdModel `json:"DynamicFloorMultiplierThresholds,omitempty"`
+    // IsEnabled when true, dynamic standby will be enabled
+    IsEnabled bool `json:"IsEnabled,omitempty"`
+    // RampDownSeconds the time it takes to reduce target standing by to configured floor value after an increase. Defaults to 30 minutes
+    RampDownSeconds int32 `json:"RampDownSeconds,omitempty"`
+}
+
+// DynamicStandbyThreshold 
+type DynamicStandbyThresholdModel struct {
+    // Multiplier when the trigger threshold is reached, multiply by this value
+    Multiplier float64 `json:"Multiplier,omitempty"`
+    // TriggerThresholdPercentage the multiplier will be applied when the actual standby divided by target standby floor is less than this value
+    TriggerThresholdPercentage float64 `json:"TriggerThresholdPercentage,omitempty"`
 }
 
 // EmptyResponse 
@@ -447,7 +563,7 @@ type EnableMultiplayerServersForTitleResponseModel struct {
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
@@ -487,6 +603,12 @@ type GetAssetUploadUrlResponseModel struct {
     FileName string `json:"FileName,omitempty"`
 }
 
+// GetBuildAliasRequest returns the details about a multiplayer server build alias.
+type GetBuildAliasRequestModel struct {
+    // AliasId the guid string alias ID of the alias to perform the action on.
+    AliasId string `json:"AliasId,omitempty"`
+}
+
 // GetBuildRequest returns the details about a multiplayer server build.
 type GetBuildRequestModel struct {
     // BuildId the guid string build ID of the build to get.
@@ -509,11 +631,13 @@ type GetBuildResponseModel struct {
     // CreationTime the time the build was created in UTC.
     CreationTime time.Time `json:"CreationTime,omitempty"`
     // CustomGameContainerImage the custom game container image for a custom build.
-    CustomGameContainerImage ContainerImageReferenceModel `json:"CustomGameContainerImage,omitempty"`
+    CustomGameContainerImage* ContainerImageReferenceModel `json:"CustomGameContainerImage,omitempty"`
     // GameAssetReferences the game assets for the build.
     GameAssetReferences []AssetReferenceModel `json:"GameAssetReferences,omitempty"`
     // GameCertificateReferences the game certificates for the build.
     GameCertificateReferences []GameCertificateReferenceModel `json:"GameCertificateReferences,omitempty"`
+    // InstrumentationConfiguration the instrumentation configuration of the build.
+    InstrumentationConfiguration* InstrumentationConfigurationModel `json:"InstrumentationConfiguration,omitempty"`
     // Metadata metadata of the build. The keys are case insensitive. The build metadata is made available to the server through Game
 // Server SDK (GSDK).
     Metadata map[string]string `json:"Metadata,omitempty"`
@@ -559,14 +683,12 @@ type GetMatchmakingTicketRequestModel struct {
 
 // GetMatchmakingTicketResult 
 type GetMatchmakingTicketResultModel struct {
-    // CancellationReason the reason why the current ticket was canceled. This field is only set if the ticket is in canceled state.
-    CancellationReason CancellationReason `json:"CancellationReason,omitempty"`
     // CancellationReasonString the reason why the current ticket was canceled. This field is only set if the ticket is in canceled state.
     CancellationReasonString string `json:"CancellationReasonString,omitempty"`
     // Created the server date and time at which ticket was created.
     Created time.Time `json:"Created,omitempty"`
     // Creator the Creator's entity key.
-    Creator EntityKeyModel `json:"Creator,omitempty"`
+    Creator* EntityKeyModel `json:"Creator,omitempty"`
     // GiveUpAfterSeconds how long to attempt matching this ticket in seconds.
     GiveUpAfterSeconds int32 `json:"GiveUpAfterSeconds,omitempty"`
     // MatchId the Id of a match.
@@ -609,7 +731,7 @@ type GetMatchResultModel struct {
 // region selection rule.
     RegionPreferences []string `json:"RegionPreferences,omitempty"`
     // ServerDetails the details of the server that the match has been allocated to.
-    ServerDetails ServerDetailsModel `json:"ServerDetails,omitempty"`
+    ServerDetails* ServerDetailsModel `json:"ServerDetails,omitempty"`
 }
 
 // GetMultiplayerServerDetailsRequest gets multiplayer server session details for a build in a specific region.
@@ -617,7 +739,7 @@ type GetMultiplayerServerDetailsRequestModel struct {
     // BuildId the guid string build ID of the multiplayer server to get details for.
     BuildId string `json:"BuildId,omitempty"`
     // Region the region the multiplayer server is located in to get details for.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // SessionId the title generated guid string session ID of the multiplayer server to get details for. This is to keep track of
 // multiplayer server sessions.
     SessionId string `json:"SessionId,omitempty"`
@@ -636,7 +758,7 @@ type GetMultiplayerServerDetailsResponseModel struct {
     // Ports the ports the multiplayer server uses.
     Ports []PortModel `json:"Ports,omitempty"`
     // Region the region the multiplayer server is located in.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // ServerId the string server ID of the multiplayer server generated by PlayFab.
     ServerId string `json:"ServerId,omitempty"`
     // SessionId the guid string session ID of the multiplayer server.
@@ -645,6 +767,28 @@ type GetMultiplayerServerDetailsResponseModel struct {
     State string `json:"State,omitempty"`
     // VmId the virtual machine ID that the multiplayer server is located on.
     VmId string `json:"VmId,omitempty"`
+}
+
+// GetMultiplayerServerLogsRequest gets multiplayer server logs for a specific server id in a region. The logs are available only after a server has
+// terminated.
+type GetMultiplayerServerLogsRequestModel struct {
+    // Region the region of the multiplayer server to get logs for.
+    Region string `json:"Region,omitempty"`
+    // ServerId the server ID of multiplayer server to get logs for.
+    ServerId string `json:"ServerId,omitempty"`
+}
+
+// GetMultiplayerServerLogsResponse 
+type GetMultiplayerServerLogsResponseModel struct {
+    // LogDownloadUrl uRL for logs download.
+    LogDownloadUrl string `json:"LogDownloadUrl,omitempty"`
+}
+
+// GetMultiplayerSessionLogsBySessionIdRequest gets multiplayer server logs for a specific server id in a region. The logs are available only after a server has
+// terminated.
+type GetMultiplayerSessionLogsBySessionIdRequestModel struct {
+    // SessionId the server ID of multiplayer server to get logs for.
+    SessionId string `json:"SessionId,omitempty"`
 }
 
 // GetQueueStatisticsRequest returns the matchmaking statistics for a queue. These include the number of players matching and the statistics related
@@ -662,7 +806,7 @@ type GetQueueStatisticsResultModel struct {
     // NumberOfPlayersMatching the current number of players in the matchmaking queue, who are waiting to be matched.
     NumberOfPlayersMatching uint32 `json:"NumberOfPlayersMatching,omitempty"`
     // TimeToMatchStatisticsInSeconds statistics representing the time (in seconds) it takes for tickets to find a match.
-    TimeToMatchStatisticsInSeconds StatisticsModel `json:"TimeToMatchStatisticsInSeconds,omitempty"`
+    TimeToMatchStatisticsInSeconds* StatisticsModel `json:"TimeToMatchStatisticsInSeconds,omitempty"`
 }
 
 // GetRemoteLoginEndpointRequest gets a remote login endpoint to a VM that is hosting a multiplayer server build in a specific region.
@@ -670,7 +814,7 @@ type GetRemoteLoginEndpointRequestModel struct {
     // BuildId the guid string build ID of the multiplayer server to get remote login information for.
     BuildId string `json:"BuildId,omitempty"`
     // Region the region of the multiplayer server to get remote login information for.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // VmId the virtual machine ID the multiplayer server is located on.
     VmId string `json:"VmId,omitempty"`
 }
@@ -681,6 +825,40 @@ type GetRemoteLoginEndpointResponseModel struct {
     IPV4Address string `json:"IPV4Address,omitempty"`
     // Port the remote login port of multiplayer server.
     Port int32 `json:"Port,omitempty"`
+}
+
+// GetServerBackfillTicketRequest the ticket includes the players, their attributes, their teams, the ticket status, the match Id and the server details
+// when applicable, etc. Only servers can get the ticket.
+type GetServerBackfillTicketRequestModel struct {
+    // EscapeObject determines whether the matchmaking attributes will be returned as an escaped JSON string or as an un-escaped JSON
+// object.
+    EscapeObject bool `json:"EscapeObject,omitempty"`
+    // QueueName the name of the queue to find a match for.
+    QueueName string `json:"QueueName,omitempty"`
+    // TicketId the Id of the ticket to find a match for.
+    TicketId string `json:"TicketId,omitempty"`
+}
+
+// GetServerBackfillTicketResult 
+type GetServerBackfillTicketResultModel struct {
+    // CancellationReasonString the reason why the current ticket was canceled. This field is only set if the ticket is in canceled state.
+    CancellationReasonString string `json:"CancellationReasonString,omitempty"`
+    // Created the server date and time at which ticket was created.
+    Created time.Time `json:"Created,omitempty"`
+    // GiveUpAfterSeconds how long to attempt matching this ticket in seconds.
+    GiveUpAfterSeconds int32 `json:"GiveUpAfterSeconds,omitempty"`
+    // MatchId the Id of a match.
+    MatchId string `json:"MatchId,omitempty"`
+    // Members a list of Users that are part of this ticket, along with their team assignments.
+    Members []MatchmakingPlayerWithTeamAssignmentModel `json:"Members,omitempty"`
+    // QueueName the Id of a match queue.
+    QueueName string `json:"QueueName,omitempty"`
+    // ServerDetails the details of the server the members are connected to.
+    ServerDetails* ServerDetailsModel `json:"ServerDetails,omitempty"`
+    // Status the current ticket status. Possible values are: WaitingForMatch, Canceled and Matched.
+    Status string `json:"Status,omitempty"`
+    // TicketId the Id of the ticket to find a match for.
+    TicketId string `json:"TicketId,omitempty"`
 }
 
 // GetTitleEnabledForMultiplayerServersStatusRequest gets the status of whether a title is enabled for the multiplayer server feature. The enabled status can be
@@ -701,7 +879,15 @@ type GetTitleMultiplayerServersQuotasRequestModel struct {
 // GetTitleMultiplayerServersQuotasResponse 
 type GetTitleMultiplayerServersQuotasResponseModel struct {
     // Quotas the various quotas for multiplayer servers for the title.
-    Quotas TitleMultiplayerServersQuotasModel `json:"Quotas,omitempty"`
+    Quotas* TitleMultiplayerServersQuotasModel `json:"Quotas,omitempty"`
+}
+
+// InstrumentationConfiguration 
+type InstrumentationConfigurationModel struct {
+    // ProcessesToMonitor the list of processes to be monitored on a VM for this build. Providing processes will turn on performance metrics
+// collection for this build. Process names should not include extensions. If the game server process is: GameServer.exe;
+// then, ProcessesToMonitor = [ GameServer ]
+    ProcessesToMonitor []string `json:"ProcessesToMonitor,omitempty"`
 }
 
 // JoinMatchmakingTicketRequest add the player to a matchmaking ticket and specify all of its matchmaking attributes. Players can join a ticket if and
@@ -710,7 +896,7 @@ type GetTitleMultiplayerServersQuotasResponseModel struct {
 // join a ticket once it has started matching.
 type JoinMatchmakingTicketRequestModel struct {
     // Member the User who wants to join the ticket. Their Id must be listed in PlayFabIdsToMatchWith.
-    Member MatchmakingPlayerModel `json:"Member,omitempty"`
+    Member* MatchmakingPlayerModel `json:"Member,omitempty"`
     // QueueName the name of the queue to join.
     QueueName string `json:"QueueName,omitempty"`
     // TicketId the Id of the ticket to find a match for.
@@ -737,6 +923,12 @@ type ListAssetSummariesResponseModel struct {
     PageSize int32 `json:"PageSize,omitempty"`
     // SkipToken the skip token for the paged response.
     SkipToken string `json:"SkipToken,omitempty"`
+}
+
+// ListBuildAliasesForTitleResponse 
+type ListBuildAliasesForTitleResponseModel struct {
+    // BuildAliases the list of build aliases for the title
+    BuildAliases []BuildAliasDetailsResponseModel `json:"BuildAliases,omitempty"`
 }
 
 // ListBuildSummariesRequest returns a list of summarized details of all multiplayer server builds for a title.
@@ -809,7 +1001,7 @@ type ListContainerImageTagsResponseModel struct {
 // it is provided it must match the caller's entity.
 type ListMatchmakingTicketsForPlayerRequestModel struct {
     // Entity the entity key for which to find the ticket Ids.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // QueueName the name of the queue to find a match for.
     QueueName string `json:"QueueName,omitempty"`
 }
@@ -827,7 +1019,7 @@ type ListMultiplayerServersRequestModel struct {
     // PageSize the page size for the request.
     PageSize int32 `json:"PageSize,omitempty"`
     // Region the region the multiplayer servers to list.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // SkipToken the skip token for the paged request.
     SkipToken string `json:"SkipToken,omitempty"`
 }
@@ -838,6 +1030,36 @@ type ListMultiplayerServersResponseModel struct {
     MultiplayerServerSummaries []MultiplayerServerSummaryModel `json:"MultiplayerServerSummaries,omitempty"`
     // PageSize the page size on the response.
     PageSize int32 `json:"PageSize,omitempty"`
+    // SkipToken the skip token for the paged response.
+    SkipToken string `json:"SkipToken,omitempty"`
+}
+
+// ListPartyQosServersRequest returns a list of quality of service servers for party.
+type ListPartyQosServersRequestModel struct {
+    // Version qos servers version
+    Version string `json:"Version,omitempty"`
+}
+
+// ListPartyQosServersResponse 
+type ListPartyQosServersResponseModel struct {
+    // PageSize the page size on the response.
+    PageSize int32 `json:"PageSize,omitempty"`
+    // QosServers the list of QoS servers.
+    QosServers []QosServerModel `json:"QosServers,omitempty"`
+    // SkipToken the skip token for the paged response.
+    SkipToken string `json:"SkipToken,omitempty"`
+}
+
+// ListQosServersForTitleRequest returns a list of quality of service servers for a title.
+type ListQosServersForTitleRequestModel struct {
+}
+
+// ListQosServersForTitleResponse 
+type ListQosServersForTitleResponseModel struct {
+    // PageSize the page size on the response.
+    PageSize int32 `json:"PageSize,omitempty"`
+    // QosServers the list of QoS servers.
+    QosServers []QosServerModel `json:"QosServers,omitempty"`
     // SkipToken the skip token for the paged response.
     SkipToken string `json:"SkipToken,omitempty"`
 }
@@ -856,6 +1078,20 @@ type ListQosServersResponseModel struct {
     SkipToken string `json:"SkipToken,omitempty"`
 }
 
+// ListServerBackfillTicketsForPlayerRequest list all server backfill ticket Ids the user is a member of.
+type ListServerBackfillTicketsForPlayerRequestModel struct {
+    // Entity the entity key for which to find the ticket Ids.
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
+    // QueueName the name of the queue the tickets are in.
+    QueueName string `json:"QueueName,omitempty"`
+}
+
+// ListServerBackfillTicketsForPlayerResult 
+type ListServerBackfillTicketsForPlayerResultModel struct {
+    // TicketIds the list of backfill ticket Ids the user is a member of.
+    TicketIds []string `json:"TicketIds,omitempty"`
+}
+
 // ListVirtualMachineSummariesRequest returns a list of virtual machines for a title.
 type ListVirtualMachineSummariesRequestModel struct {
     // BuildId the guid string build ID of the virtual machines to list.
@@ -863,7 +1099,7 @@ type ListVirtualMachineSummariesRequestModel struct {
     // PageSize the page size for the request.
     PageSize int32 `json:"PageSize,omitempty"`
     // Region the region of the virtual machines to list.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // SkipToken the skip token for the paged request.
     SkipToken string `json:"SkipToken,omitempty"`
 }
@@ -881,9 +1117,9 @@ type ListVirtualMachineSummariesResponseModel struct {
 // MatchmakingPlayer a user in a matchmaking ticket.
 type MatchmakingPlayerModel struct {
     // Attributes the user's attributes custom to the title.
-    Attributes MatchmakingPlayerAttributesModel `json:"Attributes,omitempty"`
+    Attributes* MatchmakingPlayerAttributesModel `json:"Attributes,omitempty"`
     // Entity the entity key of the matchmaking user.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // MatchmakingPlayerAttributes the matchmaking attributes for a user.
@@ -898,11 +1134,15 @@ type MatchmakingPlayerAttributesModel struct {
 type MatchmakingPlayerWithTeamAssignmentModel struct {
     // Attributes the user's attributes custom to the title. These attributes will be null unless the request has ReturnMemberAttributes
 // flag set to true.
-    Attributes MatchmakingPlayerAttributesModel `json:"Attributes,omitempty"`
+    Attributes* MatchmakingPlayerAttributesModel `json:"Attributes,omitempty"`
     // Entity the entity key of the matchmaking user.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // TeamId the Id of the team the User is assigned to.
     TeamId string `json:"TeamId,omitempty"`
+}
+
+// MultiplayerEmptyRequest returns a list of summarized details of all multiplayer server builds for a title.
+type MultiplayerEmptyRequestModel struct {
 }
 
 // MultiplayerServerSummary 
@@ -912,7 +1152,7 @@ type MultiplayerServerSummaryModel struct {
     // LastStateTransitionTime the time (UTC) at which a change in the multiplayer server state was observed.
     LastStateTransitionTime time.Time `json:"LastStateTransitionTime,omitempty"`
     // Region the region the multiplayer server is located in.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // ServerId the string server ID of the multiplayer server generated by PlayFab.
     ServerId string `json:"ServerId,omitempty"`
     // SessionId the title generated guid string session ID of the multiplayer server.
@@ -943,13 +1183,15 @@ const (
 // QosServer 
 type QosServerModel struct {
     // Region the region the QoS server is located in.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // ServerUrl the QoS server URL.
     ServerUrl string `json:"ServerUrl,omitempty"`
 }
 
 // RequestMultiplayerServerRequest requests a multiplayer server session from a particular build in any of the given preferred regions.
 type RequestMultiplayerServerRequestModel struct {
+    // BuildAliasParams the identifiers of the build alias to use for the request.
+    BuildAliasParams* BuildAliasParamsModel `json:"BuildAliasParams,omitempty"`
     // BuildId the guid string build ID of the multiplayer server to request.
     BuildId string `json:"BuildId,omitempty"`
     // InitialPlayers initial list of players (potentially matchmade) allowed to connect to the game. This list is passed to the game server
@@ -957,7 +1199,7 @@ type RequestMultiplayerServerRequestModel struct {
     InitialPlayers []string `json:"InitialPlayers,omitempty"`
     // PreferredRegions the preferred regions to request a multiplayer server from. The Multiplayer Service will iterate through the regions in
 // the specified order and allocate a server from the first one that has servers available.
-    PreferredRegions []AzureRegion `json:"PreferredRegions,omitempty"`
+    PreferredRegions []string `json:"PreferredRegions,omitempty"`
     // SessionCookie data encoded as a string that is passed to the game server when requested. This can be used to to communicate
 // information such as game mode or map through the request flow.
     SessionCookie string `json:"SessionCookie,omitempty"`
@@ -978,7 +1220,7 @@ type RequestMultiplayerServerResponseModel struct {
     // Ports the ports the multiplayer server uses.
     Ports []PortModel `json:"Ports,omitempty"`
     // Region the region the multiplayer server is located in.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // ServerId the string server ID of the multiplayer server generated by PlayFab.
     ServerId string `json:"ServerId,omitempty"`
     // SessionId the guid string session ID of the multiplayer server.
@@ -1021,7 +1263,7 @@ type ShutdownMultiplayerServerRequestModel struct {
     // BuildId the guid string build ID of the multiplayer server to delete.
     BuildId string `json:"BuildId,omitempty"`
     // Region the region of the multiplayer server to shut down.
-    Region AzureRegion `json:"Region,omitempty"`
+    Region string `json:"Region,omitempty"`
     // SessionId a guid string session ID of the multiplayer server to shut down.
     SessionId string `json:"SessionId,omitempty"`
 }
@@ -1052,6 +1294,25 @@ type TitleMultiplayerServersQuotasModel struct {
     CoreCapacities []CoreCapacityModel `json:"CoreCapacities,omitempty"`
 }
 
+// UntagContainerImageRequest removes the specified tag from the image. After this operation, a 'docker pull' will fail for the specified image and
+// tag combination. Morever, ListContainerImageTags will not return the specified tag.
+type UntagContainerImageRequestModel struct {
+    // ImageName the container image which tag we want to remove.
+    ImageName string `json:"ImageName,omitempty"`
+    // Tag the tag we want to remove.
+    Tag string `json:"Tag,omitempty"`
+}
+
+// UpdateBuildAliasRequest creates a multiplayer server build alias and returns the created alias.
+type UpdateBuildAliasRequestModel struct {
+    // AliasId the guid string alias Id of the alias to be updated.
+    AliasId string `json:"AliasId,omitempty"`
+    // AliasName the alias name.
+    AliasName string `json:"AliasName,omitempty"`
+    // BuildSelectionCriteria array of build selection criteria.
+    BuildSelectionCriteria []BuildSelectionCriterionModel `json:"BuildSelectionCriteria,omitempty"`
+}
+
 // UpdateBuildRegionsRequest updates a multiplayer server build's regions.
 type UpdateBuildRegionsRequestModel struct {
     // BuildId the guid string ID of the build we want to update regions for.
@@ -1063,7 +1324,7 @@ type UpdateBuildRegionsRequestModel struct {
 // UploadCertificateRequest uploads a multiplayer server game certificate.
 type UploadCertificateRequestModel struct {
     // GameCertificate the game certificate to upload.
-    GameCertificate CertificateModel `json:"GameCertificate,omitempty"`
+    GameCertificate* CertificateModel `json:"GameCertificate,omitempty"`
 }
 
 // VirtualMachineSummary 

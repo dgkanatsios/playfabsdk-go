@@ -46,6 +46,42 @@ func CancelAllMatchmakingTicketsForPlayer(settings *playfab.Settings, postData *
     return result, nil
 }
 
+// CancelAllServerBackfillTicketsForPlayer cancel all active backfill tickets the player is a member of in a given queue.
+// https://api.playfab.com/Documentation/Multiplayer/method/CancelAllServerBackfillTicketsForPlayer
+func CancelAllServerBackfillTicketsForPlayer(settings *playfab.Settings, postData *CancelAllServerBackfillTicketsForPlayerRequestModel, entityToken string) (*CancelAllServerBackfillTicketsForPlayerResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Match/CancelAllServerBackfillTicketsForPlayer", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CancelAllServerBackfillTicketsForPlayerResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // CancelMatchmakingTicket cancel a matchmaking ticket.
 // https://api.playfab.com/Documentation/Multiplayer/method/CancelMatchmakingTicket
 func CancelMatchmakingTicket(settings *playfab.Settings, postData *CancelMatchmakingTicketRequestModel, entityToken string) (*CancelMatchmakingTicketResultModel, error) {
@@ -63,6 +99,78 @@ func CancelMatchmakingTicket(settings *playfab.Settings, postData *CancelMatchma
     }
     
     result := &CancelMatchmakingTicketResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// CancelServerBackfillTicket cancel a server backfill ticket.
+// https://api.playfab.com/Documentation/Multiplayer/method/CancelServerBackfillTicket
+func CancelServerBackfillTicket(settings *playfab.Settings, postData *CancelServerBackfillTicketRequestModel, entityToken string) (*CancelServerBackfillTicketResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Match/CancelServerBackfillTicket", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CancelServerBackfillTicketResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// CreateBuildAlias creates a multiplayer server build alias.
+// https://api.playfab.com/Documentation/Multiplayer/method/CreateBuildAlias
+func CreateBuildAlias(settings *playfab.Settings, postData *CreateBuildAliasRequestModel, entityToken string) (*BuildAliasDetailsResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/CreateBuildAlias", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &BuildAliasDetailsResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -226,6 +334,44 @@ func CreateRemoteUser(settings *playfab.Settings, postData *CreateRemoteUserRequ
     return result, nil
 }
 
+// CreateServerBackfillTicket create a backfill matchmaking ticket as a server. A backfill ticket represents an ongoing game. The matchmaking service
+// automatically starts matching the backfill ticket against other matchmaking tickets. Backfill tickets cannot match with
+// other backfill tickets.
+// https://api.playfab.com/Documentation/Multiplayer/method/CreateServerBackfillTicket
+func CreateServerBackfillTicket(settings *playfab.Settings, postData *CreateServerBackfillTicketRequestModel, entityToken string) (*CreateServerBackfillTicketResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Match/CreateServerBackfillTicket", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CreateServerBackfillTicketResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // CreateServerMatchmakingTicket create a matchmaking ticket as a server. The matchmaking service automatically starts matching the ticket against other
 // matchmaking tickets.
 // https://api.playfab.com/Documentation/Multiplayer/method/CreateServerMatchmakingTicket
@@ -311,6 +457,42 @@ func DeleteBuild(settings *playfab.Settings, postData *DeleteBuildRequestModel, 
     }
 
     sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/DeleteBuild", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// DeleteBuildAlias deletes a multiplayer server build alias.
+// https://api.playfab.com/Documentation/Multiplayer/method/DeleteBuildAlias
+func DeleteBuildAlias(settings *playfab.Settings, postData *DeleteBuildAliasRequestModel, entityToken string) (*EmptyResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/DeleteBuildAlias", "X-EntityToken", entityToken)
     if err != nil {
         return nil, err
     }
@@ -515,6 +697,42 @@ func GetBuild(settings *playfab.Settings, postData *GetBuildRequestModel, entity
     return result, nil
 }
 
+// GetBuildAlias gets a multiplayer server build alias.
+// https://api.playfab.com/Documentation/Multiplayer/method/GetBuildAlias
+func GetBuildAlias(settings *playfab.Settings, postData *GetBuildAliasRequestModel, entityToken string) (*BuildAliasDetailsResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/GetBuildAlias", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &BuildAliasDetailsResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetContainerRegistryCredentials gets the credentials to the container registry.
 // https://api.playfab.com/Documentation/Multiplayer/method/GetContainerRegistryCredentials
 func GetContainerRegistryCredentials(settings *playfab.Settings, postData *GetContainerRegistryCredentialsRequestModel, entityToken string) (*GetContainerRegistryCredentialsResponseModel, error) {
@@ -659,6 +877,78 @@ func GetMultiplayerServerDetails(settings *playfab.Settings, postData *GetMultip
     return result, nil
 }
 
+// GetMultiplayerServerLogs gets multiplayer server logs after a server has terminated.
+// https://api.playfab.com/Documentation/Multiplayer/method/GetMultiplayerServerLogs
+func GetMultiplayerServerLogs(settings *playfab.Settings, postData *GetMultiplayerServerLogsRequestModel, entityToken string) (*GetMultiplayerServerLogsResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/GetMultiplayerServerLogs", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetMultiplayerServerLogsResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetMultiplayerSessionLogsBySessionId gets multiplayer server logs after a server has terminated.
+// https://api.playfab.com/Documentation/Multiplayer/method/GetMultiplayerSessionLogsBySessionId
+func GetMultiplayerSessionLogsBySessionId(settings *playfab.Settings, postData *GetMultiplayerSessionLogsBySessionIdRequestModel, entityToken string) (*GetMultiplayerServerLogsResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/GetMultiplayerSessionLogsBySessionId", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetMultiplayerServerLogsResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetQueueStatistics get the statistics for a queue.
 // https://api.playfab.com/Documentation/Multiplayer/method/GetQueueStatistics
 func GetQueueStatistics(settings *playfab.Settings, postData *GetQueueStatisticsRequestModel, entityToken string) (*GetQueueStatisticsResultModel, error) {
@@ -712,6 +1002,42 @@ func GetRemoteLoginEndpoint(settings *playfab.Settings, postData *GetRemoteLogin
     }
     
     result := &GetRemoteLoginEndpointResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetServerBackfillTicket get a matchmaking backfill ticket by ticket Id.
+// https://api.playfab.com/Documentation/Multiplayer/method/GetServerBackfillTicket
+func GetServerBackfillTicket(settings *playfab.Settings, postData *GetServerBackfillTicketRequestModel, entityToken string) (*GetServerBackfillTicketResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Match/GetServerBackfillTicket", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetServerBackfillTicketResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -911,7 +1237,45 @@ func ListAssetSummaries(settings *playfab.Settings, postData *ListAssetSummaries
     return result, nil
 }
 
-// ListBuildSummaries lists summarized details of all multiplayer server builds for a title.
+// ListBuildAliases lists details of all build aliases for a title. Accepts tokens for title and if game client access is enabled, allows
+// game client to request list of builds with player entity token.
+// https://api.playfab.com/Documentation/Multiplayer/method/ListBuildAliases
+func ListBuildAliases(settings *playfab.Settings, postData *MultiplayerEmptyRequestModel, entityToken string) (*ListBuildAliasesForTitleResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/ListBuildAliases", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ListBuildAliasesForTitleResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// ListBuildSummaries lists summarized details of all multiplayer server builds for a title. Accepts tokens for title and if game client
+// access is enabled, allows game client to request list of builds with player entity token.
 // https://api.playfab.com/Documentation/Multiplayer/method/ListBuildSummaries
 func ListBuildSummaries(settings *playfab.Settings, postData *ListBuildSummariesRequestModel, entityToken string) (*ListBuildSummariesResponseModel, error) {
     if entityToken == "" {
@@ -1127,6 +1491,42 @@ func ListMultiplayerServers(settings *playfab.Settings, postData *ListMultiplaye
     return result, nil
 }
 
+// ListPartyQosServers lists quality of service servers for party.
+// https://api.playfab.com/Documentation/Multiplayer/method/ListPartyQosServers
+func ListPartyQosServers(settings *playfab.Settings, postData *ListPartyQosServersRequestModel, entityToken string) (*ListPartyQosServersResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/ListPartyQosServers", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ListPartyQosServersResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // ListQosServers lists quality of service servers.
 // https://api.playfab.com/Documentation/Multiplayer/method/ListQosServers
 func ListQosServers(settings *playfab.Settings, postData *ListQosServersRequestModel, ) (*ListQosServersResponseModel, error) {
@@ -1142,6 +1542,78 @@ func ListQosServers(settings *playfab.Settings, postData *ListQosServersRequestM
     }
     
     result := &ListQosServersResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// ListQosServersForTitle lists quality of service servers.
+// https://api.playfab.com/Documentation/Multiplayer/method/ListQosServersForTitle
+func ListQosServersForTitle(settings *playfab.Settings, postData *ListQosServersForTitleRequestModel, entityToken string) (*ListQosServersForTitleResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/ListQosServersForTitle", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ListQosServersForTitleResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// ListServerBackfillTicketsForPlayer list all server backfill ticket Ids the user is a member of.
+// https://api.playfab.com/Documentation/Multiplayer/method/ListServerBackfillTicketsForPlayer
+func ListServerBackfillTicketsForPlayer(settings *playfab.Settings, postData *ListServerBackfillTicketsForPlayerRequestModel, entityToken string) (*ListServerBackfillTicketsForPlayerResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Match/ListServerBackfillTicketsForPlayer", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ListServerBackfillTicketsForPlayerResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1197,7 +1669,7 @@ func ListVirtualMachineSummaries(settings *playfab.Settings, postData *ListVirtu
     return result, nil
 }
 
-// RequestMultiplayerServer request a multiplayer server session. Accepts tokens for title and if game client accesss is enabled, allows game client
+// RequestMultiplayerServer request a multiplayer server session. Accepts tokens for title and if game client access is enabled, allows game client
 // to request a server with player entity token.
 // https://api.playfab.com/Documentation/Multiplayer/method/RequestMultiplayerServer
 func RequestMultiplayerServer(settings *playfab.Settings, postData *RequestMultiplayerServerRequestModel, entityToken string) (*RequestMultiplayerServerResponseModel, error) {
@@ -1287,6 +1759,78 @@ func ShutdownMultiplayerServer(settings *playfab.Settings, postData *ShutdownMul
     }
     
     result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UntagContainerImage untags a container image.
+// https://api.playfab.com/Documentation/Multiplayer/method/UntagContainerImage
+func UntagContainerImage(settings *playfab.Settings, postData *UntagContainerImageRequestModel, entityToken string) (*EmptyResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/UntagContainerImage", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UpdateBuildAlias creates a multiplayer server build alias.
+// https://api.playfab.com/Documentation/Multiplayer/method/UpdateBuildAlias
+func UpdateBuildAlias(settings *playfab.Settings, postData *UpdateBuildAliasRequestModel, entityToken string) (*BuildAliasDetailsResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/UpdateBuildAlias", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &BuildAliasDetailsResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,

@@ -408,6 +408,42 @@ func CreateCloudScriptTask(settings *playfab.Settings, postData *CreateCloudScri
     return result, nil
 }
 
+// CreateInsightsScheduledScalingTask create a Insights Scheduled Scaling task, which can scale Insights Performance Units on a schedule
+// https://api.playfab.com/Documentation/Admin/method/CreateInsightsScheduledScalingTask
+func CreateInsightsScheduledScalingTask(settings *playfab.Settings, postData *CreateInsightsScheduledScalingTaskRequestModel, developerSecretKey string) (*CreateTaskResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/CreateInsightsScheduledScalingTask", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CreateTaskResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // CreateOpenIdConnection registers a relationship between a title and an Open ID Connect provider.
 // https://api.playfab.com/Documentation/Admin/method/CreateOpenIdConnection
 func CreateOpenIdConnection(settings *playfab.Settings, postData *CreateOpenIdConnectionRequestModel, developerSecretKey string) (*EmptyResponseModel, error) {
@@ -1426,7 +1462,8 @@ func GetPlayerSharedSecrets(settings *playfab.Settings, postData *GetPlayerShare
 // GetPlayersInSegment allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match
 // the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span
 // on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected
-// in the results. AB Test segments are currently not supported by this operation.
+// in the results. AB Test segments are currently not supported by this operation. NOTE: This API is limited to being
+// called 30 times in one minute. You will be returned an error if you exceed this threshold.
 // https://api.playfab.com/Documentation/Admin/method/GetPlayersInSegment
 func GetPlayersInSegment(settings *playfab.Settings, postData *GetPlayersInSegmentRequestModel, developerSecretKey string) (*GetPlayersInSegmentResultModel, error) {
     if developerSecretKey == "" {

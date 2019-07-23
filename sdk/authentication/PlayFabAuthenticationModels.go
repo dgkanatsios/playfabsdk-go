@@ -6,7 +6,7 @@ import "time"
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
@@ -33,19 +33,43 @@ type EntityLineageModel struct {
 // cannot be expired or revoked.
 type GetEntityTokenRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // GetEntityTokenResponse 
 type GetEntityTokenResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // EntityToken the token used to set X-EntityToken for all entity based API calls.
     EntityToken string `json:"EntityToken,omitempty"`
     // TokenExpiration the time the token will expire, if it is an expiring token, in UTC.
     TokenExpiration time.Time `json:"TokenExpiration,omitempty"`
 }
 
+// LoginIdentityProvider 
+type LoginIdentityProvider string
+  
+const (
+     LoginIdentityProviderUnknown LoginIdentityProvider = "Unknown"
+     LoginIdentityProviderPlayFab LoginIdentityProvider = "PlayFab"
+     LoginIdentityProviderCustom LoginIdentityProvider = "Custom"
+     LoginIdentityProviderGameCenter LoginIdentityProvider = "GameCenter"
+     LoginIdentityProviderGooglePlay LoginIdentityProvider = "GooglePlay"
+     LoginIdentityProviderSteam LoginIdentityProvider = "Steam"
+     LoginIdentityProviderXBoxLive LoginIdentityProvider = "XBoxLive"
+     LoginIdentityProviderPSN LoginIdentityProvider = "PSN"
+     LoginIdentityProviderKongregate LoginIdentityProvider = "Kongregate"
+     LoginIdentityProviderFacebook LoginIdentityProvider = "Facebook"
+     LoginIdentityProviderIOSDevice LoginIdentityProvider = "IOSDevice"
+     LoginIdentityProviderAndroidDevice LoginIdentityProvider = "AndroidDevice"
+     LoginIdentityProviderTwitch LoginIdentityProvider = "Twitch"
+     LoginIdentityProviderWindowsHello LoginIdentityProvider = "WindowsHello"
+     LoginIdentityProviderGameServer LoginIdentityProvider = "GameServer"
+     LoginIdentityProviderCustomServer LoginIdentityProvider = "CustomServer"
+     LoginIdentityProviderNintendoSwitch LoginIdentityProvider = "NintendoSwitch"
+     LoginIdentityProviderFacebookInstantGames LoginIdentityProvider = "FacebookInstantGames"
+     LoginIdentityProviderOpenIdConnect LoginIdentityProvider = "OpenIdConnect"
+      )
 // ValidateEntityTokenRequest given an entity token, validates that it hasn't exipired or been revoked and will return details of the owner.
 type ValidateEntityTokenRequestModel struct {
     // EntityToken client EntityToken
@@ -55,7 +79,9 @@ type ValidateEntityTokenRequestModel struct {
 // ValidateEntityTokenResponse 
 type ValidateEntityTokenResponseModel struct {
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
+    // IdentityProvider the identity provider for this entity, for the given login
+    IdentityProvider LoginIdentityProvider `json:"IdentityProvider,omitempty"`
     // Lineage the lineage of this profile.
-    Lineage EntityLineageModel `json:"Lineage,omitempty"`
+    Lineage* EntityLineageModel `json:"Lineage,omitempty"`
 }

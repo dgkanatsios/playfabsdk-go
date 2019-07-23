@@ -35,7 +35,7 @@ type ActionsOnPlayersInSegmentTaskSummaryModel struct {
     // Status current status of the task instance.
     Status TaskInstanceStatus `json:"Status,omitempty"`
     // TaskIdentifier identifier of the task this instance belongs to.
-    TaskIdentifier NameIdentifierModel `json:"TaskIdentifier,omitempty"`
+    TaskIdentifier* NameIdentifierModel `json:"TaskIdentifier,omitempty"`
     // TaskInstanceId iD of the task instance.
     TaskInstanceId string `json:"TaskInstanceId,omitempty"`
     // TotalPlayersInSegment total players in segment when task was started.
@@ -241,16 +241,16 @@ type BlankResultModel struct {
 type CatalogItemModel struct {
     // Bundle defines the bundle properties for the item - bundles are items which contain other items, including random drop tables
 // and virtual currencies
-    Bundle CatalogItemBundleInfoModel `json:"Bundle,omitempty"`
+    Bundle* CatalogItemBundleInfoModel `json:"Bundle,omitempty"`
     // CanBecomeCharacter if true, then an item instance of this type can be used to grant a character to a user.
     CanBecomeCharacter bool `json:"CanBecomeCharacter,omitempty"`
     // CatalogVersion catalog version for this item
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // Consumable defines the consumable properties (number of uses, timeout) for the item
-    Consumable CatalogItemConsumableInfoModel `json:"Consumable,omitempty"`
+    Consumable* CatalogItemConsumableInfoModel `json:"Consumable,omitempty"`
     // Container defines the container properties for the item - what items it contains, including random drop tables and virtual
 // currencies, and what item (if any) is required to open it via the UnlockContainerItem API
-    Container CatalogItemContainerInfoModel `json:"Container,omitempty"`
+    Container* CatalogItemContainerInfoModel `json:"Container,omitempty"`
     // CustomData game specific custom data
     CustomData string `json:"CustomData,omitempty"`
     // Description text description of item, to show in-game
@@ -367,7 +367,7 @@ type CloudScriptTaskSummaryModel struct {
     // PercentComplete progress represented as percentage.
     PercentComplete float64 `json:"PercentComplete,omitempty"`
     // Result result of CloudScript execution
-    Result ExecuteCloudScriptResultModel `json:"Result,omitempty"`
+    Result* ExecuteCloudScriptResultModel `json:"Result,omitempty"`
     // ScheduledByUserId if manually scheduled, ID of user who scheduled the task.
     ScheduledByUserId string `json:"ScheduledByUserId,omitempty"`
     // StartedAt uTC timestamp when the task started.
@@ -375,7 +375,7 @@ type CloudScriptTaskSummaryModel struct {
     // Status current status of the task instance.
     Status TaskInstanceStatus `json:"Status,omitempty"`
     // TaskIdentifier identifier of the task this instance belongs to.
-    TaskIdentifier NameIdentifierModel `json:"TaskIdentifier,omitempty"`
+    TaskIdentifier* NameIdentifierModel `json:"TaskIdentifier,omitempty"`
     // TaskInstanceId iD of the task instance.
     TaskInstanceId string `json:"TaskInstanceId,omitempty"`
 }
@@ -704,7 +704,7 @@ type CreateActionsOnPlayerSegmentTaskRequestModel struct {
     // Name name of the task. This is a unique identifier for tasks in the title.
     Name string `json:"Name,omitempty"`
     // Parameter task details related to segment and action
-    Parameter ActionsOnPlayersInSegmentTaskParameterModel `json:"Parameter,omitempty"`
+    Parameter* ActionsOnPlayersInSegmentTaskParameterModel `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
     Schedule string `json:"Schedule,omitempty"`
 }
@@ -719,7 +719,22 @@ type CreateCloudScriptTaskRequestModel struct {
     // Name name of the task. This is a unique identifier for tasks in the title.
     Name string `json:"Name,omitempty"`
     // Parameter task details related to CloudScript
-    Parameter CloudScriptTaskParameterModel `json:"Parameter,omitempty"`
+    Parameter* CloudScriptTaskParameterModel `json:"Parameter,omitempty"`
+    // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
+    Schedule string `json:"Schedule,omitempty"`
+}
+
+// CreateInsightsScheduledScalingTaskRequest task name is unique within a title. Using a task name that's already taken will cause a name conflict error. Too many
+// create-task requests within a short time will cause a create conflict error.
+type CreateInsightsScheduledScalingTaskRequestModel struct {
+    // Description description the task
+    Description string `json:"Description,omitempty"`
+    // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
+    IsActive bool `json:"IsActive,omitempty"`
+    // Name name of the task. This is a unique identifier for tasks in the title.
+    Name string `json:"Name,omitempty"`
+    // Parameter task details related to Insights Scaling
+    Parameter* InsightsScalingTaskParameterModel `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
     Schedule string `json:"Schedule,omitempty"`
 }
@@ -738,7 +753,7 @@ type CreateOpenIdConnectionRequestModel struct {
 // https://example.com/.well-known/openid-configuration
     IssuerDiscoveryUrl string `json:"IssuerDiscoveryUrl,omitempty"`
     // IssuerInformation manually specified information for an OpenID Connect issuer.
-    IssuerInformation OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
+    IssuerInformation* OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
 }
 
 // CreatePlayerSharedSecretRequest player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an
@@ -778,7 +793,7 @@ type CreatePlayerStatisticDefinitionRequestModel struct {
 // CreatePlayerStatisticDefinitionResult 
 type CreatePlayerStatisticDefinitionResultModel struct {
     // Statistic created statistic definition
-    Statistic PlayerStatisticDefinitionModel `json:"Statistic,omitempty"`
+    Statistic* PlayerStatisticDefinitionModel `json:"Statistic,omitempty"`
 }
 
 // CreateTaskResult 
@@ -1035,7 +1050,7 @@ type DeleteStoreResultModel struct {
 // task specified does not exist, the deletion is considered a success.
 type DeleteTaskRequestModel struct {
     // Identifier specify either the task ID or the name of task to be deleted.
-    Identifier NameIdentifierModel `json:"Identifier,omitempty"`
+    Identifier* NameIdentifierModel `json:"Identifier,omitempty"`
 }
 
 // DeleteTitleRequest deletes all data associated with the title, including catalog, virtual currencies, leaderboard statistics, Cloud Script
@@ -1075,7 +1090,7 @@ type EmptyResponseModel struct {
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
@@ -1084,7 +1099,7 @@ type ExecuteCloudScriptResultModel struct {
     // APIRequestsIssued number of PlayFab API requests issued by the CloudScript function
     APIRequestsIssued int32 `json:"APIRequestsIssued,omitempty"`
     // Error information about the error, if any, that occurred during execution
-    Error ScriptExecutionErrorModel `json:"Error,omitempty"`
+    Error* ScriptExecutionErrorModel `json:"Error,omitempty"`
     // ExecutionTimeSeconds 
     ExecutionTimeSeconds float64 `json:"ExecutionTimeSeconds,omitempty"`
     // FunctionName the name of the function that executed
@@ -1599,6 +1614,7 @@ const (
      GenericErrorCodesQueryRateLimitExceeded GenericErrorCodes = "QueryRateLimitExceeded"
      GenericErrorCodesEntityAPIKeyCreationDisabledForEntity GenericErrorCodes = "EntityAPIKeyCreationDisabledForEntity"
      GenericErrorCodesForbiddenByEntityPolicy GenericErrorCodes = "ForbiddenByEntityPolicy"
+     GenericErrorCodesUpdateInventoryRateLimitExceeded GenericErrorCodes = "UpdateInventoryRateLimitExceeded"
      GenericErrorCodesStudioCreationRateLimited GenericErrorCodes = "StudioCreationRateLimited"
      GenericErrorCodesStudioCreationInProgress GenericErrorCodes = "StudioCreationInProgress"
      GenericErrorCodesDuplicateStudioName GenericErrorCodes = "DuplicateStudioName"
@@ -1625,6 +1641,21 @@ const (
      GenericErrorCodesVirtualCurrencyBetaRestoreError GenericErrorCodes = "VirtualCurrencyBetaRestoreError"
      GenericErrorCodesVirtualCurrencyBetaSaveConflict GenericErrorCodes = "VirtualCurrencyBetaSaveConflict"
      GenericErrorCodesVirtualCurrencyBetaUpdateError GenericErrorCodes = "VirtualCurrencyBetaUpdateError"
+     GenericErrorCodesInsightsManagementDatabaseNotFound GenericErrorCodes = "InsightsManagementDatabaseNotFound"
+     GenericErrorCodesInsightsManagementOperationNotFound GenericErrorCodes = "InsightsManagementOperationNotFound"
+     GenericErrorCodesInsightsManagementErrorPendingOperationExists GenericErrorCodes = "InsightsManagementErrorPendingOperationExists"
+     GenericErrorCodesInsightsManagementSetPerformanceLevelInvalidParameter GenericErrorCodes = "InsightsManagementSetPerformanceLevelInvalidParameter"
+     GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter GenericErrorCodes = "InsightsManagementSetStorageRetentionInvalidParameter"
+     GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter GenericErrorCodes = "InsightsManagementGetStorageUsageInvalidParameter"
+     GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter GenericErrorCodes = "InsightsManagementGetOperationStatusInvalidParameter"
+     GenericErrorCodesDuplicatePurchaseTransactionId GenericErrorCodes = "DuplicatePurchaseTransactionId"
+     GenericErrorCodesEvaluationModePlayerCountExceeded GenericErrorCodes = "EvaluationModePlayerCountExceeded"
+     GenericErrorCodesGetPlayersInSegmentRateLimitExceeded GenericErrorCodes = "GetPlayersInSegmentRateLimitExceeded"
+     GenericErrorCodesCloudScriptFunctionNameSizeExceeded GenericErrorCodes = "CloudScriptFunctionNameSizeExceeded"
+     GenericErrorCodesInsightsManagementTitleInEvaluationMode GenericErrorCodes = "InsightsManagementTitleInEvaluationMode"
+     GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError GenericErrorCodes = "CloudScriptAzureFunctionsQueueRequestError"
+     GenericErrorCodesEvaluationModeTitleCountExceeded GenericErrorCodes = "EvaluationModeTitleCountExceeded"
+     GenericErrorCodesInsightsManagementTitleNotInFlight GenericErrorCodes = "InsightsManagementTitleNotInFlight"
      GenericErrorCodesMatchmakingEntityInvalid GenericErrorCodes = "MatchmakingEntityInvalid"
      GenericErrorCodesMatchmakingPlayerAttributesInvalid GenericErrorCodes = "MatchmakingPlayerAttributesInvalid"
      GenericErrorCodesMatchmakingQueueNotFound GenericErrorCodes = "MatchmakingQueueNotFound"
@@ -1661,6 +1692,8 @@ const (
      GenericErrorCodesCatalogConfigInvalid GenericErrorCodes = "CatalogConfigInvalid"
      GenericErrorCodesCatalogUnauthorized GenericErrorCodes = "CatalogUnauthorized"
      GenericErrorCodesCatalogItemTypeInvalid GenericErrorCodes = "CatalogItemTypeInvalid"
+     GenericErrorCodesCatalogBadRequest GenericErrorCodes = "CatalogBadRequest"
+     GenericErrorCodesCatalogTooManyRequests GenericErrorCodes = "CatalogTooManyRequests"
      GenericErrorCodesExportInvalidStatusUpdate GenericErrorCodes = "ExportInvalidStatusUpdate"
      GenericErrorCodesExportInvalidPrefix GenericErrorCodes = "ExportInvalidPrefix"
      GenericErrorCodesExportBlobContainerDoesNotExist GenericErrorCodes = "ExportBlobContainerDoesNotExist"
@@ -1675,6 +1708,10 @@ const (
      GenericErrorCodesExportCantEditPendingExport GenericErrorCodes = "ExportCantEditPendingExport"
      GenericErrorCodesExportLimitExports GenericErrorCodes = "ExportLimitExports"
      GenericErrorCodesExportLimitEvents GenericErrorCodes = "ExportLimitEvents"
+     GenericErrorCodesExportInvalidPartitionStatusModification GenericErrorCodes = "ExportInvalidPartitionStatusModification"
+     GenericErrorCodesExportCouldNotCreate GenericErrorCodes = "ExportCouldNotCreate"
+     GenericErrorCodesExportNoBackingDatabaseFound GenericErrorCodes = "ExportNoBackingDatabaseFound"
+     GenericErrorCodesExportCouldNotDelete GenericErrorCodes = "ExportCouldNotDelete"
      GenericErrorCodesTitleNotEnabledForParty GenericErrorCodes = "TitleNotEnabledForParty"
      GenericErrorCodesPartyVersionNotFound GenericErrorCodes = "PartyVersionNotFound"
      GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue GenericErrorCodes = "MultiplayerServerBuildReferencedByMatchmakingQueue"
@@ -1684,17 +1721,23 @@ const (
      GenericErrorCodesExperimentationExperimentNeverStarted GenericErrorCodes = "ExperimentationExperimentNeverStarted"
      GenericErrorCodesExperimentationExperimentDeleted GenericErrorCodes = "ExperimentationExperimentDeleted"
      GenericErrorCodesExperimentationClientTimeout GenericErrorCodes = "ExperimentationClientTimeout"
-     GenericErrorCodesExperimentationExceededVariantNameLength GenericErrorCodes = "ExperimentationExceededVariantNameLength"
-     GenericErrorCodesExperimentationExceededMaxVariantLength GenericErrorCodes = "ExperimentationExceededMaxVariantLength"
+     GenericErrorCodesExperimentationInvalidVariantConfiguration GenericErrorCodes = "ExperimentationInvalidVariantConfiguration"
+     GenericErrorCodesExperimentationInvalidVariableConfiguration GenericErrorCodes = "ExperimentationInvalidVariableConfiguration"
      GenericErrorCodesExperimentInvalidId GenericErrorCodes = "ExperimentInvalidId"
+     GenericErrorCodesExperimentationNoScorecard GenericErrorCodes = "ExperimentationNoScorecard"
+     GenericErrorCodesExperimentationTreatmentAssignmentFailed GenericErrorCodes = "ExperimentationTreatmentAssignmentFailed"
+     GenericErrorCodesExperimentationTreatmentAssignmentDisabled GenericErrorCodes = "ExperimentationTreatmentAssignmentDisabled"
+     GenericErrorCodesExperimentationInvalidDuration GenericErrorCodes = "ExperimentationInvalidDuration"
+     GenericErrorCodesExperimentationMaxExperimentsReached GenericErrorCodes = "ExperimentationMaxExperimentsReached"
+     GenericErrorCodesMaxActionDepthExceeded GenericErrorCodes = "MaxActionDepthExceeded"
      GenericErrorCodesSnapshotNotFound GenericErrorCodes = "SnapshotNotFound"
       )
 // GetActionsOnPlayersInSegmentTaskInstanceResult 
 type GetActionsOnPlayersInSegmentTaskInstanceResultModel struct {
     // Parameter parameter of this task instance
-    Parameter ActionsOnPlayersInSegmentTaskParameterModel `json:"Parameter,omitempty"`
+    Parameter* ActionsOnPlayersInSegmentTaskParameterModel `json:"Parameter,omitempty"`
     // Summary status summary of the actions-on-players-in-segment task instance
-    Summary ActionsOnPlayersInSegmentTaskSummaryModel `json:"Summary,omitempty"`
+    Summary* ActionsOnPlayersInSegmentTaskSummaryModel `json:"Summary,omitempty"`
 }
 
 // GetAllSegmentsRequest request has no paramaters.
@@ -1744,9 +1787,9 @@ type GetCloudScriptRevisionResultModel struct {
 // GetCloudScriptTaskInstanceResult 
 type GetCloudScriptTaskInstanceResultModel struct {
     // Parameter parameter of this task instance
-    Parameter CloudScriptTaskParameterModel `json:"Parameter,omitempty"`
+    Parameter* CloudScriptTaskParameterModel `json:"Parameter,omitempty"`
     // Summary status summary of the CloudScript task instance
-    Summary CloudScriptTaskSummaryModel `json:"Summary,omitempty"`
+    Summary* CloudScriptTaskSummaryModel `json:"Summary,omitempty"`
 }
 
 // GetCloudScriptVersionsRequest 
@@ -1806,7 +1849,8 @@ type GetDataReportRequestModel struct {
 
 // GetDataReportResult 
 type GetDataReportResultModel struct {
-    // DownloadUrl the URL where the requested report can be downloaded.
+    // DownloadUrl the URL where the requested report can be downloaded. This can be any PlayFab generated reports. The full list of
+// reports can be found at: https://docs.microsoft.com/en-us/gaming/playfab/features/analytics/reports/quickstart.
     DownloadUrl string `json:"DownloadUrl,omitempty"`
 }
 
@@ -1895,14 +1939,14 @@ type GetPlayerProfileRequestModel struct {
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
-    ProfileConstraints PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
+    ProfileConstraints* PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
 }
 
 // GetPlayerProfileResult 
 type GetPlayerProfileResultModel struct {
     // PlayerProfile the profile of the player. This profile is not guaranteed to be up-to-date. For a new player, this profile will not
 // exist.
-    PlayerProfile PlayerProfileModelModel `json:"PlayerProfile,omitempty"`
+    PlayerProfile* PlayerProfileModelModel `json:"PlayerProfile,omitempty"`
 }
 
 // GetPlayerSegmentsResult 
@@ -2126,7 +2170,7 @@ type GetStoreItemsResultModel struct {
     // CatalogVersion the base catalog that this store is a part of.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // MarketingData additional data about the store.
-    MarketingData StoreMarketingModelModel `json:"MarketingData,omitempty"`
+    MarketingData* StoreMarketingModelModel `json:"MarketingData,omitempty"`
     // Source how the store was last updated (Admin or a third party).
     Source SourceType `json:"Source,omitempty"`
     // Store array of items which can be purchased from this store.
@@ -2155,7 +2199,7 @@ type GetTaskInstancesRequestModel struct {
     StatusFilter TaskInstanceStatus `json:"StatusFilter,omitempty"`
     // TaskIdentifier name or ID of the task whose instances are being queried. If not specified, return all task instances that satisfy
 // conditions set by other filters.
-    TaskIdentifier NameIdentifierModel `json:"TaskIdentifier,omitempty"`
+    TaskIdentifier* NameIdentifierModel `json:"TaskIdentifier,omitempty"`
 }
 
 // GetTaskInstancesResult 
@@ -2169,7 +2213,7 @@ type GetTaskInstancesResultModel struct {
 // GetTasksRequest 
 type GetTasksRequestModel struct {
     // Identifier provide either the task ID or the task name to get a specific task. If not specified, return all defined tasks.
-    Identifier NameIdentifierModel `json:"Identifier,omitempty"`
+    Identifier* NameIdentifierModel `json:"Identifier,omitempty"`
 }
 
 // GetTasksResult 
@@ -2249,7 +2293,11 @@ type GetUserInventoryResultModel struct {
     VirtualCurrencyRechargeTimes map[string]VirtualCurrencyRechargeTimeModel `json:"VirtualCurrencyRechargeTimes,omitempty"`
 }
 
-// GrantedItemInstance result of granting an item to a user
+// GrantedItemInstance result of granting an item to a user. Note, to retrieve additional information for an item such as Tags, Description
+// that are the same across all instances of the item, a call to GetCatalogItems is required. The ItemID of can be matched
+// to a catalog entry, which contains the additional information. Also note that Custom Data is only set when the User's
+// specific instance has updated the CustomData via a call to UpdateUserInventoryItemCustomData. Other fields such as
+// UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type GrantedItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
     Annotation string `json:"Annotation,omitempty"`
@@ -2262,7 +2310,8 @@ type GrantedItemInstanceModel struct {
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
-    // CustomData a set of custom key-value pairs on the inventory item.
+    // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
+// item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
     DisplayName string `json:"DisplayName,omitempty"`
@@ -2282,9 +2331,9 @@ type GrantedItemInstanceModel struct {
     RemainingUses int32 `json:"RemainingUses,omitempty"`
     // Result result of this operation.
     Result bool `json:"Result,omitempty"`
-    // UnitCurrency currency type for the cost of the catalog item.
+    // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
     UnitCurrency string `json:"UnitCurrency,omitempty"`
-    // UnitPrice cost of the catalog item in the given currency.
+    // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
     UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
     UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
@@ -2340,7 +2389,13 @@ type IncrementPlayerStatisticVersionRequestModel struct {
 // IncrementPlayerStatisticVersionResult 
 type IncrementPlayerStatisticVersionResultModel struct {
     // StatisticVersion version change history of the statistic
-    StatisticVersion PlayerStatisticVersionModel `json:"StatisticVersion,omitempty"`
+    StatisticVersion* PlayerStatisticVersionModel `json:"StatisticVersion,omitempty"`
+}
+
+// InsightsScalingTaskParameter 
+type InsightsScalingTaskParameterModel struct {
+    // Level insights Performance Level to scale to.
+    Level int32 `json:"Level,omitempty"`
 }
 
 // ItemGrant 
@@ -2361,10 +2416,11 @@ type ItemGrantModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
-// ItemInstance a unique instance of an item in a user's inventory. Note, to retrieve additional information for an item instance (such
-// as Tags, Description, or Custom Data that are set on the root catalog item), a call to GetCatalogItems is required. The
-// Item ID of the instance can then be matched to a catalog entry, which contains the additional information. Also note
-// that Custom Data is only set here from a call to UpdateUserInventoryItemCustomData.
+// ItemInstance a unique instance of an item in a user's inventory. Note, to retrieve additional information for an item such as Tags,
+// Description that are the same across all instances of the item, a call to GetCatalogItems is required. The ItemID of can
+// be matched to a catalog entry, which contains the additional information. Also note that Custom Data is only set when
+// the User's specific instance has updated the CustomData via a call to UpdateUserInventoryItemCustomData. Other fields
+// such as UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type ItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
     Annotation string `json:"Annotation,omitempty"`
@@ -2375,7 +2431,8 @@ type ItemInstanceModel struct {
     BundleParent string `json:"BundleParent,omitempty"`
     // CatalogVersion catalog version for the inventory item, when this instance was created.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
-    // CustomData a set of custom key-value pairs on the inventory item.
+    // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
+// item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
     DisplayName string `json:"DisplayName,omitempty"`
@@ -2391,9 +2448,9 @@ type ItemInstanceModel struct {
     PurchaseDate time.Time `json:"PurchaseDate,omitempty"`
     // RemainingUses total number of remaining uses, if this is a consumable item.
     RemainingUses int32 `json:"RemainingUses,omitempty"`
-    // UnitCurrency currency type for the cost of the catalog item.
+    // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
     UnitCurrency string `json:"UnitCurrency,omitempty"`
-    // UnitPrice cost of the catalog item in the given currency.
+    // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
     UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
     UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
@@ -2507,7 +2564,7 @@ type LookupUserAccountInfoRequestModel struct {
 // LookupUserAccountInfoResult 
 type LookupUserAccountInfoResultModel struct {
     // UserInfo user info for the user matching the request
-    UserInfo UserAccountInfoModel `json:"UserInfo,omitempty"`
+    UserInfo* UserAccountInfoModel `json:"UserInfo,omitempty"`
 }
 
 // MembershipModel 
@@ -2621,7 +2678,7 @@ type OpenIdConnectionModel struct {
     // DiscoverConfiguration shows if data about the connection will be loaded from the issuer's discovery document
     DiscoverConfiguration bool `json:"DiscoverConfiguration,omitempty"`
     // IssuerInformation information for an OpenID Connect provider.
-    IssuerInformation OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
+    IssuerInformation* OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
 }
 
 // OpenIdIssuerInformation 
@@ -2641,7 +2698,7 @@ type PermissionStatementModel struct {
     // Action the action this statement effects. The only supported action is 'Execute'.
     Action string `json:"Action,omitempty"`
     // ApiConditions additional conditions to be applied for API Resources.
-    ApiConditions ApiConditionModel `json:"ApiConditions,omitempty"`
+    ApiConditions* ApiConditionModel `json:"ApiConditions,omitempty"`
     // Comment a comment about the statement. Intended solely for bookkeeping and debugging.
     Comment string `json:"Comment,omitempty"`
     // Effect the effect this statement will have. It could be either Allow or Deny
@@ -2701,6 +2758,8 @@ type PlayerProfileModel struct {
     Locations map[string]PlayerLocationModel `json:"Locations,omitempty"`
     // Origination player account origination
     Origination LoginIdentityProvider `json:"Origination,omitempty"`
+    // PlayerExperimentVariants list of player variants for experimentation
+    PlayerExperimentVariants []string `json:"PlayerExperimentVariants,omitempty"`
     // PlayerId playFab Player ID
     PlayerId string `json:"PlayerId,omitempty"`
     // PlayerStatistics array of player statistics
@@ -2737,6 +2796,8 @@ type PlayerProfileModelModel struct {
     Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
     DisplayName string `json:"DisplayName,omitempty"`
+    // ExperimentVariants list of experiment variants for the player.
+    ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
     LastLogin time.Time `json:"LastLogin,omitempty"`
     // LinkedAccounts list of all authentication systems linked to this player account
@@ -2780,6 +2841,8 @@ type PlayerProfileViewConstraintsModel struct {
     ShowCreated bool `json:"ShowCreated,omitempty"`
     // ShowDisplayName whether to show the display name. Defaults to false
     ShowDisplayName bool `json:"ShowDisplayName,omitempty"`
+    // ShowExperimentVariants whether to show player's experiment variants. Defaults to false
+    ShowExperimentVariants bool `json:"ShowExperimentVariants,omitempty"`
     // ShowLastLogin whether to show the last login time. Defaults to false
     ShowLastLogin bool `json:"ShowLastLogin,omitempty"`
     // ShowLinkedAccounts whether to show the linked accounts. Defaults to false
@@ -3108,13 +3171,13 @@ type RevokeItemErrorModel struct {
     // Error specific error that was encountered.
     Error GenericErrorCodes `json:"Error,omitempty"`
     // Item item information that failed to be revoked.
-    Item RevokeInventoryItemModel `json:"Item,omitempty"`
+    Item* RevokeInventoryItemModel `json:"Item,omitempty"`
 }
 
 // RunTaskRequest the returned task instance ID can be used to query for task execution status.
 type RunTaskRequestModel struct {
     // Identifier provide either the task ID or the task name to run a task.
-    Identifier NameIdentifierModel `json:"Identifier,omitempty"`
+    Identifier* NameIdentifierModel `json:"Identifier,omitempty"`
 }
 
 // RunTaskResult 
@@ -3154,6 +3217,7 @@ const (
      ScheduledTaskTypeCloudScript ScheduledTaskType = "CloudScript"
      ScheduledTaskTypeActionsOnPlayerSegment ScheduledTaskType = "ActionsOnPlayerSegment"
      ScheduledTaskTypeCloudScriptAzureFunctions ScheduledTaskType = "CloudScriptAzureFunctions"
+     ScheduledTaskTypeInsightsScheduledScaling ScheduledTaskType = "InsightsScheduledScaling"
       )
 // ScriptExecutionError 
 type ScriptExecutionErrorModel struct {
@@ -3426,7 +3490,7 @@ type TaskInstanceBasicSummaryModel struct {
     // Status current status of the task instance.
     Status TaskInstanceStatus `json:"Status,omitempty"`
     // TaskIdentifier identifier of the task this instance belongs to.
-    TaskIdentifier NameIdentifierModel `json:"TaskIdentifier,omitempty"`
+    TaskIdentifier* NameIdentifierModel `json:"TaskIdentifier,omitempty"`
     // TaskInstanceId iD of the task instance.
     TaskInstanceId string `json:"TaskInstanceId,omitempty"`
     // Type type of the task.
@@ -3532,7 +3596,7 @@ type UpdateOpenIdConnectionRequestModel struct {
     // IssuerDiscoveryUrl the issuer URL or discovery document URL to read issuer information from
     IssuerDiscoveryUrl string `json:"IssuerDiscoveryUrl,omitempty"`
     // IssuerInformation manually specified information for an OpenID Connect issuer.
-    IssuerInformation OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
+    IssuerInformation* OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
 }
 
 // UpdatePlayerSharedSecretRequest player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an
@@ -3575,7 +3639,7 @@ type UpdatePlayerStatisticDefinitionRequestModel struct {
 // UpdatePlayerStatisticDefinitionResult 
 type UpdatePlayerStatisticDefinitionResultModel struct {
     // Statistic updated statistic definition
-    Statistic PlayerStatisticDefinitionModel `json:"Statistic,omitempty"`
+    Statistic* PlayerStatisticDefinitionModel `json:"Statistic,omitempty"`
 }
 
 // UpdatePolicyRequest updates permissions for your title. Policies affect what is allowed to happen on your title. Your policy is a collection
@@ -3626,7 +3690,7 @@ type UpdateStoreItemsRequestModel struct {
     // CatalogVersion catalog version of the store to update. If null, uses the default catalog.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // MarketingData additional data about the store
-    MarketingData StoreMarketingModelModel `json:"MarketingData,omitempty"`
+    MarketingData* StoreMarketingModelModel `json:"MarketingData,omitempty"`
     // Store array of store items - references to catalog items, with specific pricing - to be added
     Store []StoreItemModel `json:"Store,omitempty"`
     // StoreId unique identifier for the store which is to be updated
@@ -3645,7 +3709,7 @@ type UpdateTaskRequestModel struct {
     // Description description the task
     Description string `json:"Description,omitempty"`
     // Identifier specify either the task ID or the name of the task to be updated.
-    Identifier NameIdentifierModel `json:"Identifier,omitempty"`
+    Identifier* NameIdentifierModel `json:"Identifier,omitempty"`
     // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
     IsActive bool `json:"IsActive,omitempty"`
     // Name name of the task. This is a unique identifier for tasks in the title.
@@ -3714,45 +3778,45 @@ type UpdateUserTitleDisplayNameResultModel struct {
 // UserAccountInfo 
 type UserAccountInfoModel struct {
     // AndroidDeviceInfo user Android device information, if an Android device has been linked
-    AndroidDeviceInfo UserAndroidDeviceInfoModel `json:"AndroidDeviceInfo,omitempty"`
+    AndroidDeviceInfo* UserAndroidDeviceInfoModel `json:"AndroidDeviceInfo,omitempty"`
     // Created timestamp indicating when the user account was created
     Created time.Time `json:"Created,omitempty"`
     // CustomIdInfo custom ID information, if a custom ID has been assigned
-    CustomIdInfo UserCustomIdInfoModel `json:"CustomIdInfo,omitempty"`
+    CustomIdInfo* UserCustomIdInfoModel `json:"CustomIdInfo,omitempty"`
     // FacebookInfo user Facebook information, if a Facebook account has been linked
-    FacebookInfo UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
+    FacebookInfo* UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
     // FacebookInstantGamesIdInfo facebook Instant Games account information, if a Facebook Instant Games account has been linked
-    FacebookInstantGamesIdInfo UserFacebookInstantGamesIdInfoModel `json:"FacebookInstantGamesIdInfo,omitempty"`
+    FacebookInstantGamesIdInfo* UserFacebookInstantGamesIdInfoModel `json:"FacebookInstantGamesIdInfo,omitempty"`
     // GameCenterInfo user Gamecenter information, if a Gamecenter account has been linked
-    GameCenterInfo UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
+    GameCenterInfo* UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // GoogleInfo user Google account information, if a Google account has been linked
-    GoogleInfo UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
+    GoogleInfo* UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
     // IosDeviceInfo user iOS device information, if an iOS device has been linked
-    IosDeviceInfo UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
+    IosDeviceInfo* UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
     // KongregateInfo user Kongregate account information, if a Kongregate account has been linked
-    KongregateInfo UserKongregateInfoModel `json:"KongregateInfo,omitempty"`
+    KongregateInfo* UserKongregateInfoModel `json:"KongregateInfo,omitempty"`
     // NintendoSwitchDeviceIdInfo nintendo Switch account information, if a Nintendo Switch account has been linked
-    NintendoSwitchDeviceIdInfo UserNintendoSwitchDeviceIdInfoModel `json:"NintendoSwitchDeviceIdInfo,omitempty"`
+    NintendoSwitchDeviceIdInfo* UserNintendoSwitchDeviceIdInfoModel `json:"NintendoSwitchDeviceIdInfo,omitempty"`
     // OpenIdInfo openID Connect information, if any OpenID Connect accounts have been linked
     OpenIdInfo []UserOpenIdInfoModel `json:"OpenIdInfo,omitempty"`
     // PlayFabId unique identifier for the user account
     PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
-    PrivateInfo UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
+    PrivateInfo* UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
     // PsnInfo user PSN account information, if a PSN account has been linked
-    PsnInfo UserPsnInfoModel `json:"PsnInfo,omitempty"`
+    PsnInfo* UserPsnInfoModel `json:"PsnInfo,omitempty"`
     // SteamInfo user Steam information, if a Steam account has been linked
-    SteamInfo UserSteamInfoModel `json:"SteamInfo,omitempty"`
+    SteamInfo* UserSteamInfoModel `json:"SteamInfo,omitempty"`
     // TitleInfo title-specific information for the user account
-    TitleInfo UserTitleInfoModel `json:"TitleInfo,omitempty"`
+    TitleInfo* UserTitleInfoModel `json:"TitleInfo,omitempty"`
     // TwitchInfo user Twitch account information, if a Twitch account has been linked
-    TwitchInfo UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
+    TwitchInfo* UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
     Username string `json:"Username,omitempty"`
     // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
-    WindowsHelloInfo UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
+    WindowsHelloInfo* UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
-    XboxInfo UserXboxInfoModel `json:"XboxInfo,omitempty"`
+    XboxInfo* UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
 
 // UserAndroidDeviceInfo 
@@ -3924,7 +3988,7 @@ type UserTitleInfoModel struct {
     // Origination source by which the user first joined the game, if known
     Origination UserOrigination `json:"Origination,omitempty"`
     // TitlePlayerAccount title player account entity for this user
-    TitlePlayerAccount EntityKeyModel `json:"TitlePlayerAccount,omitempty"`
+    TitlePlayerAccount* EntityKeyModel `json:"TitlePlayerAccount,omitempty"`
 }
 
 // UserTwitchInfo 

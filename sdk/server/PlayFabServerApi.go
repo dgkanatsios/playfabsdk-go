@@ -159,7 +159,8 @@ func AddPlayerTag(settings *playfab.Settings, postData *AddPlayerTagRequestModel
 
 // AddSharedGroupMembers adds users to the set of those able to update both the shared data, as well as the set of users in the group. Only users
 // in the group (and the server) can add new members. Shared Groups are designed for sharing data between a very small
-// number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+// number of players, please see our guide:
+// https://docs.microsoft.com/gaming/playfab/features/social/groups/using-shared-group-data
 // https://api.playfab.com/Documentation/Server/method/AddSharedGroupMembers
 func AddSharedGroupMembers(settings *playfab.Settings, postData *AddSharedGroupMembersRequestModel, developerSecretKey string) (*AddSharedGroupMembersResultModel, error) {
     if developerSecretKey == "" {
@@ -378,7 +379,7 @@ func ConsumeItem(settings *playfab.Settings, postData *ConsumeItemRequestModel, 
 // CreateSharedGroup requests the creation of a shared group object, containing key/value pairs which may be updated by all members of the
 // group. When created by a server, the group will initially have no members. Shared Groups are designed for sharing data
 // between a very small number of players, please see our guide:
-// https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+// https://docs.microsoft.com/gaming/playfab/features/social/groups/using-shared-group-data
 // https://api.playfab.com/Documentation/Server/method/CreateSharedGroup
 func CreateSharedGroup(settings *playfab.Settings, postData *CreateSharedGroupRequestModel, developerSecretKey string) (*CreateSharedGroupResultModel, error) {
     if developerSecretKey == "" {
@@ -524,7 +525,7 @@ func DeletePushNotificationTemplate(settings *playfab.Settings, postData *Delete
 
 // DeleteSharedGroup deletes a shared group, freeing up the shared group ID to be reused for a new group. Shared Groups are designed for
 // sharing data between a very small number of players, please see our guide:
-// https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+// https://docs.microsoft.com/gaming/playfab/features/social/groups/using-shared-group-data
 // https://api.playfab.com/Documentation/Server/method/DeleteSharedGroup
 func DeleteSharedGroup(settings *playfab.Settings, postData *DeleteSharedGroupRequestModel, developerSecretKey string) (*EmptyResponseModel, error) {
     if developerSecretKey == "" {
@@ -999,7 +1000,7 @@ func GetCharacterStatistics(settings *playfab.Settings, postData *GetCharacterSt
 // URL will attempt to download the content. A HEAD query to the returned URL will attempt to retrieve the metadata of the
 // content. Note that a successful result does not guarantee the existence of this content - if it has not been uploaded,
 // the query to retrieve the data will fail. See this post for more information:
-// https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service. Also,
+// https://community.playfab.com/hc/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service. Also,
 // please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN rates apply.
 // https://api.playfab.com/Documentation/Server/method/GetContentDownloadUrl
 func GetContentDownloadUrl(settings *playfab.Settings, postData *GetContentDownloadUrlRequestModel, developerSecretKey string) (*GetContentDownloadUrlResultModel, error) {
@@ -1366,7 +1367,8 @@ func GetPlayerSegments(settings *playfab.Settings, postData *GetPlayersSegmentsR
 // GetPlayersInSegment allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match
 // the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span
 // on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected
-// in the results. AB Test segments are currently not supported by this operation.
+// in the results. AB Test segments are currently not supported by this operation. NOTE: This API is limited to being
+// called 30 times in one minute. You will be returned an error if you exceed this threshold.
 // https://api.playfab.com/Documentation/Server/method/GetPlayersInSegment
 func GetPlayersInSegment(settings *playfab.Settings, postData *GetPlayersInSegmentRequestModel, developerSecretKey string) (*GetPlayersInSegmentResultModel, error) {
     if developerSecretKey == "" {
@@ -1876,7 +1878,7 @@ func GetServerCustomIDsFromPlayFabIDs(settings *playfab.Settings, postData *GetS
 
 // GetSharedGroupData retrieves data stored in a shared group object, as well as the list of members in the group. The server can access all
 // public and private group data. Shared Groups are designed for sharing data between a very small number of players,
-// please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+// please see our guide: https://docs.microsoft.com/gaming/playfab/features/social/groups/using-shared-group-data
 // https://api.playfab.com/Documentation/Server/method/GetSharedGroupData
 func GetSharedGroupData(settings *playfab.Settings, postData *GetSharedGroupDataRequestModel, developerSecretKey string) (*GetSharedGroupDataResultModel, error) {
     if developerSecretKey == "" {
@@ -1893,6 +1895,42 @@ func GetSharedGroupData(settings *playfab.Settings, postData *GetSharedGroupData
     }
     
     result := &GetSharedGroupDataResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetStoreItems retrieves the set of items defined for the specified store, including all prices defined, for the specified player
+// https://api.playfab.com/Documentation/Server/method/GetStoreItems
+func GetStoreItems(settings *playfab.Settings, postData *GetStoreItemsServerRequestModel, developerSecretKey string) (*GetStoreItemsResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/GetStoreItems", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetStoreItemsResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -2525,6 +2563,42 @@ func GrantItemsToUsers(settings *playfab.Settings, postData *GrantItemsToUsersRe
     return result, nil
 }
 
+// LinkPSNAccount links the PlayStation Network account associated with the provided access code to the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/LinkPSNAccount
+func LinkPSNAccount(settings *playfab.Settings, postData *LinkPSNAccountRequestModel, developerSecretKey string) (*LinkPSNAccountResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LinkPSNAccount", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LinkPSNAccountResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // LinkServerCustomId links the custom server identifier, generated by the title, to the user's PlayFab account.
 // https://api.playfab.com/Documentation/Server/method/LinkServerCustomId
 func LinkServerCustomId(settings *playfab.Settings, postData *LinkServerCustomIdRequestModel, developerSecretKey string) (*LinkServerCustomIdResultModel, error) {
@@ -2647,6 +2721,43 @@ func LoginWithXbox(settings *playfab.Settings, postData *LoginWithXboxRequestMod
     }
 
     sourceMap, err := playfab.Request(settings, b, "/Server/LoginWithXbox", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ServerLoginResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LoginWithXboxId signs the user in using an Xbox ID and Sandbox ID, returning a session identifier that can subsequently be used for API
+// calls which require an authenticated user
+// https://api.playfab.com/Documentation/Server/method/LoginWithXboxId
+func LoginWithXboxId(settings *playfab.Settings, postData *LoginWithXboxIdRequestModel, developerSecretKey string) (*ServerLoginResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LoginWithXboxId", "X-SecretKey", developerSecretKey)
     if err != nil {
         return nil, err
     }
@@ -3107,7 +3218,7 @@ func RemovePlayerTag(settings *playfab.Settings, postData *RemovePlayerTagReques
 // RemoveSharedGroupMembers removes users from the set of those able to update the shared data and the set of users in the group. Only users in the
 // group can remove members. If as a result of the call, zero users remain with access, the group and its associated data
 // will be deleted. Shared Groups are designed for sharing data between a very small number of players, please see our
-// guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+// guide: https://docs.microsoft.com/gaming/playfab/features/social/groups/using-shared-group-data
 // https://api.playfab.com/Documentation/Server/method/RemoveSharedGroupMembers
 func RemoveSharedGroupMembers(settings *playfab.Settings, postData *RemoveSharedGroupMembersRequestModel, developerSecretKey string) (*RemoveSharedGroupMembersResultModel, error) {
     if developerSecretKey == "" {
@@ -3870,6 +3981,42 @@ func SubtractUserVirtualCurrency(settings *playfab.Settings, postData *SubtractU
     return result, nil
 }
 
+// UnlinkPSNAccount unlinks the related PSN account from the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/UnlinkPSNAccount
+func UnlinkPSNAccount(settings *playfab.Settings, postData *UnlinkPSNAccountRequestModel, developerSecretKey string) (*UnlinkPSNAccountResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/UnlinkPSNAccount", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &UnlinkPSNAccountResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // UnlinkServerCustomId unlinks the custom server identifier from the user's PlayFab account.
 // https://api.playfab.com/Documentation/Server/method/UnlinkServerCustomId
 func UnlinkServerCustomId(settings *playfab.Settings, postData *UnlinkServerCustomIdRequestModel, developerSecretKey string) (*UnlinkServerCustomIdResultModel, error) {
@@ -4275,7 +4422,7 @@ func UpdatePlayerStatistics(settings *playfab.Settings, postData *UpdatePlayerSt
 // or added in this call will be readable by users not in the group. By default, data permissions are set to Private.
 // Regardless of the permission setting, only members of the group (and the server) can update the data. Shared Groups are
 // designed for sharing data between a very small number of players, please see our guide:
-// https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+// https://docs.microsoft.com/gaming/playfab/features/social/groups/using-shared-group-data
 // https://api.playfab.com/Documentation/Server/method/UpdateSharedGroupData
 func UpdateSharedGroupData(settings *playfab.Settings, postData *UpdateSharedGroupDataRequestModel, developerSecretKey string) (*UpdateSharedGroupDataResultModel, error) {
     if developerSecretKey == "" {

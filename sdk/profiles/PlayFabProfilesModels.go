@@ -23,7 +23,7 @@ type EntityDataObjectModel struct {
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
@@ -69,9 +69,11 @@ type EntityProfileBodyModel struct {
 // player account it could represent the display name of the player, whereas on a character it could be character's name.
     DisplayName string `json:"DisplayName,omitempty"`
     // Entity the entity id and type.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // EntityChain the chain of responsibility for this entity. Use Lineage.
     EntityChain string `json:"EntityChain,omitempty"`
+    // ExperimentVariants the experiment variants of this profile.
+    ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // Files the files on this profile.
     Files map[string]EntityProfileFileMetadataModel `json:"Files,omitempty"`
     // Language the language on this profile.
@@ -79,7 +81,7 @@ type EntityProfileBodyModel struct {
     // LeaderboardMetadata leaderboard metadata for the entity.
     LeaderboardMetadata string `json:"LeaderboardMetadata,omitempty"`
     // Lineage the lineage of this profile.
-    Lineage EntityLineageModel `json:"Lineage,omitempty"`
+    Lineage* EntityLineageModel `json:"Lineage,omitempty"`
     // Objects the objects on this profile.
     Objects map[string]EntityDataObjectModel `json:"Objects,omitempty"`
     // Permissions the permissions that govern access to this entity profile and its properties. Only includes permissions set on this
@@ -138,13 +140,13 @@ type GetEntityProfileRequestModel struct {
 // JSON string.
     DataAsObject bool `json:"DataAsObject,omitempty"`
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // GetEntityProfileResponse 
 type GetEntityProfileResponseModel struct {
     // Profile entity profile
-    Profile EntityProfileBodyModel `json:"Profile,omitempty"`
+    Profile* EntityProfileBodyModel `json:"Profile,omitempty"`
 }
 
 // GetEntityProfilesRequest given a set of entity types and entity identifiers will retrieve all readable profiles properties for the caller.
@@ -184,6 +186,8 @@ type GetTitlePlayersFromMasterPlayerAccountIdsRequestModel struct {
 
 // GetTitlePlayersFromMasterPlayerAccountIdsResponse 
 type GetTitlePlayersFromMasterPlayerAccountIdsResponseModel struct {
+    // TitleId optional id of title to get players from, required if calling using a master_player_account.
+    TitleId string `json:"TitleId,omitempty"`
     // TitlePlayerAccounts dictionary of master player ids mapped to title player entity keys and id pairs
     TitlePlayerAccounts map[string]EntityKeyModel `json:"TitlePlayerAccounts,omitempty"`
 }
@@ -201,7 +205,7 @@ const (
 // will be replaced with the statements in this request.
 type SetEntityProfilePolicyRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Statements the statements to include in the access policy.
     Statements []EntityPermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -228,7 +232,7 @@ type SetGlobalPolicyResponseModel struct {
 // passed in.
 type SetProfileLanguageRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // ExpectedVersion the expected version of a profile to perform this update on
     ExpectedVersion int32 `json:"ExpectedVersion,omitempty"`
     // Language the language to set on the given entity. Deletes the profile's language if passed in a null string.

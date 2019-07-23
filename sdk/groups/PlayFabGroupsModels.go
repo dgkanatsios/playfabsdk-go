@@ -7,9 +7,9 @@ import "time"
 type AcceptGroupApplicationRequestModel struct {
     // Entity optional. Type of the entity to accept as. If specified, must be the same entity as the claimant or an entity that is a
 // child of the claimant entity. Defaults to the claimant entity.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // AcceptGroupInvitationRequest accepts an outstanding invitation to join the group if the invited entity is not blocked by the group. Only the invited
@@ -17,9 +17,9 @@ type AcceptGroupApplicationRequestModel struct {
 // returned in the case of success.
 type AcceptGroupInvitationRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // AddMembersRequest adds members to a group or role. Existing members of the group will added to roles within the group, but if the user is
@@ -27,7 +27,7 @@ type AcceptGroupInvitationRequestModel struct {
 // application or invite system to add new members to a group. Returns nothing if successful.
 type AddMembersRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // Members list of entities to add to the group. Only entities of type title_player_account and character may be added to groups.
     Members []EntityKeyModel `json:"Members,omitempty"`
     // RoleId optional: The ID of the existing role to add the entities to. If this is not specified, the default member role for the
@@ -44,19 +44,19 @@ type ApplyToGroupRequestModel struct {
     // AutoAcceptOutstandingInvite optional, default true. Automatically accept an outstanding invitation if one exists instead of creating an application
     AutoAcceptOutstandingInvite bool `json:"AutoAcceptOutstandingInvite,omitempty"`
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // ApplyToGroupResponse describes an application to join a group
 type ApplyToGroupResponseModel struct {
     // Entity type of entity that requested membership
-    Entity EntityWithLineageModel `json:"Entity,omitempty"`
+    Entity* EntityWithLineageModel `json:"Entity,omitempty"`
     // Expires when the application to join will expire and be deleted
     Expires time.Time `json:"Expires,omitempty"`
     // Group iD of the group that the entity requesting membership to
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // BlockEntityRequest blocks a list of entities from joining a group. Blocked entities may not create new applications to join, be invited to
@@ -64,9 +64,9 @@ type ApplyToGroupResponseModel struct {
 // applications or invitations to the group. No data is returned in the case of success.
 type BlockEntityRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // ChangeMemberRoleRequest changes the role membership of a list of entities from one role to another in in a single operation. The destination
@@ -77,7 +77,7 @@ type ChangeMemberRoleRequestModel struct {
 // and 64 characters long.
     DestinationRoleId string `json:"DestinationRoleId,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // Members list of entities to move between roles in the group. All entities in this list must be members of the group and origin
 // role.
     Members []EntityKeyModel `json:"Members,omitempty"`
@@ -89,7 +89,7 @@ type ChangeMemberRoleRequestModel struct {
 // information about the group that was created.
 type CreateGroupRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // GroupName the name of the group. This is unique at the title level by default.
     GroupName string `json:"GroupName,omitempty"`
 }
@@ -101,7 +101,7 @@ type CreateGroupResponseModel struct {
     // Created the server date and time the group was created.
     Created time.Time `json:"Created,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // GroupName the name of the group.
     GroupName string `json:"GroupName,omitempty"`
     // MemberRoleId the ID of the default member role for the group.
@@ -117,7 +117,7 @@ type CreateGroupResponseModel struct {
 // about the role that was created.
 type CreateGroupRoleRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // RoleId the ID of the role. This must be unique within the group and cannot be changed. Role IDs must be between 1 and 64
 // characters long.
     RoleId string `json:"RoleId,omitempty"`
@@ -141,13 +141,13 @@ type CreateGroupRoleResponseModel struct {
 // abuse reports about the group will remain. No data is returned in the case of success.
 type DeleteGroupRequestModel struct {
     // Group iD of the group or role to remove
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // DeleteRoleRequest returns information about the role
 type DeleteRoleRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // RoleId the ID of the role to delete. Role IDs must be between 1 and 64 characters long.
     RoleId string `json:"RoleId,omitempty"`
 }
@@ -160,7 +160,7 @@ type EmptyResponseModel struct {
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
@@ -177,7 +177,7 @@ type EntityMemberRoleModel struct {
 // EntityWithLineage entity wrapper class that contains the entity key and the entities that make up the lineage of the entity.
 type EntityWithLineageModel struct {
     // Key the entity key for the specified entity
-    Key EntityKeyModel `json:"Key,omitempty"`
+    Key* EntityKeyModel `json:"Key,omitempty"`
     // Lineage dictionary of entity keys for related entities. Dictionary key is entity type.
     Lineage map[string]EntityKeyModel `json:"Lineage,omitempty"`
 }
@@ -185,7 +185,7 @@ type EntityWithLineageModel struct {
 // GetGroupRequest returns the ID, name, role list and other non-membership related information about a group.
 type GetGroupRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // GroupName the full name of the group
     GroupName string `json:"GroupName,omitempty"`
 }
@@ -197,7 +197,7 @@ type GetGroupResponseModel struct {
     // Created the server date and time the group was created.
     Created time.Time `json:"Created,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // GroupName the name of the group.
     GroupName string `json:"GroupName,omitempty"`
     // MemberRoleId the ID of the default member role for the group.
@@ -211,19 +211,19 @@ type GetGroupResponseModel struct {
 // GroupApplication describes an application to join a group
 type GroupApplicationModel struct {
     // Entity type of entity that requested membership
-    Entity EntityWithLineageModel `json:"Entity,omitempty"`
+    Entity* EntityWithLineageModel `json:"Entity,omitempty"`
     // Expires when the application to join will expire and be deleted
     Expires time.Time `json:"Expires,omitempty"`
     // Group iD of the group that the entity requesting membership to
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // GroupBlock describes an entity that is blocked from joining a group.
 type GroupBlockModel struct {
     // Entity the entity that is blocked
-    Entity EntityWithLineageModel `json:"Entity,omitempty"`
+    Entity* EntityWithLineageModel `json:"Entity,omitempty"`
     // Group iD of the group that the entity is blocked from
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // GroupInvitation describes an invitation to a group.
@@ -231,11 +231,11 @@ type GroupInvitationModel struct {
     // Expires when the invitation will expire and be deleted
     Expires time.Time `json:"Expires,omitempty"`
     // Group the group that the entity invited to
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // InvitedByEntity the entity that created the invitation
-    InvitedByEntity EntityWithLineageModel `json:"InvitedByEntity,omitempty"`
+    InvitedByEntity* EntityWithLineageModel `json:"InvitedByEntity,omitempty"`
     // InvitedEntity the entity that is invited
-    InvitedEntity EntityWithLineageModel `json:"InvitedEntity,omitempty"`
+    InvitedEntity* EntityWithLineageModel `json:"InvitedEntity,omitempty"`
     // RoleId iD of the role in the group to assign the user to.
     RoleId string `json:"RoleId,omitempty"`
 }
@@ -251,7 +251,7 @@ type GroupRoleModel struct {
 // GroupWithRoles describes a group and the roles that it contains
 type GroupWithRolesModel struct {
     // Group iD for the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // GroupName the name of the group
     GroupName string `json:"GroupName,omitempty"`
     // ProfileVersion the current version of the profile, can be used for concurrency control during updates.
@@ -269,9 +269,9 @@ type InviteToGroupRequestModel struct {
     // AutoAcceptOutstandingApplication optional, default true. Automatically accept an application if one exists instead of creating an invitation
     AutoAcceptOutstandingApplication bool `json:"AutoAcceptOutstandingApplication,omitempty"`
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // RoleId optional. ID of an existing a role in the group to assign the user to. The group's default member role is used if this
 // is not specified. Role IDs must be between 1 and 64 characters long.
     RoleId string `json:"RoleId,omitempty"`
@@ -282,11 +282,11 @@ type InviteToGroupResponseModel struct {
     // Expires when the invitation will expire and be deleted
     Expires time.Time `json:"Expires,omitempty"`
     // Group the group that the entity invited to
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // InvitedByEntity the entity that created the invitation
-    InvitedByEntity EntityWithLineageModel `json:"InvitedByEntity,omitempty"`
+    InvitedByEntity* EntityWithLineageModel `json:"InvitedByEntity,omitempty"`
     // InvitedEntity the entity that is invited
-    InvitedEntity EntityWithLineageModel `json:"InvitedEntity,omitempty"`
+    InvitedEntity* EntityWithLineageModel `json:"InvitedEntity,omitempty"`
     // RoleId iD of the role in the group to assign the user to.
     RoleId string `json:"RoleId,omitempty"`
 }
@@ -296,9 +296,9 @@ type InviteToGroupResponseModel struct {
 // list.
 type IsMemberRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // RoleId optional: ID of the role to check membership of. Defaults to any role (that is, check to see if the entity is a member
 // of the group in any capacity) if not specified.
     RoleId string `json:"RoleId,omitempty"`
@@ -314,7 +314,7 @@ type IsMemberResponseModel struct {
 // expire. To get the group applications for a specific entity, use ListMembershipOpportunities.
 type ListGroupApplicationsRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // ListGroupApplicationsResponse 
@@ -326,7 +326,7 @@ type ListGroupApplicationsResponseModel struct {
 // ListGroupBlocksRequest lists all entities blocked from joining a group. A list of blocked entities is returned
 type ListGroupBlocksRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // ListGroupBlocksResponse 
@@ -339,7 +339,7 @@ type ListGroupBlocksResponseModel struct {
 // invitation will expire. To get the group invitations for a specific entity, use ListMembershipOpportunities.
 type ListGroupInvitationsRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // ListGroupInvitationsResponse 
@@ -353,7 +353,7 @@ type ListGroupInvitationsResponseModel struct {
 // the group.
 type ListGroupMembersRequestModel struct {
     // Group iD of the group to list the members and roles for
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // ListGroupMembersResponse 
@@ -367,7 +367,7 @@ type ListGroupMembersResponseModel struct {
 // check if a player is trying to join, use ListGroupInvitations and ListGroupApplications.
 type ListMembershipOpportunitiesRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // ListMembershipOpportunitiesResponse 
@@ -383,7 +383,7 @@ type ListMembershipOpportunitiesResponseModel struct {
 // returned in the results, even if the caller otherwise has permission to see that the entity is a member of that group.
 type ListMembershipRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // ListMembershipResponse 
@@ -406,9 +406,9 @@ const (
 // any caller with appropriate access in the group may reject an application. No data is returned in the case of success.
 type RemoveGroupApplicationRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // RemoveGroupInvitationRequest removes an existing invitation to join the group. This is used for both rejection of an invitation as well as rescinding
@@ -417,16 +417,16 @@ type RemoveGroupApplicationRequestModel struct {
 // of success.
 type RemoveGroupInvitationRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // RemoveMembersRequest removes members from a group. A member can always remove themselves from a group, regardless of permissions. Returns
 // nothing if successful.
 type RemoveMembersRequestModel struct {
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // Members list of entities to remove
     Members []EntityKeyModel `json:"Members,omitempty"`
     // RoleId the ID of the role to remove the entities from.
@@ -436,9 +436,9 @@ type RemoveMembersRequestModel struct {
 // UnblockEntityRequest unblocks a list of entities from joining a group. No data is returned in the case of success.
 type UnblockEntityRequestModel struct {
     // Entity the entity to perform this action on.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
 }
 
 // UpdateGroupRequest updates data about a group, such as the name or default member role. Returns information about whether the update was
@@ -451,7 +451,7 @@ type UpdateGroupRequestModel struct {
 // other clients since the version you last loaded.
     ExpectedProfileVersion int32 `json:"ExpectedProfileVersion,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // GroupName optional: the new name of the group
     GroupName string `json:"GroupName,omitempty"`
     // MemberRoleId optional: the ID of an existing role to set as the new member role for the group
@@ -475,7 +475,7 @@ type UpdateGroupRoleRequestModel struct {
 // other clients since the version you last loaded.
     ExpectedProfileVersion int32 `json:"ExpectedProfileVersion,omitempty"`
     // Group the identifier of the group
-    Group EntityKeyModel `json:"Group,omitempty"`
+    Group* EntityKeyModel `json:"Group,omitempty"`
     // RoleId iD of the role to update. Role IDs must be between 1 and 64 characters long.
     RoleId string `json:"RoleId,omitempty"`
     // RoleName the new name of the role

@@ -6,15 +6,15 @@ import "time"
 type EntityKeyModel struct {
     // Id unique ID of the entity.
     Id string `json:"Id,omitempty"`
-    // Type entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes
+    // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
 }
 
 // EventContents 
 type EventContentsModel struct {
     // Entity entity associated with the event. If null, the event will apply to the calling entity.
-    Entity EntityKeyModel `json:"Entity,omitempty"`
-    // EventNamespace the namespace in which the event is defined. It must begin with 'com.playfab.events.'
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
+    // EventNamespace the namespace in which the event is defined. Allowed namespaces can vary by API.
     EventNamespace string `json:"EventNamespace,omitempty"`
     // Name the name of this event.
     Name string `json:"Name,omitempty"`
