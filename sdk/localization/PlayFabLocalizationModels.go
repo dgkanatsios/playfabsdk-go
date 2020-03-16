@@ -1,11 +1,11 @@
 package localization
- 
-// GetLanguageListRequest 
+
+// GetLanguageListRequest
 type GetLanguageListRequestModel struct {
 }
 
-// GetLanguageListResponse 
+// GetLanguageListResponse
 type GetLanguageListResponseModel struct {
-    // LanguageList the list of allowed languages, in BCP47 two-letter format
-    LanguageList []string `json:"LanguageList,omitempty"`
+	// LanguageList the list of allowed languages, in BCP47 two-letter format
+	LanguageList []string `json:"LanguageList,omitempty"`
 }
