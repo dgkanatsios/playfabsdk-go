@@ -28,8 +28,8 @@ type PlayFabResponse struct {
 
 // CustomError contains data about an error during HTTP operation
 type CustomError struct {
-	msg      string
-	Code     ErrorCode
+	msg       string
+	Code      ErrorCode
 	Response *PlayFabResponse
 }
 
