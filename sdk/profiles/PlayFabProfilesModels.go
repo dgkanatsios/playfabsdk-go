@@ -12,74 +12,74 @@ const (
 // EntityDataObject an entity object and its associated meta data.
 type EntityDataObjectModel struct {
     // DataObject un-escaped JSON object, if DataAsObject is true.
-    DataObject interface{} `json:"DataObject"`
+    DataObject interface{} `json:"DataObject,omitempty"`
     // EscapedDataObject escaped string JSON body of the object, if DataAsObject is default or false.
-    EscapedDataObject string `json:"EscapedDataObject"`
+    EscapedDataObject string `json:"EscapedDataObject,omitempty"`
     // ObjectName name of this object.
-    ObjectName string `json:"ObjectName"`
+    ObjectName string `json:"ObjectName,omitempty"`
 }
 
 // EntityKey combined entity type and ID structure which uniquely identifies a single entity.
 type EntityKeyModel struct {
     // Id unique ID of the entity.
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
-    Type string `json:"Type"`
+    Type string `json:"Type,omitempty"`
 }
 
 // EntityLineage 
 type EntityLineageModel struct {
     // CharacterId the Character Id of the associated entity.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // GroupId the Group Id of the associated entity.
-    GroupId string `json:"GroupId"`
+    GroupId string `json:"GroupId,omitempty"`
     // MasterPlayerAccountId the Master Player Account Id of the associated entity.
-    MasterPlayerAccountId string `json:"MasterPlayerAccountId"`
+    MasterPlayerAccountId string `json:"MasterPlayerAccountId,omitempty"`
     // NamespaceId the Namespace Id of the associated entity.
-    NamespaceId string `json:"NamespaceId"`
+    NamespaceId string `json:"NamespaceId,omitempty"`
     // TitleId the Title Id of the associated entity.
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
     // TitlePlayerAccountId the Title Player Account Id of the associated entity.
-    TitlePlayerAccountId string `json:"TitlePlayerAccountId"`
+    TitlePlayerAccountId string `json:"TitlePlayerAccountId,omitempty"`
 }
 
 // EntityPermissionStatement 
 type EntityPermissionStatementModel struct {
     // Action the action this statement effects. May be 'Read', 'Write' or '*' for both read and write.
-    Action string `json:"Action"`
+    Action string `json:"Action,omitempty"`
     // Comment a comment about the statement. Intended solely for bookkeeping and debugging.
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // Condition additional conditions to be applied for entity resources.
-    Condition interface{} `json:"Condition"`
+    Condition interface{} `json:"Condition,omitempty"`
     // Effect the effect this statement will have. It may be either Allow or Deny
-    Effect EffectType `json:"Effect"`
+    Effect EffectType `json:"Effect,omitempty"`
     // Principal the principal this statement will effect.
-    Principal interface{} `json:"Principal"`
+    Principal interface{} `json:"Principal,omitempty"`
     // Resource the resource this statements effects. Similar to 'pfrn:data--title![Title ID]/Profile/*'
-    Resource string `json:"Resource"`
+    Resource string `json:"Resource,omitempty"`
 }
 
 // EntityProfileBody 
 type EntityProfileBodyModel struct {
     // AvatarUrl avatar URL for the entity.
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // Created the creation time of this profile in UTC.
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName the display name of the entity. This field may serve different purposes for different entity types. i.e.: for a title
 // player account it could represent the display name of the player, whereas on a character it could be character's name.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Entity the entity id and type.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // EntityChain the chain of responsibility for this entity. Use Lineage.
-    EntityChain string `json:"EntityChain"`
+    EntityChain string `json:"EntityChain,omitempty"`
     // ExperimentVariants the experiment variants of this profile.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // Files the files on this profile.
     Files map[string]EntityProfileFileMetadataModel `json:"Files,omitempty"`
     // Language the language on this profile.
-    Language string `json:"Language"`
+    Language string `json:"Language,omitempty"`
     // LeaderboardMetadata leaderboard metadata for the entity.
-    LeaderboardMetadata string `json:"LeaderboardMetadata"`
+    LeaderboardMetadata string `json:"LeaderboardMetadata,omitempty"`
     // Lineage the lineage of this profile.
     Lineage *EntityLineageModel `json:"Lineage,omitempty"`
     // Objects the objects on this profile.
@@ -91,29 +91,29 @@ type EntityProfileBodyModel struct {
     Statistics map[string]EntityStatisticValueModel `json:"Statistics,omitempty"`
     // VersionNumber the version number of the profile in persistent storage at the time of the read. Used for optional optimistic
 // concurrency during update.
-    VersionNumber int32 `json:"VersionNumber"`
+    VersionNumber int32 `json:"VersionNumber,omitempty"`
 }
 
 // EntityProfileFileMetadata an entity file's meta data. To get a download URL call File/GetFiles API.
 type EntityProfileFileMetadataModel struct {
     // Checksum checksum value for the file
-    Checksum string `json:"Checksum"`
+    Checksum string `json:"Checksum,omitempty"`
     // FileName name of the file
-    FileName string `json:"FileName"`
+    FileName string `json:"FileName,omitempty"`
     // LastModified last UTC time the file was modified
-    LastModified time.Time `json:"LastModified"`
+    LastModified time.Time `json:"LastModified,omitempty"`
     // Size storage service's reported byte count
-    Size int32 `json:"Size"`
+    Size int32 `json:"Size,omitempty"`
 }
 
 // EntityStatisticChildValue 
 type EntityStatisticChildValueModel struct {
     // ChildName child name value, if child statistic
-    ChildName string `json:"ChildName"`
+    ChildName string `json:"ChildName,omitempty"`
     // Metadata child statistic metadata
-    Metadata string `json:"Metadata"`
+    Metadata string `json:"Metadata,omitempty"`
     // Value child statistic value
-    Value int32 `json:"Value"`
+    Value int32 `json:"Value,omitempty"`
 }
 
 // EntityStatisticValue 
@@ -121,13 +121,13 @@ type EntityStatisticValueModel struct {
     // ChildStatistics child statistic values
     ChildStatistics map[string]EntityStatisticChildValueModel `json:"ChildStatistics,omitempty"`
     // Metadata statistic metadata
-    Metadata string `json:"Metadata"`
+    Metadata string `json:"Metadata,omitempty"`
     // Name statistic name
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Value statistic value
-    Value int32 `json:"Value"`
+    Value int32 `json:"Value,omitempty"`
     // Version statistic version
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetEntityProfileRequest given an entity type and entity identifier will retrieve the profile from the entity store. If the profile being
@@ -189,13 +189,13 @@ type GetTitlePlayersFromMasterPlayerAccountIdsRequestModel struct {
     // MasterPlayerAccountIds master player account ids.
     MasterPlayerAccountIds []string `json:"MasterPlayerAccountIds,omitempty"`
     // TitleId id of title to get players from.
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
 }
 
 // GetTitlePlayersFromMasterPlayerAccountIdsResponse 
 type GetTitlePlayersFromMasterPlayerAccountIdsResponseModel struct {
     // TitleId optional id of title to get players from, required if calling using a master_player_account.
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
     // TitlePlayerAccounts dictionary of master player ids mapped to title player entity keys and id pairs
     TitlePlayerAccounts map[string]EntityKeyModel `json:"TitlePlayerAccounts,omitempty"`
 }
@@ -215,7 +215,7 @@ type SetEntityProfilePolicyRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
-    Entity* EntityKeyModel `json:"Entity"`
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Statements the statements to include in the access policy.
     Statements []EntityPermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -248,15 +248,15 @@ type SetProfileLanguageRequestModel struct {
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // ExpectedVersion the expected version of a profile to perform this update on
-    ExpectedVersion int32 `json:"ExpectedVersion"`
+    ExpectedVersion int32 `json:"ExpectedVersion,omitempty"`
     // Language the language to set on the given entity. Deletes the profile's language if passed in a null string.
-    Language string `json:"Language"`
+    Language string `json:"Language,omitempty"`
 }
 
 // SetProfileLanguageResponse 
 type SetProfileLanguageResponseModel struct {
     // OperationResult the type of operation that occured on the profile's language
-    OperationResult OperationTypes `json:"OperationResult"`
+    OperationResult OperationTypes `json:"OperationResult,omitempty"`
     // VersionNumber the updated version of the profile after the language update
-    VersionNumber int32 `json:"VersionNumber"`
+    VersionNumber int32 `json:"VersionNumber,omitempty"`
 }

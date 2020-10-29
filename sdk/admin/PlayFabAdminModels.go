@@ -7,77 +7,77 @@ type AbortTaskInstanceRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // TaskInstanceId iD of a task instance that is being aborted.
-    TaskInstanceId string `json:"TaskInstanceId"`
+    TaskInstanceId string `json:"TaskInstanceId,omitempty"`
 }
 
 // ActionsOnPlayersInSegmentTaskParameter 
 type ActionsOnPlayersInSegmentTaskParameterModel struct {
     // ActionId iD of the action to perform on each player in segment.
-    ActionId string `json:"ActionId"`
+    ActionId string `json:"ActionId,omitempty"`
     // SegmentId iD of the segment to perform actions on.
-    SegmentId string `json:"SegmentId"`
+    SegmentId string `json:"SegmentId,omitempty"`
 }
 
 // ActionsOnPlayersInSegmentTaskSummary 
 type ActionsOnPlayersInSegmentTaskSummaryModel struct {
     // CompletedAt uTC timestamp when the task completed.
-    CompletedAt time.Time `json:"CompletedAt"`
+    CompletedAt time.Time `json:"CompletedAt,omitempty"`
     // ErrorMessage error message for last processing attempt, if an error occured.
-    ErrorMessage string `json:"ErrorMessage"`
+    ErrorMessage string `json:"ErrorMessage,omitempty"`
     // ErrorWasFatal flag indicating if the error was fatal, if false job will be retried.
     ErrorWasFatal bool `json:"ErrorWasFatal"`
     // EstimatedSecondsRemaining estimated time remaining in seconds.
-    EstimatedSecondsRemaining float64 `json:"EstimatedSecondsRemaining"`
+    EstimatedSecondsRemaining float64 `json:"EstimatedSecondsRemaining,omitempty"`
     // PercentComplete progress represented as percentage.
-    PercentComplete float64 `json:"PercentComplete"`
+    PercentComplete float64 `json:"PercentComplete,omitempty"`
     // ScheduledByUserId if manually scheduled, ID of user who scheduled the task.
-    ScheduledByUserId string `json:"ScheduledByUserId"`
+    ScheduledByUserId string `json:"ScheduledByUserId,omitempty"`
     // StartedAt uTC timestamp when the task started.
-    StartedAt time.Time `json:"StartedAt"`
+    StartedAt time.Time `json:"StartedAt,omitempty"`
     // Status current status of the task instance.
-    Status TaskInstanceStatus `json:"Status"`
+    Status TaskInstanceStatus `json:"Status,omitempty"`
     // TaskIdentifier identifier of the task this instance belongs to.
     TaskIdentifier *NameIdentifierModel `json:"TaskIdentifier,omitempty"`
     // TaskInstanceId iD of the task instance.
-    TaskInstanceId string `json:"TaskInstanceId"`
+    TaskInstanceId string `json:"TaskInstanceId,omitempty"`
     // TotalPlayersInSegment total players in segment when task was started.
-    TotalPlayersInSegment int32 `json:"TotalPlayersInSegment"`
+    TotalPlayersInSegment int32 `json:"TotalPlayersInSegment,omitempty"`
     // TotalPlayersProcessed total number of players that have had the actions applied to.
-    TotalPlayersProcessed int32 `json:"TotalPlayersProcessed"`
+    TotalPlayersProcessed int32 `json:"TotalPlayersProcessed,omitempty"`
 }
 
 // AdCampaignAttribution 
 type AdCampaignAttributionModel struct {
     // AttributedAt uTC time stamp of attribution
-    AttributedAt time.Time `json:"AttributedAt"`
+    AttributedAt time.Time `json:"AttributedAt,omitempty"`
     // CampaignId attribution campaign identifier
-    CampaignId string `json:"CampaignId"`
+    CampaignId string `json:"CampaignId,omitempty"`
     // Platform attribution network name
-    Platform string `json:"Platform"`
+    Platform string `json:"Platform,omitempty"`
 }
 
 // AdCampaignAttributionModel 
 type AdCampaignAttributionModelModel struct {
     // AttributedAt uTC time stamp of attribution
-    AttributedAt time.Time `json:"AttributedAt"`
+    AttributedAt time.Time `json:"AttributedAt,omitempty"`
     // CampaignId attribution campaign identifier
-    CampaignId string `json:"CampaignId"`
+    CampaignId string `json:"CampaignId,omitempty"`
     // Platform attribution network name
-    Platform string `json:"Platform"`
+    Platform string `json:"Platform,omitempty"`
 }
 
 // AddLocalizedNewsRequest 
 type AddLocalizedNewsRequestModel struct {
     // Body localized body text of the news.
-    Body string `json:"Body"`
+    Body string `json:"Body,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Language language of the news item.
-    Language string `json:"Language"`
+    Language string `json:"Language,omitempty"`
     // NewsId unique id of the updated news item.
-    NewsId string `json:"NewsId"`
+    NewsId string `json:"NewsId,omitempty"`
     // Title localized title (headline) of the news item.
-    Title string `json:"Title"`
+    Title string `json:"Title,omitempty"`
 }
 
 // AddLocalizedNewsResult 
@@ -87,19 +87,19 @@ type AddLocalizedNewsResultModel struct {
 // AddNewsRequest 
 type AddNewsRequestModel struct {
     // Body default body text of the news.
-    Body string `json:"Body"`
+    Body string `json:"Body,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Timestamp time this news was published. If not set, defaults to now.
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
     // Title default title (headline) of the news item.
-    Title string `json:"Title"`
+    Title string `json:"Title,omitempty"`
 }
 
 // AddNewsResult 
 type AddNewsResultModel struct {
     // NewsId unique id of the new news item
-    NewsId string `json:"NewsId"`
+    NewsId string `json:"NewsId,omitempty"`
 }
 
 // AddPlayerTagRequest this API will trigger a player_tag_added event and add a tag with the given TagName and PlayFabID to the corresponding
@@ -109,9 +109,9 @@ type AddPlayerTagRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // TagName unique tag for player profile.
-    TagName string `json:"TagName"`
+    TagName string `json:"TagName,omitempty"`
 }
 
 // AddPlayerTagResult 
@@ -123,20 +123,20 @@ type AddServerBuildRequestModel struct {
     // ActiveRegions server host regions in which this build should be running and available
     ActiveRegions []Region `json:"ActiveRegions,omitempty"`
     // BuildId unique identifier for the build executable
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
     // CommandLineTemplate appended to the end of the command line when starting game servers
-    CommandLineTemplate string `json:"CommandLineTemplate"`
+    CommandLineTemplate string `json:"CommandLineTemplate,omitempty"`
     // Comment developer comment(s) for this build
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ExecutablePath path to the game server executable. Defaults to gameserver.exe
-    ExecutablePath string `json:"ExecutablePath"`
+    ExecutablePath string `json:"ExecutablePath,omitempty"`
     // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost"`
+    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
     // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
 // machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots"`
+    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
 }
 
 // AddServerBuildResult 
@@ -144,38 +144,38 @@ type AddServerBuildResultModel struct {
     // ActiveRegions array of regions where this build can used, when it is active
     ActiveRegions []Region `json:"ActiveRegions,omitempty"`
     // BuildId unique identifier for this build executable
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
     // CommandLineTemplate appended to the end of the command line when starting game servers
-    CommandLineTemplate string `json:"CommandLineTemplate"`
+    CommandLineTemplate string `json:"CommandLineTemplate,omitempty"`
     // Comment developer comment(s) for this build
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // ExecutablePath path to the game server executable. Defaults to gameserver.exe
-    ExecutablePath string `json:"ExecutablePath"`
+    ExecutablePath string `json:"ExecutablePath,omitempty"`
     // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost"`
+    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
     // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
 // machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots"`
+    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
     // Status the current status of the build validation and processing steps
-    Status GameBuildStatus `json:"Status"`
+    Status GameBuildStatus `json:"Status,omitempty"`
     // Timestamp time this build was last modified (or uploaded, if this build has never been modified)
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
 }
 
 // AddUserVirtualCurrencyRequest 
 type AddUserVirtualCurrencyRequestModel struct {
     // Amount amount to be added to the user balance of the specified virtual currency. Maximum VC balance is Int32 (2,147,483,647).
 // Any increase over this value will be discarded.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId playFab unique identifier of the user whose virtual currency balance is to be increased.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which is to be incremented.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // AddVirtualCurrencyTypesRequest this operation is additive. Any new currencies defined in the array will be added to the set of those available for the
@@ -189,7 +189,7 @@ type AddVirtualCurrencyTypesRequestModel struct {
 // ApiCondition 
 type ApiConditionModel struct {
     // HasSignatureOrEncryption require that API calls contain an RSA encrypted payload or signed headers.
-    HasSignatureOrEncryption Conditionals `json:"HasSignatureOrEncryption"`
+    HasSignatureOrEncryption Conditionals `json:"HasSignatureOrEncryption,omitempty"`
 }
 
 // AuthTokenType 
@@ -203,33 +203,33 @@ type BanInfoModel struct {
     // Active the active state of this ban. Expired bans may still have this value set to true but they will have no effect.
     Active bool `json:"Active"`
     // BanId the unique Ban Id associated with this ban.
-    BanId string `json:"BanId"`
+    BanId string `json:"BanId,omitempty"`
     // Created the time when this ban was applied.
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // Expires the time when this ban expires. Permanent bans do not have expiration date.
-    Expires time.Time `json:"Expires"`
+    Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the IP address on which the ban was applied. May affect multiple players.
-    IPAddress string `json:"IPAddress"`
+    IPAddress string `json:"IPAddress,omitempty"`
     // MACAddress the MAC address on which the ban was applied. May affect multiple players.
-    MACAddress string `json:"MACAddress"`
+    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason why this ban was applied.
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // BanRequest represents a single ban request.
 type BanRequestModel struct {
     // DurationInHours the duration in hours for the ban. Leave this blank for a permanent ban.
-    DurationInHours uint32 `json:"DurationInHours"`
+    DurationInHours uint32 `json:"DurationInHours,omitempty"`
     // IPAddress iP address to be banned. May affect multiple players.
-    IPAddress string `json:"IPAddress"`
+    IPAddress string `json:"IPAddress,omitempty"`
     // MACAddress mAC address to be banned. May affect multiple players.
-    MACAddress string `json:"MACAddress"`
+    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason for this ban. Maximum 140 characters.
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // BanUsersRequest the existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so
@@ -259,24 +259,24 @@ type CatalogItemModel struct {
     // CanBecomeCharacter if true, then an item instance of this type can be used to grant a character to a user.
     CanBecomeCharacter bool `json:"CanBecomeCharacter"`
     // CatalogVersion catalog version for this item
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // Consumable defines the consumable properties (number of uses, timeout) for the item
     Consumable *CatalogItemConsumableInfoModel `json:"Consumable,omitempty"`
     // Container defines the container properties for the item - what items it contains, including random drop tables and virtual
 // currencies, and what item (if any) is required to open it via the UnlockContainerItem API
     Container *CatalogItemContainerInfoModel `json:"Container,omitempty"`
     // CustomData game specific custom data
-    CustomData string `json:"CustomData"`
+    CustomData string `json:"CustomData,omitempty"`
     // Description text description of item, to show in-game
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // DisplayName text name for the item, to show in-game
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // InitialLimitedEditionCount if the item has IsLImitedEdition set to true, and this is the first time this ItemId has been defined as a limited
 // edition item, this value determines the total number of instances to allocate for the title. Once this limit has been
 // reached, no more instances of this ItemId can be created, and attempts to purchase or grant it will return a Result of
 // false for that ItemId. If the item has already been defined to have a limited edition count, or if this value is less
 // than zero, it will be ignored.
-    InitialLimitedEditionCount int32 `json:"InitialLimitedEditionCount"`
+    InitialLimitedEditionCount int32 `json:"InitialLimitedEditionCount,omitempty"`
     // IsLimitedEdition bETA: If true, then only a fixed number can ever be granted.
     IsLimitedEdition bool `json:"IsLimitedEdition"`
     // IsStackable if true, then only one item instance of this type will exist and its remaininguses will be incremented instead.
@@ -285,12 +285,12 @@ type CatalogItemModel struct {
     // IsTradable if true, then an item instance of this type can be traded between players using the trading APIs
     IsTradable bool `json:"IsTradable"`
     // ItemClass class to which the item belongs
-    ItemClass string `json:"ItemClass"`
+    ItemClass string `json:"ItemClass,omitempty"`
     // ItemId unique identifier for this item
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // ItemImageUrl uRL to the item image. For Facebook purchase to display the image on the item purchase page, this must be set to an HTTP
 // URL.
-    ItemImageUrl string `json:"ItemImageUrl"`
+    ItemImageUrl string `json:"ItemImageUrl,omitempty"`
     // RealCurrencyPrices override prices for this item for specific currencies
     RealCurrencyPrices map[string]uint32 `json:"RealCurrencyPrices,omitempty"`
     // Tags list of item tags
@@ -313,14 +313,14 @@ type CatalogItemBundleInfoModel struct {
 // CatalogItemConsumableInfo 
 type CatalogItemConsumableInfoModel struct {
     // UsageCount number of times this object can be used, after which it will be removed from the player inventory
-    UsageCount uint32 `json:"UsageCount"`
+    UsageCount uint32 `json:"UsageCount,omitempty"`
     // UsagePeriod duration in seconds for how long the item will remain in the player inventory - once elapsed, the item will be removed
 // (recommended minimum value is 5 seconds, as lower values can cause the item to expire before operations depending on
 // this item's details have completed)
-    UsagePeriod uint32 `json:"UsagePeriod"`
+    UsagePeriod uint32 `json:"UsagePeriod,omitempty"`
     // UsagePeriodGroup all inventory item instances in the player inventory sharing a non-null UsagePeriodGroup have their UsagePeriod values
 // added together, and share the result - when that period has elapsed, all the items in the group will be removed
-    UsagePeriodGroup string `json:"UsagePeriodGroup"`
+    UsagePeriodGroup string `json:"UsagePeriodGroup,omitempty"`
 }
 
 // CatalogItemContainerInfo containers are inventory items that can hold other items defined in the catalog, as well as virtual currency, which is
@@ -333,7 +333,7 @@ type CatalogItemContainerInfoModel struct {
     ItemContents []string `json:"ItemContents,omitempty"`
     // KeyItemId itemId for the catalog item used to unlock the container, if any (if not specified, a call to UnlockContainerItem will
 // open the container, adding the contents to the player inventory and currency balances)
-    KeyItemId string `json:"KeyItemId"`
+    KeyItemId string `json:"KeyItemId,omitempty"`
     // ResultTableContents unique TableId values for all RandomResultTable objects which are part of the container (once unlocked, random tables
 // will be resolved and add the relevant items to the player inventory)
     ResultTableContents []string `json:"ResultTableContents,omitempty"`
@@ -344,64 +344,64 @@ type CatalogItemContainerInfoModel struct {
 // CheckLimitedEditionItemAvailabilityRequest this returns the total number of these items available.
 type CheckLimitedEditionItemAvailabilityRequestModel struct {
     // CatalogVersion which catalog is being updated. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // ItemId the item to check for.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
 }
 
 // CheckLimitedEditionItemAvailabilityResult 
 type CheckLimitedEditionItemAvailabilityResultModel struct {
     // Amount the amount of the specified resource remaining.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
 }
 
 // CloudScriptFile 
 type CloudScriptFileModel struct {
     // FileContents contents of the Cloud Script javascript. Must be string-escaped javascript.
-    FileContents string `json:"FileContents"`
+    FileContents string `json:"FileContents,omitempty"`
     // Filename name of the javascript file. These names are not used internally by the server, they are only for developer
 // organizational purposes.
-    Filename string `json:"Filename"`
+    Filename string `json:"Filename,omitempty"`
 }
 
 // CloudScriptTaskParameter 
 type CloudScriptTaskParameterModel struct {
     // Argument argument to pass to the CloudScript function.
-    Argument interface{} `json:"Argument"`
+    Argument interface{} `json:"Argument,omitempty"`
     // FunctionName name of the CloudScript function to execute.
-    FunctionName string `json:"FunctionName"`
+    FunctionName string `json:"FunctionName,omitempty"`
 }
 
 // CloudScriptTaskSummary 
 type CloudScriptTaskSummaryModel struct {
     // CompletedAt uTC timestamp when the task completed.
-    CompletedAt time.Time `json:"CompletedAt"`
+    CompletedAt time.Time `json:"CompletedAt,omitempty"`
     // EstimatedSecondsRemaining estimated time remaining in seconds.
-    EstimatedSecondsRemaining float64 `json:"EstimatedSecondsRemaining"`
+    EstimatedSecondsRemaining float64 `json:"EstimatedSecondsRemaining,omitempty"`
     // PercentComplete progress represented as percentage.
-    PercentComplete float64 `json:"PercentComplete"`
+    PercentComplete float64 `json:"PercentComplete,omitempty"`
     // Result result of CloudScript execution
     Result *ExecuteCloudScriptResultModel `json:"Result,omitempty"`
     // ScheduledByUserId if manually scheduled, ID of user who scheduled the task.
-    ScheduledByUserId string `json:"ScheduledByUserId"`
+    ScheduledByUserId string `json:"ScheduledByUserId,omitempty"`
     // StartedAt uTC timestamp when the task started.
-    StartedAt time.Time `json:"StartedAt"`
+    StartedAt time.Time `json:"StartedAt,omitempty"`
     // Status current status of the task instance.
-    Status TaskInstanceStatus `json:"Status"`
+    Status TaskInstanceStatus `json:"Status,omitempty"`
     // TaskIdentifier identifier of the task this instance belongs to.
     TaskIdentifier *NameIdentifierModel `json:"TaskIdentifier,omitempty"`
     // TaskInstanceId iD of the task instance.
-    TaskInstanceId string `json:"TaskInstanceId"`
+    TaskInstanceId string `json:"TaskInstanceId,omitempty"`
 }
 
 // CloudScriptVersionStatus 
 type CloudScriptVersionStatusModel struct {
     // LatestRevision most recent revision for this Cloud Script version
-    LatestRevision int32 `json:"LatestRevision"`
+    LatestRevision int32 `json:"LatestRevision,omitempty"`
     // PublishedRevision published code revision for this Cloud Script version
-    PublishedRevision int32 `json:"PublishedRevision"`
+    PublishedRevision int32 `json:"PublishedRevision,omitempty"`
     // Version version number
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // Conditionals 
@@ -415,31 +415,31 @@ const (
 // ContactEmailInfo 
 type ContactEmailInfoModel struct {
     // EmailAddress the email address
-    EmailAddress string `json:"EmailAddress"`
+    EmailAddress string `json:"EmailAddress,omitempty"`
     // Name the name of the email info data
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // VerificationStatus the verification status of the email
-    VerificationStatus EmailVerificationStatus `json:"VerificationStatus"`
+    VerificationStatus EmailVerificationStatus `json:"VerificationStatus,omitempty"`
 }
 
 // ContactEmailInfoModel 
 type ContactEmailInfoModelModel struct {
     // EmailAddress the email address
-    EmailAddress string `json:"EmailAddress"`
+    EmailAddress string `json:"EmailAddress,omitempty"`
     // Name the name of the email info data
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // VerificationStatus the verification status of the email
-    VerificationStatus EmailVerificationStatus `json:"VerificationStatus"`
+    VerificationStatus EmailVerificationStatus `json:"VerificationStatus,omitempty"`
 }
 
 // ContentInfo 
 type ContentInfoModel struct {
     // Key key of the content
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // LastModified last modified time
-    LastModified time.Time `json:"LastModified"`
+    LastModified time.Time `json:"LastModified,omitempty"`
     // Size size of the content in bytes
-    Size uint32 `json:"Size"`
+    Size uint32 `json:"Size,omitempty"`
 }
 
 // ContinentCode 
@@ -714,15 +714,15 @@ type CreateActionsOnPlayerSegmentTaskRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Description description the task
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
     IsActive bool `json:"IsActive"`
     // Name name of the task. This is a unique identifier for tasks in the title.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Parameter task details related to segment and action
-    Parameter* ActionsOnPlayersInSegmentTaskParameterModel `json:"Parameter"`
+    Parameter* ActionsOnPlayersInSegmentTaskParameterModel `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
-    Schedule string `json:"Schedule"`
+    Schedule string `json:"Schedule,omitempty"`
 }
 
 // CreateCloudScriptTaskRequest task name is unique within a title. Using a task name that's already taken will cause a name conflict error. Too many
@@ -731,15 +731,15 @@ type CreateCloudScriptTaskRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Description description the task
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
     IsActive bool `json:"IsActive"`
     // Name name of the task. This is a unique identifier for tasks in the title.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Parameter task details related to CloudScript
-    Parameter* CloudScriptTaskParameterModel `json:"Parameter"`
+    Parameter* CloudScriptTaskParameterModel `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
-    Schedule string `json:"Schedule"`
+    Schedule string `json:"Schedule,omitempty"`
 }
 
 // CreateInsightsScheduledScalingTaskRequest task name is unique within a title. Using a task name that's already taken will cause a name conflict error. Too many
@@ -748,30 +748,30 @@ type CreateInsightsScheduledScalingTaskRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Description description the task
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
     IsActive bool `json:"IsActive"`
     // Name name of the task. This is a unique identifier for tasks in the title.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Parameter task details related to Insights Scaling
-    Parameter* InsightsScalingTaskParameterModel `json:"Parameter"`
+    Parameter* InsightsScalingTaskParameterModel `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
-    Schedule string `json:"Schedule"`
+    Schedule string `json:"Schedule,omitempty"`
 }
 
 // CreateOpenIdConnectionRequest 
 type CreateOpenIdConnectionRequestModel struct {
     // ClientId the client ID given by the ID provider.
-    ClientId string `json:"ClientId"`
+    ClientId string `json:"ClientId,omitempty"`
     // ClientSecret the client secret given by the ID provider.
-    ClientSecret string `json:"ClientSecret"`
+    ClientSecret string `json:"ClientSecret,omitempty"`
     // ConnectionId a name for the connection that identifies it within the title.
-    ConnectionId string `json:"ConnectionId"`
+    ConnectionId string `json:"ConnectionId,omitempty"`
     // IssuerDiscoveryUrl the discovery document URL to read issuer information from. This must be the absolute URL to the JSON OpenId
 // Configuration document and must be accessible from the internet. If you don't know it, try your issuer URL followed by
 // "/.well-known/openid-configuration". For example, if the issuer is https://example.com, try
 // https://example.com/.well-known/openid-configuration
-    IssuerDiscoveryUrl string `json:"IssuerDiscoveryUrl"`
+    IssuerDiscoveryUrl string `json:"IssuerDiscoveryUrl,omitempty"`
     // IssuerInformation manually specified information for an OpenID Connect issuer.
     IssuerInformation *OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
 }
@@ -780,13 +780,13 @@ type CreateOpenIdConnectionRequestModel struct {
 // RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
 type CreatePlayerSharedSecretRequestModel struct {
     // FriendlyName friendly name for this key
-    FriendlyName string `json:"FriendlyName"`
+    FriendlyName string `json:"FriendlyName,omitempty"`
 }
 
 // CreatePlayerSharedSecretResult 
 type CreatePlayerSharedSecretResultModel struct {
     // SecretKey the player shared secret to use when calling Client/GetTitlePublicKey
-    SecretKey string `json:"SecretKey"`
+    SecretKey string `json:"SecretKey,omitempty"`
 }
 
 // CreatePlayerStatisticDefinitionRequest statistics are numeric values, with each statistic in the title also generating a leaderboard. The ResetInterval enables
@@ -803,13 +803,13 @@ type CreatePlayerSharedSecretResultModel struct {
 // smallest (Min), or add them together (Sum).
 type CreatePlayerStatisticDefinitionRequestModel struct {
     // AggregationMethod the aggregation method to use in updating the statistic (defaults to last)
-    AggregationMethod StatisticAggregationMethod `json:"AggregationMethod"`
+    AggregationMethod StatisticAggregationMethod `json:"AggregationMethod,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // VersionChangeInterval interval at which the values of the statistic for all players are reset (resets begin at the next interval boundary)
-    VersionChangeInterval StatisticResetIntervalOption `json:"VersionChangeInterval"`
+    VersionChangeInterval StatisticResetIntervalOption `json:"VersionChangeInterval,omitempty"`
 }
 
 // CreatePlayerStatisticDefinitionResult 
@@ -821,7 +821,7 @@ type CreatePlayerStatisticDefinitionResultModel struct {
 // CreateTaskResult 
 type CreateTaskResultModel struct {
     // TaskId iD of the task
-    TaskId string `json:"TaskId"`
+    TaskId string `json:"TaskId,omitempty"`
 }
 
 // Currency 
@@ -994,7 +994,7 @@ const (
 // DeleteContentRequest 
 type DeleteContentRequestModel struct {
     // Key key of the content item to be deleted
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
 }
 
 // DeleteMasterPlayerAccountRequest deletes all data associated with the master player account, including data from all titles the player has played, such
@@ -1008,16 +1008,16 @@ type DeleteContentRequestModel struct {
 // calling GetPlayedTitleList, before calling this API.
 type DeleteMasterPlayerAccountRequestModel struct {
     // MetaData developer created string to identify a user without PlayFab ID
-    MetaData string `json:"MetaData"`
+    MetaData string `json:"MetaData,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // DeleteMasterPlayerAccountResult 
 type DeleteMasterPlayerAccountResultModel struct {
     // JobReceiptId a notification email with this job receipt Id will be sent to the title notification email address when deletion is
 // complete.
-    JobReceiptId string `json:"JobReceiptId"`
+    JobReceiptId string `json:"JobReceiptId,omitempty"`
     // TitleIds list of titles from which the player's data will be deleted.
     TitleIds []string `json:"TitleIds,omitempty"`
 }
@@ -1025,7 +1025,7 @@ type DeleteMasterPlayerAccountResultModel struct {
 // DeleteOpenIdConnectionRequest 
 type DeleteOpenIdConnectionRequestModel struct {
     // ConnectionId unique name of the connection
-    ConnectionId string `json:"ConnectionId"`
+    ConnectionId string `json:"ConnectionId,omitempty"`
 }
 
 // DeletePlayerRequest deletes all data associated with the player, including statistics, custom data, inventory, purchases, virtual currency
@@ -1037,7 +1037,7 @@ type DeleteOpenIdConnectionRequestModel struct {
 // the same user account in the same title will fail with the 'AccountDeleted' error.
 type DeletePlayerRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // DeletePlayerResult 
@@ -1048,7 +1048,7 @@ type DeletePlayerResultModel struct {
 // RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
 type DeletePlayerSharedSecretRequestModel struct {
     // SecretKey the shared secret key to delete
-    SecretKey string `json:"SecretKey"`
+    SecretKey string `json:"SecretKey,omitempty"`
 }
 
 // DeletePlayerSharedSecretResult 
@@ -1058,11 +1058,11 @@ type DeletePlayerSharedSecretResultModel struct {
 // DeleteStoreRequest this non-reversible operation will permanently delete the requested store.
 type DeleteStoreRequestModel struct {
     // CatalogVersion catalog version of the store to delete. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // StoreId unqiue identifier for the store which is to be deleted
-    StoreId string `json:"StoreId"`
+    StoreId string `json:"StoreId,omitempty"`
 }
 
 // DeleteStoreResult 
@@ -1080,7 +1080,7 @@ type DeleteTaskRequestModel struct {
 // DeleteTitleDataOverrideRequest will delete all the title data associated with the given override label.
 type DeleteTitleDataOverrideRequestModel struct {
     // OverrideLabel name of the override.
-    OverrideLabel string `json:"OverrideLabel"`
+    OverrideLabel string `json:"OverrideLabel,omitempty"`
 }
 
 // DeleteTitleDataOverrideResult 
@@ -1123,28 +1123,28 @@ type EmptyResponseModel struct {
 // EntityKey combined entity type and ID structure which uniquely identifies a single entity.
 type EntityKeyModel struct {
     // Id unique ID of the entity.
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
-    Type string `json:"Type"`
+    Type string `json:"Type,omitempty"`
 }
 
 // ExecuteCloudScriptResult 
 type ExecuteCloudScriptResultModel struct {
     // APIRequestsIssued number of PlayFab API requests issued by the CloudScript function
-    APIRequestsIssued int32 `json:"APIRequestsIssued"`
+    APIRequestsIssued int32 `json:"APIRequestsIssued,omitempty"`
     // Error information about the error, if any, that occurred during execution
     Error *ScriptExecutionErrorModel `json:"Error,omitempty"`
     // ExecutionTimeSeconds 
-    ExecutionTimeSeconds float64 `json:"ExecutionTimeSeconds"`
+    ExecutionTimeSeconds float64 `json:"ExecutionTimeSeconds,omitempty"`
     // FunctionName the name of the function that executed
-    FunctionName string `json:"FunctionName"`
+    FunctionName string `json:"FunctionName,omitempty"`
     // FunctionResult the object returned from the CloudScript function, if any
-    FunctionResult interface{} `json:"FunctionResult"`
+    FunctionResult interface{} `json:"FunctionResult,omitempty"`
     // FunctionResultTooLarge flag indicating if the FunctionResult was too large and was subsequently dropped from this event. This only occurs if
 // the total event size is larger than 350KB.
     FunctionResultTooLarge bool `json:"FunctionResultTooLarge"`
     // HttpRequestsIssued number of external HTTP requests issued by the CloudScript function
-    HttpRequestsIssued int32 `json:"HttpRequestsIssued"`
+    HttpRequestsIssued int32 `json:"HttpRequestsIssued,omitempty"`
     // Logs entries logged during the function execution. These include both entries logged in the function code using log.info()
 // and log.error() and error entries for API and HTTP request failures.
     Logs []LogStatementModel `json:"Logs,omitempty"`
@@ -1152,12 +1152,12 @@ type ExecuteCloudScriptResultModel struct {
 // event size is larger than 350KB after the FunctionResult was removed.
     LogsTooLarge bool `json:"LogsTooLarge"`
     // MemoryConsumedBytes 
-    MemoryConsumedBytes uint32 `json:"MemoryConsumedBytes"`
+    MemoryConsumedBytes uint32 `json:"MemoryConsumedBytes,omitempty"`
     // ProcessorTimeSeconds processor time consumed while executing the function. This does not include time spent waiting on API calls or HTTP
 // requests.
-    ProcessorTimeSeconds float64 `json:"ProcessorTimeSeconds"`
+    ProcessorTimeSeconds float64 `json:"ProcessorTimeSeconds,omitempty"`
     // Revision the revision of the CloudScript that executed
-    Revision int32 `json:"Revision"`
+    Revision int32 `json:"Revision,omitempty"`
 }
 
 // ExportMasterPlayerDataRequest exports all data associated with the master player account, including data from all titles the player has played, such
@@ -1168,14 +1168,14 @@ type ExecuteCloudScriptResultModel struct {
 // will be sent to the notification email address configured for the title.
 type ExportMasterPlayerDataRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ExportMasterPlayerDataResult 
 type ExportMasterPlayerDataResultModel struct {
     // JobReceiptId an email with this job receipt Id containing the export download link will be sent to the title notification email
 // address when the export is complete.
-    JobReceiptId string `json:"JobReceiptId"`
+    JobReceiptId string `json:"JobReceiptId,omitempty"`
 }
 
 // GameBuildStatus 
@@ -1191,11 +1191,11 @@ const (
 // GameModeInfo 
 type GameModeInfoModel struct {
     // Gamemode specific game mode type
-    Gamemode string `json:"Gamemode"`
+    Gamemode string `json:"Gamemode,omitempty"`
     // MaxPlayerCount maximum user count a specific Game Server Instance can support
-    MaxPlayerCount uint32 `json:"MaxPlayerCount"`
+    MaxPlayerCount uint32 `json:"MaxPlayerCount,omitempty"`
     // MinPlayerCount minimum user count required for this Game Server Instance to continue (usually 1)
-    MinPlayerCount uint32 `json:"MinPlayerCount"`
+    MinPlayerCount uint32 `json:"MinPlayerCount,omitempty"`
     // StartOpen whether to start as an open session, meaning that players can matchmake into it (defaults to true)
     StartOpen bool `json:"StartOpen"`
 }
@@ -1827,7 +1827,7 @@ type GetAllSegmentsResultModel struct {
 // GetCatalogItemsRequest 
 type GetCatalogItemsRequestModel struct {
     // CatalogVersion which catalog is being requested. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
 }
 
 // GetCatalogItemsResult 
@@ -1839,23 +1839,23 @@ type GetCatalogItemsResultModel struct {
 // GetCloudScriptRevisionRequest 
 type GetCloudScriptRevisionRequestModel struct {
     // Revision revision number. If left null, defaults to the latest revision
-    Revision int32 `json:"Revision"`
+    Revision int32 `json:"Revision,omitempty"`
     // Version version number. If left null, defaults to the latest version
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetCloudScriptRevisionResult 
 type GetCloudScriptRevisionResultModel struct {
     // CreatedAt time this revision was created
-    CreatedAt time.Time `json:"CreatedAt"`
+    CreatedAt time.Time `json:"CreatedAt,omitempty"`
     // Files list of Cloud Script files in this revision.
     Files []CloudScriptFileModel `json:"Files,omitempty"`
     // IsPublished true if this is the currently published revision
     IsPublished bool `json:"IsPublished"`
     // Revision revision number.
-    Revision int32 `json:"Revision"`
+    Revision int32 `json:"Revision,omitempty"`
     // Version version number.
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetCloudScriptTaskInstanceResult 
@@ -1880,7 +1880,7 @@ type GetCloudScriptVersionsResultModel struct {
 type GetContentListRequestModel struct {
     // Prefix limits the response to keys that begin with the specified prefix. You can use prefixes to list contents under a folder,
 // or for a specified version, etc.
-    Prefix string `json:"Prefix"`
+    Prefix string `json:"Prefix,omitempty"`
 }
 
 // GetContentListResult 
@@ -1888,79 +1888,79 @@ type GetContentListResultModel struct {
     // Contents list of content items.
     Contents []ContentInfoModel `json:"Contents,omitempty"`
     // ItemCount number of content items returned. We currently have a maximum of 1000 items limit.
-    ItemCount int32 `json:"ItemCount"`
+    ItemCount int32 `json:"ItemCount,omitempty"`
     // TotalSize the total size of listed contents in bytes.
-    TotalSize uint32 `json:"TotalSize"`
+    TotalSize uint32 `json:"TotalSize,omitempty"`
 }
 
 // GetContentUploadUrlRequest 
 type GetContentUploadUrlRequestModel struct {
     // ContentType a standard MIME type describing the format of the contents. The same MIME type has to be set in the header when
 // uploading the content. If not specified, the MIME type is 'binary/octet-stream' by default.
-    ContentType string `json:"ContentType"`
+    ContentType string `json:"ContentType,omitempty"`
     // Key key of the content item to upload, usually formatted as a path, e.g. images/a.png
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
 }
 
 // GetContentUploadUrlResult 
 type GetContentUploadUrlResultModel struct {
     // URL uRL for uploading content via HTTP PUT method. The URL requires the 'x-ms-blob-type' header to have the value
 // 'BlockBlob'. The URL will expire in approximately one hour.
-    URL string `json:"URL"`
+    URL string `json:"URL,omitempty"`
 }
 
 // GetDataReportRequest gets the download URL for the requested report data (in CSV form). The reports available through this API call are those
 // available in the Game Manager, in the Analytics->Reports tab.
 type GetDataReportRequestModel struct {
     // Day reporting year (UTC)
-    Day int32 `json:"Day"`
+    Day int32 `json:"Day,omitempty"`
     // Month reporting month (UTC)
-    Month int32 `json:"Month"`
+    Month int32 `json:"Month,omitempty"`
     // ReportName report name
-    ReportName string `json:"ReportName"`
+    ReportName string `json:"ReportName,omitempty"`
     // Year reporting year (UTC)
-    Year int32 `json:"Year"`
+    Year int32 `json:"Year,omitempty"`
 }
 
 // GetDataReportResult 
 type GetDataReportResultModel struct {
     // DownloadUrl the URL where the requested report can be downloaded. This can be any PlayFab generated reports. The full list of
 // reports can be found at: https://docs.microsoft.com/en-us/gaming/playfab/features/analytics/reports/quickstart.
-    DownloadUrl string `json:"DownloadUrl"`
+    DownloadUrl string `json:"DownloadUrl,omitempty"`
 }
 
 // GetMatchmakerGameInfoRequest 
 type GetMatchmakerGameInfoRequestModel struct {
     // LobbyId unique identifier of the lobby for which info is being requested
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
 }
 
 // GetMatchmakerGameInfoResult 
 type GetMatchmakerGameInfoResultModel struct {
     // BuildVersion version identifier of the game server executable binary being run
-    BuildVersion string `json:"BuildVersion"`
+    BuildVersion string `json:"BuildVersion,omitempty"`
     // EndTime time when Game Server Instance is currently scheduled to end
-    EndTime time.Time `json:"EndTime"`
+    EndTime time.Time `json:"EndTime,omitempty"`
     // LobbyId unique identifier of the lobby
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
     // Mode game mode for this Game Server Instance
-    Mode string `json:"Mode"`
+    Mode string `json:"Mode,omitempty"`
     // Players array of unique PlayFab identifiers for users currently connected to this Game Server Instance
     Players []string `json:"Players,omitempty"`
     // Region region in which the Game Server Instance is running
-    Region Region `json:"Region"`
+    Region Region `json:"Region,omitempty"`
     // ServerIPV4Address iPV4 address of the server
-    ServerIPV4Address string `json:"ServerIPV4Address"`
+    ServerIPV4Address string `json:"ServerIPV4Address,omitempty"`
     // ServerIPV6Address iPV6 address of the server
-    ServerIPV6Address string `json:"ServerIPV6Address"`
+    ServerIPV6Address string `json:"ServerIPV6Address,omitempty"`
     // ServerPort communication port for this Game Server Instance
-    ServerPort uint32 `json:"ServerPort"`
+    ServerPort uint32 `json:"ServerPort,omitempty"`
     // ServerPublicDNSName public DNS name (if any) of the server
-    ServerPublicDNSName string `json:"ServerPublicDNSName"`
+    ServerPublicDNSName string `json:"ServerPublicDNSName,omitempty"`
     // StartTime time when the Game Server Instance was created
-    StartTime time.Time `json:"StartTime"`
+    StartTime time.Time `json:"StartTime,omitempty"`
     // TitleId unique identifier of the Game Server Instance for this lobby
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
 }
 
 // GetMatchmakerGameModesRequest these details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for
@@ -1968,7 +1968,7 @@ type GetMatchmakerGameInfoResultModel struct {
 // created in order to prevent excess load on existing Hosts.
 type GetMatchmakerGameModesRequestModel struct {
     // BuildVersion previously uploaded build version for which game modes are being requested
-    BuildVersion string `json:"BuildVersion"`
+    BuildVersion string `json:"BuildVersion,omitempty"`
 }
 
 // GetMatchmakerGameModesResult 
@@ -1980,7 +1980,7 @@ type GetMatchmakerGameModesResultModel struct {
 // GetPlayedTitleListRequest useful for identifying titles of which the player's data will be deleted by DeleteMasterPlayer.
 type GetPlayedTitleListRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayedTitleListResult 
@@ -1993,15 +1993,15 @@ type GetPlayedTitleListResultModel struct {
 // expired.
 type GetPlayerIdFromAuthTokenRequestModel struct {
     // Token the auth token of the player requesting the password reset.
-    Token string `json:"Token"`
+    Token string `json:"Token,omitempty"`
     // TokenType the type of auth token of the player requesting the password reset.
-    TokenType AuthTokenType `json:"TokenType"`
+    TokenType AuthTokenType `json:"TokenType,omitempty"`
 }
 
 // GetPlayerIdFromAuthTokenResult 
 type GetPlayerIdFromAuthTokenResultModel struct {
     // PlayFabId the player ID from the token passed in
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerProfileRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support.
@@ -2012,7 +2012,7 @@ type GetPlayerProfileRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
@@ -2052,26 +2052,26 @@ type GetPlayerSharedSecretsResultModel struct {
 // the API may be rejected with the APIConcurrentRequestLimitExceeded error.
 type GetPlayersInSegmentRequestModel struct {
     // ContinuationToken continuation token if retrieving subsequent pages of results.
-    ContinuationToken string `json:"ContinuationToken"`
+    ContinuationToken string `json:"ContinuationToken,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // MaxBatchSize maximum number of profiles to load. Default is 1,000. Maximum is 10,000.
-    MaxBatchSize uint32 `json:"MaxBatchSize"`
+    MaxBatchSize uint32 `json:"MaxBatchSize,omitempty"`
     // SecondsToLive number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
 // results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
-    SecondsToLive uint32 `json:"SecondsToLive"`
+    SecondsToLive uint32 `json:"SecondsToLive,omitempty"`
     // SegmentId unique identifier for this segment.
-    SegmentId string `json:"SegmentId"`
+    SegmentId string `json:"SegmentId,omitempty"`
 }
 
 // GetPlayersInSegmentResult 
 type GetPlayersInSegmentResultModel struct {
     // ContinuationToken continuation token to use to retrieve subsequent pages of results. If token returns null there are no more results.
-    ContinuationToken string `json:"ContinuationToken"`
+    ContinuationToken string `json:"ContinuationToken,omitempty"`
     // PlayerProfiles array of player profiles in this segment.
     PlayerProfiles []PlayerProfileModel `json:"PlayerProfiles,omitempty"`
     // ProfilesInSegment count of profiles matching this segment.
-    ProfilesInSegment int32 `json:"ProfilesInSegment"`
+    ProfilesInSegment int32 `json:"ProfilesInSegment,omitempty"`
 }
 
 // GetPlayersSegmentsRequest 
@@ -2079,7 +2079,7 @@ type GetPlayersSegmentsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerStatisticDefinitionsRequest 
@@ -2108,7 +2108,7 @@ type GetPlayerStatisticVersionsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // GetPlayerStatisticVersionsResult statistics are numeric values, with each statistic in the title also generating a leaderboard. The information returned
@@ -2129,15 +2129,15 @@ type GetPlayerTagsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Namespace optional namespace to filter results by
-    Namespace string `json:"Namespace"`
+    Namespace string `json:"Namespace,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerTagsResult 
 type GetPlayerTagsResultModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Tags canonical tags (including namespace and tag's name) for the requested user
     Tags []string `json:"Tags,omitempty"`
 }
@@ -2145,13 +2145,13 @@ type GetPlayerTagsResultModel struct {
 // GetPolicyRequest views the requested policy. Today, the only supported policy is 'ApiPolicy'.
 type GetPolicyRequestModel struct {
     // PolicyName the name of the policy to read. Only supported name is 'ApiPolicy'.
-    PolicyName string `json:"PolicyName"`
+    PolicyName string `json:"PolicyName,omitempty"`
 }
 
 // GetPolicyResponse 
 type GetPolicyResponseModel struct {
     // PolicyName the name of the policy read.
-    PolicyName string `json:"PolicyName"`
+    PolicyName string `json:"PolicyName,omitempty"`
     // Statements the statements in the requested policy.
     Statements []PermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -2174,7 +2174,7 @@ type GetPublisherDataResultModel struct {
 // GetRandomResultTablesRequest 
 type GetRandomResultTablesRequestModel struct {
     // CatalogVersion catalog version to fetch tables from. Use default catalog version if null
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
 }
 
 // GetRandomResultTablesResult 
@@ -2186,17 +2186,17 @@ type GetRandomResultTablesResultModel struct {
 // GetSegmentResult 
 type GetSegmentResultModel struct {
     // ABTestParent identifier of the segments AB Test, if it is attached to one.
-    ABTestParent string `json:"ABTestParent"`
+    ABTestParent string `json:"ABTestParent,omitempty"`
     // Id unique identifier for this segment.
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Name segment name.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
 }
 
 // GetServerBuildInfoRequest 
 type GetServerBuildInfoRequestModel struct {
     // BuildId unique identifier of the previously uploaded build executable for which information is being requested
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
 }
 
 // GetServerBuildInfoResult information about a particular server build
@@ -2204,35 +2204,35 @@ type GetServerBuildInfoResultModel struct {
     // ActiveRegions array of regions where this build can used, when it is active
     ActiveRegions []Region `json:"ActiveRegions,omitempty"`
     // BuildId unique identifier for this build executable
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
     // Comment developer comment(s) for this build
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // ErrorMessage error message, if any, about this build
-    ErrorMessage string `json:"ErrorMessage"`
+    ErrorMessage string `json:"ErrorMessage,omitempty"`
     // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost"`
+    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
     // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
 // machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots"`
+    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
     // Status the current status of the build validation and processing steps
-    Status GameBuildStatus `json:"Status"`
+    Status GameBuildStatus `json:"Status,omitempty"`
     // Timestamp time this build was last modified (or uploaded, if this build has never been modified)
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
 }
 
 // GetServerBuildUploadURLRequest 
 type GetServerBuildUploadURLRequestModel struct {
     // BuildId unique identifier of the game server build to upload
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
 }
 
 // GetServerBuildUploadURLResult 
 type GetServerBuildUploadURLResultModel struct {
     // URL pre-authorized URL for uploading the game server build package
-    URL string `json:"URL"`
+    URL string `json:"URL,omitempty"`
 }
 
 // GetStoreItemsRequest a store contains an array of references to items defined in the catalog, along with the prices for the item, in both
@@ -2245,23 +2245,23 @@ type GetServerBuildUploadURLResultModel struct {
 // specified in the store for an item, the price set in the catalog should be displayed to the user.
 type GetStoreItemsRequestModel struct {
     // CatalogVersion catalog version to store items from. Use default catalog version if null
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // StoreId unqiue identifier for the store which is being requested.
-    StoreId string `json:"StoreId"`
+    StoreId string `json:"StoreId,omitempty"`
 }
 
 // GetStoreItemsResult 
 type GetStoreItemsResultModel struct {
     // CatalogVersion the base catalog that this store is a part of.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // MarketingData additional data about the store.
     MarketingData *StoreMarketingModelModel `json:"MarketingData,omitempty"`
     // Source how the store was last updated (Admin or a third party).
-    Source SourceType `json:"Source"`
+    Source SourceType `json:"Source,omitempty"`
     // Store array of items which can be purchased from this store.
     Store []StoreItemModel `json:"Store,omitempty"`
     // StoreId the ID of this store.
-    StoreId string `json:"StoreId"`
+    StoreId string `json:"StoreId,omitempty"`
 }
 
 // GetTaskInstanceRequest the result includes detail information that's specific to a CloudScript task. Only CloudScript tasks configured as "Run
@@ -2269,7 +2269,7 @@ type GetStoreItemsResultModel struct {
 // GetTaskInstances.
 type GetTaskInstanceRequestModel struct {
     // TaskInstanceId iD of the requested task instance.
-    TaskInstanceId string `json:"TaskInstanceId"`
+    TaskInstanceId string `json:"TaskInstanceId,omitempty"`
 }
 
 // GetTaskInstancesRequest only the most recent 100 task instances are returned, ordered by start time descending. The results are generic basic
@@ -2277,11 +2277,11 @@ type GetTaskInstanceRequestModel struct {
 // corresponding task type.
 type GetTaskInstancesRequestModel struct {
     // StartedAtRangeFrom optional range-from filter for task instances' StartedAt timestamp.
-    StartedAtRangeFrom time.Time `json:"StartedAtRangeFrom"`
+    StartedAtRangeFrom time.Time `json:"StartedAtRangeFrom,omitempty"`
     // StartedAtRangeTo optional range-to filter for task instances' StartedAt timestamp.
-    StartedAtRangeTo time.Time `json:"StartedAtRangeTo"`
+    StartedAtRangeTo time.Time `json:"StartedAtRangeTo,omitempty"`
     // StatusFilter optional filter for task instances that are of a specific status.
-    StatusFilter TaskInstanceStatus `json:"StatusFilter"`
+    StatusFilter TaskInstanceStatus `json:"StatusFilter,omitempty"`
     // TaskIdentifier name or ID of the task whose instances are being queried. If not specified, return all task instances that satisfy
 // conditions set by other filters.
     TaskIdentifier *NameIdentifierModel `json:"TaskIdentifier,omitempty"`
@@ -2318,7 +2318,7 @@ type GetTitleDataRequestModel struct {
     Keys []string `json:"Keys,omitempty"`
     // OverrideLabel optional field that specifies the name of an override. This value is ignored when used by the game client; otherwise,
 // the overrides are applied automatically to the title data.
-    OverrideLabel string `json:"OverrideLabel"`
+    OverrideLabel string `json:"OverrideLabel,omitempty"`
 }
 
 // GetTitleDataResult 
@@ -2330,7 +2330,7 @@ type GetTitleDataResultModel struct {
 // GetUserBansRequest get all bans for a user, including inactive and expired bans.
 type GetUserBansRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserBansResult 
@@ -2344,11 +2344,11 @@ type GetUserBansResultModel struct {
 type GetUserDataRequestModel struct {
     // IfChangedFromDataVersion the version that currently exists according to the caller. The call will return the data for all of the keys if the
 // version in the system is greater than this.
-    IfChangedFromDataVersion uint32 `json:"IfChangedFromDataVersion"`
+    IfChangedFromDataVersion uint32 `json:"IfChangedFromDataVersion,omitempty"`
     // Keys specific keys to search for in the custom user data.
     Keys []string `json:"Keys,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserDataResult 
@@ -2357,9 +2357,9 @@ type GetUserDataResultModel struct {
     Data map[string]UserDataRecordModel `json:"Data,omitempty"`
     // DataVersion indicates the current version of the data that has been set. This is incremented with every set call for that type of
 // data (read-only, internal, etc). This version can be provided in Get calls to find updated data.
-    DataVersion uint32 `json:"DataVersion"`
+    DataVersion uint32 `json:"DataVersion,omitempty"`
     // PlayFabId playFab unique identifier of the user whose custom data is being returned.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserInventoryRequest all items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing,
@@ -2369,7 +2369,7 @@ type GetUserInventoryRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserInventoryResult 
@@ -2377,7 +2377,7 @@ type GetUserInventoryResultModel struct {
     // Inventory array of inventory items belonging to the user.
     Inventory []ItemInstanceModel `json:"Inventory,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency array of virtual currency balance(s) belonging to the user.
     VirtualCurrency map[string]int32 `json:"VirtualCurrency,omitempty"`
     // VirtualCurrencyRechargeTimes array of remaining times and timestamps for virtual currencies.
@@ -2391,43 +2391,43 @@ type GetUserInventoryResultModel struct {
 // UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type GrantedItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // BundleContents array of unique items that were awarded when this catalog item was purchased.
     BundleContents []string `json:"BundleContents,omitempty"`
     // BundleParent unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or
 // container.
-    BundleParent string `json:"BundleParent"`
+    BundleParent string `json:"BundleParent,omitempty"`
     // CatalogVersion catalog version for the inventory item, when this instance was created.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
 // item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Expiration timestamp for when this instance will expire.
-    Expiration time.Time `json:"Expiration"`
+    Expiration time.Time `json:"Expiration,omitempty"`
     // ItemClass class name for the inventory item, as defined in the catalog.
-    ItemClass string `json:"ItemClass"`
+    ItemClass string `json:"ItemClass,omitempty"`
     // ItemId unique identifier for the inventory item, as defined in the catalog.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // ItemInstanceId unique item identifier for this specific instance of the item.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // PurchaseDate timestamp for when this instance was purchased.
-    PurchaseDate time.Time `json:"PurchaseDate"`
+    PurchaseDate time.Time `json:"PurchaseDate,omitempty"`
     // RemainingUses total number of remaining uses, if this is a consumable item.
-    RemainingUses int32 `json:"RemainingUses"`
+    RemainingUses int32 `json:"RemainingUses,omitempty"`
     // Result result of this operation.
     Result bool `json:"Result"`
     // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
-    UnitCurrency string `json:"UnitCurrency"`
+    UnitCurrency string `json:"UnitCurrency,omitempty"`
     // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
-    UnitPrice uint32 `json:"UnitPrice"`
+    UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
-    UsesIncrementedBy int32 `json:"UsesIncrementedBy"`
+    UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
 // GrantItemsToUsersRequest this function directly adds inventory items to user inventories. As a result of this operations, the user will not be
@@ -2436,7 +2436,7 @@ type GrantedItemInstanceModel struct {
 // the grant/purchase operation.
 type GrantItemsToUsersRequestModel struct {
     // CatalogVersion catalog version from which items are to be granted.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemGrants array of items to grant and the users to whom the items are to be granted.
@@ -2453,13 +2453,13 @@ type GrantItemsToUsersResultModel struct {
 // decremented, except by actual grants.
 type IncrementLimitedEditionItemAvailabilityRequestModel struct {
     // Amount amount to increase availability by.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CatalogVersion which catalog is being updated. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemId the item which needs more availability.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
 }
 
 // IncrementLimitedEditionItemAvailabilityResult 
@@ -2480,7 +2480,7 @@ type IncrementPlayerStatisticVersionRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // IncrementPlayerStatisticVersionResult 
@@ -2492,25 +2492,25 @@ type IncrementPlayerStatisticVersionResultModel struct {
 // InsightsScalingTaskParameter 
 type InsightsScalingTaskParameterModel struct {
     // Level insights Performance Level to scale to.
-    Level int32 `json:"Level"`
+    Level int32 `json:"Level,omitempty"`
 }
 
 // ItemGrant 
 type ItemGrantModel struct {
     // Annotation string detailing any additional information concerning this operation.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
     Data map[string]string `json:"Data,omitempty"`
     // ItemId unique identifier of the catalog item to be granted to the user.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // KeysToRemove optional list of Data-keys to remove from UserData. Some SDKs cannot insert null-values into Data due to language
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ItemInstance a unique instance of an item in a user's inventory. Note, to retrieve additional information for an item such as Tags,
@@ -2520,49 +2520,49 @@ type ItemGrantModel struct {
 // such as UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type ItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // BundleContents array of unique items that were awarded when this catalog item was purchased.
     BundleContents []string `json:"BundleContents,omitempty"`
     // BundleParent unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or
 // container.
-    BundleParent string `json:"BundleParent"`
+    BundleParent string `json:"BundleParent,omitempty"`
     // CatalogVersion catalog version for the inventory item, when this instance was created.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
 // item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Expiration timestamp for when this instance will expire.
-    Expiration time.Time `json:"Expiration"`
+    Expiration time.Time `json:"Expiration,omitempty"`
     // ItemClass class name for the inventory item, as defined in the catalog.
-    ItemClass string `json:"ItemClass"`
+    ItemClass string `json:"ItemClass,omitempty"`
     // ItemId unique identifier for the inventory item, as defined in the catalog.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // ItemInstanceId unique item identifier for this specific instance of the item.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PurchaseDate timestamp for when this instance was purchased.
-    PurchaseDate time.Time `json:"PurchaseDate"`
+    PurchaseDate time.Time `json:"PurchaseDate,omitempty"`
     // RemainingUses total number of remaining uses, if this is a consumable item.
-    RemainingUses int32 `json:"RemainingUses"`
+    RemainingUses int32 `json:"RemainingUses,omitempty"`
     // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
-    UnitCurrency string `json:"UnitCurrency"`
+    UnitCurrency string `json:"UnitCurrency,omitempty"`
     // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
-    UnitPrice uint32 `json:"UnitPrice"`
+    UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
-    UsesIncrementedBy int32 `json:"UsesIncrementedBy"`
+    UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
 // LinkedPlatformAccountModel 
 type LinkedPlatformAccountModelModel struct {
     // Email linked account email of the user on the platform, if available
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // Platform authentication platform
-    Platform LoginIdentityProvider `json:"Platform"`
+    Platform LoginIdentityProvider `json:"Platform,omitempty"`
     // PlatformUserId unique account identifier of the user on the platform
-    PlatformUserId string `json:"PlatformUserId"`
+    PlatformUserId string `json:"PlatformUserId,omitempty"`
     // Username linked account username of the user on the platform, if available
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
 }
 
 // ListBuildsRequest 
@@ -2598,15 +2598,15 @@ type ListVirtualCurrencyTypesResultModel struct {
 // LocationModel 
 type LocationModelModel struct {
     // City city name.
-    City string `json:"City"`
+    City string `json:"City,omitempty"`
     // ContinentCode the two-character continent code for this location
-    ContinentCode ContinentCode `json:"ContinentCode"`
+    ContinentCode ContinentCode `json:"ContinentCode,omitempty"`
     // CountryCode the two-character ISO 3166-1 country code for the country associated with the location
-    CountryCode CountryCode `json:"CountryCode"`
+    CountryCode CountryCode `json:"CountryCode,omitempty"`
     // Latitude latitude coordinate of the geographic location.
-    Latitude float64 `json:"Latitude"`
+    Latitude float64 `json:"Latitude,omitempty"`
     // Longitude longitude coordinate of the geographic location.
-    Longitude float64 `json:"Longitude"`
+    Longitude float64 `json:"Longitude,omitempty"`
 }
 
 // LoginIdentityProvider 
@@ -2638,11 +2638,11 @@ const (
 // LogStatement 
 type LogStatementModel struct {
     // Data optional object accompanying the message as contextual information
-    Data interface{} `json:"Data"`
+    Data interface{} `json:"Data,omitempty"`
     // Level 'Debug', 'Info', or 'Error'
-    Level string `json:"Level"`
+    Level string `json:"Level,omitempty"`
     // Message 
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
 }
 
 // LookupUserAccountInfoRequest this API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support.
@@ -2651,13 +2651,13 @@ type LogStatementModel struct {
 // have accessed the title, the recommendation is to not store this data locally.
 type LookupUserAccountInfoRequestModel struct {
     // Email user email address attached to their account
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // TitleDisplayName title specific username to match against existing user accounts
-    TitleDisplayName string `json:"TitleDisplayName"`
+    TitleDisplayName string `json:"TitleDisplayName,omitempty"`
     // Username playFab username for the account (3-20 characters)
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
 }
 
 // LookupUserAccountInfoResult 
@@ -2671,12 +2671,12 @@ type MembershipModelModel struct {
     // IsActive whether this membership is active. That is, whether the MembershipExpiration time has been reached.
     IsActive bool `json:"IsActive"`
     // MembershipExpiration the time this membership expires
-    MembershipExpiration time.Time `json:"MembershipExpiration"`
+    MembershipExpiration time.Time `json:"MembershipExpiration,omitempty"`
     // MembershipId the id of the membership
-    MembershipId string `json:"MembershipId"`
+    MembershipId string `json:"MembershipId,omitempty"`
     // OverrideExpiration membership expirations can be explicitly overridden (via game manager or the admin api). If this membership has been
 // overridden, this will be the new expiration time.
-    OverrideExpiration time.Time `json:"OverrideExpiration"`
+    OverrideExpiration time.Time `json:"OverrideExpiration,omitempty"`
     // Subscriptions the list of subscriptions that this player has for this membership
     Subscriptions []SubscriptionModelModel `json:"Subscriptions,omitempty"`
 }
@@ -2688,7 +2688,7 @@ type MembershipModelModel struct {
 // server mode definition for the given BuildVersion, it will be deleted and replaced with the data specified in this call.
 type ModifyMatchmakerGameModesRequestModel struct {
     // BuildVersion previously uploaded build version for which game modes are being specified
-    BuildVersion string `json:"BuildVersion"`
+    BuildVersion string `json:"BuildVersion,omitempty"`
     // GameModes array of game modes (Note: this will replace all game modes for the indicated build version)
     GameModes []GameModeInfoModel `json:"GameModes,omitempty"`
 }
@@ -2702,22 +2702,22 @@ type ModifyServerBuildRequestModel struct {
     // ActiveRegions array of regions where this build can used, when it is active
     ActiveRegions []Region `json:"ActiveRegions,omitempty"`
     // BuildId unique identifier of the previously uploaded build executable to be updated
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
     // CommandLineTemplate appended to the end of the command line when starting game servers
-    CommandLineTemplate string `json:"CommandLineTemplate"`
+    CommandLineTemplate string `json:"CommandLineTemplate,omitempty"`
     // Comment developer comment(s) for this build
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ExecutablePath path to the game server executable. Defaults to gameserver.exe
-    ExecutablePath string `json:"ExecutablePath"`
+    ExecutablePath string `json:"ExecutablePath,omitempty"`
     // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost"`
+    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
     // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
 // machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots"`
+    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
     // Timestamp new timestamp
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 
 // ModifyServerBuildResult 
@@ -2725,57 +2725,57 @@ type ModifyServerBuildResultModel struct {
     // ActiveRegions array of regions where this build can used, when it is active
     ActiveRegions []Region `json:"ActiveRegions,omitempty"`
     // BuildId unique identifier for this build executable
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
     // CommandLineTemplate appended to the end of the command line when starting game servers
-    CommandLineTemplate string `json:"CommandLineTemplate"`
+    CommandLineTemplate string `json:"CommandLineTemplate,omitempty"`
     // Comment developer comment(s) for this build
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // ExecutablePath path to the game server executable. Defaults to gameserver.exe
-    ExecutablePath string `json:"ExecutablePath"`
+    ExecutablePath string `json:"ExecutablePath,omitempty"`
     // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost"`
+    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
     // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
 // machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots"`
+    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
     // Status the current status of the build validation and processing steps
-    Status GameBuildStatus `json:"Status"`
+    Status GameBuildStatus `json:"Status,omitempty"`
     // Timestamp time this build was last modified (or uploaded, if this build has never been modified)
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
 }
 
 // ModifyUserVirtualCurrencyResult 
 type ModifyUserVirtualCurrencyResultModel struct {
     // Balance balance of the virtual currency after modification.
-    Balance int32 `json:"Balance"`
+    Balance int32 `json:"Balance,omitempty"`
     // BalanceChange amount added or subtracted from the user's virtual currency. Maximum VC balance is Int32 (2,147,483,647). Any increase
 // over this value will be discarded.
-    BalanceChange int32 `json:"BalanceChange"`
+    BalanceChange int32 `json:"BalanceChange,omitempty"`
     // PlayFabId user currency was subtracted from.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which was modified.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // NameIdentifier identifier by either name or ID. Note that a name may change due to renaming, or reused after being deleted. ID is
 // immutable and unique.
 type NameIdentifierModel struct {
     // Id id Identifier, if present
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Name name Identifier, if present
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
 }
 
 // OpenIdConnection 
 type OpenIdConnectionModel struct {
     // ClientId the client ID given by the ID provider.
-    ClientId string `json:"ClientId"`
+    ClientId string `json:"ClientId,omitempty"`
     // ClientSecret the client secret given by the ID provider.
-    ClientSecret string `json:"ClientSecret"`
+    ClientSecret string `json:"ClientSecret,omitempty"`
     // ConnectionId a name for the connection to identify it within the title.
-    ConnectionId string `json:"ConnectionId"`
+    ConnectionId string `json:"ConnectionId,omitempty"`
     // DiscoverConfiguration shows if data about the connection will be loaded from the issuer's discovery document
     DiscoverConfiguration bool `json:"DiscoverConfiguration"`
     // IssuerInformation information for an OpenID Connect provider.
@@ -2785,56 +2785,56 @@ type OpenIdConnectionModel struct {
 // OpenIdIssuerInformation 
 type OpenIdIssuerInformationModel struct {
     // AuthorizationUrl authorization endpoint URL to direct users to for signin.
-    AuthorizationUrl string `json:"AuthorizationUrl"`
+    AuthorizationUrl string `json:"AuthorizationUrl,omitempty"`
     // Issuer the URL of the issuer of the tokens. This must match the exact URL of the issuer field in tokens.
-    Issuer string `json:"Issuer"`
+    Issuer string `json:"Issuer,omitempty"`
     // JsonWebKeySet jSON Web Key Set for validating the signature of tokens.
-    JsonWebKeySet interface{} `json:"JsonWebKeySet"`
+    JsonWebKeySet interface{} `json:"JsonWebKeySet,omitempty"`
     // TokenUrl token endpoint URL for code verification.
-    TokenUrl string `json:"TokenUrl"`
+    TokenUrl string `json:"TokenUrl,omitempty"`
 }
 
 // PermissionStatement 
 type PermissionStatementModel struct {
     // Action the action this statement effects. The only supported action is 'Execute'.
-    Action string `json:"Action"`
+    Action string `json:"Action,omitempty"`
     // ApiConditions additional conditions to be applied for API Resources.
     ApiConditions *ApiConditionModel `json:"ApiConditions,omitempty"`
     // Comment a comment about the statement. Intended solely for bookkeeping and debugging.
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // Effect the effect this statement will have. It could be either Allow or Deny
-    Effect EffectType `json:"Effect"`
+    Effect EffectType `json:"Effect,omitempty"`
     // Principal the principal this statement will effect. The only supported principal is '*'.
-    Principal string `json:"Principal"`
+    Principal string `json:"Principal,omitempty"`
     // Resource the resource this statements effects. The only supported resources look like 'pfrn:api--*' for all apis, or
 // 'pfrn:api--/Client/ConfirmPurchase' for specific apis.
-    Resource string `json:"Resource"`
+    Resource string `json:"Resource,omitempty"`
 }
 
 // PlayerLinkedAccount 
 type PlayerLinkedAccountModel struct {
     // Email linked account's email
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // Platform authentication platform
-    Platform LoginIdentityProvider `json:"Platform"`
+    Platform LoginIdentityProvider `json:"Platform,omitempty"`
     // PlatformUserId platform user identifier
-    PlatformUserId string `json:"PlatformUserId"`
+    PlatformUserId string `json:"PlatformUserId,omitempty"`
     // Username linked account's username
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
 }
 
 // PlayerLocation 
 type PlayerLocationModel struct {
     // City city of the player's geographic location.
-    City string `json:"City"`
+    City string `json:"City,omitempty"`
     // ContinentCode the two-character continent code for this location
-    ContinentCode ContinentCode `json:"ContinentCode"`
+    ContinentCode ContinentCode `json:"ContinentCode,omitempty"`
     // CountryCode the two-character ISO 3166-1 country code for the country associated with the location
-    CountryCode CountryCode `json:"CountryCode"`
+    CountryCode CountryCode `json:"CountryCode,omitempty"`
     // Latitude latitude coordinate of the player's geographic location.
-    Latitude float64 `json:"Latitude"`
+    Latitude float64 `json:"Latitude,omitempty"`
     // Longitude longitude coordinate of the player's geographic location.
-    Longitude float64 `json:"Longitude"`
+    Longitude float64 `json:"Longitude,omitempty"`
 }
 
 // PlayerProfile 
@@ -2842,31 +2842,31 @@ type PlayerProfileModel struct {
     // AdCampaignAttributions array of ad campaigns player has been attributed to
     AdCampaignAttributions []AdCampaignAttributionModel `json:"AdCampaignAttributions,omitempty"`
     // AvatarUrl image URL of the player's avatar.
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // BannedUntil banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
-    BannedUntil time.Time `json:"BannedUntil"`
+    BannedUntil time.Time `json:"BannedUntil,omitempty"`
     // ContactEmailAddresses array of contact email addresses associated with the player
     ContactEmailAddresses []ContactEmailInfoModel `json:"ContactEmailAddresses,omitempty"`
     // Created player record created
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName player Display Name
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // LastLogin last login
-    LastLogin time.Time `json:"LastLogin"`
+    LastLogin time.Time `json:"LastLogin,omitempty"`
     // LinkedAccounts array of third party accounts linked to this player
     LinkedAccounts []PlayerLinkedAccountModel `json:"LinkedAccounts,omitempty"`
     // Locations dictionary of player's locations by type.
     Locations map[string]PlayerLocationModel `json:"Locations,omitempty"`
     // Origination player account origination
-    Origination LoginIdentityProvider `json:"Origination"`
+    Origination LoginIdentityProvider `json:"Origination,omitempty"`
     // PlayerExperimentVariants list of player variants for experimentation
     PlayerExperimentVariants []string `json:"PlayerExperimentVariants,omitempty"`
     // PlayerId playFab Player ID
-    PlayerId string `json:"PlayerId"`
+    PlayerId string `json:"PlayerId,omitempty"`
     // PlayerStatistics array of player statistics
     PlayerStatistics []PlayerStatisticModel `json:"PlayerStatistics,omitempty"`
     // PublisherId publisher this player belongs to
-    PublisherId string `json:"PublisherId"`
+    PublisherId string `json:"PublisherId,omitempty"`
     // PushNotificationRegistrations array of configured push notification end points
     PushNotificationRegistrations []PushNotificationRegistrationModel `json:"PushNotificationRegistrations,omitempty"`
     // Statistics dictionary of player's statistics using only the latest version's value
@@ -2874,9 +2874,9 @@ type PlayerProfileModel struct {
     // Tags list of player's tags for segmentation.
     Tags []string `json:"Tags,omitempty"`
     // TitleId title ID this profile applies to
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
     // TotalValueToDateInUSD a sum of player's total purchases in USD across all currencies.
-    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD"`
+    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD,omitempty"`
     // ValuesToDate dictionary of player's total purchases by currency.
     ValuesToDate map[string]uint32 `json:"ValuesToDate,omitempty"`
     // VirtualCurrencyBalances dictionary of player's virtual currency balances
@@ -2888,19 +2888,19 @@ type PlayerProfileModelModel struct {
     // AdCampaignAttributions list of advertising campaigns the player has been attributed to
     AdCampaignAttributions []AdCampaignAttributionModelModel `json:"AdCampaignAttributions,omitempty"`
     // AvatarUrl uRL of the player's avatar image
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // BannedUntil if the player is currently banned, the UTC Date when the ban expires
-    BannedUntil time.Time `json:"BannedUntil"`
+    BannedUntil time.Time `json:"BannedUntil,omitempty"`
     // ContactEmailAddresses list of all contact email info associated with the player account
     ContactEmailAddresses []ContactEmailInfoModelModel `json:"ContactEmailAddresses,omitempty"`
     // Created player record created
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // ExperimentVariants list of experiment variants for the player.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
-    LastLogin time.Time `json:"LastLogin"`
+    LastLogin time.Time `json:"LastLogin,omitempty"`
     // LinkedAccounts list of all authentication systems linked to this player account
     LinkedAccounts []LinkedPlatformAccountModelModel `json:"LinkedAccounts,omitempty"`
     // Locations list of geographic locations from which the player has logged in to the title
@@ -2908,11 +2908,11 @@ type PlayerProfileModelModel struct {
     // Memberships list of memberships for the player, along with whether are expired.
     Memberships []MembershipModelModel `json:"Memberships,omitempty"`
     // Origination player account origination
-    Origination LoginIdentityProvider `json:"Origination"`
+    Origination LoginIdentityProvider `json:"Origination,omitempty"`
     // PlayerId playFab player account unique identifier
-    PlayerId string `json:"PlayerId"`
+    PlayerId string `json:"PlayerId,omitempty"`
     // PublisherId publisher this player belongs to
-    PublisherId string `json:"PublisherId"`
+    PublisherId string `json:"PublisherId,omitempty"`
     // PushNotificationRegistrations list of configured end points registered for sending the player push notifications
     PushNotificationRegistrations []PushNotificationRegistrationModelModel `json:"PushNotificationRegistrations,omitempty"`
     // Statistics list of leaderboard statistic values for the player
@@ -2920,10 +2920,10 @@ type PlayerProfileModelModel struct {
     // Tags list of player's tags for segmentation
     Tags []TagModelModel `json:"Tags,omitempty"`
     // TitleId title ID this player profile applies to
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
     // TotalValueToDateInUSD sum of the player's purchases made with real-money currencies, converted to US dollars equivalent and represented as a
 // whole number of cents (1/100 USD). For example, 999 indicates nine dollars and ninety-nine cents.
-    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD"`
+    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD,omitempty"`
     // ValuesToDate list of the player's lifetime purchase totals, summed by real-money currency
     ValuesToDate []ValueToDateModelModel `json:"ValuesToDate,omitempty"`
 }
@@ -2969,45 +2969,45 @@ type PlayerProfileViewConstraintsModel struct {
 // PlayerStatistic 
 type PlayerStatisticModel struct {
     // Id statistic ID
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Name statistic name
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // StatisticValue current statistic value
-    StatisticValue int32 `json:"StatisticValue"`
+    StatisticValue int32 `json:"StatisticValue,omitempty"`
     // StatisticVersion statistic version (0 if not a versioned statistic)
-    StatisticVersion int32 `json:"StatisticVersion"`
+    StatisticVersion int32 `json:"StatisticVersion,omitempty"`
 }
 
 // PlayerStatisticDefinition 
 type PlayerStatisticDefinitionModel struct {
     // AggregationMethod the aggregation method to use in updating the statistic (defaults to last)
-    AggregationMethod StatisticAggregationMethod `json:"AggregationMethod"`
+    AggregationMethod StatisticAggregationMethod `json:"AggregationMethod,omitempty"`
     // CurrentVersion current active version of the statistic, incremented each time the statistic resets
-    CurrentVersion uint32 `json:"CurrentVersion"`
+    CurrentVersion uint32 `json:"CurrentVersion,omitempty"`
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // VersionChangeInterval interval at which the values of the statistic for all players are reset automatically
-    VersionChangeInterval StatisticResetIntervalOption `json:"VersionChangeInterval"`
+    VersionChangeInterval StatisticResetIntervalOption `json:"VersionChangeInterval,omitempty"`
 }
 
 // PlayerStatisticVersion 
 type PlayerStatisticVersionModel struct {
     // ActivationTime time when the statistic version became active
-    ActivationTime time.Time `json:"ActivationTime"`
+    ActivationTime time.Time `json:"ActivationTime,omitempty"`
     // ArchiveDownloadUrl uRL for the downloadable archive of player statistic values, if available
-    ArchiveDownloadUrl string `json:"ArchiveDownloadUrl"`
+    ArchiveDownloadUrl string `json:"ArchiveDownloadUrl,omitempty"`
     // DeactivationTime time when the statistic version became inactive due to statistic version incrementing
-    DeactivationTime time.Time `json:"DeactivationTime"`
+    DeactivationTime time.Time `json:"DeactivationTime,omitempty"`
     // ScheduledActivationTime time at which the statistic version was scheduled to become active, based on the configured ResetInterval
-    ScheduledActivationTime time.Time `json:"ScheduledActivationTime"`
+    ScheduledActivationTime time.Time `json:"ScheduledActivationTime,omitempty"`
     // ScheduledDeactivationTime time at which the statistic version was scheduled to become inactive, based on the configured ResetInterval
-    ScheduledDeactivationTime time.Time `json:"ScheduledDeactivationTime"`
+    ScheduledDeactivationTime time.Time `json:"ScheduledDeactivationTime,omitempty"`
     // StatisticName name of the statistic when the version became active
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Status status of the statistic version
-    Status StatisticVersionStatus `json:"Status"`
+    Status StatisticVersionStatus `json:"Status,omitempty"`
     // Version version of the statistic
-    Version uint32 `json:"Version"`
+    Version uint32 `json:"Version,omitempty"`
 }
 
 // PushNotificationPlatform 
@@ -3020,17 +3020,17 @@ const (
 // PushNotificationRegistration 
 type PushNotificationRegistrationModel struct {
     // NotificationEndpointARN notification configured endpoint
-    NotificationEndpointARN string `json:"NotificationEndpointARN"`
+    NotificationEndpointARN string `json:"NotificationEndpointARN,omitempty"`
     // Platform push notification platform
-    Platform PushNotificationPlatform `json:"Platform"`
+    Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
 // PushNotificationRegistrationModel 
 type PushNotificationRegistrationModelModel struct {
     // NotificationEndpointARN notification configured endpoint
-    NotificationEndpointARN string `json:"NotificationEndpointARN"`
+    NotificationEndpointARN string `json:"NotificationEndpointARN,omitempty"`
     // Platform push notification platform
-    Platform PushNotificationPlatform `json:"Platform"`
+    Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
 // PushSetupPlatform 
@@ -3046,35 +3046,35 @@ type RandomResultTableModel struct {
     // Nodes child nodes that indicate what kind of drop table item this actually is.
     Nodes []ResultTableNodeModel `json:"Nodes,omitempty"`
     // TableId unique name for this drop table
-    TableId string `json:"TableId"`
+    TableId string `json:"TableId,omitempty"`
 }
 
 // RandomResultTableListing 
 type RandomResultTableListingModel struct {
     // CatalogVersion catalog version this table is associated with
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // Nodes child nodes that indicate what kind of drop table item this actually is.
     Nodes []ResultTableNodeModel `json:"Nodes,omitempty"`
     // TableId unique name for this drop table
-    TableId string `json:"TableId"`
+    TableId string `json:"TableId,omitempty"`
 }
 
 // RefundPurchaseRequest 
 type RefundPurchaseRequestModel struct {
     // OrderId unique order ID for the purchase in question.
-    OrderId string `json:"OrderId"`
+    OrderId string `json:"OrderId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the Reason parameter should correspond with the payment providers reason field, if they require one such as Facebook. In
 // the case of Facebook this must match one of their refund or dispute resolution enums (See:
 // https://developers.facebook.com/docs/payments/implementation-guide/handling-disputes-refunds)
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // RefundPurchaseResponse 
 type RefundPurchaseResponseModel struct {
     // PurchaseStatus the order's updated purchase status.
-    PurchaseStatus string `json:"PurchaseStatus"`
+    PurchaseStatus string `json:"PurchaseStatus,omitempty"`
 }
 
 // Region 
@@ -3095,9 +3095,9 @@ type RemovePlayerTagRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // TagName unique tag for player profile.
-    TagName string `json:"TagName"`
+    TagName string `json:"TagName,omitempty"`
 }
 
 // RemovePlayerTagResult 
@@ -3107,7 +3107,7 @@ type RemovePlayerTagResultModel struct {
 // RemoveServerBuildRequest 
 type RemoveServerBuildRequestModel struct {
     // BuildId unique identifier of the previously uploaded build executable to be removed
-    BuildId string `json:"BuildId"`
+    BuildId string `json:"BuildId,omitempty"`
 }
 
 // RemoveServerBuildResult 
@@ -3126,11 +3126,11 @@ type RemoveVirtualCurrencyTypesRequestModel struct {
 // leaderboards for the game.
 type ResetCharacterStatisticsRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ResetCharacterStatisticsResult 
@@ -3143,9 +3143,9 @@ type ResetPasswordRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Password the new password for the player.
-    Password string `json:"Password"`
+    Password string `json:"Password,omitempty"`
     // Token the token of the player requesting the password reset.
-    Token string `json:"Token"`
+    Token string `json:"Token,omitempty"`
 }
 
 // ResetPasswordResult 
@@ -3158,7 +3158,7 @@ type ResetUserStatisticsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ResetUserStatisticsResult 
@@ -3176,32 +3176,32 @@ const (
 // ResolvePurchaseDisputeRequest 
 type ResolvePurchaseDisputeRequestModel struct {
     // OrderId unique order ID for the purchase in question.
-    OrderId string `json:"OrderId"`
+    OrderId string `json:"OrderId,omitempty"`
     // Outcome enum for the desired purchase result state after notifying the payment provider. Valid values are Revoke, Reinstate and
 // Manual. Manual will cause no change to the order state.
-    Outcome ResolutionOutcome `json:"Outcome"`
+    Outcome ResolutionOutcome `json:"Outcome,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the Reason parameter should correspond with the payment providers reason field, if they require one such as Facebook. In
 // the case of Facebook this must match one of their refund or dispute resolution enums (See:
 // https://developers.facebook.com/docs/payments/implementation-guide/handling-disputes-refunds)
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // ResolvePurchaseDisputeResponse 
 type ResolvePurchaseDisputeResponseModel struct {
     // PurchaseStatus the order's updated purchase status.
-    PurchaseStatus string `json:"PurchaseStatus"`
+    PurchaseStatus string `json:"PurchaseStatus,omitempty"`
 }
 
 // ResultTableNode 
 type ResultTableNodeModel struct {
     // ResultItem either an ItemId, or the TableId of another random result table
-    ResultItem string `json:"ResultItem"`
+    ResultItem string `json:"ResultItem,omitempty"`
     // ResultItemType whether this entry in the table is an item or a link to another table
-    ResultItemType ResultTableNodeType `json:"ResultItemType"`
+    ResultItemType ResultTableNodeType `json:"ResultItemType,omitempty"`
     // Weight how likely this is to be rolled - larger numbers add more weight
-    Weight int32 `json:"Weight"`
+    Weight int32 `json:"Weight,omitempty"`
 }
 
 // ResultTableNodeType 
@@ -3215,7 +3215,7 @@ const (
 // ignored, however. Returns information about applied updates only.
 type RevokeAllBansForUserRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RevokeAllBansForUserResult 
@@ -3240,22 +3240,22 @@ type RevokeBansResultModel struct {
 // RevokeInventoryItem 
 type RevokeInventoryItemModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RevokeInventoryItemRequest in cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this
 // will not revoke access or otherwise remove the items which were dispensed.
 type RevokeInventoryItemRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RevokeInventoryItemsRequest in cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this
@@ -3278,7 +3278,7 @@ type RevokeInventoryResultModel struct {
 // RevokeItemError 
 type RevokeItemErrorModel struct {
     // Error specific error that was encountered.
-    Error GenericErrorCodes `json:"Error"`
+    Error GenericErrorCodes `json:"Error,omitempty"`
     // Item item information that failed to be revoked.
     Item *RevokeInventoryItemModel `json:"Item,omitempty"`
 }
@@ -3295,30 +3295,30 @@ type RunTaskRequestModel struct {
 type RunTaskResultModel struct {
     // TaskInstanceId iD of the task instance that is started. This can be used in Get*TaskInstance (e.g. GetCloudScriptTaskInstance) API call
 // to retrieve status for the task instance.
-    TaskInstanceId string `json:"TaskInstanceId"`
+    TaskInstanceId string `json:"TaskInstanceId,omitempty"`
 }
 
 // ScheduledTask 
 type ScheduledTaskModel struct {
     // Description description the task
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
     IsActive bool `json:"IsActive"`
     // LastRunTime uTC time of last run
-    LastRunTime time.Time `json:"LastRunTime"`
+    LastRunTime time.Time `json:"LastRunTime,omitempty"`
     // Name name of the task. This is a unique identifier for tasks in the title.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // NextRunTime uTC time of next run
-    NextRunTime time.Time `json:"NextRunTime"`
+    NextRunTime time.Time `json:"NextRunTime,omitempty"`
     // Parameter task parameter. Different types of task have different parameter structure. See each task type's create API
 // documentation for the details.
-    Parameter interface{} `json:"Parameter"`
+    Parameter interface{} `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
-    Schedule string `json:"Schedule"`
+    Schedule string `json:"Schedule,omitempty"`
     // TaskId iD of the task
-    TaskId string `json:"TaskId"`
+    TaskId string `json:"TaskId,omitempty"`
     // Type task type.
-    Type ScheduledTaskType `json:"Type"`
+    Type ScheduledTaskType `json:"Type,omitempty"`
 }
 
 // ScheduledTaskType 
@@ -3334,11 +3334,11 @@ const (
 type ScriptExecutionErrorModel struct {
     // Error error code, such as CloudScriptNotFound, JavascriptException, CloudScriptFunctionArgumentSizeExceeded,
 // CloudScriptAPIRequestCountExceeded, CloudScriptAPIRequestError, or CloudScriptHTTPRequestError
-    Error string `json:"Error"`
+    Error string `json:"Error,omitempty"`
     // Message details about the error
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
     // StackTrace point during the execution of the script at which the error occurred, if any
-    StackTrace string `json:"StackTrace"`
+    StackTrace string `json:"StackTrace,omitempty"`
 }
 
 // SendAccountRecoveryEmailRequest if the account in question is a "temporary" account (for example, one that was created via a call to
@@ -3348,9 +3348,9 @@ type SendAccountRecoveryEmailRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Email user email address attached to their account
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // EmailTemplateId the email template id of the account recovery email template to send.
-    EmailTemplateId string `json:"EmailTemplateId"`
+    EmailTemplateId string `json:"EmailTemplateId,omitempty"`
 }
 
 // SendAccountRecoveryEmailResult 
@@ -3365,9 +3365,9 @@ type SendAccountRecoveryEmailResultModel struct {
 // signature.
 type SetPlayerSecretRequestModel struct {
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
-    PlayerSecret string `json:"PlayerSecret"`
+    PlayerSecret string `json:"PlayerSecret,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // SetPlayerSecretResult 
@@ -3379,9 +3379,9 @@ type SetPublishedRevisionRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Revision revision to make the current published revision
-    Revision int32 `json:"Revision"`
+    Revision int32 `json:"Revision,omitempty"`
     // Version version number
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // SetPublishedRevisionResult 
@@ -3396,9 +3396,9 @@ type SetPublishedRevisionResultModel struct {
 type SetPublisherDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // Value new value to set. Set to null to remove a value
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // SetPublisherDataResult 
@@ -3412,7 +3412,7 @@ type SetTitleDataAndOverridesRequestModel struct {
 // create/update a key.
     KeyValues []TitleDataKeyValueModel `json:"KeyValues,omitempty"`
     // OverrideLabel name of the override.
-    OverrideLabel string `json:"OverrideLabel"`
+    OverrideLabel string `json:"OverrideLabel,omitempty"`
 }
 
 // SetTitleDataAndOverridesResult 
@@ -3427,9 +3427,9 @@ type SetTitleDataAndOverridesResultModel struct {
 type SetTitleDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // Value new value to set. Set to null to remove a value
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // SetTitleDataResult 
@@ -3441,24 +3441,24 @@ type SetTitleDataResultModel struct {
 // The current ARN (if one exists) can be overwritten by setting the OverwriteOldARN boolean to true.
 type SetupPushNotificationRequestModel struct {
     // Credential credential is the Private Key for APNS/APNS_SANDBOX, and the API Key for GCM
-    Credential string `json:"Credential"`
+    Credential string `json:"Credential,omitempty"`
     // Key for APNS, this is the PlatformPrincipal (SSL Certificate)
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // Name name of the application sending the message (application names must be made up of only uppercase and lowercase ASCII
 // letters, numbers, underscores, hyphens, and periods, and must be between 1 and 256 characters long)
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // OverwriteOldARN replace any existing ARN with the newly generated one. If this is set to false, an error will be returned if
 // notifications have already setup for this platform.
     OverwriteOldARN bool `json:"OverwriteOldARN"`
     // Platform supported notification platforms are Apple Push Notification Service (APNS and APNS_SANDBOX) for iOS and Google Cloud
 // Messaging (GCM) for Android
-    Platform PushSetupPlatform `json:"Platform"`
+    Platform PushSetupPlatform `json:"Platform,omitempty"`
 }
 
 // SetupPushNotificationResult 
 type SetupPushNotificationResultModel struct {
     // ARN amazon Resource Name for the created notification topic.
-    ARN string `json:"ARN"`
+    ARN string `json:"ARN,omitempty"`
 }
 
 // SharedSecret 
@@ -3466,9 +3466,9 @@ type SharedSecretModel struct {
     // Disabled flag to indicate if this key is disabled
     Disabled bool `json:"Disabled"`
     // FriendlyName friendly name for this key
-    FriendlyName string `json:"FriendlyName"`
+    FriendlyName string `json:"FriendlyName,omitempty"`
     // SecretKey the player shared secret to use when calling Client/GetTitlePublicKey
-    SecretKey string `json:"SecretKey"`
+    SecretKey string `json:"SecretKey,omitempty"`
 }
 
 // SourceType 
@@ -3495,11 +3495,11 @@ const (
 // StatisticModel 
 type StatisticModelModel struct {
     // Name statistic name
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Value statistic value
-    Value int32 `json:"Value"`
+    Value int32 `json:"Value,omitempty"`
     // Version statistic version (0 if not a versioned statistic)
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // StatisticResetIntervalOption 
@@ -3535,12 +3535,12 @@ const (
 // StoreItem a store entry that list a catalog item at a particular price
 type StoreItemModel struct {
     // CustomData store specific custom data. The data only exists as part of this store; it is not transferred to item instances
-    CustomData interface{} `json:"CustomData"`
+    CustomData interface{} `json:"CustomData,omitempty"`
     // DisplayPosition intended display position for this item. Note that 0 is the first position
-    DisplayPosition uint32 `json:"DisplayPosition"`
+    DisplayPosition uint32 `json:"DisplayPosition,omitempty"`
     // ItemId unique identifier of the item as it exists in the catalog - note that this must exactly match the ItemId from the
 // catalog
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // RealCurrencyPrices override prices for this item for specific currencies
     RealCurrencyPrices map[string]uint32 `json:"RealCurrencyPrices,omitempty"`
     // VirtualCurrencyPrices override prices for this item in virtual currencies and "RM" (the base Real Money purchase price, in USD pennies)
@@ -3550,29 +3550,29 @@ type StoreItemModel struct {
 // StoreMarketingModel marketing data about a specific store
 type StoreMarketingModelModel struct {
     // Description tagline for a store.
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // DisplayName display name of a store as it will appear to users.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Metadata custom data about a store.
-    Metadata interface{} `json:"Metadata"`
+    Metadata interface{} `json:"Metadata,omitempty"`
 }
 
 // SubscriptionModel 
 type SubscriptionModelModel struct {
     // Expiration when this subscription expires.
-    Expiration time.Time `json:"Expiration"`
+    Expiration time.Time `json:"Expiration,omitempty"`
     // InitialSubscriptionTime the time the subscription was orignially purchased
-    InitialSubscriptionTime time.Time `json:"InitialSubscriptionTime"`
+    InitialSubscriptionTime time.Time `json:"InitialSubscriptionTime,omitempty"`
     // IsActive whether this subscription is currently active. That is, if Expiration > now.
     IsActive bool `json:"IsActive"`
     // Status the status of this subscription, according to the subscription provider.
-    Status SubscriptionProviderStatus `json:"Status"`
+    Status SubscriptionProviderStatus `json:"Status,omitempty"`
     // SubscriptionId the id for this subscription
-    SubscriptionId string `json:"SubscriptionId"`
+    SubscriptionId string `json:"SubscriptionId,omitempty"`
     // SubscriptionItemId the item id for this subscription from the primary catalog
-    SubscriptionItemId string `json:"SubscriptionItemId"`
+    SubscriptionItemId string `json:"SubscriptionItemId,omitempty"`
     // SubscriptionProvider the provider for this subscription. Apple or Google Play are supported today.
-    SubscriptionProvider string `json:"SubscriptionProvider"`
+    SubscriptionProvider string `json:"SubscriptionProvider,omitempty"`
 }
 
 // SubscriptionProviderStatus 
@@ -3591,43 +3591,43 @@ const (
 // SubtractUserVirtualCurrencyRequest 
 type SubtractUserVirtualCurrencyRequestModel struct {
     // Amount amount to be subtracted from the user balance of the specified virtual currency.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId playFab unique identifier of the user whose virtual currency balance is to be decreased.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which is to be decremented.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // TagModel 
 type TagModelModel struct {
     // TagValue full value of the tag, including namespace
-    TagValue string `json:"TagValue"`
+    TagValue string `json:"TagValue,omitempty"`
 }
 
 // TaskInstanceBasicSummary 
 type TaskInstanceBasicSummaryModel struct {
     // CompletedAt uTC timestamp when the task completed.
-    CompletedAt time.Time `json:"CompletedAt"`
+    CompletedAt time.Time `json:"CompletedAt,omitempty"`
     // ErrorMessage error message for last processing attempt, if an error occured.
-    ErrorMessage string `json:"ErrorMessage"`
+    ErrorMessage string `json:"ErrorMessage,omitempty"`
     // EstimatedSecondsRemaining estimated time remaining in seconds.
-    EstimatedSecondsRemaining float64 `json:"EstimatedSecondsRemaining"`
+    EstimatedSecondsRemaining float64 `json:"EstimatedSecondsRemaining,omitempty"`
     // PercentComplete progress represented as percentage.
-    PercentComplete float64 `json:"PercentComplete"`
+    PercentComplete float64 `json:"PercentComplete,omitempty"`
     // ScheduledByUserId if manually scheduled, ID of user who scheduled the task.
-    ScheduledByUserId string `json:"ScheduledByUserId"`
+    ScheduledByUserId string `json:"ScheduledByUserId,omitempty"`
     // StartedAt uTC timestamp when the task started.
-    StartedAt time.Time `json:"StartedAt"`
+    StartedAt time.Time `json:"StartedAt,omitempty"`
     // Status current status of the task instance.
-    Status TaskInstanceStatus `json:"Status"`
+    Status TaskInstanceStatus `json:"Status,omitempty"`
     // TaskIdentifier identifier of the task this instance belongs to.
     TaskIdentifier *NameIdentifierModel `json:"TaskIdentifier,omitempty"`
     // TaskInstanceId iD of the task instance.
-    TaskInstanceId string `json:"TaskInstanceId"`
+    TaskInstanceId string `json:"TaskInstanceId,omitempty"`
     // Type type of the task.
-    Type ScheduledTaskType `json:"Type"`
+    Type ScheduledTaskType `json:"Type,omitempty"`
 }
 
 // TaskInstanceStatus 
@@ -3655,9 +3655,9 @@ const (
 type TitleDataKeyValueModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // Value new value to set. Set to null to remove a value
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // UpdateBanRequest represents a single update ban request.
@@ -3665,17 +3665,17 @@ type UpdateBanRequestModel struct {
     // Active the updated active state for the ban. Null for no change.
     Active bool `json:"Active"`
     // BanId the id of the ban to be updated.
-    BanId string `json:"BanId"`
+    BanId string `json:"BanId,omitempty"`
     // Expires the updated expiration date for the ban. Null for no change.
-    Expires time.Time `json:"Expires"`
+    Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the updated IP address for the ban. Null for no change.
-    IPAddress string `json:"IPAddress"`
+    IPAddress string `json:"IPAddress,omitempty"`
     // MACAddress the updated MAC address for the ban. Null for no change.
-    MACAddress string `json:"MACAddress"`
+    MACAddress string `json:"MACAddress,omitempty"`
     // Permanent whether to make this ban permanent. Set to true to make this ban permanent. This will not modify Active state.
     Permanent bool `json:"Permanent"`
     // Reason the updated reason for the ban to be updated. Maximum 140 characters. Null for no change.
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // UpdateBansRequest for each ban, only updates the values that are set. Leave any value to null for no change. If a ban could not be found,
@@ -3699,7 +3699,7 @@ type UpdateCatalogItemsRequestModel struct {
 // required and ignored in this call.
     Catalog []CatalogItemModel `json:"Catalog,omitempty"`
     // CatalogVersion which catalog is being updated. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // SetAsDefaultCatalog should this catalog be set as the default catalog. Defaults to true. If there is currently no default catalog, this will
@@ -3716,7 +3716,7 @@ type UpdateCloudScriptRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // DeveloperPlayFabId playFab user ID of the developer initiating the request.
-    DeveloperPlayFabId string `json:"DeveloperPlayFabId"`
+    DeveloperPlayFabId string `json:"DeveloperPlayFabId,omitempty"`
     // Files list of Cloud Script files to upload to create the new revision. Must have at least one file.
     Files []CloudScriptFileModel `json:"Files,omitempty"`
     // Publish immediately publish the new revision
@@ -3726,21 +3726,21 @@ type UpdateCloudScriptRequestModel struct {
 // UpdateCloudScriptResult 
 type UpdateCloudScriptResultModel struct {
     // Revision new revision number created
-    Revision int32 `json:"Revision"`
+    Revision int32 `json:"Revision,omitempty"`
     // Version cloud Script version updated
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // UpdateOpenIdConnectionRequest 
 type UpdateOpenIdConnectionRequestModel struct {
     // ClientId the client ID given by the ID provider.
-    ClientId string `json:"ClientId"`
+    ClientId string `json:"ClientId,omitempty"`
     // ClientSecret the client secret given by the ID provider.
-    ClientSecret string `json:"ClientSecret"`
+    ClientSecret string `json:"ClientSecret,omitempty"`
     // ConnectionId a name for the connection that identifies it within the title.
-    ConnectionId string `json:"ConnectionId"`
+    ConnectionId string `json:"ConnectionId,omitempty"`
     // IssuerDiscoveryUrl the issuer URL or discovery document URL to read issuer information from
-    IssuerDiscoveryUrl string `json:"IssuerDiscoveryUrl"`
+    IssuerDiscoveryUrl string `json:"IssuerDiscoveryUrl,omitempty"`
     // IssuerInformation manually specified information for an OpenID Connect issuer.
     IssuerInformation *OpenIdIssuerInformationModel `json:"IssuerInformation,omitempty"`
 }
@@ -3751,9 +3751,9 @@ type UpdatePlayerSharedSecretRequestModel struct {
     // Disabled disable or Enable this key
     Disabled bool `json:"Disabled"`
     // FriendlyName friendly name for this key
-    FriendlyName string `json:"FriendlyName"`
+    FriendlyName string `json:"FriendlyName,omitempty"`
     // SecretKey the shared secret key to update
-    SecretKey string `json:"SecretKey"`
+    SecretKey string `json:"SecretKey,omitempty"`
 }
 
 // UpdatePlayerSharedSecretResult 
@@ -3774,12 +3774,12 @@ type UpdatePlayerSharedSecretResultModel struct {
 // smallest (Min), or add them together (Sum).
 type UpdatePlayerStatisticDefinitionRequestModel struct {
     // AggregationMethod the aggregation method to use in updating the statistic (defaults to last)
-    AggregationMethod StatisticAggregationMethod `json:"AggregationMethod"`
+    AggregationMethod StatisticAggregationMethod `json:"AggregationMethod,omitempty"`
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // VersionChangeInterval interval at which the values of the statistic for all players are reset (changes are effective at the next occurance of
 // the new interval boundary)
-    VersionChangeInterval StatisticResetIntervalOption `json:"VersionChangeInterval"`
+    VersionChangeInterval StatisticResetIntervalOption `json:"VersionChangeInterval,omitempty"`
 }
 
 // UpdatePlayerStatisticDefinitionResult 
@@ -3795,7 +3795,7 @@ type UpdatePolicyRequestModel struct {
     // OverwritePolicy whether to overwrite or append to the existing policy.
     OverwritePolicy bool `json:"OverwritePolicy"`
     // PolicyName the name of the policy being updated. Only supported name is 'ApiPolicy'
-    PolicyName string `json:"PolicyName"`
+    PolicyName string `json:"PolicyName,omitempty"`
     // Statements the new statements to include in the policy.
     Statements []PermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -3803,7 +3803,7 @@ type UpdatePolicyRequestModel struct {
 // UpdatePolicyResponse 
 type UpdatePolicyResponseModel struct {
     // PolicyName the name of the policy that was updated.
-    PolicyName string `json:"PolicyName"`
+    PolicyName string `json:"PolicyName,omitempty"`
     // Statements the statements included in the new version of the policy.
     Statements []PermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -3812,7 +3812,7 @@ type UpdatePolicyResponseModel struct {
 // values matching Tables currently in the catalog will be overwritten with the given values.
 type UpdateRandomResultTablesRequestModel struct {
     // CatalogVersion which catalog is being updated. If null, update the current default catalog version
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Tables array of random result tables to make available (Note: specifying an existing TableId will result in overwriting that
@@ -3836,7 +3836,7 @@ type UpdateRandomResultTablesResultModel struct {
 // specified in the store for an item, the price set in the catalog should be displayed to the user.
 type UpdateStoreItemsRequestModel struct {
     // CatalogVersion catalog version of the store to update. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // MarketingData additional data about the store
@@ -3844,7 +3844,7 @@ type UpdateStoreItemsRequestModel struct {
     // Store array of store items - references to catalog items, with specific pricing - to be added
     Store []StoreItemModel `json:"Store,omitempty"`
     // StoreId unique identifier for the store which is to be updated
-    StoreId string `json:"StoreId"`
+    StoreId string `json:"StoreId,omitempty"`
 }
 
 // UpdateStoreItemsResult 
@@ -3859,19 +3859,19 @@ type UpdateTaskRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Description description the task
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // Identifier specify either the task ID or the name of the task to be updated.
     Identifier *NameIdentifierModel `json:"Identifier,omitempty"`
     // IsActive whether the schedule is active. Inactive schedule will not trigger task execution.
     IsActive bool `json:"IsActive"`
     // Name name of the task. This is a unique identifier for tasks in the title.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Parameter parameter object specific to the task type. See each task type's create API documentation for details.
-    Parameter interface{} `json:"Parameter"`
+    Parameter interface{} `json:"Parameter,omitempty"`
     // Schedule cron expression for the run schedule of the task. The expression should be in UTC.
-    Schedule string `json:"Schedule"`
+    Schedule string `json:"Schedule,omitempty"`
     // Type task type.
-    Type ScheduledTaskType `json:"Type"`
+    Type ScheduledTaskType `json:"Type,omitempty"`
 }
 
 // UpdateUserDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user. In
@@ -3887,16 +3887,16 @@ type UpdateUserDataRequestModel struct {
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // Permission permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateUserDataResult 
 type UpdateUserDataResultModel struct {
     // DataVersion indicates the current version of the data that has been set. This is incremented with every set call for that type of
 // data (read-only, internal, etc). This version can be provided in Get calls to find updated data.
-    DataVersion uint32 `json:"DataVersion"`
+    DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
 // UpdateUserInternalDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user. In
@@ -3912,7 +3912,7 @@ type UpdateUserInternalDataRequestModel struct {
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateUserTitleDisplayNameRequest in addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier, but
@@ -3922,15 +3922,15 @@ type UpdateUserTitleDisplayNameRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // DisplayName new title display name for the user - must be between 3 and 25 characters
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // PlayFabId playFab unique identifier of the user whose title specific display name is to be changed
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateUserTitleDisplayNameResult 
 type UpdateUserTitleDisplayNameResultModel struct {
     // DisplayName current title display name for the user (this will be the original display name if the rename attempt failed)
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
 }
 
 // UserAccountInfo 
@@ -3940,7 +3940,7 @@ type UserAccountInfoModel struct {
     // AppleAccountInfo sign in with Apple account information, if an Apple account has been linked
     AppleAccountInfo *UserAppleIdInfoModel `json:"AppleAccountInfo,omitempty"`
     // Created timestamp indicating when the user account was created
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // CustomIdInfo custom ID information, if a custom ID has been assigned
     CustomIdInfo *UserCustomIdInfoModel `json:"CustomIdInfo,omitempty"`
     // FacebookInfo user Facebook information, if a Facebook account has been linked
@@ -3962,7 +3962,7 @@ type UserAccountInfoModel struct {
     // OpenIdInfo openID Connect information, if any OpenID Connect accounts have been linked
     OpenIdInfo []UserOpenIdInfoModel `json:"OpenIdInfo,omitempty"`
     // PlayFabId unique identifier for the user account
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
     PrivateInfo *UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
     // PsnInfo user PSN account information, if a PSN account has been linked
@@ -3974,7 +3974,7 @@ type UserAccountInfoModel struct {
     // TwitchInfo user Twitch account information, if a Twitch account has been linked
     TwitchInfo *UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
     // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
     WindowsHelloInfo *UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
@@ -3984,19 +3984,19 @@ type UserAccountInfoModel struct {
 // UserAndroidDeviceInfo 
 type UserAndroidDeviceInfoModel struct {
     // AndroidDeviceId android device ID
-    AndroidDeviceId string `json:"AndroidDeviceId"`
+    AndroidDeviceId string `json:"AndroidDeviceId,omitempty"`
 }
 
 // UserAppleIdInfo 
 type UserAppleIdInfoModel struct {
     // AppleSubjectId apple subject ID
-    AppleSubjectId string `json:"AppleSubjectId"`
+    AppleSubjectId string `json:"AppleSubjectId,omitempty"`
 }
 
 // UserCustomIdInfo 
 type UserCustomIdInfoModel struct {
     // CustomId custom ID
-    CustomId string `json:"CustomId"`
+    CustomId string `json:"CustomId,omitempty"`
 }
 
 // UserDataPermission indicates whether a given data key is private (readable only by the player) or public (readable by all players). When a
@@ -4010,82 +4010,82 @@ const (
 // UserDataRecord 
 type UserDataRecordModel struct {
     // LastUpdated timestamp for when this data was last updated.
-    LastUpdated time.Time `json:"LastUpdated"`
+    LastUpdated time.Time `json:"LastUpdated,omitempty"`
     // Permission indicates whether this data can be read by all users (public) or only the user (private). This is used for GetUserData
 // requests being made by one player about another player.
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // Value data stored for the specified user data key.
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // UserFacebookInfo 
 type UserFacebookInfoModel struct {
     // FacebookId facebook identifier
-    FacebookId string `json:"FacebookId"`
+    FacebookId string `json:"FacebookId,omitempty"`
     // FullName facebook full name
-    FullName string `json:"FullName"`
+    FullName string `json:"FullName,omitempty"`
 }
 
 // UserFacebookInstantGamesIdInfo 
 type UserFacebookInstantGamesIdInfoModel struct {
     // FacebookInstantGamesId facebook Instant Games ID
-    FacebookInstantGamesId string `json:"FacebookInstantGamesId"`
+    FacebookInstantGamesId string `json:"FacebookInstantGamesId,omitempty"`
 }
 
 // UserGameCenterInfo 
 type UserGameCenterInfoModel struct {
     // GameCenterId gamecenter identifier
-    GameCenterId string `json:"GameCenterId"`
+    GameCenterId string `json:"GameCenterId,omitempty"`
 }
 
 // UserGoogleInfo 
 type UserGoogleInfoModel struct {
     // GoogleEmail email address of the Google account
-    GoogleEmail string `json:"GoogleEmail"`
+    GoogleEmail string `json:"GoogleEmail,omitempty"`
     // GoogleGender gender information of the Google account
-    GoogleGender string `json:"GoogleGender"`
+    GoogleGender string `json:"GoogleGender,omitempty"`
     // GoogleId google ID
-    GoogleId string `json:"GoogleId"`
+    GoogleId string `json:"GoogleId,omitempty"`
     // GoogleLocale locale of the Google account
-    GoogleLocale string `json:"GoogleLocale"`
+    GoogleLocale string `json:"GoogleLocale,omitempty"`
     // GoogleName name of the Google account user
-    GoogleName string `json:"GoogleName"`
+    GoogleName string `json:"GoogleName,omitempty"`
 }
 
 // UserIosDeviceInfo 
 type UserIosDeviceInfoModel struct {
     // IosDeviceId iOS device ID
-    IosDeviceId string `json:"IosDeviceId"`
+    IosDeviceId string `json:"IosDeviceId,omitempty"`
 }
 
 // UserKongregateInfo 
 type UserKongregateInfoModel struct {
     // KongregateId kongregate ID
-    KongregateId string `json:"KongregateId"`
+    KongregateId string `json:"KongregateId,omitempty"`
     // KongregateName kongregate Username
-    KongregateName string `json:"KongregateName"`
+    KongregateName string `json:"KongregateName,omitempty"`
 }
 
 // UserNintendoSwitchAccountIdInfo 
 type UserNintendoSwitchAccountIdInfoModel struct {
     // NintendoSwitchAccountSubjectId nintendo Switch account subject ID
-    NintendoSwitchAccountSubjectId string `json:"NintendoSwitchAccountSubjectId"`
+    NintendoSwitchAccountSubjectId string `json:"NintendoSwitchAccountSubjectId,omitempty"`
 }
 
 // UserNintendoSwitchDeviceIdInfo 
 type UserNintendoSwitchDeviceIdInfoModel struct {
     // NintendoSwitchDeviceId nintendo Switch Device ID
-    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId"`
+    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId,omitempty"`
 }
 
 // UserOpenIdInfo 
 type UserOpenIdInfoModel struct {
     // ConnectionId openID Connection ID
-    ConnectionId string `json:"ConnectionId"`
+    ConnectionId string `json:"ConnectionId,omitempty"`
     // Issuer openID Issuer
-    Issuer string `json:"Issuer"`
+    Issuer string `json:"Issuer,omitempty"`
     // Subject openID Subject
-    Subject string `json:"Subject"`
+    Subject string `json:"Subject,omitempty"`
 }
 
 // UserOrigination 
@@ -4120,49 +4120,49 @@ const (
 // UserPrivateAccountInfo 
 type UserPrivateAccountInfoModel struct {
     // Email user email address
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
 }
 
 // UserPsnInfo 
 type UserPsnInfoModel struct {
     // PsnAccountId pSN account ID
-    PsnAccountId string `json:"PsnAccountId"`
+    PsnAccountId string `json:"PsnAccountId,omitempty"`
     // PsnOnlineId pSN online ID
-    PsnOnlineId string `json:"PsnOnlineId"`
+    PsnOnlineId string `json:"PsnOnlineId,omitempty"`
 }
 
 // UserSteamInfo 
 type UserSteamInfoModel struct {
     // SteamActivationStatus what stage of game ownership the user is listed as being in, from Steam
-    SteamActivationStatus TitleActivationStatus `json:"SteamActivationStatus"`
+    SteamActivationStatus TitleActivationStatus `json:"SteamActivationStatus,omitempty"`
     // SteamCountry the country in which the player resides, from Steam data
-    SteamCountry string `json:"SteamCountry"`
+    SteamCountry string `json:"SteamCountry,omitempty"`
     // SteamCurrency currency type set in the user Steam account
-    SteamCurrency Currency `json:"SteamCurrency"`
+    SteamCurrency Currency `json:"SteamCurrency,omitempty"`
     // SteamId steam identifier
-    SteamId string `json:"SteamId"`
+    SteamId string `json:"SteamId,omitempty"`
     // SteamName steam display name
-    SteamName string `json:"SteamName"`
+    SteamName string `json:"SteamName,omitempty"`
 }
 
 // UserTitleInfo 
 type UserTitleInfoModel struct {
     // AvatarUrl uRL to the player's avatar.
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // Created timestamp indicating when the user was first associated with this game (this can differ significantly from when the user
 // first registered with PlayFab)
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName name of the user, as it is displayed in-game
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // FirstLogin timestamp indicating when the user first signed into this game (this can differ from the Created timestamp, as other
 // events, such as issuing a beta key to the user, can associate the title to the user)
-    FirstLogin time.Time `json:"FirstLogin"`
+    FirstLogin time.Time `json:"FirstLogin,omitempty"`
     // isBanned boolean indicating whether or not the user is currently banned for a title
     IsBanned bool `json:"isBanned"`
     // LastLogin timestamp for the last user login for this title
-    LastLogin time.Time `json:"LastLogin"`
+    LastLogin time.Time `json:"LastLogin,omitempty"`
     // Origination source by which the user first joined the game, if known
-    Origination UserOrigination `json:"Origination"`
+    Origination UserOrigination `json:"Origination,omitempty"`
     // TitlePlayerAccount title player account entity for this user
     TitlePlayerAccount *EntityKeyModel `json:"TitlePlayerAccount,omitempty"`
 }
@@ -4170,49 +4170,49 @@ type UserTitleInfoModel struct {
 // UserTwitchInfo 
 type UserTwitchInfoModel struct {
     // TwitchId twitch ID
-    TwitchId string `json:"TwitchId"`
+    TwitchId string `json:"TwitchId,omitempty"`
     // TwitchUserName twitch Username
-    TwitchUserName string `json:"TwitchUserName"`
+    TwitchUserName string `json:"TwitchUserName,omitempty"`
 }
 
 // UserWindowsHelloInfo 
 type UserWindowsHelloInfoModel struct {
     // WindowsHelloDeviceName windows Hello Device Name
-    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName"`
+    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName,omitempty"`
     // WindowsHelloPublicKeyHash windows Hello Public Key Hash
-    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash"`
+    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash,omitempty"`
 }
 
 // UserXboxInfo 
 type UserXboxInfoModel struct {
     // XboxUserId xBox user ID
-    XboxUserId string `json:"XboxUserId"`
+    XboxUserId string `json:"XboxUserId,omitempty"`
 }
 
 // ValueToDateModel 
 type ValueToDateModelModel struct {
     // Currency iSO 4217 code of the currency used in the purchases
-    Currency string `json:"Currency"`
+    Currency string `json:"Currency,omitempty"`
     // TotalValue total value of the purchases in a whole number of 1/100 monetary units. For example, 999 indicates nine dollars and
 // ninety-nine cents when Currency is 'USD')
-    TotalValue uint32 `json:"TotalValue"`
+    TotalValue uint32 `json:"TotalValue,omitempty"`
     // TotalValueAsDecimal total value of the purchases in a string representation of decimal monetary units. For example, '9.99' indicates nine
 // dollars and ninety-nine cents when Currency is 'USD'.
-    TotalValueAsDecimal string `json:"TotalValueAsDecimal"`
+    TotalValueAsDecimal string `json:"TotalValueAsDecimal,omitempty"`
 }
 
 // VirtualCurrencyData 
 type VirtualCurrencyDataModel struct {
     // CurrencyCode unique two-character identifier for this currency type (e.g.: "CC")
-    CurrencyCode string `json:"CurrencyCode"`
+    CurrencyCode string `json:"CurrencyCode,omitempty"`
     // DisplayName friendly name to show in the developer portal, reports, etc.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // InitialDeposit amount to automatically grant users upon first login to the title
-    InitialDeposit int32 `json:"InitialDeposit"`
+    InitialDeposit int32 `json:"InitialDeposit,omitempty"`
     // RechargeMax maximum amount to which the currency will recharge (cannot exceed MaxAmount, but can be less)
-    RechargeMax int32 `json:"RechargeMax"`
+    RechargeMax int32 `json:"RechargeMax,omitempty"`
     // RechargeRate rate at which the currency automatically be added to over time, in units per day (24 hours)
-    RechargeRate int32 `json:"RechargeRate"`
+    RechargeRate int32 `json:"RechargeRate,omitempty"`
 }
 
 // VirtualCurrencyRechargeTime 
@@ -4220,9 +4220,9 @@ type VirtualCurrencyRechargeTimeModel struct {
     // RechargeMax maximum value to which the regenerating currency will automatically increment. Note that it can exceed this value
 // through use of the AddUserVirtualCurrency API call. However, it will not regenerate automatically until it has fallen
 // below this value.
-    RechargeMax int32 `json:"RechargeMax"`
+    RechargeMax int32 `json:"RechargeMax,omitempty"`
     // RechargeTime server timestamp in UTC indicating the next time the virtual currency will be incremented.
-    RechargeTime time.Time `json:"RechargeTime"`
+    RechargeTime time.Time `json:"RechargeTime,omitempty"`
     // SecondsToRecharge time remaining (in seconds) before the next recharge increment of the virtual currency.
-    SecondsToRecharge int32 `json:"SecondsToRecharge"`
+    SecondsToRecharge int32 `json:"SecondsToRecharge,omitempty"`
 }

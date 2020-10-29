@@ -5,58 +5,58 @@ import "time"
 // AdCampaignAttribution 
 type AdCampaignAttributionModel struct {
     // AttributedAt uTC time stamp of attribution
-    AttributedAt time.Time `json:"AttributedAt"`
+    AttributedAt time.Time `json:"AttributedAt,omitempty"`
     // CampaignId attribution campaign identifier
-    CampaignId string `json:"CampaignId"`
+    CampaignId string `json:"CampaignId,omitempty"`
     // Platform attribution network name
-    Platform string `json:"Platform"`
+    Platform string `json:"Platform,omitempty"`
 }
 
 // AdCampaignAttributionModel 
 type AdCampaignAttributionModelModel struct {
     // AttributedAt uTC time stamp of attribution
-    AttributedAt time.Time `json:"AttributedAt"`
+    AttributedAt time.Time `json:"AttributedAt,omitempty"`
     // CampaignId attribution campaign identifier
-    CampaignId string `json:"CampaignId"`
+    CampaignId string `json:"CampaignId,omitempty"`
     // Platform attribution network name
-    Platform string `json:"Platform"`
+    Platform string `json:"Platform,omitempty"`
 }
 
 // AddCharacterVirtualCurrencyRequest 
 type AddCharacterVirtualCurrencyRequestModel struct {
     // Amount amount to be added to the character balance of the specified virtual currency. Maximum VC balance is Int32
 // (2,147,483,647). Any increase over this value will be discarded.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId playFab unique identifier of the user whose virtual currency balance is to be incremented.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which is to be incremented.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // AddFriendRequest 
 type AddFriendRequestModel struct {
     // FriendEmail email address of the user being added.
-    FriendEmail string `json:"FriendEmail"`
+    FriendEmail string `json:"FriendEmail,omitempty"`
     // FriendPlayFabId the PlayFab identifier of the user being added.
-    FriendPlayFabId string `json:"FriendPlayFabId"`
+    FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
     // FriendTitleDisplayName title-specific display name of the user to being added.
-    FriendTitleDisplayName string `json:"FriendTitleDisplayName"`
+    FriendTitleDisplayName string `json:"FriendTitleDisplayName,omitempty"`
     // FriendUsername the PlayFab username of the user being added
-    FriendUsername string `json:"FriendUsername"`
+    FriendUsername string `json:"FriendUsername,omitempty"`
     // PlayFabId playFab identifier of the player to add a new friend.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // AddGenericIDRequest 
 type AddGenericIDRequestModel struct {
     // GenericId generic service identifier to add to the player account.
-    GenericId* GenericServiceIdModel `json:"GenericId"`
+    GenericId* GenericServiceIdModel `json:"GenericId,omitempty"`
     // PlayFabId playFabId of the user to link.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // AddPlayerTagRequest this API will trigger a player_tag_added event and add a tag with the given TagName and PlayFabID to the corresponding
@@ -66,9 +66,9 @@ type AddPlayerTagRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // TagName unique tag for player profile.
-    TagName string `json:"TagName"`
+    TagName string `json:"TagName,omitempty"`
 }
 
 // AddPlayerTagResult 
@@ -80,7 +80,7 @@ type AddSharedGroupMembersRequestModel struct {
     // PlayFabIds an array of unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabIds []string `json:"PlayFabIds,omitempty"`
     // SharedGroupId unique identifier for the shared group.
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // AddSharedGroupMembersResult 
@@ -91,13 +91,13 @@ type AddSharedGroupMembersResultModel struct {
 type AddUserVirtualCurrencyRequestModel struct {
     // Amount amount to be added to the user balance of the specified virtual currency. Maximum VC balance is Int32 (2,147,483,647).
 // Any increase over this value will be discarded.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId playFab unique identifier of the user whose virtual currency balance is to be increased.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which is to be incremented.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // AdvancedPushPlatformMsg 
@@ -106,9 +106,9 @@ type AdvancedPushPlatformMsgModel struct {
 // data property.
     GCMDataOnly bool `json:"GCMDataOnly"`
     // Json the Json the platform should receive.
-    Json string `json:"Json"`
+    Json string `json:"Json,omitempty"`
     // Platform the platform that should receive the Json.
-    Platform PushNotificationPlatform `json:"Platform"`
+    Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
 // AuthenticateSessionTicketRequest note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be
@@ -116,7 +116,7 @@ type AdvancedPushPlatformMsgModel struct {
 // have accessed the title, the recommendation is to not store this data locally.
 type AuthenticateSessionTicketRequestModel struct {
     // SessionTicket session ticket as issued by a PlayFab client login API.
-    SessionTicket string `json:"SessionTicket"`
+    SessionTicket string `json:"SessionTicket,omitempty"`
 }
 
 // AuthenticateSessionTicketResult 
@@ -130,9 +130,9 @@ type AuthenticateSessionTicketResultModel struct {
 // AwardSteamAchievementItem 
 type AwardSteamAchievementItemModel struct {
     // AchievementName unique Steam achievement name.
-    AchievementName string `json:"AchievementName"`
+    AchievementName string `json:"AchievementName,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Result result of the award attempt (only valid on response, not on request).
     Result bool `json:"Result"`
 }
@@ -154,33 +154,33 @@ type BanInfoModel struct {
     // Active the active state of this ban. Expired bans may still have this value set to true but they will have no effect.
     Active bool `json:"Active"`
     // BanId the unique Ban Id associated with this ban.
-    BanId string `json:"BanId"`
+    BanId string `json:"BanId,omitempty"`
     // Created the time when this ban was applied.
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // Expires the time when this ban expires. Permanent bans do not have expiration date.
-    Expires time.Time `json:"Expires"`
+    Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the IP address on which the ban was applied. May affect multiple players.
-    IPAddress string `json:"IPAddress"`
+    IPAddress string `json:"IPAddress,omitempty"`
     // MACAddress the MAC address on which the ban was applied. May affect multiple players.
-    MACAddress string `json:"MACAddress"`
+    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason why this ban was applied.
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // BanRequest represents a single ban request.
 type BanRequestModel struct {
     // DurationInHours the duration in hours for the ban. Leave this blank for a permanent ban.
-    DurationInHours uint32 `json:"DurationInHours"`
+    DurationInHours uint32 `json:"DurationInHours,omitempty"`
     // IPAddress iP address to be banned. May affect multiple players.
-    IPAddress string `json:"IPAddress"`
+    IPAddress string `json:"IPAddress,omitempty"`
     // MACAddress mAC address to be banned. May affect multiple players.
-    MACAddress string `json:"MACAddress"`
+    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason for this ban. Maximum 140 characters.
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // BanUsersRequest the existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so
@@ -206,24 +206,24 @@ type CatalogItemModel struct {
     // CanBecomeCharacter if true, then an item instance of this type can be used to grant a character to a user.
     CanBecomeCharacter bool `json:"CanBecomeCharacter"`
     // CatalogVersion catalog version for this item
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // Consumable defines the consumable properties (number of uses, timeout) for the item
     Consumable *CatalogItemConsumableInfoModel `json:"Consumable,omitempty"`
     // Container defines the container properties for the item - what items it contains, including random drop tables and virtual
 // currencies, and what item (if any) is required to open it via the UnlockContainerItem API
     Container *CatalogItemContainerInfoModel `json:"Container,omitempty"`
     // CustomData game specific custom data
-    CustomData string `json:"CustomData"`
+    CustomData string `json:"CustomData,omitempty"`
     // Description text description of item, to show in-game
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // DisplayName text name for the item, to show in-game
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // InitialLimitedEditionCount if the item has IsLImitedEdition set to true, and this is the first time this ItemId has been defined as a limited
 // edition item, this value determines the total number of instances to allocate for the title. Once this limit has been
 // reached, no more instances of this ItemId can be created, and attempts to purchase or grant it will return a Result of
 // false for that ItemId. If the item has already been defined to have a limited edition count, or if this value is less
 // than zero, it will be ignored.
-    InitialLimitedEditionCount int32 `json:"InitialLimitedEditionCount"`
+    InitialLimitedEditionCount int32 `json:"InitialLimitedEditionCount,omitempty"`
     // IsLimitedEdition bETA: If true, then only a fixed number can ever be granted.
     IsLimitedEdition bool `json:"IsLimitedEdition"`
     // IsStackable if true, then only one item instance of this type will exist and its remaininguses will be incremented instead.
@@ -232,12 +232,12 @@ type CatalogItemModel struct {
     // IsTradable if true, then an item instance of this type can be traded between players using the trading APIs
     IsTradable bool `json:"IsTradable"`
     // ItemClass class to which the item belongs
-    ItemClass string `json:"ItemClass"`
+    ItemClass string `json:"ItemClass,omitempty"`
     // ItemId unique identifier for this item
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // ItemImageUrl uRL to the item image. For Facebook purchase to display the image on the item purchase page, this must be set to an HTTP
 // URL.
-    ItemImageUrl string `json:"ItemImageUrl"`
+    ItemImageUrl string `json:"ItemImageUrl,omitempty"`
     // RealCurrencyPrices override prices for this item for specific currencies
     RealCurrencyPrices map[string]uint32 `json:"RealCurrencyPrices,omitempty"`
     // Tags list of item tags
@@ -260,14 +260,14 @@ type CatalogItemBundleInfoModel struct {
 // CatalogItemConsumableInfo 
 type CatalogItemConsumableInfoModel struct {
     // UsageCount number of times this object can be used, after which it will be removed from the player inventory
-    UsageCount uint32 `json:"UsageCount"`
+    UsageCount uint32 `json:"UsageCount,omitempty"`
     // UsagePeriod duration in seconds for how long the item will remain in the player inventory - once elapsed, the item will be removed
 // (recommended minimum value is 5 seconds, as lower values can cause the item to expire before operations depending on
 // this item's details have completed)
-    UsagePeriod uint32 `json:"UsagePeriod"`
+    UsagePeriod uint32 `json:"UsagePeriod,omitempty"`
     // UsagePeriodGroup all inventory item instances in the player inventory sharing a non-null UsagePeriodGroup have their UsagePeriod values
 // added together, and share the result - when that period has elapsed, all the items in the group will be removed
-    UsagePeriodGroup string `json:"UsagePeriodGroup"`
+    UsagePeriodGroup string `json:"UsagePeriodGroup,omitempty"`
 }
 
 // CatalogItemContainerInfo containers are inventory items that can hold other items defined in the catalog, as well as virtual currency, which is
@@ -280,7 +280,7 @@ type CatalogItemContainerInfoModel struct {
     ItemContents []string `json:"ItemContents,omitempty"`
     // KeyItemId itemId for the catalog item used to unlock the container, if any (if not specified, a call to UnlockContainerItem will
 // open the container, adding the contents to the player inventory and currency balances)
-    KeyItemId string `json:"KeyItemId"`
+    KeyItemId string `json:"KeyItemId,omitempty"`
     // ResultTableContents unique TableId values for all RandomResultTable objects which are part of the container (once unlocked, random tables
 // will be resolved and add the relevant items to the player inventory)
     ResultTableContents []string `json:"ResultTableContents,omitempty"`
@@ -291,7 +291,7 @@ type CatalogItemContainerInfoModel struct {
 // CharacterInventory 
 type CharacterInventoryModel struct {
     // CharacterId the id of this character.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // Inventory the inventory of this character.
     Inventory []ItemInstanceModel `json:"Inventory,omitempty"`
 }
@@ -299,29 +299,29 @@ type CharacterInventoryModel struct {
 // CharacterLeaderboardEntry 
 type CharacterLeaderboardEntryModel struct {
     // CharacterId playFab unique identifier of the character that belongs to the user for this leaderboard entry.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CharacterName title-specific display name of the character for this leaderboard entry.
-    CharacterName string `json:"CharacterName"`
+    CharacterName string `json:"CharacterName,omitempty"`
     // CharacterType name of the character class for this entry.
-    CharacterType string `json:"CharacterType"`
+    CharacterType string `json:"CharacterType,omitempty"`
     // DisplayName title-specific display name of the user for this leaderboard entry.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // PlayFabId playFab unique identifier of the user for this leaderboard entry.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Position user's overall position in the leaderboard.
-    Position int32 `json:"Position"`
+    Position int32 `json:"Position,omitempty"`
     // StatValue specific value of the user's statistic.
-    StatValue int32 `json:"StatValue"`
+    StatValue int32 `json:"StatValue,omitempty"`
 }
 
 // CharacterResult 
 type CharacterResultModel struct {
     // CharacterId the id for this character on this player.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CharacterName the name of this character.
-    CharacterName string `json:"CharacterName"`
+    CharacterName string `json:"CharacterName,omitempty"`
     // CharacterType the type-string that was given to this character on creation.
-    CharacterType string `json:"CharacterType"`
+    CharacterType string `json:"CharacterType,omitempty"`
 }
 
 // CloudScriptRevisionOption 
@@ -335,43 +335,43 @@ const (
 // ConsumeItemRequest 
 type ConsumeItemRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ConsumeCount number of uses to consume from the item.
-    ConsumeCount int32 `json:"ConsumeCount"`
+    ConsumeCount int32 `json:"ConsumeCount,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemInstanceId unique instance identifier of the item to be consumed.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ConsumeItemResult 
 type ConsumeItemResultModel struct {
     // ItemInstanceId unique instance identifier of the item with uses consumed.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // RemainingUses number of uses remaining on the item.
-    RemainingUses int32 `json:"RemainingUses"`
+    RemainingUses int32 `json:"RemainingUses,omitempty"`
 }
 
 // ContactEmailInfo 
 type ContactEmailInfoModel struct {
     // EmailAddress the email address
-    EmailAddress string `json:"EmailAddress"`
+    EmailAddress string `json:"EmailAddress,omitempty"`
     // Name the name of the email info data
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // VerificationStatus the verification status of the email
-    VerificationStatus EmailVerificationStatus `json:"VerificationStatus"`
+    VerificationStatus EmailVerificationStatus `json:"VerificationStatus,omitempty"`
 }
 
 // ContactEmailInfoModel 
 type ContactEmailInfoModelModel struct {
     // EmailAddress the email address
-    EmailAddress string `json:"EmailAddress"`
+    EmailAddress string `json:"EmailAddress,omitempty"`
     // Name the name of the email info data
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // VerificationStatus the verification status of the email
-    VerificationStatus EmailVerificationStatus `json:"VerificationStatus"`
+    VerificationStatus EmailVerificationStatus `json:"VerificationStatus,omitempty"`
 }
 
 // ContinentCode 
@@ -644,13 +644,13 @@ const (
 // if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
 type CreateSharedGroupRequestModel struct {
     // SharedGroupId unique identifier for the shared group (a random identifier will be assigned, if one is not specified).
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // CreateSharedGroupResult 
 type CreateSharedGroupResultModel struct {
     // SharedGroupId unique identifier for the shared group.
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // Currency 
@@ -825,11 +825,11 @@ const (
 // preserve leaderboard integrity.
 type DeleteCharacterFromUserRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // SaveCharacterInventory if true, the character's inventory will be transferred up to the owning user; otherwise, this request will purge those
 // items.
     SaveCharacterInventory bool `json:"SaveCharacterInventory"`
@@ -849,7 +849,7 @@ type DeleteCharacterFromUserResultModel struct {
 // an option in the game manager website. It is disabled by default.
 type DeletePlayerRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // DeletePlayerResult 
@@ -859,7 +859,7 @@ type DeletePlayerResultModel struct {
 // DeletePushNotificationTemplateRequest represents the request to delete a push notification template.
 type DeletePushNotificationTemplateRequestModel struct {
     // PushNotificationTemplateId id of the push notification template to be deleted.
-    PushNotificationTemplateId string `json:"PushNotificationTemplateId"`
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
 }
 
 // DeletePushNotificationTemplateResult 
@@ -869,7 +869,7 @@ type DeletePushNotificationTemplateResultModel struct {
 // DeleteSharedGroupRequest 
 type DeleteSharedGroupRequestModel struct {
     // SharedGroupId unique identifier for the shared group.
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // DeregisterGameRequest 
@@ -877,7 +877,7 @@ type DeregisterGameRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // LobbyId unique identifier for the Game Server Instance that is being deregistered.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
 }
 
 // DeregisterGameResponse 
@@ -903,9 +903,9 @@ type EmptyResultModel struct {
 // EntityKey combined entity type and ID structure which uniquely identifies a single entity.
 type EntityKeyModel struct {
     // Id unique ID of the entity.
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
-    Type string `json:"Type"`
+    Type string `json:"Type,omitempty"`
 }
 
 // EntityTokenResponse 
@@ -913,44 +913,44 @@ type EntityTokenResponseModel struct {
     // Entity the entity id and type.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // EntityToken the token used to set X-EntityToken for all entity based API calls.
-    EntityToken string `json:"EntityToken"`
+    EntityToken string `json:"EntityToken,omitempty"`
     // TokenExpiration the time the token will expire, if it is an expiring token, in UTC.
-    TokenExpiration time.Time `json:"TokenExpiration"`
+    TokenExpiration time.Time `json:"TokenExpiration,omitempty"`
 }
 
 // EvaluateRandomResultTableRequest 
 type EvaluateRandomResultTableRequestModel struct {
     // CatalogVersion specifies the catalog version that should be used to evaluate the Random Result Table. If unspecified, uses
 // default/primary catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // TableId the unique identifier of the Random Result Table to use.
-    TableId string `json:"TableId"`
+    TableId string `json:"TableId,omitempty"`
 }
 
 // EvaluateRandomResultTableResult note that if the Random Result Table contains no entries, or does not exist for the catalog specified (the Primary
 // catalog if one is not specified), an InvalidDropTable error will be returned.
 type EvaluateRandomResultTableResultModel struct {
     // ResultItemId unique identifier for the item returned from the Random Result Table evaluation, for the given catalog.
-    ResultItemId string `json:"ResultItemId"`
+    ResultItemId string `json:"ResultItemId,omitempty"`
 }
 
 // ExecuteCloudScriptResult 
 type ExecuteCloudScriptResultModel struct {
     // APIRequestsIssued number of PlayFab API requests issued by the CloudScript function
-    APIRequestsIssued int32 `json:"APIRequestsIssued"`
+    APIRequestsIssued int32 `json:"APIRequestsIssued,omitempty"`
     // Error information about the error, if any, that occurred during execution
     Error *ScriptExecutionErrorModel `json:"Error,omitempty"`
     // ExecutionTimeSeconds 
-    ExecutionTimeSeconds float64 `json:"ExecutionTimeSeconds"`
+    ExecutionTimeSeconds float64 `json:"ExecutionTimeSeconds,omitempty"`
     // FunctionName the name of the function that executed
-    FunctionName string `json:"FunctionName"`
+    FunctionName string `json:"FunctionName,omitempty"`
     // FunctionResult the object returned from the CloudScript function, if any
-    FunctionResult interface{} `json:"FunctionResult"`
+    FunctionResult interface{} `json:"FunctionResult,omitempty"`
     // FunctionResultTooLarge flag indicating if the FunctionResult was too large and was subsequently dropped from this event. This only occurs if
 // the total event size is larger than 350KB.
     FunctionResultTooLarge bool `json:"FunctionResultTooLarge"`
     // HttpRequestsIssued number of external HTTP requests issued by the CloudScript function
-    HttpRequestsIssued int32 `json:"HttpRequestsIssued"`
+    HttpRequestsIssued int32 `json:"HttpRequestsIssued,omitempty"`
     // Logs entries logged during the function execution. These include both entries logged in the function code using log.info()
 // and log.error() and error entries for API and HTTP request failures.
     Logs []LogStatementModel `json:"Logs,omitempty"`
@@ -958,12 +958,12 @@ type ExecuteCloudScriptResultModel struct {
 // event size is larger than 350KB after the FunctionResult was removed.
     LogsTooLarge bool `json:"LogsTooLarge"`
     // MemoryConsumedBytes 
-    MemoryConsumedBytes uint32 `json:"MemoryConsumedBytes"`
+    MemoryConsumedBytes uint32 `json:"MemoryConsumedBytes,omitempty"`
     // ProcessorTimeSeconds processor time consumed while executing the function. This does not include time spent waiting on API calls or HTTP
 // requests.
-    ProcessorTimeSeconds float64 `json:"ProcessorTimeSeconds"`
+    ProcessorTimeSeconds float64 `json:"ProcessorTimeSeconds,omitempty"`
     // Revision the revision of the CloudScript that executed
-    Revision int32 `json:"Revision"`
+    Revision int32 `json:"Revision,omitempty"`
 }
 
 // ExecuteCloudScriptServerRequest 
@@ -971,36 +971,36 @@ type ExecuteCloudScriptServerRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // FunctionName the name of the CloudScript function to execute
-    FunctionName string `json:"FunctionName"`
+    FunctionName string `json:"FunctionName,omitempty"`
     // FunctionParameter object that is passed in to the function as the first argument
-    FunctionParameter interface{} `json:"FunctionParameter"`
+    FunctionParameter interface{} `json:"FunctionParameter,omitempty"`
     // GeneratePlayStreamEvent generate a 'player_executed_cloudscript' PlayStream event containing the results of the function execution and other
 // contextual information. This event will show up in the PlayStream debugger console for the player in Game Manager.
     GeneratePlayStreamEvent bool `json:"GeneratePlayStreamEvent"`
     // PlayFabId the unique user identifier for the player on whose behalf the script is being run
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // RevisionSelection option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live'
 // executes the current live, published revision, and 'Specific' executes the specified revision. The default value is
 // 'Specific', if the SpeificRevision parameter is specified, otherwise it is 'Live'.
-    RevisionSelection CloudScriptRevisionOption `json:"RevisionSelection"`
+    RevisionSelection CloudScriptRevisionOption `json:"RevisionSelection,omitempty"`
     // SpecificRevision the specivic revision to execute, when RevisionSelection is set to 'Specific'
-    SpecificRevision int32 `json:"SpecificRevision"`
+    SpecificRevision int32 `json:"SpecificRevision,omitempty"`
 }
 
 // FacebookInstantGamesPlayFabIdPair 
 type FacebookInstantGamesPlayFabIdPairModel struct {
     // FacebookInstantGamesId unique Facebook Instant Games identifier for a user.
-    FacebookInstantGamesId string `json:"FacebookInstantGamesId"`
+    FacebookInstantGamesId string `json:"FacebookInstantGamesId,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Facebook Instant Games identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // FacebookPlayFabIdPair 
 type FacebookPlayFabIdPairModel struct {
     // FacebookId unique Facebook identifier for a user.
-    FacebookId string `json:"FacebookId"`
+    FacebookId string `json:"FacebookId,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Facebook identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // FriendInfo 
@@ -1008,7 +1008,7 @@ type FriendInfoModel struct {
     // FacebookInfo available Facebook information (if the user and PlayFab friend are also connected in Facebook).
     FacebookInfo *UserFacebookInfoModel `json:"FacebookInfo,omitempty"`
     // FriendPlayFabId playFab unique identifier for this friend.
-    FriendPlayFabId string `json:"FriendPlayFabId"`
+    FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
     // GameCenterInfo available Game Center information (if the user and PlayFab friend are also connected in Game Center).
     GameCenterInfo *UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // Profile the profile of the user, if requested.
@@ -1020,9 +1020,9 @@ type FriendInfoModel struct {
     // Tags tags which have been associated with this friend.
     Tags []string `json:"Tags,omitempty"`
     // TitleDisplayName title-specific display name for this friend.
-    TitleDisplayName string `json:"TitleDisplayName"`
+    TitleDisplayName string `json:"TitleDisplayName,omitempty"`
     // Username playFab unique username for this friend.
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
     // XboxInfo available Xbox information, if the user and PlayFab friend are both connected to Xbox Live.
     XboxInfo *UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
@@ -1645,15 +1645,15 @@ type GenericPlayFabIdPairModel struct {
     // GenericId unique generic service identifier for a user.
     GenericId *GenericServiceIdModel `json:"GenericId,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the given generic identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GenericServiceId 
 type GenericServiceIdModel struct {
     // ServiceName name of the service for which the player has a unique identifier.
-    ServiceName string `json:"ServiceName"`
+    ServiceName string `json:"ServiceName,omitempty"`
     // UserId unique identifier of the player in that service.
-    UserId string `json:"UserId"`
+    UserId string `json:"UserId,omitempty"`
 }
 
 // GetAllSegmentsRequest request has no paramaters.
@@ -1669,7 +1669,7 @@ type GetAllSegmentsResultModel struct {
 // GetCatalogItemsRequest 
 type GetCatalogItemsRequestModel struct {
     // CatalogVersion which catalog is being requested. If null, uses the default catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
 }
 
 // GetCatalogItemsResult 
@@ -1682,27 +1682,27 @@ type GetCatalogItemsResultModel struct {
 // the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 type GetCharacterDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // IfChangedFromDataVersion the version that currently exists according to the caller. The call will return the data for all of the keys if the
 // version in the system is greater than this.
-    IfChangedFromDataVersion uint32 `json:"IfChangedFromDataVersion"`
+    IfChangedFromDataVersion uint32 `json:"IfChangedFromDataVersion,omitempty"`
     // Keys specific keys to search for in the custom user data.
     Keys []string `json:"Keys,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetCharacterDataResult 
 type GetCharacterDataResultModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // Data user specific data for this title.
     Data map[string]UserDataRecordModel `json:"Data,omitempty"`
     // DataVersion indicates the current version of the data that has been set. This is incremented with every set call for that type of
 // data (read-only, internal, etc). This version can be provided in Get calls to find updated data.
-    DataVersion uint32 `json:"DataVersion"`
+    DataVersion uint32 `json:"DataVersion,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetCharacterInventoryRequest all items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing,
@@ -1710,23 +1710,23 @@ type GetCharacterDataResultModel struct {
 // user's current inventory, and so will not be not included. Also returns their virtual currency balances.
 type GetCharacterInventoryRequestModel struct {
     // CatalogVersion used to limit results to only those from a specific catalog version.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetCharacterInventoryResult 
 type GetCharacterInventoryResultModel struct {
     // CharacterId unique identifier of the character for this inventory.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // Inventory array of inventory items belonging to the character.
     Inventory []ItemInstanceModel `json:"Inventory,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency array of virtual currency balance(s) belonging to the character.
     VirtualCurrency map[string]int32 `json:"VirtualCurrency,omitempty"`
     // VirtualCurrencyRechargeTimes array of remaining times and timestamps for virtual currencies.
@@ -1736,13 +1736,13 @@ type GetCharacterInventoryResultModel struct {
 // GetCharacterLeaderboardRequest 
 type GetCharacterLeaderboardRequestModel struct {
     // CharacterType optional character type on which to filter the leaderboard entries.
-    CharacterType string `json:"CharacterType"`
+    CharacterType string `json:"CharacterType,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount"`
+    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // StartPosition first entry in the leaderboard to be retrieved.
-    StartPosition int32 `json:"StartPosition"`
+    StartPosition int32 `json:"StartPosition,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // GetCharacterLeaderboardResult note that the Position of the character in the results is for the overall leaderboard.
@@ -1756,27 +1756,27 @@ type GetCharacterLeaderboardResultModel struct {
 // by the title, the statistics are used for all leaderboard operations in PlayFab.
 type GetCharacterStatisticsRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetCharacterStatisticsResult 
 type GetCharacterStatisticsResultModel struct {
     // CharacterId unique identifier of the character for the statistics.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CharacterStatistics character statistics for the requested user.
     CharacterStatistics map[string]int32 `json:"CharacterStatistics,omitempty"`
     // PlayFabId playFab unique identifier of the user whose character statistics are being returned.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetContentDownloadUrlRequest 
 type GetContentDownloadUrlRequestModel struct {
     // HttpMethod hTTP method to fetch item - GET or HEAD. Use HEAD when only fetching metadata. Default is GET.
-    HttpMethod string `json:"HttpMethod"`
+    HttpMethod string `json:"HttpMethod,omitempty"`
     // Key key of the content item to fetch, usually formatted as a path, e.g. images/a.png
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // ThruCDN true to download through CDN. CDN provides higher download bandwidth and lower latency. However, if you want the latest,
 // non-cached version of the content during development, set this to false. Default is true.
     ThruCDN bool `json:"ThruCDN"`
@@ -1785,7 +1785,7 @@ type GetContentDownloadUrlRequestModel struct {
 // GetContentDownloadUrlResult 
 type GetContentDownloadUrlResultModel struct {
     // URL uRL for downloading content via HTTP GET or HEAD method. The URL will expire in approximately one hour.
-    URL string `json:"URL"`
+    URL string `json:"URL,omitempty"`
 }
 
 // GetFriendLeaderboardRequest 
@@ -1797,21 +1797,21 @@ type GetFriendLeaderboardRequestModel struct {
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
     IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount"`
+    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId the player whose friend leaderboard to get
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
     ProfileConstraints *PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StartPosition position in the leaderboard to start this listing (defaults to the first entry).
-    StartPosition int32 `json:"StartPosition"`
+    StartPosition int32 `json:"StartPosition,omitempty"`
     // StatisticName statistic used to rank friends for this leaderboard.
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Version the version of the leaderboard to get.
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
     // XboxToken xbox token if Xbox friends should be included. Requires Xbox be configured on PlayFab.
-    XboxToken string `json:"XboxToken"`
+    XboxToken string `json:"XboxToken,omitempty"`
 }
 
 // GetFriendsListRequest 
@@ -1823,13 +1823,13 @@ type GetFriendsListRequestModel struct {
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
     IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // PlayFabId playFab identifier of the player whose friend list to get.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
     ProfileConstraints *PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // XboxToken xbox token if Xbox friends should be included. Requires Xbox be configured on PlayFab.
-    XboxToken string `json:"XboxToken"`
+    XboxToken string `json:"XboxToken,omitempty"`
 }
 
 // GetFriendsListResult if any additional services are queried for the user's friends, those friends who also have a PlayFab account registered
@@ -1844,15 +1844,15 @@ type GetFriendsListResultModel struct {
 // GetLeaderboardAroundCharacterRequest 
 type GetLeaderboardAroundCharacterRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CharacterType optional character type on which to filter the leaderboard entries.
-    CharacterType string `json:"CharacterType"`
+    CharacterType string `json:"CharacterType,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount"`
+    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // GetLeaderboardAroundCharacterResult note: When calling 'GetLeaderboardAround...' APIs, the position of the character defaults to 0 when the character does
@@ -1867,17 +1867,17 @@ type GetLeaderboardAroundUserRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount"`
+    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
     ProfileConstraints *PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Version the version of the leaderboard to get.
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetLeaderboardAroundUserResult note: When calling 'GetLeaderboardAround...' APIs, the position of the user defaults to 0 when the user does not have
@@ -1886,19 +1886,19 @@ type GetLeaderboardAroundUserResultModel struct {
     // Leaderboard ordered listing of users and their positions in the requested leaderboard.
     Leaderboard []PlayerLeaderboardEntryModel `json:"Leaderboard,omitempty"`
     // NextReset the time the next scheduled reset will occur. Null if the leaderboard does not reset on a schedule.
-    NextReset time.Time `json:"NextReset"`
+    NextReset time.Time `json:"NextReset,omitempty"`
     // Version the version of the leaderboard returned.
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetLeaderboardForUsersCharactersRequest 
 type GetLeaderboardForUsersCharactersRequestModel struct {
     // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount"`
+    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // GetLeaderboardForUsersCharactersResult nOTE: The position of the character in the results is relative to the other characters for that specific user. This mean
@@ -1914,17 +1914,17 @@ type GetLeaderboardRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount"`
+    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
     ProfileConstraints *PlayerProfileViewConstraintsModel `json:"ProfileConstraints,omitempty"`
     // StartPosition first entry in the leaderboard to be retrieved.
-    StartPosition int32 `json:"StartPosition"`
+    StartPosition int32 `json:"StartPosition,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Version the version of the leaderboard to get.
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetLeaderboardResult note that the Position of the user in the results is for the overall leaderboard.
@@ -1932,9 +1932,9 @@ type GetLeaderboardResultModel struct {
     // Leaderboard ordered listing of users and their positions in the requested leaderboard.
     Leaderboard []PlayerLeaderboardEntryModel `json:"Leaderboard,omitempty"`
     // NextReset the time the next scheduled reset will occur. Null if the leaderboard does not reset on a schedule.
-    NextReset time.Time `json:"NextReset"`
+    NextReset time.Time `json:"NextReset,omitempty"`
     // Version the version of the leaderboard returned.
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // GetPlayerCombinedInfoRequest 
@@ -1942,9 +1942,9 @@ type GetPlayerCombinedInfoRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters"`
+    InfoRequestParameters* GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayFabId playFabId of the user whose data will be returned
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerCombinedInfoRequestParams 
@@ -1987,7 +1987,7 @@ type GetPlayerCombinedInfoResultModel struct {
     // InfoResultPayload results for requested info.
     InfoResultPayload *GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerCombinedInfoResultPayload 
@@ -2008,13 +2008,13 @@ type GetPlayerCombinedInfoResultPayloadModel struct {
     // UserData user specific custom data.
     UserData map[string]UserDataRecordModel `json:"UserData,omitempty"`
     // UserDataVersion the version of the UserData that was returned.
-    UserDataVersion uint32 `json:"UserDataVersion"`
+    UserDataVersion uint32 `json:"UserDataVersion,omitempty"`
     // UserInventory array of inventory items in the user's current inventory.
     UserInventory []ItemInstanceModel `json:"UserInventory,omitempty"`
     // UserReadOnlyData user specific read-only data.
     UserReadOnlyData map[string]UserDataRecordModel `json:"UserReadOnlyData,omitempty"`
     // UserReadOnlyDataVersion the version of the Read-Only UserData that was returned.
-    UserReadOnlyDataVersion uint32 `json:"UserReadOnlyDataVersion"`
+    UserReadOnlyDataVersion uint32 `json:"UserReadOnlyDataVersion,omitempty"`
     // UserVirtualCurrency dictionary of virtual currency balance(s) belonging to the user.
     UserVirtualCurrency map[string]int32 `json:"UserVirtualCurrency,omitempty"`
     // UserVirtualCurrencyRechargeTimes dictionary of remaining times and timestamps for virtual currencies.
@@ -2029,7 +2029,7 @@ type GetPlayerProfileRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
@@ -2058,26 +2058,26 @@ type GetPlayerSegmentsResultModel struct {
 // the API may be rejected with the APIConcurrentRequestLimitExceeded error.
 type GetPlayersInSegmentRequestModel struct {
     // ContinuationToken continuation token if retrieving subsequent pages of results.
-    ContinuationToken string `json:"ContinuationToken"`
+    ContinuationToken string `json:"ContinuationToken,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // MaxBatchSize maximum number of profiles to load. Default is 1,000. Maximum is 10,000.
-    MaxBatchSize uint32 `json:"MaxBatchSize"`
+    MaxBatchSize uint32 `json:"MaxBatchSize,omitempty"`
     // SecondsToLive number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
 // results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
-    SecondsToLive uint32 `json:"SecondsToLive"`
+    SecondsToLive uint32 `json:"SecondsToLive,omitempty"`
     // SegmentId unique identifier for this segment.
-    SegmentId string `json:"SegmentId"`
+    SegmentId string `json:"SegmentId,omitempty"`
 }
 
 // GetPlayersInSegmentResult 
 type GetPlayersInSegmentResultModel struct {
     // ContinuationToken continuation token to use to retrieve subsequent pages of results. If token returns null there are no more results.
-    ContinuationToken string `json:"ContinuationToken"`
+    ContinuationToken string `json:"ContinuationToken,omitempty"`
     // PlayerProfiles array of player profiles in this segment.
     PlayerProfiles []PlayerProfileModel `json:"PlayerProfiles,omitempty"`
     // ProfilesInSegment count of profiles matching this segment.
-    ProfilesInSegment int32 `json:"ProfilesInSegment"`
+    ProfilesInSegment int32 `json:"ProfilesInSegment,omitempty"`
 }
 
 // GetPlayersSegmentsRequest 
@@ -2085,7 +2085,7 @@ type GetPlayersSegmentsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerStatisticsRequest 
@@ -2093,7 +2093,7 @@ type GetPlayerStatisticsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId user for whom statistics are being requested
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // StatisticNames statistics to return
     StatisticNames []string `json:"StatisticNames,omitempty"`
     // StatisticNameVersions statistics to return, if StatisticNames is not set (only statistics which have a version matching that provided will be
@@ -2104,7 +2104,7 @@ type GetPlayerStatisticsRequestModel struct {
 // GetPlayerStatisticsResult in addition to being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
 type GetPlayerStatisticsResultModel struct {
     // PlayFabId playFab unique identifier of the user whose statistics are being returned
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Statistics user statistics for the requested user.
     Statistics []StatisticValueModel `json:"Statistics,omitempty"`
 }
@@ -2114,7 +2114,7 @@ type GetPlayerStatisticVersionsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // GetPlayerStatisticVersionsResult 
@@ -2130,15 +2130,15 @@ type GetPlayerTagsRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Namespace optional namespace to filter results by
-    Namespace string `json:"Namespace"`
+    Namespace string `json:"Namespace,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetPlayerTagsResult 
 type GetPlayerTagsResultModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Tags canonical tags (including namespace and tag's name) for the requested user
     Tags []string `json:"Tags,omitempty"`
 }
@@ -2195,7 +2195,7 @@ type GetPlayFabIDsFromNintendoSwitchDeviceIdsResultModel struct {
 // GetPlayFabIDsFromPSNAccountIDsRequest 
 type GetPlayFabIDsFromPSNAccountIDsRequestModel struct {
     // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
-    IssuerId int32 `json:"IssuerId"`
+    IssuerId int32 `json:"IssuerId,omitempty"`
     // PSNAccountIDs array of unique PlayStation Network identifiers for which the title needs to get PlayFab identifiers.
     PSNAccountIDs []string `json:"PSNAccountIDs,omitempty"`
 }
@@ -2221,7 +2221,7 @@ type GetPlayFabIDsFromSteamIDsResultModel struct {
 // GetPlayFabIDsFromXboxLiveIDsRequest 
 type GetPlayFabIDsFromXboxLiveIDsRequestModel struct {
     // Sandbox the ID of Xbox Live sandbox.
-    Sandbox string `json:"Sandbox"`
+    Sandbox string `json:"Sandbox,omitempty"`
     // XboxLiveAccountIDs array of unique Xbox Live account identifiers for which the title needs to get PlayFab identifiers.
     XboxLiveAccountIDs []string `json:"XboxLiveAccountIDs,omitempty"`
 }
@@ -2251,7 +2251,7 @@ type GetPublisherDataResultModel struct {
 type GetRandomResultTablesRequestModel struct {
     // CatalogVersion specifies the catalog version that should be used to retrieve the Random Result Tables. If unspecified, uses
 // default/primary catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // TableIDs the unique identifier of the Random Result Table to use.
     TableIDs []string `json:"TableIDs,omitempty"`
 }
@@ -2266,11 +2266,11 @@ type GetRandomResultTablesResultModel struct {
 // GetSegmentResult 
 type GetSegmentResultModel struct {
     // ABTestParent identifier of the segments AB Test, if it is attached to one.
-    ABTestParent string `json:"ABTestParent"`
+    ABTestParent string `json:"ABTestParent,omitempty"`
     // Id unique identifier for this segment.
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Name segment name.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
 }
 
 // GetServerCustomIDsFromPlayFabIDsRequest 
@@ -2294,7 +2294,7 @@ type GetSharedGroupDataRequestModel struct {
 // indicates that no keys should be returned).
     Keys []string `json:"Keys,omitempty"`
     // SharedGroupId unique identifier for the shared group.
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // GetSharedGroupDataResult 
@@ -2308,15 +2308,15 @@ type GetSharedGroupDataResultModel struct {
 // GetStoreItemsResult 
 type GetStoreItemsResultModel struct {
     // CatalogVersion the base catalog that this store is a part of.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // MarketingData additional data about the store.
     MarketingData *StoreMarketingModelModel `json:"MarketingData,omitempty"`
     // Source how the store was last updated (Admin or a third party).
-    Source SourceType `json:"Source"`
+    Source SourceType `json:"Source,omitempty"`
     // Store array of items which can be purchased from this store.
     Store []StoreItemModel `json:"Store,omitempty"`
     // StoreId the ID of this store.
-    StoreId string `json:"StoreId"`
+    StoreId string `json:"StoreId,omitempty"`
 }
 
 // GetStoreItemsServerRequest a store contains an array of references to items defined in one or more catalog versions of the game, along with the
@@ -2330,14 +2330,14 @@ type GetStoreItemsResultModel struct {
 // to the user.
 type GetStoreItemsServerRequestModel struct {
     // CatalogVersion catalog version to store items from. Use default catalog version if null
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId optional identifier for the player to use in requesting the store information - if used, segment overrides will be
 // applied
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // StoreId unqiue identifier for the store which is being requested
-    StoreId string `json:"StoreId"`
+    StoreId string `json:"StoreId,omitempty"`
 }
 
 // GetTimeRequest this query retrieves the current time from one of the servers in PlayFab. Please note that due to clock drift between
@@ -2348,7 +2348,7 @@ type GetTimeRequestModel struct {
 // GetTimeResult time is always returned as Coordinated Universal Time (UTC).
 type GetTimeResultModel struct {
     // Time current server time when the request was received, in UTC
-    Time time.Time `json:"Time"`
+    Time time.Time `json:"Time,omitempty"`
 }
 
 // GetTitleDataRequest this API is designed to return title specific values which can be read, but not written to, by the client. For example,
@@ -2362,7 +2362,7 @@ type GetTitleDataRequestModel struct {
     Keys []string `json:"Keys,omitempty"`
     // OverrideLabel optional field that specifies the name of an override. This value is ignored when used by the game client; otherwise,
 // the overrides are applied automatically to the title data.
-    OverrideLabel string `json:"OverrideLabel"`
+    OverrideLabel string `json:"OverrideLabel,omitempty"`
 }
 
 // GetTitleDataResult 
@@ -2374,7 +2374,7 @@ type GetTitleDataResultModel struct {
 // GetTitleNewsRequest 
 type GetTitleNewsRequestModel struct {
     // Count limits the results to the last n entries. Defaults to 10 if not set.
-    Count int32 `json:"Count"`
+    Count int32 `json:"Count,omitempty"`
 }
 
 // GetTitleNewsResult 
@@ -2389,7 +2389,7 @@ type GetTitleNewsResultModel struct {
 // have accessed the title, the recommendation is to not store this data locally.
 type GetUserAccountInfoRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserAccountInfoResult 
@@ -2401,7 +2401,7 @@ type GetUserAccountInfoResultModel struct {
 // GetUserBansRequest get all bans for a user, including inactive and expired bans.
 type GetUserBansRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserBansResult 
@@ -2415,11 +2415,11 @@ type GetUserBansResultModel struct {
 type GetUserDataRequestModel struct {
     // IfChangedFromDataVersion the version that currently exists according to the caller. The call will return the data for all of the keys if the
 // version in the system is greater than this.
-    IfChangedFromDataVersion uint32 `json:"IfChangedFromDataVersion"`
+    IfChangedFromDataVersion uint32 `json:"IfChangedFromDataVersion,omitempty"`
     // Keys specific keys to search for in the custom user data.
     Keys []string `json:"Keys,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserDataResult 
@@ -2428,9 +2428,9 @@ type GetUserDataResultModel struct {
     Data map[string]UserDataRecordModel `json:"Data,omitempty"`
     // DataVersion indicates the current version of the data that has been set. This is incremented with every set call for that type of
 // data (read-only, internal, etc). This version can be provided in Get calls to find updated data.
-    DataVersion uint32 `json:"DataVersion"`
+    DataVersion uint32 `json:"DataVersion,omitempty"`
     // PlayFabId playFab unique identifier of the user whose custom data is being returned.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserInventoryRequest all items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing,
@@ -2440,7 +2440,7 @@ type GetUserInventoryRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GetUserInventoryResult 
@@ -2448,7 +2448,7 @@ type GetUserInventoryResultModel struct {
     // Inventory array of inventory items belonging to the user.
     Inventory []ItemInstanceModel `json:"Inventory,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency array of virtual currency balance(s) belonging to the user.
     VirtualCurrency map[string]int32 `json:"VirtualCurrency,omitempty"`
     // VirtualCurrencyRechargeTimes array of remaining times and timestamps for virtual currencies.
@@ -2458,19 +2458,19 @@ type GetUserInventoryResultModel struct {
 // GrantCharacterToUserRequest grants a character to the user of the type and name specified in the request.
 type GrantCharacterToUserRequestModel struct {
     // CharacterName non-unique display name of the character being granted (1-40 characters in length).
-    CharacterName string `json:"CharacterName"`
+    CharacterName string `json:"CharacterName,omitempty"`
     // CharacterType type of the character being granted; statistics can be sliced based on this value.
-    CharacterType string `json:"CharacterType"`
+    CharacterType string `json:"CharacterType,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GrantCharacterToUserResult 
 type GrantCharacterToUserResultModel struct {
     // CharacterId unique identifier tagged to this character.
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
 }
 
 // GrantedItemInstance result of granting an item to a user. Note, to retrieve additional information for an item such as Tags, Description
@@ -2480,43 +2480,43 @@ type GrantCharacterToUserResultModel struct {
 // UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type GrantedItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // BundleContents array of unique items that were awarded when this catalog item was purchased.
     BundleContents []string `json:"BundleContents,omitempty"`
     // BundleParent unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or
 // container.
-    BundleParent string `json:"BundleParent"`
+    BundleParent string `json:"BundleParent,omitempty"`
     // CatalogVersion catalog version for the inventory item, when this instance was created.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
 // item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Expiration timestamp for when this instance will expire.
-    Expiration time.Time `json:"Expiration"`
+    Expiration time.Time `json:"Expiration,omitempty"`
     // ItemClass class name for the inventory item, as defined in the catalog.
-    ItemClass string `json:"ItemClass"`
+    ItemClass string `json:"ItemClass,omitempty"`
     // ItemId unique identifier for the inventory item, as defined in the catalog.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // ItemInstanceId unique item identifier for this specific instance of the item.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // PurchaseDate timestamp for when this instance was purchased.
-    PurchaseDate time.Time `json:"PurchaseDate"`
+    PurchaseDate time.Time `json:"PurchaseDate,omitempty"`
     // RemainingUses total number of remaining uses, if this is a consumable item.
-    RemainingUses int32 `json:"RemainingUses"`
+    RemainingUses int32 `json:"RemainingUses,omitempty"`
     // Result result of this operation.
     Result bool `json:"Result"`
     // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
-    UnitCurrency string `json:"UnitCurrency"`
+    UnitCurrency string `json:"UnitCurrency,omitempty"`
     // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
-    UnitPrice uint32 `json:"UnitPrice"`
+    UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
-    UsesIncrementedBy int32 `json:"UsesIncrementedBy"`
+    UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
 // GrantItemsToCharacterRequest this function directly adds inventory items to the character's inventories. As a result of this operations, the user
@@ -2525,17 +2525,17 @@ type GrantedItemInstanceModel struct {
 // more items are in the grant/purchase operation.
 type GrantItemsToCharacterRequestModel struct {
     // Annotation string detailing any additional information concerning this operation.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // CatalogVersion catalog version from which items are to be granted.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemIds array of itemIds to grant to the user.
     ItemIds []string `json:"ItemIds,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GrantItemsToCharacterResult 
@@ -2550,15 +2550,15 @@ type GrantItemsToCharacterResultModel struct {
 // are in the grant/purchase operation.
 type GrantItemsToUserRequestModel struct {
     // Annotation string detailing any additional information concerning this operation.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // CatalogVersion catalog version from which items are to be granted.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemIds array of itemIds to grant to the user.
     ItemIds []string `json:"ItemIds,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // GrantItemsToUserResult please note that the order of the items in the response may not match the order of items in the request.
@@ -2573,7 +2573,7 @@ type GrantItemsToUserResultModel struct {
 // the grant/purchase operation.
 type GrantItemsToUsersRequestModel struct {
     // CatalogVersion catalog version from which items are to be granted.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemGrants array of items to grant and the users to whom the items are to be granted.
@@ -2589,19 +2589,19 @@ type GrantItemsToUsersResultModel struct {
 // ItemGrant 
 type ItemGrantModel struct {
     // Annotation string detailing any additional information concerning this operation.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
     Data map[string]string `json:"Data,omitempty"`
     // ItemId unique identifier of the catalog item to be granted to the user.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // KeysToRemove optional list of Data-keys to remove from UserData. Some SDKs cannot insert null-values into Data due to language
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ItemInstance a unique instance of an item in a user's inventory. Note, to retrieve additional information for an item such as Tags,
@@ -2611,65 +2611,65 @@ type ItemGrantModel struct {
 // such as UnitPrice and UnitCurrency are only set when the item was granted via a purchase.
 type ItemInstanceModel struct {
     // Annotation game specific comment associated with this instance when it was added to the user inventory.
-    Annotation string `json:"Annotation"`
+    Annotation string `json:"Annotation,omitempty"`
     // BundleContents array of unique items that were awarded when this catalog item was purchased.
     BundleContents []string `json:"BundleContents,omitempty"`
     // BundleParent unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or
 // container.
-    BundleParent string `json:"BundleParent"`
+    BundleParent string `json:"BundleParent,omitempty"`
     // CatalogVersion catalog version for the inventory item, when this instance was created.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomData a set of custom key-value pairs on the instance of the inventory item, which is not to be confused with the catalog
 // item's custom data.
     CustomData map[string]string `json:"CustomData,omitempty"`
     // DisplayName catalogItem.DisplayName at the time this item was purchased.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Expiration timestamp for when this instance will expire.
-    Expiration time.Time `json:"Expiration"`
+    Expiration time.Time `json:"Expiration,omitempty"`
     // ItemClass class name for the inventory item, as defined in the catalog.
-    ItemClass string `json:"ItemClass"`
+    ItemClass string `json:"ItemClass,omitempty"`
     // ItemId unique identifier for the inventory item, as defined in the catalog.
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // ItemInstanceId unique item identifier for this specific instance of the item.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PurchaseDate timestamp for when this instance was purchased.
-    PurchaseDate time.Time `json:"PurchaseDate"`
+    PurchaseDate time.Time `json:"PurchaseDate,omitempty"`
     // RemainingUses total number of remaining uses, if this is a consumable item.
-    RemainingUses int32 `json:"RemainingUses"`
+    RemainingUses int32 `json:"RemainingUses,omitempty"`
     // UnitCurrency currency type for the cost of the catalog item. Not available when granting items.
-    UnitCurrency string `json:"UnitCurrency"`
+    UnitCurrency string `json:"UnitCurrency,omitempty"`
     // UnitPrice cost of the catalog item in the given currency. Not available when granting items.
-    UnitPrice uint32 `json:"UnitPrice"`
+    UnitPrice uint32 `json:"UnitPrice,omitempty"`
     // UsesIncrementedBy the number of uses that were added or removed to this item in this call.
-    UsesIncrementedBy int32 `json:"UsesIncrementedBy"`
+    UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
 // LinkedPlatformAccountModel 
 type LinkedPlatformAccountModelModel struct {
     // Email linked account email of the user on the platform, if available
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // Platform authentication platform
-    Platform LoginIdentityProvider `json:"Platform"`
+    Platform LoginIdentityProvider `json:"Platform,omitempty"`
     // PlatformUserId unique account identifier of the user on the platform
-    PlatformUserId string `json:"PlatformUserId"`
+    PlatformUserId string `json:"PlatformUserId,omitempty"`
     // Username linked account username of the user on the platform, if available
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
 }
 
 // LinkPSNAccountRequest 
 type LinkPSNAccountRequestModel struct {
     // AuthCode authentication code provided by the PlayStation Network.
-    AuthCode string `json:"AuthCode"`
+    AuthCode string `json:"AuthCode,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink"`
     // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
-    IssuerId int32 `json:"IssuerId"`
+    IssuerId int32 `json:"IssuerId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // RedirectUri redirect URI supplied to PSN when requesting an auth code
-    RedirectUri string `json:"RedirectUri"`
+    RedirectUri string `json:"RedirectUri,omitempty"`
 }
 
 // LinkPSNAccountResult 
@@ -2683,9 +2683,9 @@ type LinkServerCustomIdRequestModel struct {
     // ForceLink if another user is already linked to the custom ID, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink"`
     // PlayFabId unique PlayFab identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ServerCustomId unique server custom identifier for this player.
-    ServerCustomId string `json:"ServerCustomId"`
+    ServerCustomId string `json:"ServerCustomId,omitempty"`
 }
 
 // LinkServerCustomIdResult 
@@ -2699,9 +2699,9 @@ type LinkXboxAccountRequestModel struct {
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Xbox Live identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com/", "").
-    XboxToken string `json:"XboxToken"`
+    XboxToken string `json:"XboxToken,omitempty"`
 }
 
 // LinkXboxAccountResult 
@@ -2711,7 +2711,7 @@ type LinkXboxAccountResultModel struct {
 // ListUsersCharactersRequest returns a list of every character that currently belongs to a user.
 type ListUsersCharactersRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // ListUsersCharactersResult 
@@ -2723,23 +2723,23 @@ type ListUsersCharactersResultModel struct {
 // LocalizedPushNotificationProperties contains the localized push notification content.
 type LocalizedPushNotificationPropertiesModel struct {
     // Message message of the localized push notification template.
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
     // Subject subject of the localized push notification template.
-    Subject string `json:"Subject"`
+    Subject string `json:"Subject,omitempty"`
 }
 
 // LocationModel 
 type LocationModelModel struct {
     // City city name.
-    City string `json:"City"`
+    City string `json:"City,omitempty"`
     // ContinentCode the two-character continent code for this location
-    ContinentCode ContinentCode `json:"ContinentCode"`
+    ContinentCode ContinentCode `json:"ContinentCode,omitempty"`
     // CountryCode the two-character ISO 3166-1 country code for the country associated with the location
-    CountryCode CountryCode `json:"CountryCode"`
+    CountryCode CountryCode `json:"CountryCode,omitempty"`
     // Latitude latitude coordinate of the geographic location.
-    Latitude float64 `json:"Latitude"`
+    Latitude float64 `json:"Latitude,omitempty"`
     // Longitude longitude coordinate of the geographic location.
-    Longitude float64 `json:"Longitude"`
+    Longitude float64 `json:"Longitude,omitempty"`
 }
 
 // LoginIdentityProvider 
@@ -2777,9 +2777,9 @@ type LoginWithServerCustomIdRequestModel struct {
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
-    PlayerSecret string `json:"PlayerSecret"`
+    PlayerSecret string `json:"PlayerSecret,omitempty"`
     // ServerCustomId the backend server identifier for this player.
-    ServerCustomId string `json:"ServerCustomId"`
+    ServerCustomId string `json:"ServerCustomId,omitempty"`
 }
 
 // LoginWithXboxIdRequest if this is the first time a user has signed in with the Xbox ID and CreateAccount is set to true, a new PlayFab account
@@ -2794,9 +2794,9 @@ type LoginWithXboxIdRequestModel struct {
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // Sandbox the id of Xbox Live sandbox.
-    Sandbox string `json:"Sandbox"`
+    Sandbox string `json:"Sandbox,omitempty"`
     // XboxId unique Xbox identifier for a user
-    XboxId string `json:"XboxId"`
+    XboxId string `json:"XboxId,omitempty"`
 }
 
 // LoginWithXboxRequest if this is the first time a user has signed in with the Xbox Live account and CreateAccount is set to true, a new
@@ -2811,17 +2811,17 @@ type LoginWithXboxRequestModel struct {
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // XboxToken token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com/", "").
-    XboxToken string `json:"XboxToken"`
+    XboxToken string `json:"XboxToken,omitempty"`
 }
 
 // LogStatement 
 type LogStatementModel struct {
     // Data optional object accompanying the message as contextual information
-    Data interface{} `json:"Data"`
+    Data interface{} `json:"Data,omitempty"`
     // Level 'Debug', 'Info', or 'Error'
-    Level string `json:"Level"`
+    Level string `json:"Level,omitempty"`
     // Message 
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
 }
 
 // MembershipModel 
@@ -2829,12 +2829,12 @@ type MembershipModelModel struct {
     // IsActive whether this membership is active. That is, whether the MembershipExpiration time has been reached.
     IsActive bool `json:"IsActive"`
     // MembershipExpiration the time this membership expires
-    MembershipExpiration time.Time `json:"MembershipExpiration"`
+    MembershipExpiration time.Time `json:"MembershipExpiration,omitempty"`
     // MembershipId the id of the membership
-    MembershipId string `json:"MembershipId"`
+    MembershipId string `json:"MembershipId,omitempty"`
     // OverrideExpiration membership expirations can be explicitly overridden (via game manager or the admin api). If this membership has been
 // overridden, this will be the new expiration time.
-    OverrideExpiration time.Time `json:"OverrideExpiration"`
+    OverrideExpiration time.Time `json:"OverrideExpiration,omitempty"`
     // Subscriptions the list of subscriptions that this player has for this membership
     Subscriptions []SubscriptionModelModel `json:"Subscriptions,omitempty"`
 }
@@ -2842,9 +2842,9 @@ type MembershipModelModel struct {
 // ModifyCharacterVirtualCurrencyResult 
 type ModifyCharacterVirtualCurrencyResultModel struct {
     // Balance balance of the virtual currency after modification.
-    Balance int32 `json:"Balance"`
+    Balance int32 `json:"Balance,omitempty"`
     // VirtualCurrency name of the virtual currency which was modified.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // ModifyItemUsesRequest this function can both add and remove uses of an inventory item. If the number of uses drops below zero, the item will
@@ -2853,32 +2853,32 @@ type ModifyItemUsesRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ItemInstanceId unique instance identifier of the item to be modified.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId playFab unique identifier of the user whose item is being modified.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // UsesToAdd number of uses to add to the item. Can be negative to remove uses.
-    UsesToAdd int32 `json:"UsesToAdd"`
+    UsesToAdd int32 `json:"UsesToAdd,omitempty"`
 }
 
 // ModifyItemUsesResult 
 type ModifyItemUsesResultModel struct {
     // ItemInstanceId unique instance identifier of the item with uses consumed.
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // RemainingUses number of uses remaining on the item.
-    RemainingUses int32 `json:"RemainingUses"`
+    RemainingUses int32 `json:"RemainingUses,omitempty"`
 }
 
 // ModifyUserVirtualCurrencyResult 
 type ModifyUserVirtualCurrencyResultModel struct {
     // Balance balance of the virtual currency after modification.
-    Balance int32 `json:"Balance"`
+    Balance int32 `json:"Balance,omitempty"`
     // BalanceChange amount added or subtracted from the user's virtual currency. Maximum VC balance is Int32 (2,147,483,647). Any increase
 // over this value will be discarded.
-    BalanceChange int32 `json:"BalanceChange"`
+    BalanceChange int32 `json:"BalanceChange,omitempty"`
     // PlayFabId user currency was subtracted from.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which was modified.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // MoveItemToCharacterFromCharacterRequest transfers an item from a character to another character that is owned by the same user. This will remove the item from
@@ -2886,13 +2886,13 @@ type ModifyUserVirtualCurrencyResultModel struct {
 // item instead.
 type MoveItemToCharacterFromCharacterRequestModel struct {
     // GivingCharacterId unique identifier of the character that currently has the item.
-    GivingCharacterId string `json:"GivingCharacterId"`
+    GivingCharacterId string `json:"GivingCharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ReceivingCharacterId unique identifier of the character that will be receiving the item.
-    ReceivingCharacterId string `json:"ReceivingCharacterId"`
+    ReceivingCharacterId string `json:"ReceivingCharacterId,omitempty"`
 }
 
 // MoveItemToCharacterFromCharacterResult 
@@ -2903,11 +2903,11 @@ type MoveItemToCharacterFromCharacterResultModel struct {
 // unless it is moved back), and will enable the character to make use of the item instead.
 type MoveItemToCharacterFromUserRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // MoveItemToCharacterFromUserResult 
@@ -2918,11 +2918,11 @@ type MoveItemToCharacterFromUserResultModel struct {
 // and unless it is moved back), and will enable the user to make use of the item instead.
 type MoveItemToUserFromCharacterRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // MoveItemToUserFromCharacterResult 
@@ -2932,9 +2932,9 @@ type MoveItemToUserFromCharacterResultModel struct {
 // NintendoSwitchPlayFabIdPair 
 type NintendoSwitchPlayFabIdPairModel struct {
     // NintendoSwitchDeviceId unique Nintendo Switch Device identifier for a user.
-    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId"`
+    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Nintendo Switch Device identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // NotifyMatchmakerPlayerLeftRequest 
@@ -2942,15 +2942,15 @@ type NotifyMatchmakerPlayerLeftRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // LobbyId unique identifier of the Game Instance the user is leaving.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // NotifyMatchmakerPlayerLeftResult 
 type NotifyMatchmakerPlayerLeftResultModel struct {
     // PlayerState state of user leaving the Game Server Instance.
-    PlayerState PlayerConnectionState `json:"PlayerState"`
+    PlayerState PlayerConnectionState `json:"PlayerState,omitempty"`
 }
 
 // PlayerConnectionState 
@@ -2965,41 +2965,41 @@ const (
 // PlayerLeaderboardEntry 
 type PlayerLeaderboardEntryModel struct {
     // DisplayName title-specific display name of the user for this leaderboard entry.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // PlayFabId playFab unique identifier of the user for this leaderboard entry.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Position user's overall position in the leaderboard.
-    Position int32 `json:"Position"`
+    Position int32 `json:"Position,omitempty"`
     // Profile the profile of the user, if requested.
     Profile *PlayerProfileModelModel `json:"Profile,omitempty"`
     // StatValue specific value of the user's statistic.
-    StatValue int32 `json:"StatValue"`
+    StatValue int32 `json:"StatValue,omitempty"`
 }
 
 // PlayerLinkedAccount 
 type PlayerLinkedAccountModel struct {
     // Email linked account's email
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // Platform authentication platform
-    Platform LoginIdentityProvider `json:"Platform"`
+    Platform LoginIdentityProvider `json:"Platform,omitempty"`
     // PlatformUserId platform user identifier
-    PlatformUserId string `json:"PlatformUserId"`
+    PlatformUserId string `json:"PlatformUserId,omitempty"`
     // Username linked account's username
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
 }
 
 // PlayerLocation 
 type PlayerLocationModel struct {
     // City city of the player's geographic location.
-    City string `json:"City"`
+    City string `json:"City,omitempty"`
     // ContinentCode the two-character continent code for this location
-    ContinentCode ContinentCode `json:"ContinentCode"`
+    ContinentCode ContinentCode `json:"ContinentCode,omitempty"`
     // CountryCode the two-character ISO 3166-1 country code for the country associated with the location
-    CountryCode CountryCode `json:"CountryCode"`
+    CountryCode CountryCode `json:"CountryCode,omitempty"`
     // Latitude latitude coordinate of the player's geographic location.
-    Latitude float64 `json:"Latitude"`
+    Latitude float64 `json:"Latitude,omitempty"`
     // Longitude longitude coordinate of the player's geographic location.
-    Longitude float64 `json:"Longitude"`
+    Longitude float64 `json:"Longitude,omitempty"`
 }
 
 // PlayerProfile 
@@ -3007,31 +3007,31 @@ type PlayerProfileModel struct {
     // AdCampaignAttributions array of ad campaigns player has been attributed to
     AdCampaignAttributions []AdCampaignAttributionModel `json:"AdCampaignAttributions,omitempty"`
     // AvatarUrl image URL of the player's avatar.
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // BannedUntil banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
-    BannedUntil time.Time `json:"BannedUntil"`
+    BannedUntil time.Time `json:"BannedUntil,omitempty"`
     // ContactEmailAddresses array of contact email addresses associated with the player
     ContactEmailAddresses []ContactEmailInfoModel `json:"ContactEmailAddresses,omitempty"`
     // Created player record created
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName player Display Name
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // LastLogin last login
-    LastLogin time.Time `json:"LastLogin"`
+    LastLogin time.Time `json:"LastLogin,omitempty"`
     // LinkedAccounts array of third party accounts linked to this player
     LinkedAccounts []PlayerLinkedAccountModel `json:"LinkedAccounts,omitempty"`
     // Locations dictionary of player's locations by type.
     Locations map[string]PlayerLocationModel `json:"Locations,omitempty"`
     // Origination player account origination
-    Origination LoginIdentityProvider `json:"Origination"`
+    Origination LoginIdentityProvider `json:"Origination,omitempty"`
     // PlayerExperimentVariants list of player variants for experimentation
     PlayerExperimentVariants []string `json:"PlayerExperimentVariants,omitempty"`
     // PlayerId playFab Player ID
-    PlayerId string `json:"PlayerId"`
+    PlayerId string `json:"PlayerId,omitempty"`
     // PlayerStatistics array of player statistics
     PlayerStatistics []PlayerStatisticModel `json:"PlayerStatistics,omitempty"`
     // PublisherId publisher this player belongs to
-    PublisherId string `json:"PublisherId"`
+    PublisherId string `json:"PublisherId,omitempty"`
     // PushNotificationRegistrations array of configured push notification end points
     PushNotificationRegistrations []PushNotificationRegistrationModel `json:"PushNotificationRegistrations,omitempty"`
     // Statistics dictionary of player's statistics using only the latest version's value
@@ -3039,9 +3039,9 @@ type PlayerProfileModel struct {
     // Tags list of player's tags for segmentation.
     Tags []string `json:"Tags,omitempty"`
     // TitleId title ID this profile applies to
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
     // TotalValueToDateInUSD a sum of player's total purchases in USD across all currencies.
-    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD"`
+    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD,omitempty"`
     // ValuesToDate dictionary of player's total purchases by currency.
     ValuesToDate map[string]uint32 `json:"ValuesToDate,omitempty"`
     // VirtualCurrencyBalances dictionary of player's virtual currency balances
@@ -3053,19 +3053,19 @@ type PlayerProfileModelModel struct {
     // AdCampaignAttributions list of advertising campaigns the player has been attributed to
     AdCampaignAttributions []AdCampaignAttributionModelModel `json:"AdCampaignAttributions,omitempty"`
     // AvatarUrl uRL of the player's avatar image
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // BannedUntil if the player is currently banned, the UTC Date when the ban expires
-    BannedUntil time.Time `json:"BannedUntil"`
+    BannedUntil time.Time `json:"BannedUntil,omitempty"`
     // ContactEmailAddresses list of all contact email info associated with the player account
     ContactEmailAddresses []ContactEmailInfoModelModel `json:"ContactEmailAddresses,omitempty"`
     // Created player record created
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // ExperimentVariants list of experiment variants for the player.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
-    LastLogin time.Time `json:"LastLogin"`
+    LastLogin time.Time `json:"LastLogin,omitempty"`
     // LinkedAccounts list of all authentication systems linked to this player account
     LinkedAccounts []LinkedPlatformAccountModelModel `json:"LinkedAccounts,omitempty"`
     // Locations list of geographic locations from which the player has logged in to the title
@@ -3073,11 +3073,11 @@ type PlayerProfileModelModel struct {
     // Memberships list of memberships for the player, along with whether are expired.
     Memberships []MembershipModelModel `json:"Memberships,omitempty"`
     // Origination player account origination
-    Origination LoginIdentityProvider `json:"Origination"`
+    Origination LoginIdentityProvider `json:"Origination,omitempty"`
     // PlayerId playFab player account unique identifier
-    PlayerId string `json:"PlayerId"`
+    PlayerId string `json:"PlayerId,omitempty"`
     // PublisherId publisher this player belongs to
-    PublisherId string `json:"PublisherId"`
+    PublisherId string `json:"PublisherId,omitempty"`
     // PushNotificationRegistrations list of configured end points registered for sending the player push notifications
     PushNotificationRegistrations []PushNotificationRegistrationModelModel `json:"PushNotificationRegistrations,omitempty"`
     // Statistics list of leaderboard statistic values for the player
@@ -3085,10 +3085,10 @@ type PlayerProfileModelModel struct {
     // Tags list of player's tags for segmentation
     Tags []TagModelModel `json:"Tags,omitempty"`
     // TitleId title ID this player profile applies to
-    TitleId string `json:"TitleId"`
+    TitleId string `json:"TitleId,omitempty"`
     // TotalValueToDateInUSD sum of the player's purchases made with real-money currencies, converted to US dollars equivalent and represented as a
 // whole number of cents (1/100 USD). For example, 999 indicates nine dollars and ninety-nine cents.
-    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD"`
+    TotalValueToDateInUSD uint32 `json:"TotalValueToDateInUSD,omitempty"`
     // ValuesToDate list of the player's lifetime purchase totals, summed by real-money currency
     ValuesToDate []ValueToDateModelModel `json:"ValuesToDate,omitempty"`
 }
@@ -3134,53 +3134,53 @@ type PlayerProfileViewConstraintsModel struct {
 // PlayerStatistic 
 type PlayerStatisticModel struct {
     // Id statistic ID
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // Name statistic name
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // StatisticValue current statistic value
-    StatisticValue int32 `json:"StatisticValue"`
+    StatisticValue int32 `json:"StatisticValue,omitempty"`
     // StatisticVersion statistic version (0 if not a versioned statistic)
-    StatisticVersion int32 `json:"StatisticVersion"`
+    StatisticVersion int32 `json:"StatisticVersion,omitempty"`
 }
 
 // PlayerStatisticVersion 
 type PlayerStatisticVersionModel struct {
     // ActivationTime time when the statistic version became active
-    ActivationTime time.Time `json:"ActivationTime"`
+    ActivationTime time.Time `json:"ActivationTime,omitempty"`
     // DeactivationTime time when the statistic version became inactive due to statistic version incrementing
-    DeactivationTime time.Time `json:"DeactivationTime"`
+    DeactivationTime time.Time `json:"DeactivationTime,omitempty"`
     // ScheduledActivationTime time at which the statistic version was scheduled to become active, based on the configured ResetInterval
-    ScheduledActivationTime time.Time `json:"ScheduledActivationTime"`
+    ScheduledActivationTime time.Time `json:"ScheduledActivationTime,omitempty"`
     // ScheduledDeactivationTime time at which the statistic version was scheduled to become inactive, based on the configured ResetInterval
-    ScheduledDeactivationTime time.Time `json:"ScheduledDeactivationTime"`
+    ScheduledDeactivationTime time.Time `json:"ScheduledDeactivationTime,omitempty"`
     // StatisticName name of the statistic when the version became active
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Version version of the statistic
-    Version uint32 `json:"Version"`
+    Version uint32 `json:"Version,omitempty"`
 }
 
 // PSNAccountPlayFabIdPair 
 type PSNAccountPlayFabIdPairModel struct {
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the PlayStation Network identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // PSNAccountId unique PlayStation Network identifier for a user.
-    PSNAccountId string `json:"PSNAccountId"`
+    PSNAccountId string `json:"PSNAccountId,omitempty"`
 }
 
 // PushNotificationPackage 
 type PushNotificationPackageModel struct {
     // Badge numerical badge to display on App icon (iOS only)
-    Badge int32 `json:"Badge"`
+    Badge int32 `json:"Badge,omitempty"`
     // CustomData this must be a JSON formatted object. For use with developer-created custom Push Notification plugins
-    CustomData string `json:"CustomData"`
+    CustomData string `json:"CustomData,omitempty"`
     // Icon icon file to display with the message (Not supported for iOS)
-    Icon string `json:"Icon"`
+    Icon string `json:"Icon,omitempty"`
     // Message content of the message (all platforms)
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
     // Sound sound file to play with the message (all platforms)
-    Sound string `json:"Sound"`
+    Sound string `json:"Sound,omitempty"`
     // Title title/Subject of the message. Not supported for iOS
-    Title string `json:"Title"`
+    Title string `json:"Title,omitempty"`
 }
 
 // PushNotificationPlatform 
@@ -3193,27 +3193,27 @@ const (
 // PushNotificationRegistration 
 type PushNotificationRegistrationModel struct {
     // NotificationEndpointARN notification configured endpoint
-    NotificationEndpointARN string `json:"NotificationEndpointARN"`
+    NotificationEndpointARN string `json:"NotificationEndpointARN,omitempty"`
     // Platform push notification platform
-    Platform PushNotificationPlatform `json:"Platform"`
+    Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
 // PushNotificationRegistrationModel 
 type PushNotificationRegistrationModelModel struct {
     // NotificationEndpointARN notification configured endpoint
-    NotificationEndpointARN string `json:"NotificationEndpointARN"`
+    NotificationEndpointARN string `json:"NotificationEndpointARN,omitempty"`
     // Platform push notification platform
-    Platform PushNotificationPlatform `json:"Platform"`
+    Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
 // RandomResultTableListing 
 type RandomResultTableListingModel struct {
     // CatalogVersion catalog version this table is associated with
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // Nodes child nodes that indicate what kind of drop table item this actually is.
     Nodes []ResultTableNodeModel `json:"Nodes,omitempty"`
     // TableId unique name for this drop table
-    TableId string `json:"TableId"`
+    TableId string `json:"TableId,omitempty"`
 }
 
 // RedeemCouponRequest coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the
@@ -3221,15 +3221,15 @@ type RandomResultTableListingModel struct {
 // or a code which has not yet been created in the service, will result in an error.
 type RedeemCouponRequestModel struct {
     // CatalogVersion catalog version of the coupon.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId optional identifier for the Character that should receive the item. If null, item is added to the player
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CouponCode generated coupon code to redeem.
-    CouponCode string `json:"CouponCode"`
+    CouponCode string `json:"CouponCode,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RedeemCouponResult 
@@ -3249,15 +3249,15 @@ type RedeemMatchmakerTicketRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // LobbyId unique identifier of the Game Server Instance that is asking for validation of the authorization ticket.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
     // Ticket server authorization ticket passed back from a call to Matchmake or StartGame.
-    Ticket string `json:"Ticket"`
+    Ticket string `json:"Ticket,omitempty"`
 }
 
 // RedeemMatchmakerTicketResult 
 type RedeemMatchmakerTicketResultModel struct {
     // Error error value if the ticket was not validated.
-    Error string `json:"Error"`
+    Error string `json:"Error,omitempty"`
     // TicketIsValid boolean indicating whether the ticket was validated by the PlayFab service.
     TicketIsValid bool `json:"TicketIsValid"`
     // UserInfo user account information for the user validated.
@@ -3267,7 +3267,7 @@ type RedeemMatchmakerTicketResultModel struct {
 // RefreshGameServerInstanceHeartbeatRequest 
 type RefreshGameServerInstanceHeartbeatRequestModel struct {
     // LobbyId unique identifier of the Game Server Instance for which the heartbeat is updated.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
 }
 
 // RefreshGameServerInstanceHeartbeatResult 
@@ -3289,25 +3289,25 @@ const (
 // RegisterGameRequest 
 type RegisterGameRequestModel struct {
     // Build unique identifier of the build running on the Game Server Instance.
-    Build string `json:"Build"`
+    Build string `json:"Build,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // GameMode game Mode the Game Server instance is running. Note that this must be defined in the Game Modes tab in the PlayFab Game
 // Manager, along with the Build ID (the same Game Mode can be defined for multiple Build IDs).
-    GameMode string `json:"GameMode"`
+    GameMode string `json:"GameMode,omitempty"`
     // LobbyId previous lobby id if re-registering an existing game.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
     // Region region in which the Game Server Instance is running. For matchmaking using non-AWS region names, set this to any AWS
 // region and use Tags (below) to specify your custom region.
-    Region Region `json:"Region"`
+    Region Region `json:"Region,omitempty"`
     // ServerIPV4Address iPV4 address of the game server instance.
-    ServerIPV4Address string `json:"ServerIPV4Address"`
+    ServerIPV4Address string `json:"ServerIPV4Address,omitempty"`
     // ServerIPV6Address iPV6 address (if any) of the game server instance.
-    ServerIPV6Address string `json:"ServerIPV6Address"`
+    ServerIPV6Address string `json:"ServerIPV6Address,omitempty"`
     // ServerPort port number for communication with the Game Server Instance.
-    ServerPort string `json:"ServerPort"`
+    ServerPort string `json:"ServerPort,omitempty"`
     // ServerPublicDNSName public DNS name (if any) of the server
-    ServerPublicDNSName string `json:"ServerPublicDNSName"`
+    ServerPublicDNSName string `json:"ServerPublicDNSName,omitempty"`
     // Tags tags for the Game Server Instance
     Tags map[string]string `json:"Tags,omitempty"`
 }
@@ -3316,23 +3316,23 @@ type RegisterGameRequestModel struct {
 type RegisterGameResponseModel struct {
     // LobbyId unique identifier generated for the Game Server Instance that is registered. If LobbyId is specified in request and the
 // game still exists in PlayFab, the LobbyId in request is returned. Otherwise a new lobby id will be returned.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
 }
 
 // RemoveFriendRequest 
 type RemoveFriendRequestModel struct {
     // FriendPlayFabId playFab identifier of the friend account which is to be removed.
-    FriendPlayFabId string `json:"FriendPlayFabId"`
+    FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RemoveGenericIDRequest 
 type RemoveGenericIDRequestModel struct {
     // GenericId generic service identifier to be removed from the player.
-    GenericId* GenericServiceIdModel `json:"GenericId"`
+    GenericId* GenericServiceIdModel `json:"GenericId,omitempty"`
     // PlayFabId playFabId of the user to remove.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RemovePlayerTagRequest this API will trigger a player_tag_removed event and remove a tag with the given TagName and PlayFabID from the
@@ -3341,9 +3341,9 @@ type RemovePlayerTagRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // TagName unique tag for player profile.
-    TagName string `json:"TagName"`
+    TagName string `json:"TagName,omitempty"`
 }
 
 // RemovePlayerTagResult 
@@ -3355,7 +3355,7 @@ type RemoveSharedGroupMembersRequestModel struct {
     // PlayFabIds an array of unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabIds []string `json:"PlayFabIds,omitempty"`
     // SharedGroupId unique identifier for the shared group.
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // RemoveSharedGroupMembersResult 
@@ -3365,30 +3365,30 @@ type RemoveSharedGroupMembersResultModel struct {
 // ReportPlayerServerRequest 
 type ReportPlayerServerRequestModel struct {
     // Comment optional additional comment by reporting player.
-    Comment string `json:"Comment"`
+    Comment string `json:"Comment,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ReporteeId unique PlayFab identifier of the reported player.
-    ReporteeId string `json:"ReporteeId"`
+    ReporteeId string `json:"ReporteeId,omitempty"`
     // ReporterId playFabId of the reporting player.
-    ReporterId string `json:"ReporterId"`
+    ReporterId string `json:"ReporterId,omitempty"`
 }
 
 // ReportPlayerServerResult players are currently limited to five reports per day. Attempts by a single user account to submit reports beyond five
 // will result in Updated being returned as false.
 type ReportPlayerServerResultModel struct {
     // SubmissionsRemaining the number of remaining reports which may be filed today by this reporting player.
-    SubmissionsRemaining int32 `json:"SubmissionsRemaining"`
+    SubmissionsRemaining int32 `json:"SubmissionsRemaining,omitempty"`
 }
 
 // ResultTableNode 
 type ResultTableNodeModel struct {
     // ResultItem either an ItemId, or the TableId of another random result table
-    ResultItem string `json:"ResultItem"`
+    ResultItem string `json:"ResultItem,omitempty"`
     // ResultItemType whether this entry in the table is an item or a link to another table
-    ResultItemType ResultTableNodeType `json:"ResultItemType"`
+    ResultItemType ResultTableNodeType `json:"ResultItemType,omitempty"`
     // Weight how likely this is to be rolled - larger numbers add more weight
-    Weight int32 `json:"Weight"`
+    Weight int32 `json:"Weight,omitempty"`
 }
 
 // ResultTableNodeType 
@@ -3402,7 +3402,7 @@ const (
 // ignored, however. Returns information about applied updates only.
 type RevokeAllBansForUserRequestModel struct {
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RevokeAllBansForUserResult 
@@ -3427,22 +3427,22 @@ type RevokeBansResultModel struct {
 // RevokeInventoryItem 
 type RevokeInventoryItemModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RevokeInventoryItemRequest in cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this
 // will not revoke access or otherwise remove the items which were dispensed.
 type RevokeInventoryItemRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // RevokeInventoryItemsRequest in cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this
@@ -3465,7 +3465,7 @@ type RevokeInventoryResultModel struct {
 // RevokeItemError 
 type RevokeItemErrorModel struct {
     // Error specific error that was encountered.
-    Error GenericErrorCodes `json:"Error"`
+    Error GenericErrorCodes `json:"Error,omitempty"`
     // Item item information that failed to be revoked.
     Item *RevokeInventoryItemModel `json:"Item,omitempty"`
 }
@@ -3473,32 +3473,32 @@ type RevokeItemErrorModel struct {
 // SavePushNotificationTemplateRequest represents the save push notification template request.
 type SavePushNotificationTemplateRequestModel struct {
     // AndroidPayload android JSON for the notification template.
-    AndroidPayload string `json:"AndroidPayload"`
+    AndroidPayload string `json:"AndroidPayload,omitempty"`
     // Id id of the push notification template.
-    Id string `json:"Id"`
+    Id string `json:"Id,omitempty"`
     // IOSPayload iOS JSON for the notification template.
-    IOSPayload string `json:"IOSPayload"`
+    IOSPayload string `json:"IOSPayload,omitempty"`
     // LocalizedPushNotificationTemplates dictionary of localized push notification templates with the language as the key.
     LocalizedPushNotificationTemplates map[string]LocalizedPushNotificationPropertiesModel `json:"LocalizedPushNotificationTemplates,omitempty"`
     // Name name of the push notification template.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
 }
 
 // SavePushNotificationTemplateResult represents the save push notification template result.
 type SavePushNotificationTemplateResultModel struct {
     // PushNotificationTemplateId id of the push notification template that was saved.
-    PushNotificationTemplateId string `json:"PushNotificationTemplateId"`
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
 }
 
 // ScriptExecutionError 
 type ScriptExecutionErrorModel struct {
     // Error error code, such as CloudScriptNotFound, JavascriptException, CloudScriptFunctionArgumentSizeExceeded,
 // CloudScriptAPIRequestCountExceeded, CloudScriptAPIRequestError, or CloudScriptHTTPRequestError
-    Error string `json:"Error"`
+    Error string `json:"Error,omitempty"`
     // Message details about the error
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
     // StackTrace point during the execution of the script at which the error occurred, if any
-    StackTrace string `json:"StackTrace"`
+    StackTrace string `json:"StackTrace,omitempty"`
 }
 
 // SendCustomAccountRecoveryEmailRequest playFab accounts which have valid email address or username will be able to receive a password reset email using this
@@ -3507,11 +3507,11 @@ type SendCustomAccountRecoveryEmailRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Email user email address attached to their account
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
     // EmailTemplateId the email template id of the account recovery email template to send.
-    EmailTemplateId string `json:"EmailTemplateId"`
+    EmailTemplateId string `json:"EmailTemplateId,omitempty"`
     // Username the user's username requesting an account recovery.
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
 }
 
 // SendCustomAccountRecoveryEmailResult 
@@ -3524,9 +3524,9 @@ type SendEmailFromTemplateRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // EmailTemplateId the email template id of the email template to send.
-    EmailTemplateId string `json:"EmailTemplateId"`
+    EmailTemplateId string `json:"EmailTemplateId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // SendEmailFromTemplateResult 
@@ -3538,9 +3538,9 @@ type SendPushNotificationFromTemplateRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PushNotificationTemplateId id of the push notification template.
-    PushNotificationTemplateId string `json:"PushNotificationTemplateId"`
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
     // Recipient playFabId of the push notification recipient.
-    Recipient string `json:"Recipient"`
+    Recipient string `json:"Recipient,omitempty"`
 }
 
 // SendPushNotificationRequest 
@@ -3551,14 +3551,14 @@ type SendPushNotificationRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Message text of message to send.
-    Message string `json:"Message"`
+    Message string `json:"Message,omitempty"`
     // Package defines all possible push attributes like message, title, icon, etc. Some parameters are device specific - please see
 // the PushNotificationPackage documentation for details.
     Package *PushNotificationPackageModel `json:"Package,omitempty"`
     // Recipient playFabId of the recipient of the push notification.
-    Recipient string `json:"Recipient"`
+    Recipient string `json:"Recipient,omitempty"`
     // Subject subject of message to send (may not be displayed in all platforms)
-    Subject string `json:"Subject"`
+    Subject string `json:"Subject,omitempty"`
     // TargetPlatforms target Platforms that should receive the Message or Package. If omitted, we will send to all available platforms.
     TargetPlatforms []PushNotificationPlatform `json:"TargetPlatforms,omitempty"`
 }
@@ -3570,9 +3570,9 @@ type SendPushNotificationResultModel struct {
 // ServerCustomIDPlayFabIDPair 
 type ServerCustomIDPlayFabIDPairModel struct {
     // PlayFabId unique PlayFab identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ServerCustomId unique server custom identifier for this player.
-    ServerCustomId string `json:"ServerCustomId"`
+    ServerCustomId string `json:"ServerCustomId,omitempty"`
 }
 
 // ServerLoginResult 
@@ -3583,13 +3583,13 @@ type ServerLoginResultModel struct {
     // InfoResultPayload results for requested info.
     InfoResultPayload *GetPlayerCombinedInfoResultPayloadModel `json:"InfoResultPayload,omitempty"`
     // LastLoginTime the time of this user's previous login. If there was no previous login, then it's DateTime.MinValue
-    LastLoginTime time.Time `json:"LastLoginTime"`
+    LastLoginTime time.Time `json:"LastLoginTime,omitempty"`
     // NewlyCreated true if the account was newly created on this login.
     NewlyCreated bool `json:"NewlyCreated"`
     // PlayFabId player's unique PlayFabId.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // SessionTicket unique token authorizing the user and game at the server level, for the current session.
-    SessionTicket string `json:"SessionTicket"`
+    SessionTicket string `json:"SessionTicket,omitempty"`
     // SettingsForUser settings specific to this user.
     SettingsForUser *UserSettingsModel `json:"SettingsForUser,omitempty"`
     // TreatmentAssignment the experimentation treatments for this user at the time of login.
@@ -3601,9 +3601,9 @@ type ServerLoginResultModel struct {
 // list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
 type SetFriendTagsRequestModel struct {
     // FriendPlayFabId playFab identifier of the friend account to which the tag(s) should be applied.
-    FriendPlayFabId string `json:"FriendPlayFabId"`
+    FriendPlayFabId string `json:"FriendPlayFabId,omitempty"`
     // PlayFabId playFab identifier of the player whose friend is to be updated.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Tags array of tags to set on the friend account.
     Tags []string `json:"Tags,omitempty"`
 }
@@ -3611,9 +3611,9 @@ type SetFriendTagsRequestModel struct {
 // SetGameServerInstanceDataRequest 
 type SetGameServerInstanceDataRequestModel struct {
     // GameServerData custom data to set for the specified game server instance.
-    GameServerData string `json:"GameServerData"`
+    GameServerData string `json:"GameServerData,omitempty"`
     // LobbyId unique identifier of the Game Instance to be updated, in decimal format.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
 }
 
 // SetGameServerInstanceDataResult 
@@ -3623,9 +3623,9 @@ type SetGameServerInstanceDataResultModel struct {
 // SetGameServerInstanceStateRequest 
 type SetGameServerInstanceStateRequestModel struct {
     // LobbyId unique identifier of the Game Instance to be updated, in decimal format.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
     // State state to set for the specified game server instance.
-    State GameInstanceState `json:"State"`
+    State GameInstanceState `json:"State,omitempty"`
 }
 
 // SetGameServerInstanceStateResult 
@@ -3635,7 +3635,7 @@ type SetGameServerInstanceStateResultModel struct {
 // SetGameServerInstanceTagsRequest 
 type SetGameServerInstanceTagsRequestModel struct {
     // LobbyId unique identifier of the Game Server Instance to be updated.
-    LobbyId string `json:"LobbyId"`
+    LobbyId string `json:"LobbyId,omitempty"`
     // Tags tags to set for the specified Game Server Instance. Note that this is the complete list of tags to be associated with
 // the Game Server Instance.
     Tags map[string]string `json:"Tags,omitempty"`
@@ -3653,9 +3653,9 @@ type SetGameServerInstanceTagsResultModel struct {
 // signature.
 type SetPlayerSecretRequestModel struct {
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
-    PlayerSecret string `json:"PlayerSecret"`
+    PlayerSecret string `json:"PlayerSecret,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // SetPlayerSecretResult 
@@ -3670,9 +3670,9 @@ type SetPlayerSecretResultModel struct {
 type SetPublisherDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // Value new value to set. Set to null to remove a value
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // SetPublisherDataResult 
@@ -3687,9 +3687,9 @@ type SetPublisherDataResultModel struct {
 type SetTitleDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
-    Key string `json:"Key"`
+    Key string `json:"Key,omitempty"`
     // Value new value to set. Set to null to remove a value
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // SetTitleDataResult 
@@ -3699,13 +3699,13 @@ type SetTitleDataResultModel struct {
 // SharedGroupDataRecord 
 type SharedGroupDataRecordModel struct {
     // LastUpdated timestamp for when this data was last updated.
-    LastUpdated time.Time `json:"LastUpdated"`
+    LastUpdated time.Time `json:"LastUpdated,omitempty"`
     // LastUpdatedBy playFabId of the user to last update this value.
-    LastUpdatedBy string `json:"LastUpdatedBy"`
+    LastUpdatedBy string `json:"LastUpdatedBy,omitempty"`
     // Permission indicates whether this data can be read by all users (public) or only members of the group (private).
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // Value data stored for the specified group data key.
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // SourceType 
@@ -3723,59 +3723,59 @@ const (
 // StatisticModel 
 type StatisticModelModel struct {
     // Name statistic name
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Value statistic value
-    Value int32 `json:"Value"`
+    Value int32 `json:"Value,omitempty"`
     // Version statistic version (0 if not a versioned statistic)
-    Version int32 `json:"Version"`
+    Version int32 `json:"Version,omitempty"`
 }
 
 // StatisticNameVersion 
 type StatisticNameVersionModel struct {
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Version the version of the statistic to be returned
-    Version uint32 `json:"Version"`
+    Version uint32 `json:"Version,omitempty"`
 }
 
 // StatisticUpdate 
 type StatisticUpdateModel struct {
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Value statistic value for the player
-    Value int32 `json:"Value"`
+    Value int32 `json:"Value,omitempty"`
     // Version for updates to an existing statistic value for a player, the version of the statistic when it was loaded. Null when
 // setting the statistic value for the first time.
-    Version uint32 `json:"Version"`
+    Version uint32 `json:"Version,omitempty"`
 }
 
 // StatisticValue 
 type StatisticValueModel struct {
     // StatisticName unique name of the statistic
-    StatisticName string `json:"StatisticName"`
+    StatisticName string `json:"StatisticName,omitempty"`
     // Value statistic value for the player
-    Value int32 `json:"Value"`
+    Value int32 `json:"Value,omitempty"`
     // Version for updates to an existing statistic value for a player, the version of the statistic when it was loaded
-    Version uint32 `json:"Version"`
+    Version uint32 `json:"Version,omitempty"`
 }
 
 // SteamPlayFabIdPair 
 type SteamPlayFabIdPairModel struct {
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // SteamStringId unique Steam identifier for a user.
-    SteamStringId string `json:"SteamStringId"`
+    SteamStringId string `json:"SteamStringId,omitempty"`
 }
 
 // StoreItem a store entry that list a catalog item at a particular price
 type StoreItemModel struct {
     // CustomData store specific custom data. The data only exists as part of this store; it is not transferred to item instances
-    CustomData interface{} `json:"CustomData"`
+    CustomData interface{} `json:"CustomData,omitempty"`
     // DisplayPosition intended display position for this item. Note that 0 is the first position
-    DisplayPosition uint32 `json:"DisplayPosition"`
+    DisplayPosition uint32 `json:"DisplayPosition,omitempty"`
     // ItemId unique identifier of the item as it exists in the catalog - note that this must exactly match the ItemId from the
 // catalog
-    ItemId string `json:"ItemId"`
+    ItemId string `json:"ItemId,omitempty"`
     // RealCurrencyPrices override prices for this item for specific currencies
     RealCurrencyPrices map[string]uint32 `json:"RealCurrencyPrices,omitempty"`
     // VirtualCurrencyPrices override prices for this item in virtual currencies and "RM" (the base Real Money purchase price, in USD pennies)
@@ -3785,29 +3785,29 @@ type StoreItemModel struct {
 // StoreMarketingModel marketing data about a specific store
 type StoreMarketingModelModel struct {
     // Description tagline for a store.
-    Description string `json:"Description"`
+    Description string `json:"Description,omitempty"`
     // DisplayName display name of a store as it will appear to users.
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // Metadata custom data about a store.
-    Metadata interface{} `json:"Metadata"`
+    Metadata interface{} `json:"Metadata,omitempty"`
 }
 
 // SubscriptionModel 
 type SubscriptionModelModel struct {
     // Expiration when this subscription expires.
-    Expiration time.Time `json:"Expiration"`
+    Expiration time.Time `json:"Expiration,omitempty"`
     // InitialSubscriptionTime the time the subscription was orignially purchased
-    InitialSubscriptionTime time.Time `json:"InitialSubscriptionTime"`
+    InitialSubscriptionTime time.Time `json:"InitialSubscriptionTime,omitempty"`
     // IsActive whether this subscription is currently active. That is, if Expiration > now.
     IsActive bool `json:"IsActive"`
     // Status the status of this subscription, according to the subscription provider.
-    Status SubscriptionProviderStatus `json:"Status"`
+    Status SubscriptionProviderStatus `json:"Status,omitempty"`
     // SubscriptionId the id for this subscription
-    SubscriptionId string `json:"SubscriptionId"`
+    SubscriptionId string `json:"SubscriptionId,omitempty"`
     // SubscriptionItemId the item id for this subscription from the primary catalog
-    SubscriptionItemId string `json:"SubscriptionItemId"`
+    SubscriptionItemId string `json:"SubscriptionItemId,omitempty"`
     // SubscriptionProvider the provider for this subscription. Apple or Google Play are supported today.
-    SubscriptionProvider string `json:"SubscriptionProvider"`
+    SubscriptionProvider string `json:"SubscriptionProvider,omitempty"`
 }
 
 // SubscriptionProviderStatus 
@@ -3826,33 +3826,33 @@ const (
 // SubtractCharacterVirtualCurrencyRequest 
 type SubtractCharacterVirtualCurrencyRequestModel struct {
     // Amount amount to be subtracted from the user balance of the specified virtual currency.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which is to be decremented.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // SubtractUserVirtualCurrencyRequest 
 type SubtractUserVirtualCurrencyRequestModel struct {
     // Amount amount to be subtracted from the user balance of the specified virtual currency.
-    Amount int32 `json:"Amount"`
+    Amount int32 `json:"Amount,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId playFab unique identifier of the user whose virtual currency balance is to be decreased.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // VirtualCurrency name of the virtual currency which is to be decremented.
-    VirtualCurrency string `json:"VirtualCurrency"`
+    VirtualCurrency string `json:"VirtualCurrency,omitempty"`
 }
 
 // TagModel 
 type TagModelModel struct {
     // TagValue full value of the tag, including namespace
-    TagValue string `json:"TagValue"`
+    TagValue string `json:"TagValue,omitempty"`
 }
 
 // TitleActivationStatus 
@@ -3868,13 +3868,13 @@ const (
 // TitleNewsItem 
 type TitleNewsItemModel struct {
     // Body news item body.
-    Body string `json:"Body"`
+    Body string `json:"Body,omitempty"`
     // NewsId unique identifier of news item.
-    NewsId string `json:"NewsId"`
+    NewsId string `json:"NewsId,omitempty"`
     // Timestamp date and time when the news item was posted.
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
     // Title title of the news item.
-    Title string `json:"Title"`
+    Title string `json:"Title,omitempty"`
 }
 
 // TreatmentAssignment 
@@ -3890,7 +3890,7 @@ type UnlinkPSNAccountRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UnlinkPSNAccountResult 
@@ -3902,9 +3902,9 @@ type UnlinkServerCustomIdRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // ServerCustomId unique server custom identifier for this player.
-    ServerCustomId string `json:"ServerCustomId"`
+    ServerCustomId string `json:"ServerCustomId,omitempty"`
 }
 
 // UnlinkServerCustomIdResult 
@@ -3916,7 +3916,7 @@ type UnlinkXboxAccountRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Xbox Live identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UnlinkXboxAccountResult 
@@ -3927,33 +3927,33 @@ type UnlinkXboxAccountResultModel struct {
 type UnlockContainerInstanceRequestModel struct {
     // CatalogVersion specifies the catalog version that should be used to determine container contents. If unspecified, uses catalog
 // associated with the item instance.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ContainerItemInstanceId itemInstanceId of the container to unlock.
-    ContainerItemInstanceId string `json:"ContainerItemInstanceId"`
+    ContainerItemInstanceId string `json:"ContainerItemInstanceId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // KeyItemInstanceId itemInstanceId of the key that will be consumed by unlocking this container. If the container requires a key, this
 // parameter is required.
-    KeyItemInstanceId string `json:"KeyItemInstanceId"`
+    KeyItemInstanceId string `json:"KeyItemInstanceId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UnlockContainerItemRequest specify the type of container to open and optionally the catalogVersion for the container to open
 type UnlockContainerItemRequestModel struct {
     // CatalogVersion specifies the catalog version that should be used to determine container contents. If unspecified, uses default/primary
 // catalog.
-    CatalogVersion string `json:"CatalogVersion"`
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // ContainerItemId catalog ItemId of the container type to unlock.
-    ContainerItemId string `json:"ContainerItemId"`
+    ContainerItemId string `json:"ContainerItemId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UnlockContainerItemResult the items and vc found within the container. These will be added and stacked in your inventory as appropriate.
@@ -3961,9 +3961,9 @@ type UnlockContainerItemResultModel struct {
     // GrantedItems items granted to the player as a result of unlocking the container.
     GrantedItems []ItemInstanceModel `json:"GrantedItems,omitempty"`
     // UnlockedItemInstanceId unique instance identifier of the container unlocked.
-    UnlockedItemInstanceId string `json:"UnlockedItemInstanceId"`
+    UnlockedItemInstanceId string `json:"UnlockedItemInstanceId,omitempty"`
     // UnlockedWithItemInstanceId unique instance identifier of the key used to unlock the container, if applicable.
-    UnlockedWithItemInstanceId string `json:"UnlockedWithItemInstanceId"`
+    UnlockedWithItemInstanceId string `json:"UnlockedWithItemInstanceId,omitempty"`
     // VirtualCurrency virtual currency granted to the player as a result of unlocking the container.
     VirtualCurrency map[string]uint32 `json:"VirtualCurrency,omitempty"`
 }
@@ -3971,9 +3971,9 @@ type UnlockContainerItemResultModel struct {
 // UpdateAvatarUrlRequest 
 type UpdateAvatarUrlRequestModel struct {
     // ImageUrl uRL of the avatar image. If empty, it removes the existing avatar URL.
-    ImageUrl string `json:"ImageUrl"`
+    ImageUrl string `json:"ImageUrl,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateBanRequest represents a single update ban request.
@@ -3981,17 +3981,17 @@ type UpdateBanRequestModel struct {
     // Active the updated active state for the ban. Null for no change.
     Active bool `json:"Active"`
     // BanId the id of the ban to be updated.
-    BanId string `json:"BanId"`
+    BanId string `json:"BanId,omitempty"`
     // Expires the updated expiration date for the ban. Null for no change.
-    Expires time.Time `json:"Expires"`
+    Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the updated IP address for the ban. Null for no change.
-    IPAddress string `json:"IPAddress"`
+    IPAddress string `json:"IPAddress,omitempty"`
     // MACAddress the updated MAC address for the ban. Null for no change.
-    MACAddress string `json:"MACAddress"`
+    MACAddress string `json:"MACAddress,omitempty"`
     // Permanent whether to make this ban permanent. Set to true to make this ban permanent. This will not modify Active state.
     Permanent bool `json:"Permanent"`
     // Reason the updated reason for the ban to be updated. Maximum 140 characters. Null for no change.
-    Reason string `json:"Reason"`
+    Reason string `json:"Reason,omitempty"`
 }
 
 // UpdateBansRequest for each ban, only updates the values that are set. Leave any value to null for no change. If a ban could not be found,
@@ -4012,7 +4012,7 @@ type UpdateBansResultModel struct {
 // with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 type UpdateCharacterDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
@@ -4022,16 +4022,16 @@ type UpdateCharacterDataRequestModel struct {
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // Permission permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateCharacterDataResult 
 type UpdateCharacterDataResultModel struct {
     // DataVersion indicates the current version of the data that has been set. This is incremented with every set call for that type of
 // data (read-only, internal, etc). This version can be provided in Get calls to find updated data.
-    DataVersion uint32 `json:"DataVersion"`
+    DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
 // UpdateCharacterStatisticsRequest character statistics are similar to user statistics in that they are numeric values which may only be updated by a
@@ -4039,13 +4039,13 @@ type UpdateCharacterDataResultModel struct {
 // by the title, the statistics are used for all leaderboard operations in PlayFab.
 type UpdateCharacterStatisticsRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CharacterStatistics statistics to be updated with the provided values.
     CharacterStatistics map[string]int32 `json:"CharacterStatistics,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateCharacterStatisticsResult 
@@ -4061,7 +4061,7 @@ type UpdatePlayerStatisticsRequestModel struct {
 // Default is false.
     ForceUpdate bool `json:"ForceUpdate"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Statistics statistics to be updated with the provided values
     Statistics []StatisticUpdateModel `json:"Statistics,omitempty"`
 }
@@ -4084,9 +4084,9 @@ type UpdateSharedGroupDataRequestModel struct {
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // Permission permission to be applied to all user data keys in this request.
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // SharedGroupId unique identifier for the shared group.
-    SharedGroupId string `json:"SharedGroupId"`
+    SharedGroupId string `json:"SharedGroupId,omitempty"`
 }
 
 // UpdateSharedGroupDataResult 
@@ -4106,16 +4106,16 @@ type UpdateUserDataRequestModel struct {
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // Permission permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateUserDataResult 
 type UpdateUserDataResultModel struct {
     // DataVersion indicates the current version of the data that has been set. This is incremented with every set call for that type of
 // data (read-only, internal, etc). This version can be provided in Get calls to find updated data.
-    DataVersion uint32 `json:"DataVersion"`
+    DataVersion uint32 `json:"DataVersion,omitempty"`
 }
 
 // UpdateUserInternalDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the user. In
@@ -4131,7 +4131,7 @@ type UpdateUserInternalDataRequestModel struct {
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UpdateUserInventoryItemDataRequest this function performs an additive update of the arbitrary JSON object containing the custom data for the item instance
@@ -4140,19 +4140,19 @@ type UpdateUserInternalDataRequestModel struct {
 // apart from those specified in the call.
 type UpdateUserInventoryItemDataRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Data key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may
 // not begin with a '!' character or be null.
     Data map[string]string `json:"Data,omitempty"`
     // ItemInstanceId unique PlayFab assigned instance identifier of the item
-    ItemInstanceId string `json:"ItemInstanceId"`
+    ItemInstanceId string `json:"ItemInstanceId,omitempty"`
     // KeysToRemove optional list of Data-keys to remove from UserData. Some SDKs cannot insert null-values into Data due to language
 // constraints. Use this to delete the keys directly.
     KeysToRemove []string `json:"KeysToRemove,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
 // UserAccountInfo 
@@ -4162,7 +4162,7 @@ type UserAccountInfoModel struct {
     // AppleAccountInfo sign in with Apple account information, if an Apple account has been linked
     AppleAccountInfo *UserAppleIdInfoModel `json:"AppleAccountInfo,omitempty"`
     // Created timestamp indicating when the user account was created
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // CustomIdInfo custom ID information, if a custom ID has been assigned
     CustomIdInfo *UserCustomIdInfoModel `json:"CustomIdInfo,omitempty"`
     // FacebookInfo user Facebook information, if a Facebook account has been linked
@@ -4184,7 +4184,7 @@ type UserAccountInfoModel struct {
     // OpenIdInfo openID Connect information, if any OpenID Connect accounts have been linked
     OpenIdInfo []UserOpenIdInfoModel `json:"OpenIdInfo,omitempty"`
     // PlayFabId unique identifier for the user account
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
     PrivateInfo *UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
     // PsnInfo user PSN account information, if a PSN account has been linked
@@ -4196,7 +4196,7 @@ type UserAccountInfoModel struct {
     // TwitchInfo user Twitch account information, if a Twitch account has been linked
     TwitchInfo *UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
-    Username string `json:"Username"`
+    Username string `json:"Username,omitempty"`
     // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
     WindowsHelloInfo *UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
@@ -4206,19 +4206,19 @@ type UserAccountInfoModel struct {
 // UserAndroidDeviceInfo 
 type UserAndroidDeviceInfoModel struct {
     // AndroidDeviceId android device ID
-    AndroidDeviceId string `json:"AndroidDeviceId"`
+    AndroidDeviceId string `json:"AndroidDeviceId,omitempty"`
 }
 
 // UserAppleIdInfo 
 type UserAppleIdInfoModel struct {
     // AppleSubjectId apple subject ID
-    AppleSubjectId string `json:"AppleSubjectId"`
+    AppleSubjectId string `json:"AppleSubjectId,omitempty"`
 }
 
 // UserCustomIdInfo 
 type UserCustomIdInfoModel struct {
     // CustomId custom ID
-    CustomId string `json:"CustomId"`
+    CustomId string `json:"CustomId,omitempty"`
 }
 
 // UserDataPermission indicates whether a given data key is private (readable only by the player) or public (readable by all players). When a
@@ -4232,82 +4232,82 @@ const (
 // UserDataRecord 
 type UserDataRecordModel struct {
     // LastUpdated timestamp for when this data was last updated.
-    LastUpdated time.Time `json:"LastUpdated"`
+    LastUpdated time.Time `json:"LastUpdated,omitempty"`
     // Permission indicates whether this data can be read by all users (public) or only the user (private). This is used for GetUserData
 // requests being made by one player about another player.
-    Permission UserDataPermission `json:"Permission"`
+    Permission UserDataPermission `json:"Permission,omitempty"`
     // Value data stored for the specified user data key.
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // UserFacebookInfo 
 type UserFacebookInfoModel struct {
     // FacebookId facebook identifier
-    FacebookId string `json:"FacebookId"`
+    FacebookId string `json:"FacebookId,omitempty"`
     // FullName facebook full name
-    FullName string `json:"FullName"`
+    FullName string `json:"FullName,omitempty"`
 }
 
 // UserFacebookInstantGamesIdInfo 
 type UserFacebookInstantGamesIdInfoModel struct {
     // FacebookInstantGamesId facebook Instant Games ID
-    FacebookInstantGamesId string `json:"FacebookInstantGamesId"`
+    FacebookInstantGamesId string `json:"FacebookInstantGamesId,omitempty"`
 }
 
 // UserGameCenterInfo 
 type UserGameCenterInfoModel struct {
     // GameCenterId gamecenter identifier
-    GameCenterId string `json:"GameCenterId"`
+    GameCenterId string `json:"GameCenterId,omitempty"`
 }
 
 // UserGoogleInfo 
 type UserGoogleInfoModel struct {
     // GoogleEmail email address of the Google account
-    GoogleEmail string `json:"GoogleEmail"`
+    GoogleEmail string `json:"GoogleEmail,omitempty"`
     // GoogleGender gender information of the Google account
-    GoogleGender string `json:"GoogleGender"`
+    GoogleGender string `json:"GoogleGender,omitempty"`
     // GoogleId google ID
-    GoogleId string `json:"GoogleId"`
+    GoogleId string `json:"GoogleId,omitempty"`
     // GoogleLocale locale of the Google account
-    GoogleLocale string `json:"GoogleLocale"`
+    GoogleLocale string `json:"GoogleLocale,omitempty"`
     // GoogleName name of the Google account user
-    GoogleName string `json:"GoogleName"`
+    GoogleName string `json:"GoogleName,omitempty"`
 }
 
 // UserIosDeviceInfo 
 type UserIosDeviceInfoModel struct {
     // IosDeviceId iOS device ID
-    IosDeviceId string `json:"IosDeviceId"`
+    IosDeviceId string `json:"IosDeviceId,omitempty"`
 }
 
 // UserKongregateInfo 
 type UserKongregateInfoModel struct {
     // KongregateId kongregate ID
-    KongregateId string `json:"KongregateId"`
+    KongregateId string `json:"KongregateId,omitempty"`
     // KongregateName kongregate Username
-    KongregateName string `json:"KongregateName"`
+    KongregateName string `json:"KongregateName,omitempty"`
 }
 
 // UserNintendoSwitchAccountIdInfo 
 type UserNintendoSwitchAccountIdInfoModel struct {
     // NintendoSwitchAccountSubjectId nintendo Switch account subject ID
-    NintendoSwitchAccountSubjectId string `json:"NintendoSwitchAccountSubjectId"`
+    NintendoSwitchAccountSubjectId string `json:"NintendoSwitchAccountSubjectId,omitempty"`
 }
 
 // UserNintendoSwitchDeviceIdInfo 
 type UserNintendoSwitchDeviceIdInfoModel struct {
     // NintendoSwitchDeviceId nintendo Switch Device ID
-    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId"`
+    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId,omitempty"`
 }
 
 // UserOpenIdInfo 
 type UserOpenIdInfoModel struct {
     // ConnectionId openID Connection ID
-    ConnectionId string `json:"ConnectionId"`
+    ConnectionId string `json:"ConnectionId,omitempty"`
     // Issuer openID Issuer
-    Issuer string `json:"Issuer"`
+    Issuer string `json:"Issuer,omitempty"`
     // Subject openID Subject
-    Subject string `json:"Subject"`
+    Subject string `json:"Subject,omitempty"`
 }
 
 // UserOrigination 
@@ -4342,15 +4342,15 @@ const (
 // UserPrivateAccountInfo 
 type UserPrivateAccountInfoModel struct {
     // Email user email address
-    Email string `json:"Email"`
+    Email string `json:"Email,omitempty"`
 }
 
 // UserPsnInfo 
 type UserPsnInfoModel struct {
     // PsnAccountId pSN account ID
-    PsnAccountId string `json:"PsnAccountId"`
+    PsnAccountId string `json:"PsnAccountId,omitempty"`
     // PsnOnlineId pSN online ID
-    PsnOnlineId string `json:"PsnOnlineId"`
+    PsnOnlineId string `json:"PsnOnlineId,omitempty"`
 }
 
 // UserSettings 
@@ -4366,35 +4366,35 @@ type UserSettingsModel struct {
 // UserSteamInfo 
 type UserSteamInfoModel struct {
     // SteamActivationStatus what stage of game ownership the user is listed as being in, from Steam
-    SteamActivationStatus TitleActivationStatus `json:"SteamActivationStatus"`
+    SteamActivationStatus TitleActivationStatus `json:"SteamActivationStatus,omitempty"`
     // SteamCountry the country in which the player resides, from Steam data
-    SteamCountry string `json:"SteamCountry"`
+    SteamCountry string `json:"SteamCountry,omitempty"`
     // SteamCurrency currency type set in the user Steam account
-    SteamCurrency Currency `json:"SteamCurrency"`
+    SteamCurrency Currency `json:"SteamCurrency,omitempty"`
     // SteamId steam identifier
-    SteamId string `json:"SteamId"`
+    SteamId string `json:"SteamId,omitempty"`
     // SteamName steam display name
-    SteamName string `json:"SteamName"`
+    SteamName string `json:"SteamName,omitempty"`
 }
 
 // UserTitleInfo 
 type UserTitleInfoModel struct {
     // AvatarUrl uRL to the player's avatar.
-    AvatarUrl string `json:"AvatarUrl"`
+    AvatarUrl string `json:"AvatarUrl,omitempty"`
     // Created timestamp indicating when the user was first associated with this game (this can differ significantly from when the user
 // first registered with PlayFab)
-    Created time.Time `json:"Created"`
+    Created time.Time `json:"Created,omitempty"`
     // DisplayName name of the user, as it is displayed in-game
-    DisplayName string `json:"DisplayName"`
+    DisplayName string `json:"DisplayName,omitempty"`
     // FirstLogin timestamp indicating when the user first signed into this game (this can differ from the Created timestamp, as other
 // events, such as issuing a beta key to the user, can associate the title to the user)
-    FirstLogin time.Time `json:"FirstLogin"`
+    FirstLogin time.Time `json:"FirstLogin,omitempty"`
     // isBanned boolean indicating whether or not the user is currently banned for a title
     IsBanned bool `json:"isBanned"`
     // LastLogin timestamp for the last user login for this title
-    LastLogin time.Time `json:"LastLogin"`
+    LastLogin time.Time `json:"LastLogin,omitempty"`
     // Origination source by which the user first joined the game, if known
-    Origination UserOrigination `json:"Origination"`
+    Origination UserOrigination `json:"Origination,omitempty"`
     // TitlePlayerAccount title player account entity for this user
     TitlePlayerAccount *EntityKeyModel `json:"TitlePlayerAccount,omitempty"`
 }
@@ -4402,43 +4402,43 @@ type UserTitleInfoModel struct {
 // UserTwitchInfo 
 type UserTwitchInfoModel struct {
     // TwitchId twitch ID
-    TwitchId string `json:"TwitchId"`
+    TwitchId string `json:"TwitchId,omitempty"`
     // TwitchUserName twitch Username
-    TwitchUserName string `json:"TwitchUserName"`
+    TwitchUserName string `json:"TwitchUserName,omitempty"`
 }
 
 // UserWindowsHelloInfo 
 type UserWindowsHelloInfoModel struct {
     // WindowsHelloDeviceName windows Hello Device Name
-    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName"`
+    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName,omitempty"`
     // WindowsHelloPublicKeyHash windows Hello Public Key Hash
-    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash"`
+    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash,omitempty"`
 }
 
 // UserXboxInfo 
 type UserXboxInfoModel struct {
     // XboxUserId xBox user ID
-    XboxUserId string `json:"XboxUserId"`
+    XboxUserId string `json:"XboxUserId,omitempty"`
 }
 
 // ValueToDateModel 
 type ValueToDateModelModel struct {
     // Currency iSO 4217 code of the currency used in the purchases
-    Currency string `json:"Currency"`
+    Currency string `json:"Currency,omitempty"`
     // TotalValue total value of the purchases in a whole number of 1/100 monetary units. For example, 999 indicates nine dollars and
 // ninety-nine cents when Currency is 'USD')
-    TotalValue uint32 `json:"TotalValue"`
+    TotalValue uint32 `json:"TotalValue,omitempty"`
     // TotalValueAsDecimal total value of the purchases in a string representation of decimal monetary units. For example, '9.99' indicates nine
 // dollars and ninety-nine cents when Currency is 'USD'.
-    TotalValueAsDecimal string `json:"TotalValueAsDecimal"`
+    TotalValueAsDecimal string `json:"TotalValueAsDecimal,omitempty"`
 }
 
 // Variable 
 type VariableModel struct {
     // Name name of the variable.
-    Name string `json:"Name"`
+    Name string `json:"Name,omitempty"`
     // Value value of the variable.
-    Value string `json:"Value"`
+    Value string `json:"Value,omitempty"`
 }
 
 // VirtualCurrencyRechargeTime 
@@ -4446,18 +4446,18 @@ type VirtualCurrencyRechargeTimeModel struct {
     // RechargeMax maximum value to which the regenerating currency will automatically increment. Note that it can exceed this value
 // through use of the AddUserVirtualCurrency API call. However, it will not regenerate automatically until it has fallen
 // below this value.
-    RechargeMax int32 `json:"RechargeMax"`
+    RechargeMax int32 `json:"RechargeMax,omitempty"`
     // RechargeTime server timestamp in UTC indicating the next time the virtual currency will be incremented.
-    RechargeTime time.Time `json:"RechargeTime"`
+    RechargeTime time.Time `json:"RechargeTime,omitempty"`
     // SecondsToRecharge time remaining (in seconds) before the next recharge increment of the virtual currency.
-    SecondsToRecharge int32 `json:"SecondsToRecharge"`
+    SecondsToRecharge int32 `json:"SecondsToRecharge,omitempty"`
 }
 
 // WriteEventResponse 
 type WriteEventResponseModel struct {
     // EventId the unique identifier of the event. The values of this identifier consist of ASCII characters and are not constrained to
 // any particular format.
-    EventId string `json:"EventId"`
+    EventId string `json:"EventId,omitempty"`
 }
 
 // WriteServerCharacterEventRequest this API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema,
@@ -4467,16 +4467,16 @@ type WriteServerCharacterEventRequestModel struct {
     // Body custom event properties. Each property consists of a name (string) and a value (JSON object).
     Body map[string]interface{} `json:"Body,omitempty"`
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
-    CharacterId string `json:"CharacterId"`
+    CharacterId string `json:"CharacterId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // EventName the name of the event, within the namespace scoped to the title. The naming convention is up to the caller, but it
 // commonly follows the subject_verb_object pattern (e.g. player_logged_in).
-    EventName string `json:"EventName"`
+    EventName string `json:"EventName,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Timestamp the time (in UTC) associated with this event. The value defaults to the current time.
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 
 // WriteServerPlayerEventRequest this API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema,
@@ -4489,11 +4489,11 @@ type WriteServerPlayerEventRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // EventName the name of the event, within the namespace scoped to the title. The naming convention is up to the caller, but it
 // commonly follows the subject_verb_object pattern (e.g. player_logged_in).
-    EventName string `json:"EventName"`
+    EventName string `json:"EventName,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // Timestamp the time (in UTC) associated with this event. The value defaults to the current time.
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 
 // WriteTitleEventRequest this API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema,
@@ -4506,15 +4506,15 @@ type WriteTitleEventRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // EventName the name of the event, within the namespace scoped to the title. The naming convention is up to the caller, but it
 // commonly follows the subject_verb_object pattern (e.g. player_logged_in).
-    EventName string `json:"EventName"`
+    EventName string `json:"EventName,omitempty"`
     // Timestamp the time (in UTC) associated with this event. The value defaults to the current time.
-    Timestamp time.Time `json:"Timestamp"`
+    Timestamp time.Time `json:"Timestamp,omitempty"`
 }
 
 // XboxLiveAccountPlayFabIdPair 
 type XboxLiveAccountPlayFabIdPairModel struct {
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Xbox Live identifier.
-    PlayFabId string `json:"PlayFabId"`
+    PlayFabId string `json:"PlayFabId,omitempty"`
     // XboxLiveAccountId unique Xbox Live identifier for a user.
-    XboxLiveAccountId string `json:"XboxLiveAccountId"`
+    XboxLiveAccountId string `json:"XboxLiveAccountId,omitempty"`
 }
