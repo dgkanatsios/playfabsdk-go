@@ -36,8 +36,6 @@ type CreateExperimentRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Description description of the experiment.
     Description string `json:"Description,omitempty"`
-    // Duration the duration of the experiment, in days.
-    Duration uint32 `json:"Duration,omitempty"`
     // EndDate when experiment should end.
     EndDate time.Time `json:"EndDate,omitempty"`
     // ExclusionGroupId id of the exclusion group.
@@ -106,8 +104,6 @@ type ExclusionGroupTrafficAllocationModel struct {
 type ExperimentModel struct {
     // Description description of the experiment.
     Description string `json:"Description,omitempty"`
-    // Duration the duration of the experiment, in days.
-    Duration uint32 `json:"Duration,omitempty"`
     // EndDate when experiment should end/was ended.
     EndDate time.Time `json:"EndDate,omitempty"`
     // ExclusionGroupId id of the exclusion group for this experiment.
@@ -218,7 +214,7 @@ type GetLatestScorecardResultModel struct {
 type GetTreatmentAssignmentRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
 }
 
@@ -333,8 +329,6 @@ type UpdateExperimentRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Description description of the experiment.
     Description string `json:"Description,omitempty"`
-    // Duration the duration of the experiment, in days.
-    Duration uint32 `json:"Duration,omitempty"`
     // EndDate when experiment should end.
     EndDate time.Time `json:"EndDate,omitempty"`
     // ExclusionGroupId id of the exclusion group.

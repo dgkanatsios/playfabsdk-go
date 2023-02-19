@@ -84,6 +84,42 @@ func ExecuteFunction(settings *playfab.Settings, postData *ExecuteFunctionReques
     return result, nil
 }
 
+// GetFunction gets registered Azure Functions for a given title id and function name.
+// https://api.playfab.com/Documentation/CloudScript/method/GetFunction
+func GetFunction(settings *playfab.Settings, postData *GetFunctionRequestModel, entityToken string) (*GetFunctionResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/CloudScript/GetFunction", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetFunctionResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // ListFunctions lists all currently registered Azure Functions for a given title.
 // https://api.playfab.com/Documentation/CloudScript/method/ListFunctions
 func ListFunctions(settings *playfab.Settings, postData *ListFunctionsRequestModel, entityToken string) (*ListFunctionsResultModel, error) {

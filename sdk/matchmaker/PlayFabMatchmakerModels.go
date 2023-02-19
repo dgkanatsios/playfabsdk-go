@@ -88,50 +88,6 @@ type PlayerLeftRequestModel struct {
 type PlayerLeftResponseModel struct {
 }
 
-// Region 
-type Region string
-  
-const (
-     RegionUSCentral Region = "USCentral"
-     RegionUSEast Region = "USEast"
-     RegionEUWest Region = "EUWest"
-     RegionSingapore Region = "Singapore"
-     RegionJapan Region = "Japan"
-     RegionBrazil Region = "Brazil"
-     RegionAustralia Region = "Australia"
-      )
-// StartGameRequest 
-type StartGameRequestModel struct {
-    // Build unique identifier of the previously uploaded build executable which is to be started.
-    Build string `json:"Build,omitempty"`
-    // CustomCommandLineData custom command line argument when starting game server process.
-    CustomCommandLineData string `json:"CustomCommandLineData,omitempty"`
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // ExternalMatchmakerEventEndpoint hTTP endpoint URL for receiving game status events, if using an external matchmaker. When the game ends, PlayFab will
-// make a POST request to this URL with the X-SecretKey header set to the value of the game's secret and an
-// application/json body of { "EventName": "game_ended", "GameID": "<gameid>" }.
-    ExternalMatchmakerEventEndpoint string `json:"ExternalMatchmakerEventEndpoint,omitempty"`
-    // GameMode game mode for this Game Server Instance.
-    GameMode string `json:"GameMode,omitempty"`
-    // Region region with which to associate the server, for filtering.
-    Region Region `json:"Region,omitempty"`
-}
-
-// StartGameResponse 
-type StartGameResponseModel struct {
-    // GameID unique identifier for the game/lobby in the new Game Server Instance.
-    GameID string `json:"GameID,omitempty"`
-    // ServerIPV4Address iPV4 address of the server
-    ServerIPV4Address string `json:"ServerIPV4Address,omitempty"`
-    // ServerIPV6Address iPV6 address of the new Game Server Instance.
-    ServerIPV6Address string `json:"ServerIPV6Address,omitempty"`
-    // ServerPort port number for communication with the Game Server Instance.
-    ServerPort uint32 `json:"ServerPort,omitempty"`
-    // ServerPublicDNSName public DNS name (if any) of the server
-    ServerPublicDNSName string `json:"ServerPublicDNSName,omitempty"`
-}
-
 // UserInfoRequest 
 type UserInfoRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).

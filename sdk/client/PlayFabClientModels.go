@@ -433,13 +433,29 @@ type ConsumeMicrosoftStoreEntitlementsResponseModel struct {
     Items []ItemInstanceModel `json:"Items,omitempty"`
 }
 
+// ConsumePS5EntitlementsRequest 
+type ConsumePS5EntitlementsRequestModel struct {
+    // CatalogVersion catalog version to use
+    CatalogVersion string `json:"CatalogVersion,omitempty"`
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // MarketplaceSpecificData marketplace specific payload containing details to fetch in app purchase transactions
+    MarketplaceSpecificData* PlayStation5PayloadModel `json:"MarketplaceSpecificData,omitempty"`
+}
+
+// ConsumePS5EntitlementsResult 
+type ConsumePS5EntitlementsResultModel struct {
+    // Items details for the items purchased.
+    Items []ItemInstanceModel `json:"Items,omitempty"`
+}
+
 // ConsumePSNEntitlementsRequest 
 type ConsumePSNEntitlementsRequestModel struct {
     // CatalogVersion which catalog to match granted entitlements against. If null, defaults to title default catalog
     CatalogVersion string `json:"CatalogVersion,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // ServiceLabel id of the PSN service label to consume entitlements from
+    // ServiceLabel id of the PlayStation :tm: Network service label to consume entitlements from
     ServiceLabel int32 `json:"ServiceLabel,omitempty"`
 }
 
@@ -1042,6 +1058,17 @@ type ExecuteCloudScriptResultModel struct {
     Revision int32 `json:"Revision,omitempty"`
 }
 
+// ExternalFriendSources 
+type ExternalFriendSources string
+  
+const (
+     ExternalFriendSourcesNone ExternalFriendSources = "None"
+     ExternalFriendSourcesSteam ExternalFriendSources = "Steam"
+     ExternalFriendSourcesFacebook ExternalFriendSources = "Facebook"
+     ExternalFriendSourcesXbox ExternalFriendSources = "Xbox"
+     ExternalFriendSourcesPsn ExternalFriendSources = "Psn"
+     ExternalFriendSourcesAll ExternalFriendSources = "All"
+      )
 // FacebookInstantGamesPlayFabIdPair 
 type FacebookInstantGamesPlayFabIdPairModel struct {
     // FacebookInstantGamesId unique Facebook Instant Games identifier for a user.
@@ -1068,7 +1095,8 @@ type FriendInfoModel struct {
     GameCenterInfo *UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // Profile the profile of the user, if requested.
     Profile *PlayerProfileModelModel `json:"Profile,omitempty"`
-    // PSNInfo available PSN information, if the user and PlayFab friend are both connected to PSN.
+    // PSNInfo available PlayStation :tm: Network information, if the user and PlayFab friend are both connected to PlayStation :tm:
+// Network.
     PSNInfo *UserPsnInfoModel `json:"PSNInfo,omitempty"`
     // SteamInfo available Steam information (if the user and PlayFab friend are also connected in Steam).
     SteamInfo *UserSteamInfoModel `json:"SteamInfo,omitempty"`
@@ -1266,8 +1294,6 @@ type GetCharacterInventoryResultModel struct {
 
 // GetCharacterLeaderboardRequest 
 type GetCharacterLeaderboardRequestModel struct {
-    // CharacterType optional character type on which to filter the leaderboard entries.
-    CharacterType string `json:"CharacterType,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve. Default 10, maximum 100.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // StartPosition first entry in the leaderboard to be retrieved.
@@ -1315,6 +1341,9 @@ type GetContentDownloadUrlResultModel struct {
 type GetFriendLeaderboardAroundPlayerRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
+// comma-separated list of platforms.
+    ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
     // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
     IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
@@ -1352,6 +1381,9 @@ type GetFriendLeaderboardAroundPlayerResultModel struct {
 type GetFriendLeaderboardRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
+// comma-separated list of platforms.
+    ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
     // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
     IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
@@ -1376,6 +1408,9 @@ type GetFriendLeaderboardRequestModel struct {
 type GetFriendsListRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
+// comma-separated list of platforms.
+    ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
     // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
     IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
@@ -1401,8 +1436,6 @@ type GetFriendsListResultModel struct {
 type GetLeaderboardAroundCharacterRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character on which to center the leaderboard.
     CharacterId string `json:"CharacterId,omitempty"`
-    // CharacterType optional character type on which to filter the leaderboard entries.
-    CharacterType string `json:"CharacterType,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve. Default 10, maximum 100.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
@@ -1447,8 +1480,6 @@ type GetLeaderboardAroundPlayerResultModel struct {
 
 // GetLeaderboardForUsersCharactersRequest 
 type GetLeaderboardForUsersCharactersRequestModel struct {
-    // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
     StatisticName string `json:"StatisticName,omitempty"`
 }
@@ -1700,7 +1731,8 @@ type GetPlayerTradesResponseModel struct {
 
 // GetPlayFabIDsFromFacebookIDsRequest 
 type GetPlayFabIDsFromFacebookIDsRequestModel struct {
-    // FacebookIDs array of unique Facebook identifiers for which the title needs to get PlayFab identifiers.
+    // FacebookIDs array of unique Facebook identifiers for which the title needs to get PlayFab identifiers. The array cannot exceed 2,000
+// in length.
     FacebookIDs []string `json:"FacebookIDs,omitempty"`
 }
 
@@ -1712,7 +1744,8 @@ type GetPlayFabIDsFromFacebookIDsResultModel struct {
 
 // GetPlayFabIDsFromFacebookInstantGamesIdsRequest 
 type GetPlayFabIDsFromFacebookInstantGamesIdsRequestModel struct {
-    // FacebookInstantGamesIds array of unique Facebook Instant Games identifiers for which the title needs to get PlayFab identifiers.
+    // FacebookInstantGamesIds array of unique Facebook Instant Games identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 25 in length.
     FacebookInstantGamesIds []string `json:"FacebookInstantGamesIds,omitempty"`
 }
 
@@ -1725,6 +1758,7 @@ type GetPlayFabIDsFromFacebookInstantGamesIdsResultModel struct {
 // GetPlayFabIDsFromGameCenterIDsRequest 
 type GetPlayFabIDsFromGameCenterIDsRequestModel struct {
     // GameCenterIDs array of unique Game Center identifiers (the Player Identifier) for which the title needs to get PlayFab identifiers.
+// The array cannot exceed 2,000 in length.
     GameCenterIDs []string `json:"GameCenterIDs,omitempty"`
 }
 
@@ -1749,7 +1783,8 @@ type GetPlayFabIDsFromGenericIDsResultModel struct {
 
 // GetPlayFabIDsFromGoogleIDsRequest 
 type GetPlayFabIDsFromGoogleIDsRequestModel struct {
-    // GoogleIDs array of unique Google identifiers (Google+ user IDs) for which the title needs to get PlayFab identifiers.
+    // GoogleIDs array of unique Google identifiers (Google+ user IDs) for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     GoogleIDs []string `json:"GoogleIDs,omitempty"`
 }
 
@@ -1759,9 +1794,23 @@ type GetPlayFabIDsFromGoogleIDsResultModel struct {
     Data []GooglePlayFabIdPairModel `json:"Data,omitempty"`
 }
 
+// GetPlayFabIDsFromGooglePlayGamesPlayerIDsRequest 
+type GetPlayFabIDsFromGooglePlayGamesPlayerIDsRequestModel struct {
+    // GooglePlayGamesPlayerIDs array of unique Google Play Games identifiers (Google+ user IDs) for which the title needs to get PlayFab identifiers.
+// The array cannot exceed 2,000 in length.
+    GooglePlayGamesPlayerIDs []string `json:"GooglePlayGamesPlayerIDs,omitempty"`
+}
+
+// GetPlayFabIDsFromGooglePlayGamesPlayerIDsResult for Google Play Games identifiers which have not been linked to PlayFab accounts, null will be returned.
+type GetPlayFabIDsFromGooglePlayGamesPlayerIDsResultModel struct {
+    // Data mapping of Google Play Games identifiers to PlayFab identifiers.
+    Data []GooglePlayGamesPlayFabIdPairModel `json:"Data,omitempty"`
+}
+
 // GetPlayFabIDsFromKongregateIDsRequest 
 type GetPlayFabIDsFromKongregateIDsRequestModel struct {
-    // KongregateIDs array of unique Kongregate identifiers (Kongregate's user_id) for which the title needs to get PlayFab identifiers.
+    // KongregateIDs array of unique Kongregate identifiers (Kongregate's user_id) for which the title needs to get PlayFab identifiers. The
+// array cannot exceed 2,000 in length.
     KongregateIDs []string `json:"KongregateIDs,omitempty"`
 }
 
@@ -1771,9 +1820,23 @@ type GetPlayFabIDsFromKongregateIDsResultModel struct {
     Data []KongregatePlayFabIdPairModel `json:"Data,omitempty"`
 }
 
+// GetPlayFabIDsFromNintendoServiceAccountIdsRequest 
+type GetPlayFabIDsFromNintendoServiceAccountIdsRequestModel struct {
+    // NintendoAccountIds array of unique Nintendo Switch Account identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
+    NintendoAccountIds []string `json:"NintendoAccountIds,omitempty"`
+}
+
+// GetPlayFabIDsFromNintendoServiceAccountIdsResult for Nintendo Service Account identifiers which have not been linked to PlayFab accounts, null will be returned.
+type GetPlayFabIDsFromNintendoServiceAccountIdsResultModel struct {
+    // Data mapping of Nintendo Switch Service Account identifiers to PlayFab identifiers.
+    Data []NintendoServiceAccountPlayFabIdPairModel `json:"Data,omitempty"`
+}
+
 // GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest 
 type GetPlayFabIDsFromNintendoSwitchDeviceIdsRequestModel struct {
-    // NintendoSwitchDeviceIds array of unique Nintendo Switch Device identifiers for which the title needs to get PlayFab identifiers.
+    // NintendoSwitchDeviceIds array of unique Nintendo Switch Device identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     NintendoSwitchDeviceIds []string `json:"NintendoSwitchDeviceIds,omitempty"`
 }
 
@@ -1785,21 +1848,23 @@ type GetPlayFabIDsFromNintendoSwitchDeviceIdsResultModel struct {
 
 // GetPlayFabIDsFromPSNAccountIDsRequest 
 type GetPlayFabIDsFromPSNAccountIDsRequestModel struct {
-    // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
+    // IssuerId id of the PlayStation :tm: Network issuer environment. If null, defaults to production environment.
     IssuerId int32 `json:"IssuerId,omitempty"`
-    // PSNAccountIDs array of unique PlayStation Network identifiers for which the title needs to get PlayFab identifiers.
+    // PSNAccountIDs array of unique PlayStation :tm: Network identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     PSNAccountIDs []string `json:"PSNAccountIDs,omitempty"`
 }
 
-// GetPlayFabIDsFromPSNAccountIDsResult for PlayStation Network identifiers which have not been linked to PlayFab accounts, null will be returned.
+// GetPlayFabIDsFromPSNAccountIDsResult for PlayStation :tm: Network identifiers which have not been linked to PlayFab accounts, null will be returned.
 type GetPlayFabIDsFromPSNAccountIDsResultModel struct {
-    // Data mapping of PlayStation Network identifiers to PlayFab identifiers.
+    // Data mapping of PlayStation :tm: Network identifiers to PlayFab identifiers.
     Data []PSNAccountPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
 // GetPlayFabIDsFromSteamIDsRequest 
 type GetPlayFabIDsFromSteamIDsRequestModel struct {
-    // SteamStringIDs array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
+    // SteamStringIDs array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     SteamStringIDs []string `json:"SteamStringIDs,omitempty"`
 }
 
@@ -1811,7 +1876,8 @@ type GetPlayFabIDsFromSteamIDsResultModel struct {
 
 // GetPlayFabIDsFromTwitchIDsRequest 
 type GetPlayFabIDsFromTwitchIDsRequestModel struct {
-    // TwitchIds array of unique Twitch identifiers (Twitch's _id) for which the title needs to get PlayFab identifiers.
+    // TwitchIds array of unique Twitch identifiers (Twitch's _id) for which the title needs to get PlayFab identifiers. The array cannot
+// exceed 2,000 in length.
     TwitchIds []string `json:"TwitchIds,omitempty"`
 }
 
@@ -1825,13 +1891,14 @@ type GetPlayFabIDsFromTwitchIDsResultModel struct {
 type GetPlayFabIDsFromXboxLiveIDsRequestModel struct {
     // Sandbox the ID of Xbox Live sandbox.
     Sandbox string `json:"Sandbox,omitempty"`
-    // XboxLiveAccountIDs array of unique Xbox Live account identifiers for which the title needs to get PlayFab identifiers.
+    // XboxLiveAccountIDs array of unique Xbox Live account identifiers for which the title needs to get PlayFab identifiers. The array cannot
+// exceed 2,000 in length.
     XboxLiveAccountIDs []string `json:"XboxLiveAccountIDs,omitempty"`
 }
 
 // GetPlayFabIDsFromXboxLiveIDsResult for XboxLive identifiers which have not been linked to PlayFab accounts, null will be returned.
 type GetPlayFabIDsFromXboxLiveIDsResultModel struct {
-    // Data mapping of PlayStation Network identifiers to PlayFab identifiers.
+    // Data mapping of Xbox Live identifiers to PlayFab identifiers.
     Data []XboxLiveAccountPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
@@ -2049,26 +2116,19 @@ type GetUserInventoryResultModel struct {
     VirtualCurrencyRechargeTimes map[string]VirtualCurrencyRechargeTimeModel `json:"VirtualCurrencyRechargeTimes,omitempty"`
 }
 
-// GetWindowsHelloChallengeRequest requires the SHA256 hash of the user's public key.
-type GetWindowsHelloChallengeRequestModel struct {
-    // PublicKeyHint sHA256 hash of the PublicKey generated by Windows Hello.
-    PublicKeyHint string `json:"PublicKeyHint,omitempty"`
-    // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
-// title has been selected.
-    TitleId string `json:"TitleId,omitempty"`
-}
-
-// GetWindowsHelloChallengeResponse 
-type GetWindowsHelloChallengeResponseModel struct {
-    // Challenge server generated challenge to be signed by the user.
-    Challenge string `json:"Challenge,omitempty"`
-}
-
 // GooglePlayFabIdPair 
 type GooglePlayFabIdPairModel struct {
     // GoogleId unique Google identifier for a user.
     GoogleId string `json:"GoogleId,omitempty"`
     // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Google identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// GooglePlayGamesPlayFabIdPair 
+type GooglePlayGamesPlayFabIdPairModel struct {
+    // GooglePlayGamesPlayerId unique Google Play Games identifier for a user.
+    GooglePlayGamesPlayerId string `json:"GooglePlayGamesPlayerId,omitempty"`
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Google Play Games identifier.
     PlayFabId string `json:"PlayFabId,omitempty"`
 }
 
@@ -2250,7 +2310,8 @@ type LinkFacebookInstantGamesIdResultModel struct {
 type LinkGameCenterAccountRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // ForceLink if another user is already linked to the account, unlink the other user and re-link.
+    // ForceLink if another user is already linked to the account, unlink the other user and re-link. If the current user is already
+// linked, link both accounts
     ForceLink bool `json:"ForceLink"`
     // GameCenterId game Center identifier for the player account to be linked.
     GameCenterId string `json:"GameCenterId,omitempty"`
@@ -2274,7 +2335,8 @@ type LinkGameCenterAccountResultModel struct {
 type LinkGoogleAccountRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // ForceLink if another user is already linked to the account, unlink the other user and re-link.
+    // ForceLink if another user is already linked to the account, unlink the other user and re-link. If the current user is already
+// linked, link both accounts
     ForceLink bool `json:"ForceLink"`
     // ServerAuthCode server authentication code obtained on the client by calling getServerAuthCode()
 // (https://developers.google.com/identity/sign-in/android/offline-access) from Google Play for the user.
@@ -2283,6 +2345,23 @@ type LinkGoogleAccountRequestModel struct {
 
 // LinkGoogleAccountResult 
 type LinkGoogleAccountResultModel struct {
+}
+
+// LinkGooglePlayGamesServicesAccountRequest google Play Games sign-in is accomplished by obtaining a Google OAuth 2.0 credential using the Google Play Games sign-in
+// for Android APIs on the device and passing it to this API.
+type LinkGooglePlayGamesServicesAccountRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ForceLink if another user is already linked to the account, unlink the other user and re-link. If the current user is already
+// linked, link both accounts
+    ForceLink bool `json:"ForceLink"`
+    // ServerAuthCode oAuth 2.0 server authentication code obtained on the client by calling the requestServerSideAccess()
+// (https://developers.google.com/games/services/android/signin) Google Play Games client API.
+    ServerAuthCode string `json:"ServerAuthCode,omitempty"`
+}
+
+// LinkGooglePlayGamesServicesAccountResult 
+type LinkGooglePlayGamesServicesAccountResultModel struct {
 }
 
 // LinkIOSDeviceIDRequest 
@@ -2359,15 +2438,15 @@ type LinkOpenIdConnectRequestModel struct {
 
 // LinkPSNAccountRequest 
 type LinkPSNAccountRequestModel struct {
-    // AuthCode authentication code provided by the PlayStation Network.
+    // AuthCode authentication code provided by the PlayStation :tm: Network.
     AuthCode string `json:"AuthCode,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink"`
-    // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
+    // IssuerId id of the PlayStation :tm: Network issuer environment. If null, defaults to production environment.
     IssuerId int32 `json:"IssuerId,omitempty"`
-    // RedirectUri redirect URI supplied to PSN when requesting an auth code
+    // RedirectUri redirect URI supplied to PlayStation :tm: Network when requesting an auth code
     RedirectUri string `json:"RedirectUri,omitempty"`
 }
 
@@ -2406,24 +2485,6 @@ type LinkTwitchAccountRequestModel struct {
 
 // LinkTwitchAccountResult 
 type LinkTwitchAccountResultModel struct {
-}
-
-// LinkWindowsHelloAccountRequest publicKey must be generated using the Windows Hello Passport service.
-type LinkWindowsHelloAccountRequestModel struct {
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // DeviceName device name.
-    DeviceName string `json:"DeviceName,omitempty"`
-    // ForceLink if another user is already linked to the account, unlink the other user and re-link.
-    ForceLink bool `json:"ForceLink"`
-    // PublicKey publicKey generated by Windows Hello.
-    PublicKey string `json:"PublicKey,omitempty"`
-    // UserName player's user named used by Windows Hello.
-    UserName string `json:"UserName,omitempty"`
-}
-
-// LinkWindowsHelloAccountResponse 
-type LinkWindowsHelloAccountResponseModel struct {
 }
 
 // LinkXboxAccountRequest 
@@ -2491,6 +2552,7 @@ const (
      LoginIdentityProviderOpenIdConnect LoginIdentityProvider = "OpenIdConnect"
      LoginIdentityProviderApple LoginIdentityProvider = "Apple"
      LoginIdentityProviderNintendoSwitchAccount LoginIdentityProvider = "NintendoSwitchAccount"
+     LoginIdentityProviderGooglePlayGames LoginIdentityProvider = "GooglePlayGames"
       )
 // LoginResult 
 type LoginResultModel struct {
@@ -2554,7 +2616,8 @@ type LoginWithAppleRequestModel struct {
     // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // IdentityToken the JSON Web token (JWT) returned by Apple after login. Represented as the identityToken field in the authorization
-// credential payload.
+// credential payload. If you choose to ignore the expiration date for identity tokens, you will receive an NotAuthorized
+// error if Apple rotates the signing key. In this case, users have to login to provide a fresh identity token.
     IdentityToken string `json:"IdentityToken,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
@@ -2660,7 +2723,8 @@ type LoginWithFacebookRequestModel struct {
 // this is the first time a user has signed in with Game Center and CreateAccount is set to true, a new PlayFab account
 // will be created and linked to the Game Center identifier. In this case, no email or username will be associated with the
 // PlayFab account. Otherwise, if no PlayFab account is linked to the Game Center account, an error indicating this will be
-// returned, so that the title can guide the user through creation of a PlayFab account.
+// returned, so that the title can guide the user through creation of a PlayFab account. If an invalid iOS Game Center
+// player identifier is used, an error indicating this will be returned.
 type LoginWithGameCenterRequestModel struct {
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount"`
@@ -2715,6 +2779,36 @@ type LoginWithGoogleAccountRequestModel struct {
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // ServerAuthCode oAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode()
 // (https://developers.google.com/identity/sign-in/android/offline-access) Google client API.
+    ServerAuthCode string `json:"ServerAuthCode,omitempty"`
+    // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
+// title has been selected.
+    TitleId string `json:"TitleId,omitempty"`
+}
+
+// LoginWithGooglePlayGamesServicesRequest google Play Games sign-in is accomplished by obtaining a Google OAuth 2.0 credential using the Google Play Games sign-in
+// for Android APIs on the device and passing it to this API. If this is the first time a user has signed in with the
+// Google Play Games account and CreateAccount is set to true, a new PlayFab account will be created and linked to the
+// Google Play Games account. Otherwise, if no PlayFab account is linked to the Google Play Games account, an error
+// indicating this will be returned, so that the title can guide the user through creation of a PlayFab account. The
+// current (recommended) method for obtaining a Google Play Games account credential in an Android application is to call
+// GamesSignInClient.requestServerSideAccess() and send the auth code as the ServerAuthCode parameter of this API. Before
+// doing this, you must create an OAuth 2.0 web application client ID in the Google API Console and configure its client ID
+// and secret in the PlayFab Game Manager Google Add-on for your title. This method does not require prompting of the user
+// for additional Google account permissions, resulting in a user experience with the least possible friction. For more
+// information about obtaining the server auth code, see https://developers.google.com/games/services/android/signin.
+type LoginWithGooglePlayGamesServicesRequestModel struct {
+    // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
+    CreateAccount bool `json:"CreateAccount"`
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
+    EncryptedRequest string `json:"EncryptedRequest,omitempty"`
+    // InfoRequestParameters flags for which pieces of info to return for the user.
+    InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
+    PlayerSecret string `json:"PlayerSecret,omitempty"`
+    // ServerAuthCode oAuth 2.0 server authentication code obtained on the client by calling the requestServerSideAccess()
+// (https://developers.google.com/games/services/android/signin) Google Play Games client API.
     ServerAuthCode string `json:"ServerAuthCode,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
@@ -2857,12 +2951,13 @@ type LoginWithPlayFabRequestModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// LoginWithPSNRequest if this is the first time a user has signed in with the PlayStation Network account and CreateAccount is set to true, a
-// new PlayFab account will be created and linked to the PSN account. In this case, no email or username will be associated
-// with the PlayFab account. Otherwise, if no PlayFab account is linked to the PSN account, an error indicating this will
-// be returned, so that the title can guide the user through creation of a PlayFab account.
+// LoginWithPSNRequest if this is the first time a user has signed in with the PlayStation :tm: Network account and CreateAccount is set to
+// true, a new PlayFab account will be created and linked to the PlayStation :tm: Network account. In this case, no email
+// or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the PlayStation
+// :tm: Network account, an error indicating this will be returned, so that the title can guide the user through creation
+// of a PlayFab account.
 type LoginWithPSNRequestModel struct {
-    // AuthCode auth code provided by the PSN OAuth provider.
+    // AuthCode auth code provided by the PlayStation :tm: Network OAuth provider.
     AuthCode string `json:"AuthCode,omitempty"`
     // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
     CreateAccount bool `json:"CreateAccount"`
@@ -2872,11 +2967,11 @@ type LoginWithPSNRequestModel struct {
     EncryptedRequest string `json:"EncryptedRequest,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
-    // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
+    // IssuerId id of the PlayStation :tm: Network issuer environment. If null, defaults to production environment.
     IssuerId int32 `json:"IssuerId,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
-    // RedirectUri redirect URI supplied to PSN when requesting an auth code
+    // RedirectUri redirect URI supplied to PlayStation :tm: Network when requesting an auth code
     RedirectUri string `json:"RedirectUri,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
@@ -2931,21 +3026,6 @@ type LoginWithTwitchRequestModel struct {
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
     PlayerSecret string `json:"PlayerSecret,omitempty"`
-    // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
-// title has been selected.
-    TitleId string `json:"TitleId,omitempty"`
-}
-
-// LoginWithWindowsHelloRequest requires both the SHA256 hash of the user's public key as well as the signed response from GetWindowsHelloChallenge
-type LoginWithWindowsHelloRequestModel struct {
-    // ChallengeSignature the signed response from the user for the Challenge.
-    ChallengeSignature string `json:"ChallengeSignature,omitempty"`
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
-    // PublicKeyHint sHA256 hash of the PublicKey generated by Windows Hello.
-    PublicKeyHint string `json:"PublicKeyHint,omitempty"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
     TitleId string `json:"TitleId,omitempty"`
@@ -3085,6 +3165,15 @@ type NameIdentifierModel struct {
     Name string `json:"Name,omitempty"`
 }
 
+// NintendoServiceAccountPlayFabIdPair 
+type NintendoServiceAccountPlayFabIdPairModel struct {
+    // NintendoServiceAccountId unique Nintendo Switch Service Account identifier for a user.
+    NintendoServiceAccountId string `json:"NintendoServiceAccountId,omitempty"`
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Nintendo Switch Service Account
+// identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
 // NintendoSwitchPlayFabIdPair 
 type NintendoSwitchPlayFabIdPairModel struct {
     // NintendoSwitchDeviceId unique Nintendo Switch Device identifier for a user.
@@ -3192,7 +3281,9 @@ type PlayerProfileModelModel struct {
     Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
     DisplayName string `json:"DisplayName,omitempty"`
-    // ExperimentVariants list of experiment variants for the player.
+    // ExperimentVariants list of experiment variants for the player. Note that these variants are not guaranteed to be up-to-date when returned
+// during login because the player profile is updated only after login. Instead, use the LoginResult.TreatmentAssignment
+// property during login to get the correct variants and variables.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
     LastLogin time.Time `json:"LastLogin,omitempty"`
@@ -3277,11 +3368,20 @@ type PlayerStatisticVersionModel struct {
     Version uint32 `json:"Version,omitempty"`
 }
 
+// PlayStation5Payload 
+type PlayStation5PayloadModel struct {
+    // Ids an optional list of entitlement ids to query against PlayStation :tm: Network
+    Ids []string `json:"Ids,omitempty"`
+    // ServiceLabel id of the PlayStation :tm: Network service label to consume entitlements from
+    ServiceLabel string `json:"ServiceLabel,omitempty"`
+}
+
 // PSNAccountPlayFabIdPair 
 type PSNAccountPlayFabIdPairModel struct {
-    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the PlayStation Network identifier.
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the PlayStation :tm: Network
+// identifier.
     PlayFabId string `json:"PlayFabId,omitempty"`
-    // PSNAccountId unique PlayStation Network identifier for a user.
+    // PSNAccountId unique PlayStation :tm: Network identifier for a user.
     PSNAccountId string `json:"PSNAccountId,omitempty"`
 }
 
@@ -3362,11 +3462,11 @@ type RedeemCouponResultModel struct {
 
 // RefreshPSNAuthTokenRequest 
 type RefreshPSNAuthTokenRequestModel struct {
-    // AuthCode auth code returned by PSN OAuth system.
+    // AuthCode auth code returned by PlayStation :tm: Network OAuth system.
     AuthCode string `json:"AuthCode,omitempty"`
-    // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
+    // IssuerId id of the PlayStation :tm: Network issuer environment. If null, defaults to production environment.
     IssuerId int32 `json:"IssuerId,omitempty"`
-    // RedirectUri redirect URI supplied to PSN when requesting an auth code
+    // RedirectUri redirect URI supplied to PlayStation :tm: Network when requesting an auth code
     RedirectUri string `json:"RedirectUri,omitempty"`
 }
 
@@ -3451,27 +3551,6 @@ type RegisterPlayFabUserResultModel struct {
     SettingsForUser *UserSettingsModel `json:"SettingsForUser,omitempty"`
     // Username playFab unique user name.
     Username string `json:"Username,omitempty"`
-}
-
-// RegisterWithWindowsHelloRequest publicKey must be generated using the Windows Hello Passport service.
-type RegisterWithWindowsHelloRequestModel struct {
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // DeviceName device name.
-    DeviceName string `json:"DeviceName,omitempty"`
-    // EncryptedRequest base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
-    EncryptedRequest string `json:"EncryptedRequest,omitempty"`
-    // InfoRequestParameters flags for which pieces of info to return for the user.
-    InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
-    // PlayerSecret player secret that is used to verify API request signatures (Enterprise Only).
-    PlayerSecret string `json:"PlayerSecret,omitempty"`
-    // PublicKey publicKey generated by Windows Hello.
-    PublicKey string `json:"PublicKey,omitempty"`
-    // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
-// title has been selected.
-    TitleId string `json:"TitleId,omitempty"`
-    // UserName player's user name used by Windows Hello.
-    UserName string `json:"UserName,omitempty"`
 }
 
 // RemoveContactEmailRequest this API removes an existing contact email from the player's profile.
@@ -3562,7 +3641,8 @@ type RestoreIOSPurchasesRequestModel struct {
     ReceiptData string `json:"ReceiptData,omitempty"`
 }
 
-// RestoreIOSPurchasesResult once verified, the valid items will be restored into the user's inventory.
+// RestoreIOSPurchasesResult once verified, the valid items will be restored into the user's inventory. This result should be used for immediate
+// updates to the local client game state as opposed to the GetUserInventory API which can have an up to half second delay.
 type RestoreIOSPurchasesResultModel struct {
     // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
     Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
@@ -3681,44 +3761,6 @@ const (
      SourceTypeCustom SourceType = "Custom"
      SourceTypeAPI SourceType = "API"
       )
-// StartGameRequest this API must be enabled for use as an option in the game manager website. It is disabled by default.
-type StartGameRequestModel struct {
-    // BuildVersion version information for the build of the game server which is to be started
-    BuildVersion string `json:"BuildVersion,omitempty"`
-    // CharacterId character to use for stats based matching. Leave null to use account stats
-    CharacterId string `json:"CharacterId,omitempty"`
-    // CustomCommandLineData custom command line argument when starting game server process
-    CustomCommandLineData string `json:"CustomCommandLineData,omitempty"`
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // GameMode the title-defined game mode this server is to be running (defaults to 0 if there is only one mode)
-    GameMode string `json:"GameMode,omitempty"`
-    // Region the region to associate this server with for match filtering
-    Region Region `json:"Region,omitempty"`
-    // StatisticName player statistic for others to use in finding this game. May be null for no stat-based matching
-    StatisticName string `json:"StatisticName,omitempty"`
-}
-
-// StartGameResult 
-type StartGameResultModel struct {
-    // Expires timestamp for when the server should expire, if applicable
-    Expires string `json:"Expires,omitempty"`
-    // LobbyID unique identifier for the lobby of the server started
-    LobbyID string `json:"LobbyID,omitempty"`
-    // Password password required to log into the server
-    Password string `json:"Password,omitempty"`
-    // ServerIPV4Address server IPV4 address
-    ServerIPV4Address string `json:"ServerIPV4Address,omitempty"`
-    // ServerIPV6Address server IPV6 address
-    ServerIPV6Address string `json:"ServerIPV6Address,omitempty"`
-    // ServerPort port on the server to be used for communication
-    ServerPort int32 `json:"ServerPort,omitempty"`
-    // ServerPublicDNSName server public DNS name
-    ServerPublicDNSName string `json:"ServerPublicDNSName,omitempty"`
-    // Ticket unique identifier for the server
-    Ticket string `json:"Ticket,omitempty"`
-}
-
 // StartPurchaseRequest this is the first step in the purchasing process. For security purposes, once the order (or "cart") has been created,
 // additional inventory objects may no longer be added. In addition, inventory objects will be locked to the current
 // prices, regardless of any subsequent changes at the catalog level which may occur during the next two steps.
@@ -4043,6 +4085,16 @@ type UnlinkGoogleAccountRequestModel struct {
 type UnlinkGoogleAccountResultModel struct {
 }
 
+// UnlinkGooglePlayGamesServicesAccountRequest 
+type UnlinkGooglePlayGamesServicesAccountRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+}
+
+// UnlinkGooglePlayGamesServicesAccountResult 
+type UnlinkGooglePlayGamesServicesAccountResultModel struct {
+}
+
 // UnlinkIOSDeviceIDRequest 
 type UnlinkIOSDeviceIDRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
@@ -4123,18 +4175,6 @@ type UnlinkTwitchAccountRequestModel struct {
 
 // UnlinkTwitchAccountResult 
 type UnlinkTwitchAccountResultModel struct {
-}
-
-// UnlinkWindowsHelloAccountRequest must include the Public Key Hint
-type UnlinkWindowsHelloAccountRequestModel struct {
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // PublicKeyHint sHA256 hash of the PublicKey generated by Windows Hello.
-    PublicKeyHint string `json:"PublicKeyHint,omitempty"`
-}
-
-// UnlinkWindowsHelloAccountResponse 
-type UnlinkWindowsHelloAccountResponseModel struct {
 }
 
 // UnlinkXboxAccountRequest 
@@ -4337,6 +4377,8 @@ type UserAccountInfoModel struct {
     GameCenterInfo *UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // GoogleInfo user Google account information, if a Google account has been linked
     GoogleInfo *UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
+    // GooglePlayGamesInfo user Google Play Games account information, if a Google Play Games account has been linked
+    GooglePlayGamesInfo *UserGooglePlayGamesInfoModel `json:"GooglePlayGamesInfo,omitempty"`
     // IosDeviceInfo user iOS device information, if an iOS device has been linked
     IosDeviceInfo *UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
     // KongregateInfo user Kongregate account information, if a Kongregate account has been linked
@@ -4351,7 +4393,7 @@ type UserAccountInfoModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
     PrivateInfo *UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
-    // PsnInfo user PSN account information, if a PSN account has been linked
+    // PsnInfo user PlayStation :tm: Network account information, if a PlayStation :tm: Network account has been linked
     PsnInfo *UserPsnInfoModel `json:"PsnInfo,omitempty"`
     // SteamInfo user Steam information, if a Steam account has been linked
     SteamInfo *UserSteamInfoModel `json:"SteamInfo,omitempty"`
@@ -4361,8 +4403,6 @@ type UserAccountInfoModel struct {
     TwitchInfo *UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
     Username string `json:"Username,omitempty"`
-    // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
-    WindowsHelloInfo *UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
     XboxInfo *UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
@@ -4438,6 +4478,16 @@ type UserGoogleInfoModel struct {
     GoogleName string `json:"GoogleName,omitempty"`
 }
 
+// UserGooglePlayGamesInfo 
+type UserGooglePlayGamesInfoModel struct {
+    // GooglePlayGamesPlayerAvatarImageUrl avatar image url of the Google Play Games player
+    GooglePlayGamesPlayerAvatarImageUrl string `json:"GooglePlayGamesPlayerAvatarImageUrl,omitempty"`
+    // GooglePlayGamesPlayerDisplayName display name of the Google Play Games player
+    GooglePlayGamesPlayerDisplayName string `json:"GooglePlayGamesPlayerDisplayName,omitempty"`
+    // GooglePlayGamesPlayerId google Play Games player ID
+    GooglePlayGamesPlayerId string `json:"GooglePlayGamesPlayerId,omitempty"`
+}
+
 // UserIosDeviceInfo 
 type UserIosDeviceInfoModel struct {
     // IosDeviceId iOS device ID
@@ -4495,13 +4545,13 @@ const (
      UserOriginationXboxLive UserOrigination = "XboxLive"
      UserOriginationParse UserOrigination = "Parse"
      UserOriginationTwitch UserOrigination = "Twitch"
-     UserOriginationWindowsHello UserOrigination = "WindowsHello"
      UserOriginationServerCustomId UserOrigination = "ServerCustomId"
      UserOriginationNintendoSwitchDeviceId UserOrigination = "NintendoSwitchDeviceId"
      UserOriginationFacebookInstantGamesId UserOrigination = "FacebookInstantGamesId"
      UserOriginationOpenIdConnect UserOrigination = "OpenIdConnect"
      UserOriginationApple UserOrigination = "Apple"
      UserOriginationNintendoSwitchAccount UserOrigination = "NintendoSwitchAccount"
+     UserOriginationGooglePlayGames UserOrigination = "GooglePlayGames"
       )
 // UserPrivateAccountInfo 
 type UserPrivateAccountInfoModel struct {
@@ -4511,9 +4561,9 @@ type UserPrivateAccountInfoModel struct {
 
 // UserPsnInfo 
 type UserPsnInfoModel struct {
-    // PsnAccountId pSN account ID
+    // PsnAccountId playStation :tm: Network account ID
     PsnAccountId string `json:"PsnAccountId,omitempty"`
-    // PsnOnlineId pSN online ID
+    // PsnOnlineId playStation :tm: Network online ID
     PsnOnlineId string `json:"PsnOnlineId,omitempty"`
 }
 
@@ -4571,18 +4621,12 @@ type UserTwitchInfoModel struct {
     TwitchUserName string `json:"TwitchUserName,omitempty"`
 }
 
-// UserWindowsHelloInfo 
-type UserWindowsHelloInfoModel struct {
-    // WindowsHelloDeviceName windows Hello Device Name
-    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName,omitempty"`
-    // WindowsHelloPublicKeyHash windows Hello Public Key Hash
-    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash,omitempty"`
-}
-
 // UserXboxInfo 
 type UserXboxInfoModel struct {
     // XboxUserId xBox user ID
     XboxUserId string `json:"XboxUserId,omitempty"`
+    // XboxUserSandbox xBox user sandbox
+    XboxUserSandbox string `json:"XboxUserSandbox,omitempty"`
 }
 
 // ValidateAmazonReceiptRequest 
@@ -4601,7 +4645,9 @@ type ValidateAmazonReceiptRequestModel struct {
     UserId string `json:"UserId,omitempty"`
 }
 
-// ValidateAmazonReceiptResult once verified, the catalog item matching the Amazon item name will be added to the user's inventory.
+// ValidateAmazonReceiptResult once verified, the catalog item matching the Amazon item name will be added to the user's inventory. This result should
+// be used for immediate updates to the local client game state as opposed to the GetUserInventory API which can have an up
+// to half second delay.
 type ValidateAmazonReceiptResultModel struct {
     // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
     Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
@@ -4628,7 +4674,8 @@ type ValidateGooglePlayPurchaseRequestModel struct {
 }
 
 // ValidateGooglePlayPurchaseResult once verified, the catalog item (ItemId) matching the GooglePlay store item (productId) will be added to the user's
-// inventory.
+// inventory. This result should be used for immediate updates to the local client game state as opposed to the
+// GetUserInventory API which can have an up to half second delay.
 type ValidateGooglePlayPurchaseResultModel struct {
     // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
     Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
@@ -4652,7 +4699,9 @@ type ValidateIOSReceiptRequestModel struct {
     ReceiptData string `json:"ReceiptData,omitempty"`
 }
 
-// ValidateIOSReceiptResult once verified, the catalog item matching the iTunes item name will be added to the user's inventory.
+// ValidateIOSReceiptResult once verified, the catalog item matching the iTunes item name will be added to the user's inventory. This result should
+// be used for immediate updates to the local client game state as opposed to the GetUserInventory API which can have an up
+// to half second delay.
 type ValidateIOSReceiptResultModel struct {
     // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
     Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`
@@ -4672,7 +4721,9 @@ type ValidateWindowsReceiptRequestModel struct {
     Receipt string `json:"Receipt,omitempty"`
 }
 
-// ValidateWindowsReceiptResult once verified, the catalog item matching the Product name will be added to the user's inventory.
+// ValidateWindowsReceiptResult once verified, the catalog item matching the Product name will be added to the user's inventory. This result should be
+// used for immediate updates to the local client game state as opposed to the GetUserInventory API which can have an up to
+// half second delay.
 type ValidateWindowsReceiptResultModel struct {
     // Fulfillments fulfilled inventory items and recorded purchases in fulfillment of the validated receipt transactions.
     Fulfillments []PurchaseReceiptFulfillmentModel `json:"Fulfillments,omitempty"`

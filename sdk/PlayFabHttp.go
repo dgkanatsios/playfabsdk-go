@@ -200,10 +200,7 @@ func Request(p *Settings, b []byte, apiPath string, authKey string, authValue st
 	}
 
 	if result.Code != 200 {
-		errorString := fmt.Sprintf("error code %d", result.Code)
-		if result.Status != "" {
-			errorString = fmt.Sprintf("%s and status %s", errorString, result.Status)
-		}
+		errorString := fmt.Sprintf("error code: %d, status: %s, error: %s, errorCode: %d, errorDetails: %s, errorMessage: %s", result.Code, result.Status, result.Error, result.ErrorCode, result.ErrorDetails, result.ErrorMessage)
 		return nil, NewCustomErrorWithResponse(errorString, ErrorDoRequest, &result)
 	}
 

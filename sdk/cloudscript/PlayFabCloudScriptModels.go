@@ -352,7 +352,7 @@ type ExecuteCloudScriptResultModel struct {
 type ExecuteEntityCloudScriptRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // FunctionName the name of the CloudScript function to execute
     FunctionName string `json:"FunctionName,omitempty"`
@@ -373,7 +373,7 @@ type ExecuteEntityCloudScriptRequestModel struct {
 type ExecuteFunctionRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // FunctionName the name of the CloudScript function to execute
     FunctionName string `json:"FunctionName,omitempty"`
@@ -415,6 +415,26 @@ type FunctionModelModel struct {
     FunctionAddress string `json:"FunctionAddress,omitempty"`
     // FunctionName the name the function was registered under.
     FunctionName string `json:"FunctionName,omitempty"`
+    // TriggerType the trigger type for the function.
+    TriggerType string `json:"TriggerType,omitempty"`
+}
+
+// GetFunctionRequest 
+type GetFunctionRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // FunctionName the name of the function to register
+    FunctionName string `json:"FunctionName,omitempty"`
+}
+
+// GetFunctionResult 
+type GetFunctionResultModel struct {
+    // ConnectionString the connection string for the storage account containing the queue for a queue trigger Azure Function.
+    ConnectionString string `json:"ConnectionString,omitempty"`
+    // FunctionUrl the URL to be invoked to execute an HTTP triggered function.
+    FunctionUrl string `json:"FunctionUrl,omitempty"`
+    // QueueName the name of the queue for a queue trigger Azure Function.
+    QueueName string `json:"QueueName,omitempty"`
     // TriggerType the trigger type for the function.
     TriggerType string `json:"TriggerType,omitempty"`
 }
@@ -503,6 +523,7 @@ const (
      LoginIdentityProviderOpenIdConnect LoginIdentityProvider = "OpenIdConnect"
      LoginIdentityProviderApple LoginIdentityProvider = "Apple"
      LoginIdentityProviderNintendoSwitchAccount LoginIdentityProvider = "NintendoSwitchAccount"
+     LoginIdentityProviderGooglePlayGames LoginIdentityProvider = "GooglePlayGames"
       )
 // LogStatement 
 type LogStatementModel struct {
@@ -552,7 +573,9 @@ type PlayerProfileModelModel struct {
     Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
     DisplayName string `json:"DisplayName,omitempty"`
-    // ExperimentVariants list of experiment variants for the player.
+    // ExperimentVariants list of experiment variants for the player. Note that these variants are not guaranteed to be up-to-date when returned
+// during login because the player profile is updated only after login. Instead, use the LoginResult.TreatmentAssignment
+// property during login to get the correct variants and variables.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
     LastLogin time.Time `json:"LastLogin,omitempty"`
@@ -623,8 +646,6 @@ type PostFunctionResultForFunctionExecutionRequestModel struct {
 type PostFunctionResultForPlayerTriggeredActionRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
-    Entity *EntityKeyModel `json:"Entity,omitempty"`
     // FunctionResult the result of the function execution.
     FunctionResult* ExecuteFunctionResultModel `json:"FunctionResult,omitempty"`
     // PlayerProfile the player profile the function was invoked with.
@@ -637,8 +658,6 @@ type PostFunctionResultForPlayerTriggeredActionRequestModel struct {
 type PostFunctionResultForScheduledTaskRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
-    Entity* EntityKeyModel `json:"Entity,omitempty"`
     // FunctionResult the result of the function execution
     FunctionResult* ExecuteFunctionResultModel `json:"FunctionResult,omitempty"`
     // ScheduledTaskId the id of the scheduled task that invoked the function.
@@ -762,7 +781,7 @@ const (
 type UnregisterFunctionRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // FunctionName the name of the function to unregister
+    // FunctionName the name of the function to register
     FunctionName string `json:"FunctionName,omitempty"`
 }
 

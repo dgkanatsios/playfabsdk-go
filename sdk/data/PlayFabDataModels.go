@@ -77,7 +77,7 @@ type FinalizeFileUploadsResponseModel struct {
 
 // GetFileMetadata 
 type GetFileMetadataModel struct {
-    // Checksum checksum value for the file
+    // Checksum checksum value for the file, can be used to check if the file on the server has changed.
     Checksum string `json:"Checksum,omitempty"`
     // DownloadUrl download URL where the file can be retrieved
     DownloadUrl string `json:"DownloadUrl,omitempty"`

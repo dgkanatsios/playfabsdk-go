@@ -66,6 +66,16 @@ type AdCampaignAttributionModelModel struct {
     Platform string `json:"Platform,omitempty"`
 }
 
+// AdCampaignSegmentFilter 
+type AdCampaignSegmentFilterModel struct {
+    // CampaignId campaign id.
+    CampaignId string `json:"CampaignId,omitempty"`
+    // CampaignSource campaign source.
+    CampaignSource string `json:"CampaignSource,omitempty"`
+    // Comparison campaign comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+}
+
 // AddLocalizedNewsRequest 
 type AddLocalizedNewsRequestModel struct {
     // Body localized body text of the news.
@@ -118,53 +128,6 @@ type AddPlayerTagRequestModel struct {
 type AddPlayerTagResultModel struct {
 }
 
-// AddServerBuildRequest 
-type AddServerBuildRequestModel struct {
-    // ActiveRegions server host regions in which this build should be running and available
-    ActiveRegions []Region `json:"ActiveRegions,omitempty"`
-    // BuildId unique identifier for the build executable
-    BuildId string `json:"BuildId,omitempty"`
-    // CommandLineTemplate appended to the end of the command line when starting game servers
-    CommandLineTemplate string `json:"CommandLineTemplate,omitempty"`
-    // Comment developer comment(s) for this build
-    Comment string `json:"Comment,omitempty"`
-    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-    CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // ExecutablePath path to the game server executable. Defaults to gameserver.exe
-    ExecutablePath string `json:"ExecutablePath,omitempty"`
-    // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
-    // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
-// machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
-}
-
-// AddServerBuildResult 
-type AddServerBuildResultModel struct {
-    // ActiveRegions array of regions where this build can used, when it is active
-    ActiveRegions []Region `json:"ActiveRegions,omitempty"`
-    // BuildId unique identifier for this build executable
-    BuildId string `json:"BuildId,omitempty"`
-    // CommandLineTemplate appended to the end of the command line when starting game servers
-    CommandLineTemplate string `json:"CommandLineTemplate,omitempty"`
-    // Comment developer comment(s) for this build
-    Comment string `json:"Comment,omitempty"`
-    // ExecutablePath path to the game server executable. Defaults to gameserver.exe
-    ExecutablePath string `json:"ExecutablePath,omitempty"`
-    // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
-    // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
-// machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
-    // Status the current status of the build validation and processing steps
-    Status GameBuildStatus `json:"Status,omitempty"`
-    // Timestamp time this build was last modified (or uploaded, if this build has never been modified)
-    Timestamp time.Time `json:"Timestamp,omitempty"`
-    // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
-// title has been selected.
-    TitleId string `json:"TitleId,omitempty"`
-}
-
 // AddUserVirtualCurrencyRequest 
 type AddUserVirtualCurrencyRequestModel struct {
     // Amount amount to be added to the user balance of the specified virtual currency. Maximum VC balance is Int32 (2,147,483,647).
@@ -184,6 +147,10 @@ type AddVirtualCurrencyTypesRequestModel struct {
     // VirtualCurrencies list of virtual currencies and their initial deposits (the amount a user is granted when signing in for the first time)
 // to the title
     VirtualCurrencies []VirtualCurrencyDataModel `json:"VirtualCurrencies,omitempty"`
+}
+
+// AllPlayersSegmentFilter 
+type AllPlayersSegmentFilterModel struct {
 }
 
 // ApiCondition 
@@ -210,12 +177,18 @@ type BanInfoModel struct {
     Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the IP address on which the ban was applied. May affect multiple players.
     IPAddress string `json:"IPAddress,omitempty"`
-    // MACAddress the MAC address on which the ban was applied. May affect multiple players.
-    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason why this ban was applied.
     Reason string `json:"Reason,omitempty"`
+}
+
+// BanPlayerSegmentAction 
+type BanPlayerSegmentActionModel struct {
+    // BanHours ban hours duration.
+    BanHours uint32 `json:"BanHours,omitempty"`
+    // ReasonForBan reason for ban.
+    ReasonForBan string `json:"ReasonForBan,omitempty"`
 }
 
 // BanRequest represents a single ban request.
@@ -224,8 +197,6 @@ type BanRequestModel struct {
     DurationInHours uint32 `json:"DurationInHours,omitempty"`
     // IPAddress iP address to be banned. May affect multiple players.
     IPAddress string `json:"IPAddress,omitempty"`
-    // MACAddress mAC address to be banned. May affect multiple players.
-    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason for this ban. Maximum 140 characters.
@@ -355,6 +326,23 @@ type CheckLimitedEditionItemAvailabilityResultModel struct {
     Amount int32 `json:"Amount,omitempty"`
 }
 
+// ChurnPredictionSegmentFilter 
+type ChurnPredictionSegmentFilterModel struct {
+    // Comparison comparison
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // RiskLevel riskLevel
+    RiskLevel ChurnRiskLevel `json:"RiskLevel,omitempty"`
+}
+
+// ChurnRiskLevel 
+type ChurnRiskLevel string
+  
+const (
+     ChurnRiskLevelNoData ChurnRiskLevel = "NoData"
+     ChurnRiskLevelLowRisk ChurnRiskLevel = "LowRisk"
+     ChurnRiskLevelMediumRisk ChurnRiskLevel = "MediumRisk"
+     ChurnRiskLevelHighRisk ChurnRiskLevel = "HighRisk"
+      )
 // CloudScriptFile 
 type CloudScriptFileModel struct {
     // FileContents contents of the Cloud Script javascript. Must be string-escaped javascript.
@@ -439,7 +427,7 @@ type ContentInfoModel struct {
     // LastModified last modified time
     LastModified time.Time `json:"LastModified,omitempty"`
     // Size size of the content in bytes
-    Size uint32 `json:"Size,omitempty"`
+    Size float64 `json:"Size,omitempty"`
 }
 
 // ContinentCode 
@@ -767,6 +755,8 @@ type CreateOpenIdConnectionRequestModel struct {
     ClientSecret string `json:"ClientSecret,omitempty"`
     // ConnectionId a name for the connection that identifies it within the title.
     ConnectionId string `json:"ConnectionId,omitempty"`
+    // IgnoreNonce ignore 'nonce' claim in identity tokens.
+    IgnoreNonce bool `json:"IgnoreNonce"`
     // IssuerDiscoveryUrl the discovery document URL to read issuer information from. This must be the absolute URL to the JSON OpenId
 // Configuration document and must be accessible from the internet. If you don't know it, try your issuer URL followed by
 // "/.well-known/openid-configuration". For example, if the issuer is https://example.com, try
@@ -816,6 +806,20 @@ type CreatePlayerStatisticDefinitionRequestModel struct {
 type CreatePlayerStatisticDefinitionResultModel struct {
     // Statistic created statistic definition
     Statistic *PlayerStatisticDefinitionModel `json:"Statistic,omitempty"`
+}
+
+// CreateSegmentRequest send all the segment details part of CreateSegmentRequest
+type CreateSegmentRequestModel struct {
+    // SegmentModel segment model with all of the segment properties data.
+    SegmentModel* SegmentModelModel `json:"SegmentModel,omitempty"`
+}
+
+// CreateSegmentResponse 
+type CreateSegmentResponseModel struct {
+    // ErrorMessage error message.
+    ErrorMessage string `json:"ErrorMessage,omitempty"`
+    // SegmentId segment id.
+    SegmentId string `json:"SegmentId,omitempty"`
 }
 
 // CreateTaskResult 
@@ -1022,6 +1026,22 @@ type DeleteMasterPlayerAccountResultModel struct {
     TitleIds []string `json:"TitleIds,omitempty"`
 }
 
+// DeleteMembershipSubscriptionRequest this API lets developers delete a membership subscription.
+type DeleteMembershipSubscriptionRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // MembershipId id of the membership to apply the override expiration date to.
+    MembershipId string `json:"MembershipId,omitempty"`
+    // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+    // SubscriptionId id of the subscription that should be deleted from the membership.
+    SubscriptionId string `json:"SubscriptionId,omitempty"`
+}
+
+// DeleteMembershipSubscriptionResult 
+type DeleteMembershipSubscriptionResultModel struct {
+}
+
 // DeleteOpenIdConnectionRequest 
 type DeleteOpenIdConnectionRequestModel struct {
     // ConnectionId unique name of the connection
@@ -1044,6 +1064,10 @@ type DeletePlayerRequestModel struct {
 type DeletePlayerResultModel struct {
 }
 
+// DeletePlayerSegmentAction 
+type DeletePlayerSegmentActionModel struct {
+}
+
 // DeletePlayerSharedSecretRequest player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an
 // RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
 type DeletePlayerSharedSecretRequestModel struct {
@@ -1053,6 +1077,24 @@ type DeletePlayerSharedSecretRequestModel struct {
 
 // DeletePlayerSharedSecretResult 
 type DeletePlayerSharedSecretResultModel struct {
+}
+
+// DeletePlayerStatisticSegmentAction 
+type DeletePlayerStatisticSegmentActionModel struct {
+    // StatisticName statistic name.
+    StatisticName string `json:"StatisticName,omitempty"`
+}
+
+// DeleteSegmentRequest send segment id planning to delete part of DeleteSegmentRequest object
+type DeleteSegmentRequestModel struct {
+    // SegmentId segment id.
+    SegmentId string `json:"SegmentId,omitempty"`
+}
+
+// DeleteSegmentsResponse 
+type DeleteSegmentsResponseModel struct {
+    // ErrorMessage error message.
+    ErrorMessage string `json:"ErrorMessage,omitempty"`
 }
 
 // DeleteStoreRequest this non-reversible operation will permanently delete the requested store.
@@ -1108,6 +1150,14 @@ const (
      EffectTypeAllow EffectType = "Allow"
      EffectTypeDeny EffectType = "Deny"
       )
+// EmailNotificationSegmentAction 
+type EmailNotificationSegmentActionModel struct {
+    // EmailTemplateId email template id.
+    EmailTemplateId string `json:"EmailTemplateId,omitempty"`
+    // EmailTemplateName email template name.
+    EmailTemplateName string `json:"EmailTemplateName,omitempty"`
+}
+
 // EmailVerificationStatus 
 type EmailVerificationStatus string
   
@@ -1126,6 +1176,16 @@ type EntityKeyModel struct {
     Id string `json:"Id,omitempty"`
     // Type entity type. See https://docs.microsoft.com/gaming/playfab/features/data/entities/available-built-in-entity-types
     Type string `json:"Type,omitempty"`
+}
+
+// ExecuteAzureFunctionSegmentAction 
+type ExecuteAzureFunctionSegmentActionModel struct {
+    // AzureFunction azure function.
+    AzureFunction string `json:"AzureFunction,omitempty"`
+    // FunctionParameter azure function parameter.
+    FunctionParameter interface{} `json:"FunctionParameter,omitempty"`
+    // GenerateFunctionExecutedEvents generate play stream event.
+    GenerateFunctionExecutedEvents bool `json:"GenerateFunctionExecutedEvents"`
 }
 
 // ExecuteCloudScriptResult 
@@ -1160,6 +1220,18 @@ type ExecuteCloudScriptResultModel struct {
     Revision int32 `json:"Revision,omitempty"`
 }
 
+// ExecuteCloudScriptSegmentAction 
+type ExecuteCloudScriptSegmentActionModel struct {
+    // CloudScriptFunction cloud script function.
+    CloudScriptFunction string `json:"CloudScriptFunction,omitempty"`
+    // CloudScriptPublishResultsToPlayStream generate play stream event.
+    CloudScriptPublishResultsToPlayStream bool `json:"CloudScriptPublishResultsToPlayStream"`
+    // FunctionParameter cloud script function parameter.
+    FunctionParameter interface{} `json:"FunctionParameter,omitempty"`
+    // FunctionParameterJson cloud script function parameter json text.
+    FunctionParameterJson string `json:"FunctionParameterJson,omitempty"`
+}
+
 // ExportMasterPlayerDataRequest exports all data associated with the master player account, including data from all titles the player has played, such
 // as statistics, custom data, inventory, purchases, virtual currency balances, characters, group memberships, publisher
 // data, credential data, account linkages, friends list and PlayStream event history. Note, this API queues the player for
@@ -1176,6 +1248,36 @@ type ExportMasterPlayerDataResultModel struct {
     // JobReceiptId an email with this job receipt Id containing the export download link will be sent to the title notification email
 // address when the export is complete.
     JobReceiptId string `json:"JobReceiptId,omitempty"`
+}
+
+// ExportPlayersInSegmentRequest request must contain the Segment ID
+type ExportPlayersInSegmentRequestModel struct {
+    // SegmentId unique identifier of the requested segment.
+    SegmentId string `json:"SegmentId,omitempty"`
+}
+
+// ExportPlayersInSegmentResult 
+type ExportPlayersInSegmentResultModel struct {
+    // ExportId unique identifier of the export for the requested Segment.
+    ExportId string `json:"ExportId,omitempty"`
+    // SegmentId unique identifier of the requested Segment.
+    SegmentId string `json:"SegmentId,omitempty"`
+}
+
+// FirstLoginDateSegmentFilter 
+type FirstLoginDateSegmentFilterModel struct {
+    // Comparison first player login date comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // LogInDate first player login date.
+    LogInDate time.Time `json:"LogInDate,omitempty"`
+}
+
+// FirstLoginTimespanSegmentFilter 
+type FirstLoginTimespanSegmentFilterModel struct {
+    // Comparison first player login duration comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // DurationInMinutes first player login duration.
+    DurationInMinutes float64 `json:"DurationInMinutes,omitempty"`
 }
 
 // GameBuildStatus 
@@ -1686,7 +1788,7 @@ const (
      GenericErrorCodesEvaluationModePlayerCountExceeded GenericErrorCodes = "EvaluationModePlayerCountExceeded"
      GenericErrorCodesGetPlayersInSegmentRateLimitExceeded GenericErrorCodes = "GetPlayersInSegmentRateLimitExceeded"
      GenericErrorCodesCloudScriptFunctionNameSizeExceeded GenericErrorCodes = "CloudScriptFunctionNameSizeExceeded"
-     GenericErrorCodesInsightsManagementTitleInEvaluationMode GenericErrorCodes = "InsightsManagementTitleInEvaluationMode"
+     GenericErrorCodesPaidInsightsFeaturesNotEnabled GenericErrorCodes = "PaidInsightsFeaturesNotEnabled"
      GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError GenericErrorCodes = "CloudScriptAzureFunctionsQueueRequestError"
      GenericErrorCodesEvaluationModeTitleCountExceeded GenericErrorCodes = "EvaluationModeTitleCountExceeded"
      GenericErrorCodesInsightsManagementTitleNotInFlight GenericErrorCodes = "InsightsManagementTitleNotInFlight"
@@ -1705,6 +1807,47 @@ const (
      GenericErrorCodesDuplicateKeys GenericErrorCodes = "DuplicateKeys"
      GenericErrorCodesWasNotCreatedWithCloudRoot GenericErrorCodes = "WasNotCreatedWithCloudRoot"
      GenericErrorCodesLegacyMultiplayerServersDeprecated GenericErrorCodes = "LegacyMultiplayerServersDeprecated"
+     GenericErrorCodesVirtualCurrencyCurrentlyUnavailable GenericErrorCodes = "VirtualCurrencyCurrentlyUnavailable"
+     GenericErrorCodesSteamUserNotFound GenericErrorCodes = "SteamUserNotFound"
+     GenericErrorCodesElasticSearchOperationFailed GenericErrorCodes = "ElasticSearchOperationFailed"
+     GenericErrorCodesNotImplemented GenericErrorCodes = "NotImplemented"
+     GenericErrorCodesPublisherNotFound GenericErrorCodes = "PublisherNotFound"
+     GenericErrorCodesPublisherDeleted GenericErrorCodes = "PublisherDeleted"
+     GenericErrorCodesApiDisabledForMigration GenericErrorCodes = "ApiDisabledForMigration"
+     GenericErrorCodesResourceNameUpdateNotAllowed GenericErrorCodes = "ResourceNameUpdateNotAllowed"
+     GenericErrorCodesApiNotEnabledForTitle GenericErrorCodes = "ApiNotEnabledForTitle"
+     GenericErrorCodesDuplicateTitleNameForPublisher GenericErrorCodes = "DuplicateTitleNameForPublisher"
+     GenericErrorCodesAzureTitleCreationInProgress GenericErrorCodes = "AzureTitleCreationInProgress"
+     GenericErrorCodesTitleConstraintsPublisherDeletion GenericErrorCodes = "TitleConstraintsPublisherDeletion"
+     GenericErrorCodesInvalidPlayerAccountPoolId GenericErrorCodes = "InvalidPlayerAccountPoolId"
+     GenericErrorCodesPlayerAccountPoolNotFound GenericErrorCodes = "PlayerAccountPoolNotFound"
+     GenericErrorCodesPlayerAccountPoolDeleted GenericErrorCodes = "PlayerAccountPoolDeleted"
+     GenericErrorCodesTitleCleanupInProgress GenericErrorCodes = "TitleCleanupInProgress"
+     GenericErrorCodesAzureResourceConcurrentOperationInProgress GenericErrorCodes = "AzureResourceConcurrentOperationInProgress"
+     GenericErrorCodesTitlePublisherUpdateNotAllowed GenericErrorCodes = "TitlePublisherUpdateNotAllowed"
+     GenericErrorCodesAzureResourceManagerNotSupportedInStamp GenericErrorCodes = "AzureResourceManagerNotSupportedInStamp"
+     GenericErrorCodesApiNotIncludedInAzurePlayFabFeatureSet GenericErrorCodes = "ApiNotIncludedInAzurePlayFabFeatureSet"
+     GenericErrorCodesGoogleServiceAccountFailedAuth GenericErrorCodes = "GoogleServiceAccountFailedAuth"
+     GenericErrorCodesGoogleAPIServiceUnavailable GenericErrorCodes = "GoogleAPIServiceUnavailable"
+     GenericErrorCodesGoogleAPIServiceUnknownError GenericErrorCodes = "GoogleAPIServiceUnknownError"
+     GenericErrorCodesNoValidIdentityForAad GenericErrorCodes = "NoValidIdentityForAad"
+     GenericErrorCodesPlayerIdentityLinkNotFound GenericErrorCodes = "PlayerIdentityLinkNotFound"
+     GenericErrorCodesPhotonApplicationIdAlreadyInUse GenericErrorCodes = "PhotonApplicationIdAlreadyInUse"
+     GenericErrorCodesCloudScriptUnableToDeleteProductionRevision GenericErrorCodes = "CloudScriptUnableToDeleteProductionRevision"
+     GenericErrorCodesCustomIdNotFound GenericErrorCodes = "CustomIdNotFound"
+     GenericErrorCodesAutomationInvalidInput GenericErrorCodes = "AutomationInvalidInput"
+     GenericErrorCodesAutomationInvalidRuleName GenericErrorCodes = "AutomationInvalidRuleName"
+     GenericErrorCodesAutomationRuleAlreadyExists GenericErrorCodes = "AutomationRuleAlreadyExists"
+     GenericErrorCodesAutomationRuleLimitExceeded GenericErrorCodes = "AutomationRuleLimitExceeded"
+     GenericErrorCodesInvalidGooglePlayGamesServerAuthCode GenericErrorCodes = "InvalidGooglePlayGamesServerAuthCode"
+     GenericErrorCodesPlayStreamConnectionFailed GenericErrorCodes = "PlayStreamConnectionFailed"
+     GenericErrorCodesInvalidEventContents GenericErrorCodes = "InvalidEventContents"
+     GenericErrorCodesInsightsV1Deprecated GenericErrorCodes = "InsightsV1Deprecated"
+     GenericErrorCodesAnalysisSubscriptionNotFound GenericErrorCodes = "AnalysisSubscriptionNotFound"
+     GenericErrorCodesAnalysisSubscriptionFailed GenericErrorCodes = "AnalysisSubscriptionFailed"
+     GenericErrorCodesAnalysisSubscriptionFoundAlready GenericErrorCodes = "AnalysisSubscriptionFoundAlready"
+     GenericErrorCodesAnalysisSubscriptionManagementInvalidInput GenericErrorCodes = "AnalysisSubscriptionManagementInvalidInput"
+     GenericErrorCodesInvalidGameCenterId GenericErrorCodes = "InvalidGameCenterId"
      GenericErrorCodesMatchmakingEntityInvalid GenericErrorCodes = "MatchmakingEntityInvalid"
      GenericErrorCodesMatchmakingPlayerAttributesInvalid GenericErrorCodes = "MatchmakingPlayerAttributesInvalid"
      GenericErrorCodesMatchmakingQueueNotFound GenericErrorCodes = "MatchmakingQueueNotFound"
@@ -1726,9 +1869,15 @@ const (
      GenericErrorCodesMatchmakingQueueLimitExceeded GenericErrorCodes = "MatchmakingQueueLimitExceeded"
      GenericErrorCodesMatchmakingRequestTypeMismatch GenericErrorCodes = "MatchmakingRequestTypeMismatch"
      GenericErrorCodesMatchmakingBadRequest GenericErrorCodes = "MatchmakingBadRequest"
+     GenericErrorCodesPubSubFeatureNotEnabledForTitle GenericErrorCodes = "PubSubFeatureNotEnabledForTitle"
+     GenericErrorCodesPubSubTooManyRequests GenericErrorCodes = "PubSubTooManyRequests"
+     GenericErrorCodesPubSubConnectionNotFoundForEntity GenericErrorCodes = "PubSubConnectionNotFoundForEntity"
+     GenericErrorCodesPubSubConnectionHandleInvalid GenericErrorCodes = "PubSubConnectionHandleInvalid"
+     GenericErrorCodesPubSubSubscriptionLimitExceeded GenericErrorCodes = "PubSubSubscriptionLimitExceeded"
      GenericErrorCodesTitleConfigNotFound GenericErrorCodes = "TitleConfigNotFound"
      GenericErrorCodesTitleConfigUpdateConflict GenericErrorCodes = "TitleConfigUpdateConflict"
      GenericErrorCodesTitleConfigSerializationError GenericErrorCodes = "TitleConfigSerializationError"
+     GenericErrorCodesCatalogApiNotImplemented GenericErrorCodes = "CatalogApiNotImplemented"
      GenericErrorCodesCatalogEntityInvalid GenericErrorCodes = "CatalogEntityInvalid"
      GenericErrorCodesCatalogTitleIdMissing GenericErrorCodes = "CatalogTitleIdMissing"
      GenericErrorCodesCatalogPlayerIdMissing GenericErrorCodes = "CatalogPlayerIdMissing"
@@ -1766,9 +1915,28 @@ const (
      GenericErrorCodesExportCannotParseQuery GenericErrorCodes = "ExportCannotParseQuery"
      GenericErrorCodesExportControlCommandsNotAllowed GenericErrorCodes = "ExportControlCommandsNotAllowed"
      GenericErrorCodesExportQueryMissingTableReference GenericErrorCodes = "ExportQueryMissingTableReference"
+     GenericErrorCodesExportInsightsV1Deprecated GenericErrorCodes = "ExportInsightsV1Deprecated"
+     GenericErrorCodesExplorerBasicInvalidQueryName GenericErrorCodes = "ExplorerBasicInvalidQueryName"
+     GenericErrorCodesExplorerBasicInvalidQueryDescription GenericErrorCodes = "ExplorerBasicInvalidQueryDescription"
+     GenericErrorCodesExplorerBasicInvalidQueryConditions GenericErrorCodes = "ExplorerBasicInvalidQueryConditions"
+     GenericErrorCodesExplorerBasicInvalidQueryStartDate GenericErrorCodes = "ExplorerBasicInvalidQueryStartDate"
+     GenericErrorCodesExplorerBasicInvalidQueryEndDate GenericErrorCodes = "ExplorerBasicInvalidQueryEndDate"
+     GenericErrorCodesExplorerBasicInvalidQueryGroupBy GenericErrorCodes = "ExplorerBasicInvalidQueryGroupBy"
+     GenericErrorCodesExplorerBasicInvalidQueryAggregateType GenericErrorCodes = "ExplorerBasicInvalidQueryAggregateType"
+     GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty GenericErrorCodes = "ExplorerBasicInvalidQueryAggregateProperty"
+     GenericErrorCodesExplorerBasicLoadQueriesError GenericErrorCodes = "ExplorerBasicLoadQueriesError"
+     GenericErrorCodesExplorerBasicLoadQueryError GenericErrorCodes = "ExplorerBasicLoadQueryError"
+     GenericErrorCodesExplorerBasicCreateQueryError GenericErrorCodes = "ExplorerBasicCreateQueryError"
+     GenericErrorCodesExplorerBasicDeleteQueryError GenericErrorCodes = "ExplorerBasicDeleteQueryError"
+     GenericErrorCodesExplorerBasicUpdateQueryError GenericErrorCodes = "ExplorerBasicUpdateQueryError"
+     GenericErrorCodesExplorerBasicSavedQueriesLimit GenericErrorCodes = "ExplorerBasicSavedQueriesLimit"
+     GenericErrorCodesExplorerBasicSavedQueryNotFound GenericErrorCodes = "ExplorerBasicSavedQueryNotFound"
+     GenericErrorCodesTenantShardMapperShardNotFound GenericErrorCodes = "TenantShardMapperShardNotFound"
      GenericErrorCodesTitleNotEnabledForParty GenericErrorCodes = "TitleNotEnabledForParty"
      GenericErrorCodesPartyVersionNotFound GenericErrorCodes = "PartyVersionNotFound"
      GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue GenericErrorCodes = "MultiplayerServerBuildReferencedByMatchmakingQueue"
+     GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias GenericErrorCodes = "MultiplayerServerBuildReferencedByBuildAlias"
+     GenericErrorCodesMultiplayerServerBuildAliasReferencedByMatchmakingQueue GenericErrorCodes = "MultiplayerServerBuildAliasReferencedByMatchmakingQueue"
      GenericErrorCodesExperimentationExperimentStopped GenericErrorCodes = "ExperimentationExperimentStopped"
      GenericErrorCodesExperimentationExperimentRunning GenericErrorCodes = "ExperimentationExperimentRunning"
      GenericErrorCodesExperimentationExperimentNotFound GenericErrorCodes = "ExperimentationExperimentNotFound"
@@ -1791,6 +1959,7 @@ const (
      GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity GenericErrorCodes = "ExperimentationExclusionGroupInsufficientCapacity"
      GenericErrorCodesExperimentationExclusionGroupCannotDelete GenericErrorCodes = "ExperimentationExclusionGroupCannotDelete"
      GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation GenericErrorCodes = "ExperimentationExclusionGroupInvalidTrafficAllocation"
+     GenericErrorCodesExperimentationExclusionGroupInvalidName GenericErrorCodes = "ExperimentationExclusionGroupInvalidName"
      GenericErrorCodesMaxActionDepthExceeded GenericErrorCodes = "MaxActionDepthExceeded"
      GenericErrorCodesTitleNotOnUpdatedPricingPlan GenericErrorCodes = "TitleNotOnUpdatedPricingPlan"
      GenericErrorCodesSegmentManagementTitleNotInFlight GenericErrorCodes = "SegmentManagementTitleNotInFlight"
@@ -1804,7 +1973,42 @@ const (
      GenericErrorCodesCreateSegmentRateLimitExceeded GenericErrorCodes = "CreateSegmentRateLimitExceeded"
      GenericErrorCodesUpdateSegmentRateLimitExceeded GenericErrorCodes = "UpdateSegmentRateLimitExceeded"
      GenericErrorCodesGetSegmentsRateLimitExceeded GenericErrorCodes = "GetSegmentsRateLimitExceeded"
+     GenericErrorCodesAsyncExportNotInFlight GenericErrorCodes = "AsyncExportNotInFlight"
+     GenericErrorCodesAsyncExportNotFound GenericErrorCodes = "AsyncExportNotFound"
+     GenericErrorCodesAsyncExportRateLimitExceeded GenericErrorCodes = "AsyncExportRateLimitExceeded"
      GenericErrorCodesSnapshotNotFound GenericErrorCodes = "SnapshotNotFound"
+     GenericErrorCodesInventoryApiNotImplemented GenericErrorCodes = "InventoryApiNotImplemented"
+     GenericErrorCodesLobbyDoesNotExist GenericErrorCodes = "LobbyDoesNotExist"
+     GenericErrorCodesLobbyRateLimitExceeded GenericErrorCodes = "LobbyRateLimitExceeded"
+     GenericErrorCodesLobbyPlayerAlreadyJoined GenericErrorCodes = "LobbyPlayerAlreadyJoined"
+     GenericErrorCodesLobbyNotJoinable GenericErrorCodes = "LobbyNotJoinable"
+     GenericErrorCodesLobbyMemberCannotRejoin GenericErrorCodes = "LobbyMemberCannotRejoin"
+     GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers GenericErrorCodes = "LobbyCurrentPlayersMoreThanMaxPlayers"
+     GenericErrorCodesLobbyPlayerNotPresent GenericErrorCodes = "LobbyPlayerNotPresent"
+     GenericErrorCodesLobbyBadRequest GenericErrorCodes = "LobbyBadRequest"
+     GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded GenericErrorCodes = "LobbyPlayerMaxLobbyLimitExceeded"
+     GenericErrorCodesLobbyNewOwnerMustBeConnected GenericErrorCodes = "LobbyNewOwnerMustBeConnected"
+     GenericErrorCodesLobbyCurrentOwnerStillConnected GenericErrorCodes = "LobbyCurrentOwnerStillConnected"
+     GenericErrorCodesLobbyMemberIsNotOwner GenericErrorCodes = "LobbyMemberIsNotOwner"
+     GenericErrorCodesEventSamplingInvalidRatio GenericErrorCodes = "EventSamplingInvalidRatio"
+     GenericErrorCodesEventSamplingInvalidEventNamespace GenericErrorCodes = "EventSamplingInvalidEventNamespace"
+     GenericErrorCodesEventSamplingInvalidEventName GenericErrorCodes = "EventSamplingInvalidEventName"
+     GenericErrorCodesEventSamplingRatioNotFound GenericErrorCodes = "EventSamplingRatioNotFound"
+     GenericErrorCodesEventSinkConnectionInvalid GenericErrorCodes = "EventSinkConnectionInvalid"
+     GenericErrorCodesEventSinkConnectionUnauthorized GenericErrorCodes = "EventSinkConnectionUnauthorized"
+     GenericErrorCodesEventSinkRegionInvalid GenericErrorCodes = "EventSinkRegionInvalid"
+     GenericErrorCodesEventSinkLimitExceeded GenericErrorCodes = "EventSinkLimitExceeded"
+     GenericErrorCodesEventSinkSasTokenInvalid GenericErrorCodes = "EventSinkSasTokenInvalid"
+     GenericErrorCodesEventSinkNotFound GenericErrorCodes = "EventSinkNotFound"
+     GenericErrorCodesEventSinkNameInvalid GenericErrorCodes = "EventSinkNameInvalid"
+     GenericErrorCodesEventSinkSasTokenPermissionInvalid GenericErrorCodes = "EventSinkSasTokenPermissionInvalid"
+     GenericErrorCodesEventSinkSecretInvalid GenericErrorCodes = "EventSinkSecretInvalid"
+     GenericErrorCodesEventSinkTenantNotFound GenericErrorCodes = "EventSinkTenantNotFound"
+     GenericErrorCodesEventSinkAadNotFound GenericErrorCodes = "EventSinkAadNotFound"
+     GenericErrorCodesEventSinkDatabaseNotFound GenericErrorCodes = "EventSinkDatabaseNotFound"
+     GenericErrorCodesOperationCanceled GenericErrorCodes = "OperationCanceled"
+     GenericErrorCodesInvalidDisplayNameRandomSuffixLength GenericErrorCodes = "InvalidDisplayNameRandomSuffixLength"
+     GenericErrorCodesAllowNonUniquePlayerDisplayNamesDisableNotAllowed GenericErrorCodes = "AllowNonUniquePlayerDisplayNamesDisableNotAllowed"
       )
 // GetActionsOnPlayersInSegmentTaskInstanceResult 
 type GetActionsOnPlayersInSegmentTaskInstanceResultModel struct {
@@ -2043,6 +2247,20 @@ type GetPlayerSharedSecretsResultModel struct {
     SharedSecrets []SharedSecretModel `json:"SharedSecrets,omitempty"`
 }
 
+// GetPlayersInSegmentExportRequest request must contain the ExportId
+type GetPlayersInSegmentExportRequestModel struct {
+    // ExportId unique identifier of the export for the requested Segment.
+    ExportId string `json:"ExportId,omitempty"`
+}
+
+// GetPlayersInSegmentExportResponse 
+type GetPlayersInSegmentExportResponseModel struct {
+    // IndexUrl url from which the index file can be downloaded.
+    IndexUrl string `json:"IndexUrl,omitempty"`
+    // State shows the current status of the export
+    State string `json:"State,omitempty"`
+}
+
 // GetPlayersInSegmentRequest initial request must contain at least a Segment ID. Subsequent requests must contain the Segment ID as well as the
 // Continuation Token. Failure to send the Continuation Token will result in a new player segment list being generated.
 // Each time the Continuation Token is passed in the length of the Total Seconds to Live is refreshed. If too much time
@@ -2055,7 +2273,12 @@ type GetPlayersInSegmentRequestModel struct {
     ContinuationToken string `json:"ContinuationToken,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // MaxBatchSize maximum number of profiles to load. Default is 1,000. Maximum is 10,000.
+    // GetProfilesAsync if set to true, the profiles are loaded asynchronously and the response will include a continuation token and
+// approximate profile count until the first batch of profiles is loaded. Use this parameter to help avoid network
+// timeouts.
+    GetProfilesAsync bool `json:"GetProfilesAsync"`
+    // MaxBatchSize maximum is 10,000. The value 0 will prevent loading any profiles and return only the count of profiles matching this
+// segment.
     MaxBatchSize uint32 `json:"MaxBatchSize,omitempty"`
     // SecondsToLive number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
 // results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
@@ -2152,6 +2375,8 @@ type GetPolicyRequestModel struct {
 type GetPolicyResponseModel struct {
     // PolicyName the name of the policy read.
     PolicyName string `json:"PolicyName,omitempty"`
+    // PolicyVersion policy version.
+    PolicyVersion int32 `json:"PolicyVersion,omitempty"`
     // Statements the statements in the requested policy.
     Statements []PermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -2193,46 +2418,18 @@ type GetSegmentResultModel struct {
     Name string `json:"Name,omitempty"`
 }
 
-// GetServerBuildInfoRequest 
-type GetServerBuildInfoRequestModel struct {
-    // BuildId unique identifier of the previously uploaded build executable for which information is being requested
-    BuildId string `json:"BuildId,omitempty"`
+// GetSegmentsRequest given input segment ids, return list of segments.
+type GetSegmentsRequestModel struct {
+    // SegmentIds segment ids to filter title segments.
+    SegmentIds []string `json:"SegmentIds,omitempty"`
 }
 
-// GetServerBuildInfoResult information about a particular server build
-type GetServerBuildInfoResultModel struct {
-    // ActiveRegions array of regions where this build can used, when it is active
-    ActiveRegions []Region `json:"ActiveRegions,omitempty"`
-    // BuildId unique identifier for this build executable
-    BuildId string `json:"BuildId,omitempty"`
-    // Comment developer comment(s) for this build
-    Comment string `json:"Comment,omitempty"`
-    // ErrorMessage error message, if any, about this build
+// GetSegmentsResponse 
+type GetSegmentsResponseModel struct {
+    // ErrorMessage error message.
     ErrorMessage string `json:"ErrorMessage,omitempty"`
-    // MaxGamesPerHost maximum number of game server instances that can run on a single host machine
-    MaxGamesPerHost int32 `json:"MaxGamesPerHost,omitempty"`
-    // MinFreeGameSlots minimum capacity of additional game server instances that can be started before the autoscaling service starts new host
-// machines (given the number of current running host machines and game server instances)
-    MinFreeGameSlots int32 `json:"MinFreeGameSlots,omitempty"`
-    // Status the current status of the build validation and processing steps
-    Status GameBuildStatus `json:"Status,omitempty"`
-    // Timestamp time this build was last modified (or uploaded, if this build has never been modified)
-    Timestamp time.Time `json:"Timestamp,omitempty"`
-    // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
-// title has been selected.
-    TitleId string `json:"TitleId,omitempty"`
-}
-
-// GetServerBuildUploadURLRequest 
-type GetServerBuildUploadURLRequestModel struct {
-    // BuildId unique identifier of the game server build to upload
-    BuildId string `json:"BuildId,omitempty"`
-}
-
-// GetServerBuildUploadURLResult 
-type GetServerBuildUploadURLResultModel struct {
-    // URL pre-authorized URL for uploading the game server build package
-    URL string `json:"URL,omitempty"`
+    // Segments list of title segments.
+    Segments []SegmentModelModel `json:"Segments,omitempty"`
 }
 
 // GetStoreItemsRequest a store contains an array of references to items defined in the catalog, along with the prices for the item, in both
@@ -2364,7 +2561,8 @@ type GetUserDataResultModel struct {
 
 // GetUserInventoryRequest all items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing,
 // grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the
-// user's current inventory, and so will not be not included.
+// user's current inventory, and so will not be not included. There can be a delay of up to a half a second for inventory
+// changes to be reflected in the GetUserInventory API response.
 type GetUserInventoryRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
@@ -2430,6 +2628,16 @@ type GrantedItemInstanceModel struct {
     UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
+// GrantItemSegmentAction 
+type GrantItemSegmentActionModel struct {
+    // CatelogId item catalog id.
+    CatelogId string `json:"CatelogId,omitempty"`
+    // ItemId item id.
+    ItemId string `json:"ItemId,omitempty"`
+    // Quantity item quantity.
+    Quantity uint32 `json:"Quantity,omitempty"`
+}
+
 // GrantItemsToUsersRequest this function directly adds inventory items to user inventories. As a result of this operations, the user will not be
 // charged any transaction fee, regardless of the inventory item catalog definition. Please note that the processing time
 // for inventory grants and purchases increases fractionally the more items are in the inventory, and the more items are in
@@ -2449,6 +2657,14 @@ type GrantItemsToUsersResultModel struct {
     ItemGrantResults []GrantedItemInstanceModel `json:"ItemGrantResults,omitempty"`
 }
 
+// GrantVirtualCurrencySegmentAction 
+type GrantVirtualCurrencySegmentActionModel struct {
+    // Amount virtual currency amount.
+    Amount int32 `json:"Amount,omitempty"`
+    // CurrencyCode virtual currency code.
+    CurrencyCode string `json:"CurrencyCode,omitempty"`
+}
+
 // IncrementLimitedEditionItemAvailabilityRequest this operation will increment the global counter for the number of these items available. This number cannot be
 // decremented, except by actual grants.
 type IncrementLimitedEditionItemAvailabilityRequestModel struct {
@@ -2464,6 +2680,14 @@ type IncrementLimitedEditionItemAvailabilityRequestModel struct {
 
 // IncrementLimitedEditionItemAvailabilityResult 
 type IncrementLimitedEditionItemAvailabilityResultModel struct {
+}
+
+// IncrementPlayerStatisticSegmentAction 
+type IncrementPlayerStatisticSegmentActionModel struct {
+    // IncrementValue increment value.
+    IncrementValue int32 `json:"IncrementValue,omitempty"`
+    // StatisticName statistic name.
+    StatisticName string `json:"StatisticName,omitempty"`
 }
 
 // IncrementPlayerStatisticVersionRequest statistics are numeric values, with each statistic in the title also generating a leaderboard. When this call is made on
@@ -2553,6 +2777,22 @@ type ItemInstanceModel struct {
     UsesIncrementedBy int32 `json:"UsesIncrementedBy,omitempty"`
 }
 
+// LastLoginDateSegmentFilter 
+type LastLoginDateSegmentFilterModel struct {
+    // Comparison last player login date comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // LogInDate last player login date.
+    LogInDate time.Time `json:"LogInDate,omitempty"`
+}
+
+// LastLoginTimespanSegmentFilter 
+type LastLoginTimespanSegmentFilterModel struct {
+    // Comparison last player login duration comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // DurationInMinutes last player login duration.
+    DurationInMinutes float64 `json:"DurationInMinutes,omitempty"`
+}
+
 // LinkedPlatformAccountModel 
 type LinkedPlatformAccountModelModel struct {
     // Email linked account email of the user on the platform, if available
@@ -2565,14 +2805,18 @@ type LinkedPlatformAccountModelModel struct {
     Username string `json:"Username,omitempty"`
 }
 
-// ListBuildsRequest 
-type ListBuildsRequestModel struct {
+// LinkedUserAccountHasEmailSegmentFilter 
+type LinkedUserAccountHasEmailSegmentFilterModel struct {
+    // Comparison login provider comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // LoginProvider login provider.
+    LoginProvider SegmentLoginIdentityProvider `json:"LoginProvider,omitempty"`
 }
 
-// ListBuildsResult 
-type ListBuildsResultModel struct {
-    // Builds array of uploaded game server builds
-    Builds []GetServerBuildInfoResultModel `json:"Builds,omitempty"`
+// LinkedUserAccountSegmentFilter 
+type LinkedUserAccountSegmentFilterModel struct {
+    // LoginProvider login provider.
+    LoginProvider SegmentLoginIdentityProvider `json:"LoginProvider,omitempty"`
 }
 
 // ListOpenIdConnectionRequest 
@@ -2609,6 +2853,12 @@ type LocationModelModel struct {
     Longitude float64 `json:"Longitude,omitempty"`
 }
 
+// LocationSegmentFilter 
+type LocationSegmentFilterModel struct {
+    // CountryCode segment country code.
+    CountryCode SegmentCountryCode `json:"CountryCode,omitempty"`
+}
+
 // LoginIdentityProvider 
 type LoginIdentityProvider string
   
@@ -2634,6 +2884,7 @@ const (
      LoginIdentityProviderOpenIdConnect LoginIdentityProvider = "OpenIdConnect"
      LoginIdentityProviderApple LoginIdentityProvider = "Apple"
      LoginIdentityProviderNintendoSwitchAccount LoginIdentityProvider = "NintendoSwitchAccount"
+     LoginIdentityProviderGooglePlayGames LoginIdentityProvider = "GooglePlayGames"
       )
 // LogStatement 
 type LogStatementModel struct {
@@ -2679,22 +2930,6 @@ type MembershipModelModel struct {
     OverrideExpiration time.Time `json:"OverrideExpiration,omitempty"`
     // Subscriptions the list of subscriptions that this player has for this membership
     Subscriptions []SubscriptionModelModel `json:"Subscriptions,omitempty"`
-}
-
-// ModifyMatchmakerGameModesRequest these details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for
-// additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be
-// created in order to prevent excess load on existing Hosts. This operation is not additive. Using it will cause the game
-// mode definition for the game server executable in question to be created from scratch. If there is an existing game
-// server mode definition for the given BuildVersion, it will be deleted and replaced with the data specified in this call.
-type ModifyMatchmakerGameModesRequestModel struct {
-    // BuildVersion previously uploaded build version for which game modes are being specified
-    BuildVersion string `json:"BuildVersion,omitempty"`
-    // GameModes array of game modes (Note: this will replace all game modes for the indicated build version)
-    GameModes []GameModeInfoModel `json:"GameModes,omitempty"`
-}
-
-// ModifyMatchmakerGameModesResult 
-type ModifyMatchmakerGameModesResultModel struct {
 }
 
 // ModifyServerBuildRequest 
@@ -2811,6 +3046,30 @@ type PermissionStatementModel struct {
     Resource string `json:"Resource,omitempty"`
 }
 
+// PlayerChurnPredictionSegmentFilter 
+type PlayerChurnPredictionSegmentFilterModel struct {
+    // Comparison comparison
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // RiskLevel riskLevel
+    RiskLevel ChurnRiskLevel `json:"RiskLevel,omitempty"`
+}
+
+// PlayerChurnPredictionTimeSegmentFilter 
+type PlayerChurnPredictionTimeSegmentFilterModel struct {
+    // Comparison comparison
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // DurationInDays durationInDays
+    DurationInDays float64 `json:"DurationInDays,omitempty"`
+}
+
+// PlayerChurnPreviousPredictionSegmentFilter 
+type PlayerChurnPreviousPredictionSegmentFilterModel struct {
+    // Comparison comparison
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // RiskLevel riskLevel
+    RiskLevel ChurnRiskLevel `json:"RiskLevel,omitempty"`
+}
+
 // PlayerLinkedAccount 
 type PlayerLinkedAccountModel struct {
     // Email linked account's email
@@ -2845,6 +3104,8 @@ type PlayerProfileModel struct {
     AvatarUrl string `json:"AvatarUrl,omitempty"`
     // BannedUntil banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
     BannedUntil time.Time `json:"BannedUntil,omitempty"`
+    // ChurnPrediction the prediction of the player to churn within the next seven days.
+    ChurnPrediction ChurnRiskLevel `json:"ChurnPrediction,omitempty"`
     // ContactEmailAddresses array of contact email addresses associated with the player
     ContactEmailAddresses []ContactEmailInfoModel `json:"ContactEmailAddresses,omitempty"`
     // Created player record created
@@ -2897,7 +3158,9 @@ type PlayerProfileModelModel struct {
     Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
     DisplayName string `json:"DisplayName,omitempty"`
-    // ExperimentVariants list of experiment variants for the player.
+    // ExperimentVariants list of experiment variants for the player. Note that these variants are not guaranteed to be up-to-date when returned
+// during login because the player profile is updated only after login. Instead, use the LoginResult.TreatmentAssignment
+// property during login to get the correct variants and variables.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
     LastLogin time.Time `json:"LastLogin,omitempty"`
@@ -3033,6 +3296,18 @@ type PushNotificationRegistrationModelModel struct {
     Platform PushNotificationPlatform `json:"Platform,omitempty"`
 }
 
+// PushNotificationSegmentAction 
+type PushNotificationSegmentActionModel struct {
+    // PushNotificationTemplateId push notification template id.
+    PushNotificationTemplateId string `json:"PushNotificationTemplateId,omitempty"`
+}
+
+// PushNotificationSegmentFilter 
+type PushNotificationSegmentFilterModel struct {
+    // PushNotificationDevicePlatform push notification device platform.
+    PushNotificationDevicePlatform SegmentPushNotificationDevicePlatform `json:"PushNotificationDevicePlatform,omitempty"`
+}
+
 // PushSetupPlatform 
 type PushSetupPlatform string
   
@@ -3102,16 +3377,6 @@ type RemovePlayerTagRequestModel struct {
 
 // RemovePlayerTagResult 
 type RemovePlayerTagResultModel struct {
-}
-
-// RemoveServerBuildRequest 
-type RemoveServerBuildRequestModel struct {
-    // BuildId unique identifier of the previously uploaded build executable to be removed
-    BuildId string `json:"BuildId,omitempty"`
-}
-
-// RemoveServerBuildResult 
-type RemoveServerBuildResultModel struct {
 }
 
 // RemoveVirtualCurrencyTypesRequest virtual currencies to be removed cannot have entries in any catalog nor store for the title. Note that this operation
@@ -3341,6 +3606,566 @@ type ScriptExecutionErrorModel struct {
     StackTrace string `json:"StackTrace,omitempty"`
 }
 
+// SegmentAndDefinition 
+type SegmentAndDefinitionModel struct {
+    // AdCampaignFilter filter property for ad campaign filter.
+    AdCampaignFilter *AdCampaignSegmentFilterModel `json:"AdCampaignFilter,omitempty"`
+    // AllPlayersFilter property for all player filter.
+    AllPlayersFilter *AllPlayersSegmentFilterModel `json:"AllPlayersFilter,omitempty"`
+    // ChurnPredictionFilter filter property for player churn risk level.
+    ChurnPredictionFilter *ChurnPredictionSegmentFilterModel `json:"ChurnPredictionFilter,omitempty"`
+    // FirstLoginDateFilter filter property for first login date.
+    FirstLoginDateFilter *FirstLoginDateSegmentFilterModel `json:"FirstLoginDateFilter,omitempty"`
+    // FirstLoginFilter filter property for first login timespan.
+    FirstLoginFilter *FirstLoginTimespanSegmentFilterModel `json:"FirstLoginFilter,omitempty"`
+    // LastLoginDateFilter filter property for last login date.
+    LastLoginDateFilter *LastLoginDateSegmentFilterModel `json:"LastLoginDateFilter,omitempty"`
+    // LastLoginFilter filter property for last login timespan.
+    LastLoginFilter *LastLoginTimespanSegmentFilterModel `json:"LastLoginFilter,omitempty"`
+    // LinkedUserAccountFilter filter property for linked in user account.
+    LinkedUserAccountFilter *LinkedUserAccountSegmentFilterModel `json:"LinkedUserAccountFilter,omitempty"`
+    // LinkedUserAccountHasEmailFilter filter property for linked in user account has email.
+    LinkedUserAccountHasEmailFilter *LinkedUserAccountHasEmailSegmentFilterModel `json:"LinkedUserAccountHasEmailFilter,omitempty"`
+    // LocationFilter filter property for location.
+    LocationFilter *LocationSegmentFilterModel `json:"LocationFilter,omitempty"`
+    // PlayerChurnPredictionFilter filter property for current player churn value.
+    PlayerChurnPredictionFilter *PlayerChurnPredictionSegmentFilterModel `json:"PlayerChurnPredictionFilter,omitempty"`
+    // PlayerChurnPredictionTimeFilter filter property for player churn timespan.
+    PlayerChurnPredictionTimeFilter *PlayerChurnPredictionTimeSegmentFilterModel `json:"PlayerChurnPredictionTimeFilter,omitempty"`
+    // PlayerChurnPreviousPredictionFilter filter property for previous player churn value.
+    PlayerChurnPreviousPredictionFilter *PlayerChurnPreviousPredictionSegmentFilterModel `json:"PlayerChurnPreviousPredictionFilter,omitempty"`
+    // PushNotificationFilter filter property for push notification.
+    PushNotificationFilter *PushNotificationSegmentFilterModel `json:"PushNotificationFilter,omitempty"`
+    // StatisticFilter filter property for statistics.
+    StatisticFilter *StatisticSegmentFilterModel `json:"StatisticFilter,omitempty"`
+    // TagFilter filter property for tags.
+    TagFilter *TagSegmentFilterModel `json:"TagFilter,omitempty"`
+    // TotalValueToDateInUSDFilter filter property for total value to date in USD.
+    TotalValueToDateInUSDFilter *TotalValueToDateInUSDSegmentFilterModel `json:"TotalValueToDateInUSDFilter,omitempty"`
+    // UserOriginationFilter filter property for user origination.
+    UserOriginationFilter *UserOriginationSegmentFilterModel `json:"UserOriginationFilter,omitempty"`
+    // ValueToDateFilter filter property for value to date.
+    ValueToDateFilter *ValueToDateSegmentFilterModel `json:"ValueToDateFilter,omitempty"`
+    // VirtualCurrencyBalanceFilter filter property for virtual currency.
+    VirtualCurrencyBalanceFilter *VirtualCurrencyBalanceSegmentFilterModel `json:"VirtualCurrencyBalanceFilter,omitempty"`
+}
+
+// SegmentCountryCode 
+type SegmentCountryCode string
+  
+const (
+     SegmentCountryCodeAF SegmentCountryCode = "AF"
+     SegmentCountryCodeAX SegmentCountryCode = "AX"
+     SegmentCountryCodeAL SegmentCountryCode = "AL"
+     SegmentCountryCodeDZ SegmentCountryCode = "DZ"
+     SegmentCountryCodeAS SegmentCountryCode = "AS"
+     SegmentCountryCodeAD SegmentCountryCode = "AD"
+     SegmentCountryCodeAO SegmentCountryCode = "AO"
+     SegmentCountryCodeAI SegmentCountryCode = "AI"
+     SegmentCountryCodeAQ SegmentCountryCode = "AQ"
+     SegmentCountryCodeAG SegmentCountryCode = "AG"
+     SegmentCountryCodeAR SegmentCountryCode = "AR"
+     SegmentCountryCodeAM SegmentCountryCode = "AM"
+     SegmentCountryCodeAW SegmentCountryCode = "AW"
+     SegmentCountryCodeAU SegmentCountryCode = "AU"
+     SegmentCountryCodeAT SegmentCountryCode = "AT"
+     SegmentCountryCodeAZ SegmentCountryCode = "AZ"
+     SegmentCountryCodeBS SegmentCountryCode = "BS"
+     SegmentCountryCodeBH SegmentCountryCode = "BH"
+     SegmentCountryCodeBD SegmentCountryCode = "BD"
+     SegmentCountryCodeBB SegmentCountryCode = "BB"
+     SegmentCountryCodeBY SegmentCountryCode = "BY"
+     SegmentCountryCodeBE SegmentCountryCode = "BE"
+     SegmentCountryCodeBZ SegmentCountryCode = "BZ"
+     SegmentCountryCodeBJ SegmentCountryCode = "BJ"
+     SegmentCountryCodeBM SegmentCountryCode = "BM"
+     SegmentCountryCodeBT SegmentCountryCode = "BT"
+     SegmentCountryCodeBO SegmentCountryCode = "BO"
+     SegmentCountryCodeBQ SegmentCountryCode = "BQ"
+     SegmentCountryCodeBA SegmentCountryCode = "BA"
+     SegmentCountryCodeBW SegmentCountryCode = "BW"
+     SegmentCountryCodeBV SegmentCountryCode = "BV"
+     SegmentCountryCodeBR SegmentCountryCode = "BR"
+     SegmentCountryCodeIO SegmentCountryCode = "IO"
+     SegmentCountryCodeBN SegmentCountryCode = "BN"
+     SegmentCountryCodeBG SegmentCountryCode = "BG"
+     SegmentCountryCodeBF SegmentCountryCode = "BF"
+     SegmentCountryCodeBI SegmentCountryCode = "BI"
+     SegmentCountryCodeKH SegmentCountryCode = "KH"
+     SegmentCountryCodeCM SegmentCountryCode = "CM"
+     SegmentCountryCodeCA SegmentCountryCode = "CA"
+     SegmentCountryCodeCV SegmentCountryCode = "CV"
+     SegmentCountryCodeKY SegmentCountryCode = "KY"
+     SegmentCountryCodeCF SegmentCountryCode = "CF"
+     SegmentCountryCodeTD SegmentCountryCode = "TD"
+     SegmentCountryCodeCL SegmentCountryCode = "CL"
+     SegmentCountryCodeCN SegmentCountryCode = "CN"
+     SegmentCountryCodeCX SegmentCountryCode = "CX"
+     SegmentCountryCodeCC SegmentCountryCode = "CC"
+     SegmentCountryCodeCO SegmentCountryCode = "CO"
+     SegmentCountryCodeKM SegmentCountryCode = "KM"
+     SegmentCountryCodeCG SegmentCountryCode = "CG"
+     SegmentCountryCodeCD SegmentCountryCode = "CD"
+     SegmentCountryCodeCK SegmentCountryCode = "CK"
+     SegmentCountryCodeCR SegmentCountryCode = "CR"
+     SegmentCountryCodeCI SegmentCountryCode = "CI"
+     SegmentCountryCodeHR SegmentCountryCode = "HR"
+     SegmentCountryCodeCU SegmentCountryCode = "CU"
+     SegmentCountryCodeCW SegmentCountryCode = "CW"
+     SegmentCountryCodeCY SegmentCountryCode = "CY"
+     SegmentCountryCodeCZ SegmentCountryCode = "CZ"
+     SegmentCountryCodeDK SegmentCountryCode = "DK"
+     SegmentCountryCodeDJ SegmentCountryCode = "DJ"
+     SegmentCountryCodeDM SegmentCountryCode = "DM"
+     SegmentCountryCodeDO SegmentCountryCode = "DO"
+     SegmentCountryCodeEC SegmentCountryCode = "EC"
+     SegmentCountryCodeEG SegmentCountryCode = "EG"
+     SegmentCountryCodeSV SegmentCountryCode = "SV"
+     SegmentCountryCodeGQ SegmentCountryCode = "GQ"
+     SegmentCountryCodeER SegmentCountryCode = "ER"
+     SegmentCountryCodeEE SegmentCountryCode = "EE"
+     SegmentCountryCodeET SegmentCountryCode = "ET"
+     SegmentCountryCodeFK SegmentCountryCode = "FK"
+     SegmentCountryCodeFO SegmentCountryCode = "FO"
+     SegmentCountryCodeFJ SegmentCountryCode = "FJ"
+     SegmentCountryCodeFI SegmentCountryCode = "FI"
+     SegmentCountryCodeFR SegmentCountryCode = "FR"
+     SegmentCountryCodeGF SegmentCountryCode = "GF"
+     SegmentCountryCodePF SegmentCountryCode = "PF"
+     SegmentCountryCodeTF SegmentCountryCode = "TF"
+     SegmentCountryCodeGA SegmentCountryCode = "GA"
+     SegmentCountryCodeGM SegmentCountryCode = "GM"
+     SegmentCountryCodeGE SegmentCountryCode = "GE"
+     SegmentCountryCodeDE SegmentCountryCode = "DE"
+     SegmentCountryCodeGH SegmentCountryCode = "GH"
+     SegmentCountryCodeGI SegmentCountryCode = "GI"
+     SegmentCountryCodeGR SegmentCountryCode = "GR"
+     SegmentCountryCodeGL SegmentCountryCode = "GL"
+     SegmentCountryCodeGD SegmentCountryCode = "GD"
+     SegmentCountryCodeGP SegmentCountryCode = "GP"
+     SegmentCountryCodeGU SegmentCountryCode = "GU"
+     SegmentCountryCodeGT SegmentCountryCode = "GT"
+     SegmentCountryCodeGG SegmentCountryCode = "GG"
+     SegmentCountryCodeGN SegmentCountryCode = "GN"
+     SegmentCountryCodeGW SegmentCountryCode = "GW"
+     SegmentCountryCodeGY SegmentCountryCode = "GY"
+     SegmentCountryCodeHT SegmentCountryCode = "HT"
+     SegmentCountryCodeHM SegmentCountryCode = "HM"
+     SegmentCountryCodeVA SegmentCountryCode = "VA"
+     SegmentCountryCodeHN SegmentCountryCode = "HN"
+     SegmentCountryCodeHK SegmentCountryCode = "HK"
+     SegmentCountryCodeHU SegmentCountryCode = "HU"
+     SegmentCountryCodeIS SegmentCountryCode = "IS"
+     SegmentCountryCodeIN SegmentCountryCode = "IN"
+     SegmentCountryCodeID SegmentCountryCode = "ID"
+     SegmentCountryCodeIR SegmentCountryCode = "IR"
+     SegmentCountryCodeIQ SegmentCountryCode = "IQ"
+     SegmentCountryCodeIE SegmentCountryCode = "IE"
+     SegmentCountryCodeIM SegmentCountryCode = "IM"
+     SegmentCountryCodeIL SegmentCountryCode = "IL"
+     SegmentCountryCodeIT SegmentCountryCode = "IT"
+     SegmentCountryCodeJM SegmentCountryCode = "JM"
+     SegmentCountryCodeJP SegmentCountryCode = "JP"
+     SegmentCountryCodeJE SegmentCountryCode = "JE"
+     SegmentCountryCodeJO SegmentCountryCode = "JO"
+     SegmentCountryCodeKZ SegmentCountryCode = "KZ"
+     SegmentCountryCodeKE SegmentCountryCode = "KE"
+     SegmentCountryCodeKI SegmentCountryCode = "KI"
+     SegmentCountryCodeKP SegmentCountryCode = "KP"
+     SegmentCountryCodeKR SegmentCountryCode = "KR"
+     SegmentCountryCodeKW SegmentCountryCode = "KW"
+     SegmentCountryCodeKG SegmentCountryCode = "KG"
+     SegmentCountryCodeLA SegmentCountryCode = "LA"
+     SegmentCountryCodeLV SegmentCountryCode = "LV"
+     SegmentCountryCodeLB SegmentCountryCode = "LB"
+     SegmentCountryCodeLS SegmentCountryCode = "LS"
+     SegmentCountryCodeLR SegmentCountryCode = "LR"
+     SegmentCountryCodeLY SegmentCountryCode = "LY"
+     SegmentCountryCodeLI SegmentCountryCode = "LI"
+     SegmentCountryCodeLT SegmentCountryCode = "LT"
+     SegmentCountryCodeLU SegmentCountryCode = "LU"
+     SegmentCountryCodeMO SegmentCountryCode = "MO"
+     SegmentCountryCodeMK SegmentCountryCode = "MK"
+     SegmentCountryCodeMG SegmentCountryCode = "MG"
+     SegmentCountryCodeMW SegmentCountryCode = "MW"
+     SegmentCountryCodeMY SegmentCountryCode = "MY"
+     SegmentCountryCodeMV SegmentCountryCode = "MV"
+     SegmentCountryCodeML SegmentCountryCode = "ML"
+     SegmentCountryCodeMT SegmentCountryCode = "MT"
+     SegmentCountryCodeMH SegmentCountryCode = "MH"
+     SegmentCountryCodeMQ SegmentCountryCode = "MQ"
+     SegmentCountryCodeMR SegmentCountryCode = "MR"
+     SegmentCountryCodeMU SegmentCountryCode = "MU"
+     SegmentCountryCodeYT SegmentCountryCode = "YT"
+     SegmentCountryCodeMX SegmentCountryCode = "MX"
+     SegmentCountryCodeFM SegmentCountryCode = "FM"
+     SegmentCountryCodeMD SegmentCountryCode = "MD"
+     SegmentCountryCodeMC SegmentCountryCode = "MC"
+     SegmentCountryCodeMN SegmentCountryCode = "MN"
+     SegmentCountryCodeME SegmentCountryCode = "ME"
+     SegmentCountryCodeMS SegmentCountryCode = "MS"
+     SegmentCountryCodeMA SegmentCountryCode = "MA"
+     SegmentCountryCodeMZ SegmentCountryCode = "MZ"
+     SegmentCountryCodeMM SegmentCountryCode = "MM"
+     SegmentCountryCodeNA SegmentCountryCode = "NA"
+     SegmentCountryCodeNR SegmentCountryCode = "NR"
+     SegmentCountryCodeNP SegmentCountryCode = "NP"
+     SegmentCountryCodeNL SegmentCountryCode = "NL"
+     SegmentCountryCodeNC SegmentCountryCode = "NC"
+     SegmentCountryCodeNZ SegmentCountryCode = "NZ"
+     SegmentCountryCodeNI SegmentCountryCode = "NI"
+     SegmentCountryCodeNE SegmentCountryCode = "NE"
+     SegmentCountryCodeNG SegmentCountryCode = "NG"
+     SegmentCountryCodeNU SegmentCountryCode = "NU"
+     SegmentCountryCodeNF SegmentCountryCode = "NF"
+     SegmentCountryCodeMP SegmentCountryCode = "MP"
+     SegmentCountryCodeNO SegmentCountryCode = "NO"
+     SegmentCountryCodeOM SegmentCountryCode = "OM"
+     SegmentCountryCodePK SegmentCountryCode = "PK"
+     SegmentCountryCodePW SegmentCountryCode = "PW"
+     SegmentCountryCodePS SegmentCountryCode = "PS"
+     SegmentCountryCodePA SegmentCountryCode = "PA"
+     SegmentCountryCodePG SegmentCountryCode = "PG"
+     SegmentCountryCodePY SegmentCountryCode = "PY"
+     SegmentCountryCodePE SegmentCountryCode = "PE"
+     SegmentCountryCodePH SegmentCountryCode = "PH"
+     SegmentCountryCodePN SegmentCountryCode = "PN"
+     SegmentCountryCodePL SegmentCountryCode = "PL"
+     SegmentCountryCodePT SegmentCountryCode = "PT"
+     SegmentCountryCodePR SegmentCountryCode = "PR"
+     SegmentCountryCodeQA SegmentCountryCode = "QA"
+     SegmentCountryCodeRE SegmentCountryCode = "RE"
+     SegmentCountryCodeRO SegmentCountryCode = "RO"
+     SegmentCountryCodeRU SegmentCountryCode = "RU"
+     SegmentCountryCodeRW SegmentCountryCode = "RW"
+     SegmentCountryCodeBL SegmentCountryCode = "BL"
+     SegmentCountryCodeSH SegmentCountryCode = "SH"
+     SegmentCountryCodeKN SegmentCountryCode = "KN"
+     SegmentCountryCodeLC SegmentCountryCode = "LC"
+     SegmentCountryCodeMF SegmentCountryCode = "MF"
+     SegmentCountryCodePM SegmentCountryCode = "PM"
+     SegmentCountryCodeVC SegmentCountryCode = "VC"
+     SegmentCountryCodeWS SegmentCountryCode = "WS"
+     SegmentCountryCodeSM SegmentCountryCode = "SM"
+     SegmentCountryCodeST SegmentCountryCode = "ST"
+     SegmentCountryCodeSA SegmentCountryCode = "SA"
+     SegmentCountryCodeSN SegmentCountryCode = "SN"
+     SegmentCountryCodeRS SegmentCountryCode = "RS"
+     SegmentCountryCodeSC SegmentCountryCode = "SC"
+     SegmentCountryCodeSL SegmentCountryCode = "SL"
+     SegmentCountryCodeSG SegmentCountryCode = "SG"
+     SegmentCountryCodeSX SegmentCountryCode = "SX"
+     SegmentCountryCodeSK SegmentCountryCode = "SK"
+     SegmentCountryCodeSI SegmentCountryCode = "SI"
+     SegmentCountryCodeSB SegmentCountryCode = "SB"
+     SegmentCountryCodeSO SegmentCountryCode = "SO"
+     SegmentCountryCodeZA SegmentCountryCode = "ZA"
+     SegmentCountryCodeGS SegmentCountryCode = "GS"
+     SegmentCountryCodeSS SegmentCountryCode = "SS"
+     SegmentCountryCodeES SegmentCountryCode = "ES"
+     SegmentCountryCodeLK SegmentCountryCode = "LK"
+     SegmentCountryCodeSD SegmentCountryCode = "SD"
+     SegmentCountryCodeSR SegmentCountryCode = "SR"
+     SegmentCountryCodeSJ SegmentCountryCode = "SJ"
+     SegmentCountryCodeSZ SegmentCountryCode = "SZ"
+     SegmentCountryCodeSE SegmentCountryCode = "SE"
+     SegmentCountryCodeCH SegmentCountryCode = "CH"
+     SegmentCountryCodeSY SegmentCountryCode = "SY"
+     SegmentCountryCodeTW SegmentCountryCode = "TW"
+     SegmentCountryCodeTJ SegmentCountryCode = "TJ"
+     SegmentCountryCodeTZ SegmentCountryCode = "TZ"
+     SegmentCountryCodeTH SegmentCountryCode = "TH"
+     SegmentCountryCodeTL SegmentCountryCode = "TL"
+     SegmentCountryCodeTG SegmentCountryCode = "TG"
+     SegmentCountryCodeTK SegmentCountryCode = "TK"
+     SegmentCountryCodeTO SegmentCountryCode = "TO"
+     SegmentCountryCodeTT SegmentCountryCode = "TT"
+     SegmentCountryCodeTN SegmentCountryCode = "TN"
+     SegmentCountryCodeTR SegmentCountryCode = "TR"
+     SegmentCountryCodeTM SegmentCountryCode = "TM"
+     SegmentCountryCodeTC SegmentCountryCode = "TC"
+     SegmentCountryCodeTV SegmentCountryCode = "TV"
+     SegmentCountryCodeUG SegmentCountryCode = "UG"
+     SegmentCountryCodeUA SegmentCountryCode = "UA"
+     SegmentCountryCodeAE SegmentCountryCode = "AE"
+     SegmentCountryCodeGB SegmentCountryCode = "GB"
+     SegmentCountryCodeUS SegmentCountryCode = "US"
+     SegmentCountryCodeUM SegmentCountryCode = "UM"
+     SegmentCountryCodeUY SegmentCountryCode = "UY"
+     SegmentCountryCodeUZ SegmentCountryCode = "UZ"
+     SegmentCountryCodeVU SegmentCountryCode = "VU"
+     SegmentCountryCodeVE SegmentCountryCode = "VE"
+     SegmentCountryCodeVN SegmentCountryCode = "VN"
+     SegmentCountryCodeVG SegmentCountryCode = "VG"
+     SegmentCountryCodeVI SegmentCountryCode = "VI"
+     SegmentCountryCodeWF SegmentCountryCode = "WF"
+     SegmentCountryCodeEH SegmentCountryCode = "EH"
+     SegmentCountryCodeYE SegmentCountryCode = "YE"
+     SegmentCountryCodeZM SegmentCountryCode = "ZM"
+     SegmentCountryCodeZW SegmentCountryCode = "ZW"
+      )
+// SegmentCurrency 
+type SegmentCurrency string
+  
+const (
+     SegmentCurrencyAED SegmentCurrency = "AED"
+     SegmentCurrencyAFN SegmentCurrency = "AFN"
+     SegmentCurrencyALL SegmentCurrency = "ALL"
+     SegmentCurrencyAMD SegmentCurrency = "AMD"
+     SegmentCurrencyANG SegmentCurrency = "ANG"
+     SegmentCurrencyAOA SegmentCurrency = "AOA"
+     SegmentCurrencyARS SegmentCurrency = "ARS"
+     SegmentCurrencyAUD SegmentCurrency = "AUD"
+     SegmentCurrencyAWG SegmentCurrency = "AWG"
+     SegmentCurrencyAZN SegmentCurrency = "AZN"
+     SegmentCurrencyBAM SegmentCurrency = "BAM"
+     SegmentCurrencyBBD SegmentCurrency = "BBD"
+     SegmentCurrencyBDT SegmentCurrency = "BDT"
+     SegmentCurrencyBGN SegmentCurrency = "BGN"
+     SegmentCurrencyBHD SegmentCurrency = "BHD"
+     SegmentCurrencyBIF SegmentCurrency = "BIF"
+     SegmentCurrencyBMD SegmentCurrency = "BMD"
+     SegmentCurrencyBND SegmentCurrency = "BND"
+     SegmentCurrencyBOB SegmentCurrency = "BOB"
+     SegmentCurrencyBRL SegmentCurrency = "BRL"
+     SegmentCurrencyBSD SegmentCurrency = "BSD"
+     SegmentCurrencyBTN SegmentCurrency = "BTN"
+     SegmentCurrencyBWP SegmentCurrency = "BWP"
+     SegmentCurrencyBYR SegmentCurrency = "BYR"
+     SegmentCurrencyBZD SegmentCurrency = "BZD"
+     SegmentCurrencyCAD SegmentCurrency = "CAD"
+     SegmentCurrencyCDF SegmentCurrency = "CDF"
+     SegmentCurrencyCHF SegmentCurrency = "CHF"
+     SegmentCurrencyCLP SegmentCurrency = "CLP"
+     SegmentCurrencyCNY SegmentCurrency = "CNY"
+     SegmentCurrencyCOP SegmentCurrency = "COP"
+     SegmentCurrencyCRC SegmentCurrency = "CRC"
+     SegmentCurrencyCUC SegmentCurrency = "CUC"
+     SegmentCurrencyCUP SegmentCurrency = "CUP"
+     SegmentCurrencyCVE SegmentCurrency = "CVE"
+     SegmentCurrencyCZK SegmentCurrency = "CZK"
+     SegmentCurrencyDJF SegmentCurrency = "DJF"
+     SegmentCurrencyDKK SegmentCurrency = "DKK"
+     SegmentCurrencyDOP SegmentCurrency = "DOP"
+     SegmentCurrencyDZD SegmentCurrency = "DZD"
+     SegmentCurrencyEGP SegmentCurrency = "EGP"
+     SegmentCurrencyERN SegmentCurrency = "ERN"
+     SegmentCurrencyETB SegmentCurrency = "ETB"
+     SegmentCurrencyEUR SegmentCurrency = "EUR"
+     SegmentCurrencyFJD SegmentCurrency = "FJD"
+     SegmentCurrencyFKP SegmentCurrency = "FKP"
+     SegmentCurrencyGBP SegmentCurrency = "GBP"
+     SegmentCurrencyGEL SegmentCurrency = "GEL"
+     SegmentCurrencyGGP SegmentCurrency = "GGP"
+     SegmentCurrencyGHS SegmentCurrency = "GHS"
+     SegmentCurrencyGIP SegmentCurrency = "GIP"
+     SegmentCurrencyGMD SegmentCurrency = "GMD"
+     SegmentCurrencyGNF SegmentCurrency = "GNF"
+     SegmentCurrencyGTQ SegmentCurrency = "GTQ"
+     SegmentCurrencyGYD SegmentCurrency = "GYD"
+     SegmentCurrencyHKD SegmentCurrency = "HKD"
+     SegmentCurrencyHNL SegmentCurrency = "HNL"
+     SegmentCurrencyHRK SegmentCurrency = "HRK"
+     SegmentCurrencyHTG SegmentCurrency = "HTG"
+     SegmentCurrencyHUF SegmentCurrency = "HUF"
+     SegmentCurrencyIDR SegmentCurrency = "IDR"
+     SegmentCurrencyILS SegmentCurrency = "ILS"
+     SegmentCurrencyIMP SegmentCurrency = "IMP"
+     SegmentCurrencyINR SegmentCurrency = "INR"
+     SegmentCurrencyIQD SegmentCurrency = "IQD"
+     SegmentCurrencyIRR SegmentCurrency = "IRR"
+     SegmentCurrencyISK SegmentCurrency = "ISK"
+     SegmentCurrencyJEP SegmentCurrency = "JEP"
+     SegmentCurrencyJMD SegmentCurrency = "JMD"
+     SegmentCurrencyJOD SegmentCurrency = "JOD"
+     SegmentCurrencyJPY SegmentCurrency = "JPY"
+     SegmentCurrencyKES SegmentCurrency = "KES"
+     SegmentCurrencyKGS SegmentCurrency = "KGS"
+     SegmentCurrencyKHR SegmentCurrency = "KHR"
+     SegmentCurrencyKMF SegmentCurrency = "KMF"
+     SegmentCurrencyKPW SegmentCurrency = "KPW"
+     SegmentCurrencyKRW SegmentCurrency = "KRW"
+     SegmentCurrencyKWD SegmentCurrency = "KWD"
+     SegmentCurrencyKYD SegmentCurrency = "KYD"
+     SegmentCurrencyKZT SegmentCurrency = "KZT"
+     SegmentCurrencyLAK SegmentCurrency = "LAK"
+     SegmentCurrencyLBP SegmentCurrency = "LBP"
+     SegmentCurrencyLKR SegmentCurrency = "LKR"
+     SegmentCurrencyLRD SegmentCurrency = "LRD"
+     SegmentCurrencyLSL SegmentCurrency = "LSL"
+     SegmentCurrencyLYD SegmentCurrency = "LYD"
+     SegmentCurrencyMAD SegmentCurrency = "MAD"
+     SegmentCurrencyMDL SegmentCurrency = "MDL"
+     SegmentCurrencyMGA SegmentCurrency = "MGA"
+     SegmentCurrencyMKD SegmentCurrency = "MKD"
+     SegmentCurrencyMMK SegmentCurrency = "MMK"
+     SegmentCurrencyMNT SegmentCurrency = "MNT"
+     SegmentCurrencyMOP SegmentCurrency = "MOP"
+     SegmentCurrencyMRO SegmentCurrency = "MRO"
+     SegmentCurrencyMUR SegmentCurrency = "MUR"
+     SegmentCurrencyMVR SegmentCurrency = "MVR"
+     SegmentCurrencyMWK SegmentCurrency = "MWK"
+     SegmentCurrencyMXN SegmentCurrency = "MXN"
+     SegmentCurrencyMYR SegmentCurrency = "MYR"
+     SegmentCurrencyMZN SegmentCurrency = "MZN"
+     SegmentCurrencyNAD SegmentCurrency = "NAD"
+     SegmentCurrencyNGN SegmentCurrency = "NGN"
+     SegmentCurrencyNIO SegmentCurrency = "NIO"
+     SegmentCurrencyNOK SegmentCurrency = "NOK"
+     SegmentCurrencyNPR SegmentCurrency = "NPR"
+     SegmentCurrencyNZD SegmentCurrency = "NZD"
+     SegmentCurrencyOMR SegmentCurrency = "OMR"
+     SegmentCurrencyPAB SegmentCurrency = "PAB"
+     SegmentCurrencyPEN SegmentCurrency = "PEN"
+     SegmentCurrencyPGK SegmentCurrency = "PGK"
+     SegmentCurrencyPHP SegmentCurrency = "PHP"
+     SegmentCurrencyPKR SegmentCurrency = "PKR"
+     SegmentCurrencyPLN SegmentCurrency = "PLN"
+     SegmentCurrencyPYG SegmentCurrency = "PYG"
+     SegmentCurrencyQAR SegmentCurrency = "QAR"
+     SegmentCurrencyRON SegmentCurrency = "RON"
+     SegmentCurrencyRSD SegmentCurrency = "RSD"
+     SegmentCurrencyRUB SegmentCurrency = "RUB"
+     SegmentCurrencyRWF SegmentCurrency = "RWF"
+     SegmentCurrencySAR SegmentCurrency = "SAR"
+     SegmentCurrencySBD SegmentCurrency = "SBD"
+     SegmentCurrencySCR SegmentCurrency = "SCR"
+     SegmentCurrencySDG SegmentCurrency = "SDG"
+     SegmentCurrencySEK SegmentCurrency = "SEK"
+     SegmentCurrencySGD SegmentCurrency = "SGD"
+     SegmentCurrencySHP SegmentCurrency = "SHP"
+     SegmentCurrencySLL SegmentCurrency = "SLL"
+     SegmentCurrencySOS SegmentCurrency = "SOS"
+     SegmentCurrencySPL SegmentCurrency = "SPL"
+     SegmentCurrencySRD SegmentCurrency = "SRD"
+     SegmentCurrencySTD SegmentCurrency = "STD"
+     SegmentCurrencySVC SegmentCurrency = "SVC"
+     SegmentCurrencySYP SegmentCurrency = "SYP"
+     SegmentCurrencySZL SegmentCurrency = "SZL"
+     SegmentCurrencyTHB SegmentCurrency = "THB"
+     SegmentCurrencyTJS SegmentCurrency = "TJS"
+     SegmentCurrencyTMT SegmentCurrency = "TMT"
+     SegmentCurrencyTND SegmentCurrency = "TND"
+     SegmentCurrencyTOP SegmentCurrency = "TOP"
+     SegmentCurrencyTRY SegmentCurrency = "TRY"
+     SegmentCurrencyTTD SegmentCurrency = "TTD"
+     SegmentCurrencyTVD SegmentCurrency = "TVD"
+     SegmentCurrencyTWD SegmentCurrency = "TWD"
+     SegmentCurrencyTZS SegmentCurrency = "TZS"
+     SegmentCurrencyUAH SegmentCurrency = "UAH"
+     SegmentCurrencyUGX SegmentCurrency = "UGX"
+     SegmentCurrencyUSD SegmentCurrency = "USD"
+     SegmentCurrencyUYU SegmentCurrency = "UYU"
+     SegmentCurrencyUZS SegmentCurrency = "UZS"
+     SegmentCurrencyVEF SegmentCurrency = "VEF"
+     SegmentCurrencyVND SegmentCurrency = "VND"
+     SegmentCurrencyVUV SegmentCurrency = "VUV"
+     SegmentCurrencyWST SegmentCurrency = "WST"
+     SegmentCurrencyXAF SegmentCurrency = "XAF"
+     SegmentCurrencyXCD SegmentCurrency = "XCD"
+     SegmentCurrencyXDR SegmentCurrency = "XDR"
+     SegmentCurrencyXOF SegmentCurrency = "XOF"
+     SegmentCurrencyXPF SegmentCurrency = "XPF"
+     SegmentCurrencyYER SegmentCurrency = "YER"
+     SegmentCurrencyZAR SegmentCurrency = "ZAR"
+     SegmentCurrencyZMW SegmentCurrency = "ZMW"
+     SegmentCurrencyZWD SegmentCurrency = "ZWD"
+      )
+// SegmentFilterComparison 
+type SegmentFilterComparison string
+  
+const (
+     SegmentFilterComparisonGreaterThan SegmentFilterComparison = "GreaterThan"
+     SegmentFilterComparisonLessThan SegmentFilterComparison = "LessThan"
+     SegmentFilterComparisonEqualTo SegmentFilterComparison = "EqualTo"
+     SegmentFilterComparisonNotEqualTo SegmentFilterComparison = "NotEqualTo"
+     SegmentFilterComparisonGreaterThanOrEqual SegmentFilterComparison = "GreaterThanOrEqual"
+     SegmentFilterComparisonLessThanOrEqual SegmentFilterComparison = "LessThanOrEqual"
+     SegmentFilterComparisonExists SegmentFilterComparison = "Exists"
+     SegmentFilterComparisonContains SegmentFilterComparison = "Contains"
+     SegmentFilterComparisonNotContains SegmentFilterComparison = "NotContains"
+      )
+// SegmentLoginIdentityProvider 
+type SegmentLoginIdentityProvider string
+  
+const (
+     SegmentLoginIdentityProviderUnknown SegmentLoginIdentityProvider = "Unknown"
+     SegmentLoginIdentityProviderPlayFab SegmentLoginIdentityProvider = "PlayFab"
+     SegmentLoginIdentityProviderCustom SegmentLoginIdentityProvider = "Custom"
+     SegmentLoginIdentityProviderGameCenter SegmentLoginIdentityProvider = "GameCenter"
+     SegmentLoginIdentityProviderGooglePlay SegmentLoginIdentityProvider = "GooglePlay"
+     SegmentLoginIdentityProviderSteam SegmentLoginIdentityProvider = "Steam"
+     SegmentLoginIdentityProviderXBoxLive SegmentLoginIdentityProvider = "XBoxLive"
+     SegmentLoginIdentityProviderPSN SegmentLoginIdentityProvider = "PSN"
+     SegmentLoginIdentityProviderKongregate SegmentLoginIdentityProvider = "Kongregate"
+     SegmentLoginIdentityProviderFacebook SegmentLoginIdentityProvider = "Facebook"
+     SegmentLoginIdentityProviderIOSDevice SegmentLoginIdentityProvider = "IOSDevice"
+     SegmentLoginIdentityProviderAndroidDevice SegmentLoginIdentityProvider = "AndroidDevice"
+     SegmentLoginIdentityProviderTwitch SegmentLoginIdentityProvider = "Twitch"
+     SegmentLoginIdentityProviderWindowsHello SegmentLoginIdentityProvider = "WindowsHello"
+     SegmentLoginIdentityProviderGameServer SegmentLoginIdentityProvider = "GameServer"
+     SegmentLoginIdentityProviderCustomServer SegmentLoginIdentityProvider = "CustomServer"
+     SegmentLoginIdentityProviderNintendoSwitch SegmentLoginIdentityProvider = "NintendoSwitch"
+     SegmentLoginIdentityProviderFacebookInstantGames SegmentLoginIdentityProvider = "FacebookInstantGames"
+     SegmentLoginIdentityProviderOpenIdConnect SegmentLoginIdentityProvider = "OpenIdConnect"
+     SegmentLoginIdentityProviderApple SegmentLoginIdentityProvider = "Apple"
+     SegmentLoginIdentityProviderNintendoSwitchAccount SegmentLoginIdentityProvider = "NintendoSwitchAccount"
+      )
+// SegmentModel 
+type SegmentModelModel struct {
+    // Description segment description.
+    Description string `json:"Description,omitempty"`
+    // EnteredSegmentActions segment actions for current entered segment players.
+    EnteredSegmentActions []SegmentTriggerModel `json:"EnteredSegmentActions,omitempty"`
+    // LastUpdateTime segment last updated date time.
+    LastUpdateTime time.Time `json:"LastUpdateTime,omitempty"`
+    // LeftSegmentActions segment actions for current left segment players.
+    LeftSegmentActions []SegmentTriggerModel `json:"LeftSegmentActions,omitempty"`
+    // Name segment name.
+    Name string `json:"Name,omitempty"`
+    // SegmentId segment id in hex.
+    SegmentId string `json:"SegmentId,omitempty"`
+    // SegmentOrDefinitions segment or definitions. This includes segment and definitions and filters.
+    SegmentOrDefinitions []SegmentOrDefinitionModel `json:"SegmentOrDefinitions,omitempty"`
+}
+
+// SegmentOrDefinition 
+type SegmentOrDefinitionModel struct {
+    // SegmentAndDefinitions list of segment and definitions.
+    SegmentAndDefinitions []SegmentAndDefinitionModel `json:"SegmentAndDefinitions,omitempty"`
+}
+
+// SegmentPushNotificationDevicePlatform 
+type SegmentPushNotificationDevicePlatform string
+  
+const (
+     SegmentPushNotificationDevicePlatformApplePushNotificationService SegmentPushNotificationDevicePlatform = "ApplePushNotificationService"
+     SegmentPushNotificationDevicePlatformGoogleCloudMessaging SegmentPushNotificationDevicePlatform = "GoogleCloudMessaging"
+      )
+// SegmentTrigger 
+type SegmentTriggerModel struct {
+    // BanPlayerAction ban player segment trigger action.
+    BanPlayerAction *BanPlayerSegmentActionModel `json:"BanPlayerAction,omitempty"`
+    // DeletePlayerAction delete player segment trigger action.
+    DeletePlayerAction *DeletePlayerSegmentActionModel `json:"DeletePlayerAction,omitempty"`
+    // DeletePlayerStatisticAction delete player statistic segment trigger action.
+    DeletePlayerStatisticAction *DeletePlayerStatisticSegmentActionModel `json:"DeletePlayerStatisticAction,omitempty"`
+    // EmailNotificationAction email notification segment trigger action.
+    EmailNotificationAction *EmailNotificationSegmentActionModel `json:"EmailNotificationAction,omitempty"`
+    // ExecuteAzureFunctionAction execute azure function segment trigger action.
+    ExecuteAzureFunctionAction *ExecuteAzureFunctionSegmentActionModel `json:"ExecuteAzureFunctionAction,omitempty"`
+    // ExecuteCloudScriptAction execute cloud script segment trigger action.
+    ExecuteCloudScriptAction *ExecuteCloudScriptSegmentActionModel `json:"ExecuteCloudScriptAction,omitempty"`
+    // GrantItemAction grant item segment trigger action.
+    GrantItemAction *GrantItemSegmentActionModel `json:"GrantItemAction,omitempty"`
+    // GrantVirtualCurrencyAction grant virtual currency segment trigger action.
+    GrantVirtualCurrencyAction *GrantVirtualCurrencySegmentActionModel `json:"GrantVirtualCurrencyAction,omitempty"`
+    // IncrementPlayerStatisticAction increment player statistic segment trigger action.
+    IncrementPlayerStatisticAction *IncrementPlayerStatisticSegmentActionModel `json:"IncrementPlayerStatisticAction,omitempty"`
+    // PushNotificationAction push notification segment trigger action.
+    PushNotificationAction *PushNotificationSegmentActionModel `json:"PushNotificationAction,omitempty"`
+}
+
 // SendAccountRecoveryEmailRequest if the account in question is a "temporary" account (for example, one that was created via a call to
 // LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be
 // able to receive a password reset email using this API.
@@ -3355,6 +4180,22 @@ type SendAccountRecoveryEmailRequestModel struct {
 
 // SendAccountRecoveryEmailResult 
 type SendAccountRecoveryEmailResultModel struct {
+}
+
+// SetMembershipOverrideRequest this API lets developers set overrides for membership expirations, independent of any subscriptions setting it.
+type SetMembershipOverrideRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ExpirationTime expiration time for the membership in DateTime format, will override any subscription expirations.
+    ExpirationTime time.Time `json:"ExpirationTime,omitempty"`
+    // MembershipId id of the membership to apply the override expiration date to.
+    MembershipId string `json:"MembershipId,omitempty"`
+    // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// SetMembershipOverrideResult 
+type SetMembershipOverrideResultModel struct {
 }
 
 // SetPlayerSecretRequest aPIs that require signatures require that the player have a configured Player Secret Key that is used to sign all
@@ -3419,11 +4260,8 @@ type SetTitleDataAndOverridesRequestModel struct {
 type SetTitleDataAndOverridesResultModel struct {
 }
 
-// SetTitleDataRequest this API method is designed to store title specific values which can be read by the client. For example, a developer
-// could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement
-// speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This
-// operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it
-// already exists, the Value for that key will be overwritten with the new Value.
+// SetTitleDataRequest this operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value.
+// If it already exists, the Value for that key will be overwritten with the new Value.
 type SetTitleDataRequestModel struct {
     // Key key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same
 // name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
@@ -3444,8 +4282,7 @@ type SetupPushNotificationRequestModel struct {
     Credential string `json:"Credential,omitempty"`
     // Key for APNS, this is the PlatformPrincipal (SSL Certificate)
     Key string `json:"Key,omitempty"`
-    // Name name of the application sending the message (application names must be made up of only uppercase and lowercase ASCII
-// letters, numbers, underscores, hyphens, and periods, and must be between 1 and 256 characters long)
+    // Name this field is deprecated and any usage of this will cause the API to fail.
     Name string `json:"Name,omitempty"`
     // OverwriteOldARN replace any existing ARN with the newly generated one. If this is set to false, an error will be returned if
 // notifications have already setup for this platform.
@@ -3512,6 +4349,20 @@ const (
      StatisticResetIntervalOptionWeek StatisticResetIntervalOption = "Week"
      StatisticResetIntervalOptionMonth StatisticResetIntervalOption = "Month"
       )
+// StatisticSegmentFilter 
+type StatisticSegmentFilterModel struct {
+    // Comparison statistic filter comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // FilterValue statistic filter value.
+    FilterValue string `json:"FilterValue,omitempty"`
+    // Name statistic name.
+    Name string `json:"Name,omitempty"`
+    // UseCurrentVersion use current version of statistic?
+    UseCurrentVersion bool `json:"UseCurrentVersion"`
+    // Version statistic version.
+    Version int32 `json:"Version,omitempty"`
+}
+
 // StatisticVersionArchivalStatus 
 type StatisticVersionArchivalStatus string
   
@@ -3606,6 +4457,14 @@ type TagModelModel struct {
     TagValue string `json:"TagValue,omitempty"`
 }
 
+// TagSegmentFilter 
+type TagSegmentFilterModel struct {
+    // Comparison tag comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // TagValue tag value.
+    TagValue string `json:"TagValue,omitempty"`
+}
+
 // TaskInstanceBasicSummary 
 type TaskInstanceBasicSummaryModel struct {
     // CompletedAt uTC timestamp when the task completed.
@@ -3660,6 +4519,14 @@ type TitleDataKeyValueModel struct {
     Value string `json:"Value,omitempty"`
 }
 
+// TotalValueToDateInUSDSegmentFilter 
+type TotalValueToDateInUSDSegmentFilterModel struct {
+    // Amount total value to date USD amount.
+    Amount string `json:"Amount,omitempty"`
+    // Comparison total value to date USD comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+}
+
 // UpdateBanRequest represents a single update ban request.
 type UpdateBanRequestModel struct {
     // Active the updated active state for the ban. Null for no change.
@@ -3670,8 +4537,6 @@ type UpdateBanRequestModel struct {
     Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the updated IP address for the ban. Null for no change.
     IPAddress string `json:"IPAddress,omitempty"`
-    // MACAddress the updated MAC address for the ban. Null for no change.
-    MACAddress string `json:"MACAddress,omitempty"`
     // Permanent whether to make this ban permanent. Set to true to make this ban permanent. This will not modify Active state.
     Permanent bool `json:"Permanent"`
     // Reason the updated reason for the ban to be updated. Maximum 140 characters. Null for no change.
@@ -3691,9 +4556,11 @@ type UpdateBansResultModel struct {
     BanData []BanInfoModel `json:"BanData,omitempty"`
 }
 
-// UpdateCatalogItemsRequest this operation is not additive. Using it will cause the indicated catalog version to be created from scratch. If there
-// is an existing catalog with the version number in question, it will be deleted and replaced with only the items
-// specified in this call.
+// UpdateCatalogItemsRequest when used for SetCatalogItems, this operation is not additive. Using it will cause the indicated catalog version to be
+// created from scratch. If there is an existing catalog with the version number in question, it will be deleted and
+// replaced with only the items specified in this call. When used for UpdateCatalogItems, this operation is additive. Items
+// with ItemId values not currently in the catalog will be added, while those with ItemId values matching items currently
+// in the catalog will overwrite those items with the given values.
 type UpdateCatalogItemsRequestModel struct {
     // Catalog array of catalog items to be submitted. Note that while CatalogItem has a parameter for CatalogVersion, it is not
 // required and ignored in this call.
@@ -3790,12 +4657,17 @@ type UpdatePlayerStatisticDefinitionResultModel struct {
 
 // UpdatePolicyRequest updates permissions for your title. Policies affect what is allowed to happen on your title. Your policy is a collection
 // of statements that, together, govern particular area for your title. Today, the only allowed policy is called
-// 'ApiPolicy' and it governs what api calls are allowed.
+// 'ApiPolicy' and it governs what API calls are allowed. To verify that you have the latest version always download the
+// current policy from GetPolicy before uploading a new policy. PlayFab updates the base policy periodically and will
+// automatically apply it to the uploaded policy. Overwriting the combined policy blindly may result in unexpected API
+// errors.
 type UpdatePolicyRequestModel struct {
     // OverwritePolicy whether to overwrite or append to the existing policy.
     OverwritePolicy bool `json:"OverwritePolicy"`
     // PolicyName the name of the policy being updated. Only supported name is 'ApiPolicy'
     PolicyName string `json:"PolicyName,omitempty"`
+    // PolicyVersion version of the policy to update. Must be the latest (as returned by GetPolicy).
+    PolicyVersion int32 `json:"PolicyVersion,omitempty"`
     // Statements the new statements to include in the policy.
     Statements []PermissionStatementModel `json:"Statements,omitempty"`
 }
@@ -3824,16 +4696,33 @@ type UpdateRandomResultTablesRequestModel struct {
 type UpdateRandomResultTablesResultModel struct {
 }
 
-// UpdateStoreItemsRequest this operation is not additive. Using it will cause the indicated virtual store to be created from scratch. If there is
-// an existing store with the same storeId, it will be deleted and replaced with only the items specified in this call. A
-// store contains an array of references to items defined inthe catalog, along with the prices for the item, in both real
-// world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the
-// base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be
-// set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to
-// simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique
-// prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a
-// compromised client can be made to send a request for an item based upon any of these definitions. If no price is
-// specified in the store for an item, the price set in the catalog should be displayed to the user.
+// UpdateSegmentRequest update segment properties data which are planning to update
+type UpdateSegmentRequestModel struct {
+    // SegmentModel segment model with all of the segment properties data.
+    SegmentModel* SegmentModelModel `json:"SegmentModel,omitempty"`
+}
+
+// UpdateSegmentResponse 
+type UpdateSegmentResponseModel struct {
+    // ErrorMessage error message.
+    ErrorMessage string `json:"ErrorMessage,omitempty"`
+    // SegmentId segment id.
+    SegmentId string `json:"SegmentId,omitempty"`
+}
+
+// UpdateStoreItemsRequest when used for SetStoreItems, this operation is not additive. Using it will cause the indicated virtual store to be
+// created from scratch. If there is an existing store with the same storeId, it will be deleted and replaced with only the
+// items specified in this call. When used for UpdateStoreItems, this operation is additive. Items with ItemId values not
+// currently in the store will be added, while those with ItemId values matching items currently in the catalog will
+// overwrite those items with the given values. In both cases, a store contains an array of references to items defined in
+// the catalog, along with the prices for the item, in both real world and virtual currencies. These prices act as an
+// override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the
+// catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets
+// of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users,
+// based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store
+// definitions for the item are considered valid, and that a compromised client can be made to send a request for an item
+// based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog
+// should be displayed to the user.
 type UpdateStoreItemsRequestModel struct {
     // CatalogVersion catalog version of the store to update. If null, uses the default catalog.
     CatalogVersion string `json:"CatalogVersion,omitempty"`
@@ -3951,6 +4840,8 @@ type UserAccountInfoModel struct {
     GameCenterInfo *UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // GoogleInfo user Google account information, if a Google account has been linked
     GoogleInfo *UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
+    // GooglePlayGamesInfo user Google Play Games account information, if a Google Play Games account has been linked
+    GooglePlayGamesInfo *UserGooglePlayGamesInfoModel `json:"GooglePlayGamesInfo,omitempty"`
     // IosDeviceInfo user iOS device information, if an iOS device has been linked
     IosDeviceInfo *UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
     // KongregateInfo user Kongregate account information, if a Kongregate account has been linked
@@ -3965,7 +4856,7 @@ type UserAccountInfoModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
     PrivateInfo *UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
-    // PsnInfo user PSN account information, if a PSN account has been linked
+    // PsnInfo user PlayStation :tm: Network account information, if a PlayStation :tm: Network account has been linked
     PsnInfo *UserPsnInfoModel `json:"PsnInfo,omitempty"`
     // SteamInfo user Steam information, if a Steam account has been linked
     SteamInfo *UserSteamInfoModel `json:"SteamInfo,omitempty"`
@@ -3975,8 +4866,6 @@ type UserAccountInfoModel struct {
     TwitchInfo *UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
     Username string `json:"Username,omitempty"`
-    // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
-    WindowsHelloInfo *UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
     XboxInfo *UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
@@ -4052,6 +4941,16 @@ type UserGoogleInfoModel struct {
     GoogleName string `json:"GoogleName,omitempty"`
 }
 
+// UserGooglePlayGamesInfo 
+type UserGooglePlayGamesInfoModel struct {
+    // GooglePlayGamesPlayerAvatarImageUrl avatar image url of the Google Play Games player
+    GooglePlayGamesPlayerAvatarImageUrl string `json:"GooglePlayGamesPlayerAvatarImageUrl,omitempty"`
+    // GooglePlayGamesPlayerDisplayName display name of the Google Play Games player
+    GooglePlayGamesPlayerDisplayName string `json:"GooglePlayGamesPlayerDisplayName,omitempty"`
+    // GooglePlayGamesPlayerId google Play Games player ID
+    GooglePlayGamesPlayerId string `json:"GooglePlayGamesPlayerId,omitempty"`
+}
+
 // UserIosDeviceInfo 
 type UserIosDeviceInfoModel struct {
     // IosDeviceId iOS device ID
@@ -4109,14 +5008,20 @@ const (
      UserOriginationXboxLive UserOrigination = "XboxLive"
      UserOriginationParse UserOrigination = "Parse"
      UserOriginationTwitch UserOrigination = "Twitch"
-     UserOriginationWindowsHello UserOrigination = "WindowsHello"
      UserOriginationServerCustomId UserOrigination = "ServerCustomId"
      UserOriginationNintendoSwitchDeviceId UserOrigination = "NintendoSwitchDeviceId"
      UserOriginationFacebookInstantGamesId UserOrigination = "FacebookInstantGamesId"
      UserOriginationOpenIdConnect UserOrigination = "OpenIdConnect"
      UserOriginationApple UserOrigination = "Apple"
      UserOriginationNintendoSwitchAccount UserOrigination = "NintendoSwitchAccount"
+     UserOriginationGooglePlayGames UserOrigination = "GooglePlayGames"
       )
+// UserOriginationSegmentFilter 
+type UserOriginationSegmentFilterModel struct {
+    // LoginProvider user login provider.
+    LoginProvider SegmentLoginIdentityProvider `json:"LoginProvider,omitempty"`
+}
+
 // UserPrivateAccountInfo 
 type UserPrivateAccountInfoModel struct {
     // Email user email address
@@ -4125,9 +5030,9 @@ type UserPrivateAccountInfoModel struct {
 
 // UserPsnInfo 
 type UserPsnInfoModel struct {
-    // PsnAccountId pSN account ID
+    // PsnAccountId playStation :tm: Network account ID
     PsnAccountId string `json:"PsnAccountId,omitempty"`
-    // PsnOnlineId pSN online ID
+    // PsnOnlineId playStation :tm: Network online ID
     PsnOnlineId string `json:"PsnOnlineId,omitempty"`
 }
 
@@ -4175,18 +5080,12 @@ type UserTwitchInfoModel struct {
     TwitchUserName string `json:"TwitchUserName,omitempty"`
 }
 
-// UserWindowsHelloInfo 
-type UserWindowsHelloInfoModel struct {
-    // WindowsHelloDeviceName windows Hello Device Name
-    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName,omitempty"`
-    // WindowsHelloPublicKeyHash windows Hello Public Key Hash
-    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash,omitempty"`
-}
-
 // UserXboxInfo 
 type UserXboxInfoModel struct {
     // XboxUserId xBox user ID
     XboxUserId string `json:"XboxUserId,omitempty"`
+    // XboxUserSandbox xBox user sandbox
+    XboxUserSandbox string `json:"XboxUserSandbox,omitempty"`
 }
 
 // ValueToDateModel 
@@ -4199,6 +5098,26 @@ type ValueToDateModelModel struct {
     // TotalValueAsDecimal total value of the purchases in a string representation of decimal monetary units. For example, '9.99' indicates nine
 // dollars and ninety-nine cents when Currency is 'USD'.
     TotalValueAsDecimal string `json:"TotalValueAsDecimal,omitempty"`
+}
+
+// ValueToDateSegmentFilter 
+type ValueToDateSegmentFilterModel struct {
+    // Amount value to date amount.
+    Amount string `json:"Amount,omitempty"`
+    // Comparison value to date comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // Currency currency using for filter.
+    Currency SegmentCurrency `json:"Currency,omitempty"`
+}
+
+// VirtualCurrencyBalanceSegmentFilter 
+type VirtualCurrencyBalanceSegmentFilterModel struct {
+    // Amount total amount.
+    Amount int32 `json:"Amount,omitempty"`
+    // Comparison amount comparison.
+    Comparison SegmentFilterComparison `json:"Comparison,omitempty"`
+    // CurrencyCode currency code.
+    CurrencyCode string `json:"CurrencyCode,omitempty"`
 }
 
 // VirtualCurrencyData 

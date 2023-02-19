@@ -298,6 +298,42 @@ func CreateBuildWithProcessBasedServer(settings *playfab.Settings, postData *Cre
     return result, nil
 }
 
+// CreateLobby create a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/CreateLobby
+func CreateLobby(settings *playfab.Settings, postData *CreateLobbyRequestModel, entityToken string) (*CreateLobbyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/CreateLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CreateLobbyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // CreateMatchmakingTicket create a matchmaking ticket as a client.
 // https://api.playfab.com/Documentation/Multiplayer/method/CreateMatchmakingTicket
 func CreateMatchmakingTicket(settings *playfab.Settings, postData *CreateMatchmakingTicketRequestModel, entityToken string) (*CreateMatchmakingTicketResultModel, error) {
@@ -426,6 +462,42 @@ func CreateServerMatchmakingTicket(settings *playfab.Settings, postData *CreateS
     }
     
     result := &CreateMatchmakingTicketResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// CreateTitleMultiplayerServersQuotaChange creates a request to change a title's multiplayer server quotas.
+// https://api.playfab.com/Documentation/Multiplayer/method/CreateTitleMultiplayerServersQuotaChange
+func CreateTitleMultiplayerServersQuotaChange(settings *playfab.Settings, postData *CreateTitleMultiplayerServersQuotaChangeRequestModel, entityToken string) (*CreateTitleMultiplayerServersQuotaChangeResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/CreateTitleMultiplayerServersQuotaChange", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CreateTitleMultiplayerServersQuotaChangeResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -661,6 +733,42 @@ func DeleteContainerImageRepository(settings *playfab.Settings, postData *Delete
     return result, nil
 }
 
+// DeleteLobby delete a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/DeleteLobby
+func DeleteLobby(settings *playfab.Settings, postData *DeleteLobbyRequestModel, entityToken string) (*LobbyEmptyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/DeleteLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LobbyEmptyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // DeleteRemoteUser deletes a remote user to log on to a VM for a multiplayer server build.
 // https://api.playfab.com/Documentation/Multiplayer/method/DeleteRemoteUser
 func DeleteRemoteUser(settings *playfab.Settings, postData *DeleteRemoteUserRequestModel, entityToken string) (*EmptyResponseModel, error) {
@@ -733,7 +841,117 @@ func EnableMultiplayerServersForTitle(settings *playfab.Settings, postData *Enab
     return result, nil
 }
 
-// GetAssetUploadUrl gets the URL to upload assets to.
+// FindFriendLobbies find lobbies which match certain criteria, and which friends are in.
+// https://api.playfab.com/Documentation/Multiplayer/method/FindFriendLobbies
+func FindFriendLobbies(settings *playfab.Settings, postData *FindFriendLobbiesRequestModel, entityToken string) (*FindFriendLobbiesResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/FindFriendLobbies", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &FindFriendLobbiesResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// FindLobbies find all the lobbies that match certain criteria.
+// https://api.playfab.com/Documentation/Multiplayer/method/FindLobbies
+func FindLobbies(settings *playfab.Settings, postData *FindLobbiesRequestModel, entityToken string) (*FindLobbiesResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/FindLobbies", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &FindLobbiesResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetAssetDownloadUrl gets a URL that can be used to download the specified asset. A sample pre-authenticated url -
+// https://sampleStorageAccount.blob.core.windows.net/gameassets/gameserver.zip?sv=2015-04-05&ss=b&srt=sco&sp=rw&st=startDate&se=endDate&spr=https&sig=sampleSig&api-version=2017-07-29
+// https://api.playfab.com/Documentation/Multiplayer/method/GetAssetDownloadUrl
+func GetAssetDownloadUrl(settings *playfab.Settings, postData *GetAssetDownloadUrlRequestModel, entityToken string) (*GetAssetDownloadUrlResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/GetAssetDownloadUrl", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetAssetDownloadUrlResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetAssetUploadUrl gets the URL to upload assets to. A sample pre-authenticated url -
+// https://sampleStorageAccount.blob.core.windows.net/gameassets/gameserver.zip?sv=2015-04-05&ss=b&srt=sco&sp=rw&st=startDate&se=endDate&spr=https&sig=sampleSig&api-version=2017-07-29
 // https://api.playfab.com/Documentation/Multiplayer/method/GetAssetUploadUrl
 func GetAssetUploadUrl(settings *playfab.Settings, postData *GetAssetUploadUrlRequestModel, entityToken string) (*GetAssetUploadUrlResponseModel, error) {
     if entityToken == "" {
@@ -858,6 +1076,42 @@ func GetContainerRegistryCredentials(settings *playfab.Settings, postData *GetCo
     }
     
     result := &GetContainerRegistryCredentialsResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetLobby get a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/GetLobby
+func GetLobby(settings *playfab.Settings, postData *GetLobbyRequestModel, entityToken string) (*GetLobbyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/GetLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetLobbyResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1201,6 +1455,42 @@ func GetTitleEnabledForMultiplayerServersStatus(settings *playfab.Settings, post
     return result, nil
 }
 
+// GetTitleMultiplayerServersQuotaChange gets a title's server quota change request.
+// https://api.playfab.com/Documentation/Multiplayer/method/GetTitleMultiplayerServersQuotaChange
+func GetTitleMultiplayerServersQuotaChange(settings *playfab.Settings, postData *GetTitleMultiplayerServersQuotaChangeRequestModel, entityToken string) (*GetTitleMultiplayerServersQuotaChangeResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/GetTitleMultiplayerServersQuotaChange", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetTitleMultiplayerServersQuotaChangeResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetTitleMultiplayerServersQuotas gets the quotas for a title in relation to multiplayer servers.
 // https://api.playfab.com/Documentation/Multiplayer/method/GetTitleMultiplayerServersQuotas
 func GetTitleMultiplayerServersQuotas(settings *playfab.Settings, postData *GetTitleMultiplayerServersQuotasRequestModel, entityToken string) (*GetTitleMultiplayerServersQuotasResponseModel, error) {
@@ -1237,6 +1527,114 @@ func GetTitleMultiplayerServersQuotas(settings *playfab.Settings, postData *GetT
     return result, nil
 }
 
+// InviteToLobby send a notification to invite a player to a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/InviteToLobby
+func InviteToLobby(settings *playfab.Settings, postData *InviteToLobbyRequestModel, entityToken string) (*LobbyEmptyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/InviteToLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LobbyEmptyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// JoinArrangedLobby join an Arranged lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/JoinArrangedLobby
+func JoinArrangedLobby(settings *playfab.Settings, postData *JoinArrangedLobbyRequestModel, entityToken string) (*JoinLobbyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/JoinArrangedLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &JoinLobbyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// JoinLobby join a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/JoinLobby
+func JoinLobby(settings *playfab.Settings, postData *JoinLobbyRequestModel, entityToken string) (*JoinLobbyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/JoinLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &JoinLobbyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // JoinMatchmakingTicket join a matchmaking ticket.
 // https://api.playfab.com/Documentation/Multiplayer/method/JoinMatchmakingTicket
 func JoinMatchmakingTicket(settings *playfab.Settings, postData *JoinMatchmakingTicketRequestModel, entityToken string) (*JoinMatchmakingTicketResultModel, error) {
@@ -1254,6 +1652,42 @@ func JoinMatchmakingTicket(settings *playfab.Settings, postData *JoinMatchmaking
     }
     
     result := &JoinMatchmakingTicketResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LeaveLobby leave a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/LeaveLobby
+func LeaveLobby(settings *playfab.Settings, postData *LeaveLobbyRequestModel, entityToken string) (*LobbyEmptyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/LeaveLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LobbyEmptyResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1348,7 +1782,7 @@ func ListAssetSummaries(settings *playfab.Settings, postData *ListAssetSummaries
 // ListBuildAliases lists details of all build aliases for a title. Accepts tokens for title and if game client access is enabled, allows
 // game client to request list of builds with player entity token.
 // https://api.playfab.com/Documentation/Multiplayer/method/ListBuildAliases
-func ListBuildAliases(settings *playfab.Settings, postData *MultiplayerEmptyRequestModel, entityToken string) (*ListBuildAliasesForTitleResponseModel, error) {
+func ListBuildAliases(settings *playfab.Settings, postData *ListBuildAliasesRequestModel, entityToken string) (*ListBuildAliasesResponseModel, error) {
     if entityToken == "" {
         return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
     }
@@ -1362,7 +1796,7 @@ func ListBuildAliases(settings *playfab.Settings, postData *MultiplayerEmptyRequ
         return nil, err
     }
     
-    result := &ListBuildAliasesForTitleResponseModel{}
+    result := &ListBuildAliasesResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1382,10 +1816,10 @@ func ListBuildAliases(settings *playfab.Settings, postData *MultiplayerEmptyRequ
     return result, nil
 }
 
-// ListBuildSummaries lists summarized details of all multiplayer server builds for a title. Accepts tokens for title and if game client
+// ListBuildSummariesV2 lists summarized details of all multiplayer server builds for a title. Accepts tokens for title and if game client
 // access is enabled, allows game client to request list of builds with player entity token.
-// https://api.playfab.com/Documentation/Multiplayer/method/ListBuildSummaries
-func ListBuildSummaries(settings *playfab.Settings, postData *ListBuildSummariesRequestModel, entityToken string) (*ListBuildSummariesResponseModel, error) {
+// https://api.playfab.com/Documentation/Multiplayer/method/ListBuildSummariesV2
+func ListBuildSummariesV2(settings *playfab.Settings, postData *ListBuildSummariesRequestModel, entityToken string) (*ListBuildSummariesResponseModel, error) {
     if entityToken == "" {
         return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
     }
@@ -1394,7 +1828,7 @@ func ListBuildSummaries(settings *playfab.Settings, postData *ListBuildSummaries
         return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
     }
 
-    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/ListBuildSummaries", "X-EntityToken", entityToken)
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/ListBuildSummariesV2", "X-EntityToken", entityToken)
     if err != nil {
         return nil, err
     }
@@ -1706,6 +2140,42 @@ func ListServerBackfillTicketsForPlayer(settings *playfab.Settings, postData *Li
     return result, nil
 }
 
+// ListTitleMultiplayerServersQuotaChanges list all server quota change requests for a title.
+// https://api.playfab.com/Documentation/Multiplayer/method/ListTitleMultiplayerServersQuotaChanges
+func ListTitleMultiplayerServersQuotaChanges(settings *playfab.Settings, postData *ListTitleMultiplayerServersQuotaChangesRequestModel, entityToken string) (*ListTitleMultiplayerServersQuotaChangesResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/ListTitleMultiplayerServersQuotaChanges", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ListTitleMultiplayerServersQuotaChangesResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // ListVirtualMachineSummaries lists virtual machines for a title.
 // https://api.playfab.com/Documentation/Multiplayer/method/ListVirtualMachineSummaries
 func ListVirtualMachineSummaries(settings *playfab.Settings, postData *ListVirtualMachineSummariesRequestModel, entityToken string) (*ListVirtualMachineSummariesResponseModel, error) {
@@ -1723,6 +2193,42 @@ func ListVirtualMachineSummaries(settings *playfab.Settings, postData *ListVirtu
     }
     
     result := &ListVirtualMachineSummariesResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// RemoveMember remove a member from a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/RemoveMember
+func RemoveMember(settings *playfab.Settings, postData *RemoveMemberFromLobbyRequestModel, entityToken string) (*LobbyEmptyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/RemoveMember", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LobbyEmptyResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1851,6 +2357,78 @@ func ShutdownMultiplayerServer(settings *playfab.Settings, postData *ShutdownMul
     return result, nil
 }
 
+// SubscribeToLobbyResource subscribe to lobby resource notifications.
+// https://api.playfab.com/Documentation/Multiplayer/method/SubscribeToLobbyResource
+func SubscribeToLobbyResource(settings *playfab.Settings, postData *SubscribeToLobbyResourceRequestModel, entityToken string) (*SubscribeToLobbyResourceResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/SubscribeToLobbyResource", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &SubscribeToLobbyResourceResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UnsubscribeFromLobbyResource unsubscribe from lobby notifications.
+// https://api.playfab.com/Documentation/Multiplayer/method/UnsubscribeFromLobbyResource
+func UnsubscribeFromLobbyResource(settings *playfab.Settings, postData *UnsubscribeFromLobbyResourceRequestModel, entityToken string) (*LobbyEmptyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/UnsubscribeFromLobbyResource", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LobbyEmptyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // UntagContainerImage untags a container image.
 // https://api.playfab.com/Documentation/Multiplayer/method/UntagContainerImage
 func UntagContainerImage(settings *playfab.Settings, postData *UntagContainerImageRequestModel, entityToken string) (*EmptyResponseModel, error) {
@@ -1923,6 +2501,42 @@ func UpdateBuildAlias(settings *playfab.Settings, postData *UpdateBuildAliasRequ
     return result, nil
 }
 
+// UpdateBuildName updates a multiplayer server build's name.
+// https://api.playfab.com/Documentation/Multiplayer/method/UpdateBuildName
+func UpdateBuildName(settings *playfab.Settings, postData *UpdateBuildNameRequestModel, entityToken string) (*EmptyResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/MultiplayerServer/UpdateBuildName", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // UpdateBuildRegion updates a multiplayer server build's region. If the region is not yet created, it will be created
 // https://api.playfab.com/Documentation/Multiplayer/method/UpdateBuildRegion
 func UpdateBuildRegion(settings *playfab.Settings, postData *UpdateBuildRegionRequestModel, entityToken string) (*EmptyResponseModel, error) {
@@ -1976,6 +2590,42 @@ func UpdateBuildRegions(settings *playfab.Settings, postData *UpdateBuildRegions
     }
     
     result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UpdateLobby update a lobby.
+// https://api.playfab.com/Documentation/Multiplayer/method/UpdateLobby
+func UpdateLobby(settings *playfab.Settings, postData *UpdateLobbyRequestModel, entityToken string) (*LobbyEmptyResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Lobby/UpdateLobby", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LobbyEmptyResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,

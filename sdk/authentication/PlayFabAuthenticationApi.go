@@ -10,6 +10,78 @@ import (
     "github.com/mitchellh/mapstructure"
 )
 
+// AuthenticateGameServerWithCustomId create a game_server entity token and return a new or existing game_server entity.
+// https://api.playfab.com/Documentation/Authentication/method/AuthenticateGameServerWithCustomId
+func AuthenticateGameServerWithCustomId(settings *playfab.Settings, postData *AuthenticateCustomIdRequestModel, entityToken string) (*AuthenticateCustomIdResultModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/GameServerIdentity/AuthenticateGameServerWithCustomId", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &AuthenticateCustomIdResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// Delete delete a game_server entity.
+// https://api.playfab.com/Documentation/Authentication/method/Delete
+func Delete(settings *playfab.Settings, postData *DeleteRequestModel, entityToken string) (*EmptyResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/GameServerIdentity/Delete", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetEntityToken method to exchange a legacy AuthenticationTicket or title SecretKey for an Entity Token or to refresh a still valid
 // Entity Token.
 // https://api.playfab.com/Documentation/Authentication/method/GetEntityToken

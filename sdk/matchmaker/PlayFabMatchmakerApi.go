@@ -118,42 +118,6 @@ func PlayerLeft(settings *playfab.Settings, postData *PlayerLeftRequestModel, de
     return result, nil
 }
 
-// StartGame instructs the PlayFab game server hosting service to instantiate a new Game Server Instance
-// https://api.playfab.com/Documentation/Matchmaker/method/StartGame
-func StartGame(settings *playfab.Settings, postData *StartGameRequestModel, developerSecretKey string) (*StartGameResponseModel, error) {
-    if developerSecretKey == "" {
-        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Matchmaker/StartGame", "X-SecretKey", developerSecretKey)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &StartGameResponseModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
 // UserInfo retrieves the relevant details for a specified user, which the external match-making service can then use to compute
 // effective matches
 // https://api.playfab.com/Documentation/Matchmaker/method/UserInfo

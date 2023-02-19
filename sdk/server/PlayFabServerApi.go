@@ -634,7 +634,8 @@ func EvaluateRandomResultTable(settings *playfab.Settings, postData *EvaluateRan
     return result, nil
 }
 
-// ExecuteCloudScript executes a CloudScript function, with the 'currentPlayerId' variable set to the specified PlayFabId parameter value.
+// ExecuteCloudScript executes a CloudScript function, with the 'currentPlayerId' set to the PlayFab ID of the authenticated player. The
+// PlayFab ID is the entity ID of the player's master_player_account entity.
 // https://api.playfab.com/Documentation/Server/method/ExecuteCloudScript
 func ExecuteCloudScript(settings *playfab.Settings, postData *ExecuteCloudScriptServerRequestModel, developerSecretKey string) (*ExecuteCloudScriptResultModel, error) {
     if developerSecretKey == "" {
@@ -1622,6 +1623,42 @@ func GetPlayFabIDsFromGenericIDs(settings *playfab.Settings, postData *GetPlayFa
     return result, nil
 }
 
+// GetPlayFabIDsFromNintendoServiceAccountIds retrieves the unique PlayFab identifiers for the given set of Nintendo Service Account identifiers.
+// https://api.playfab.com/Documentation/Server/method/GetPlayFabIDsFromNintendoServiceAccountIds
+func GetPlayFabIDsFromNintendoServiceAccountIds(settings *playfab.Settings, postData *GetPlayFabIDsFromNintendoServiceAccountIdsRequestModel, developerSecretKey string) (*GetPlayFabIDsFromNintendoServiceAccountIdsResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/GetPlayFabIDsFromNintendoServiceAccountIds", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetPlayFabIDsFromNintendoServiceAccountIdsResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetPlayFabIDsFromNintendoSwitchDeviceIds retrieves the unique PlayFab identifiers for the given set of Nintendo Switch Device identifiers.
 // https://api.playfab.com/Documentation/Server/method/GetPlayFabIDsFromNintendoSwitchDeviceIds
 func GetPlayFabIDsFromNintendoSwitchDeviceIds(settings *playfab.Settings, postData *GetPlayFabIDsFromNintendoSwitchDeviceIdsRequestModel, developerSecretKey string) (*GetPlayFabIDsFromNintendoSwitchDeviceIdsResultModel, error) {
@@ -1658,7 +1695,7 @@ func GetPlayFabIDsFromNintendoSwitchDeviceIds(settings *playfab.Settings, postDa
     return result, nil
 }
 
-// GetPlayFabIDsFromPSNAccountIDs retrieves the unique PlayFab identifiers for the given set of PlayStation Network identifiers.
+// GetPlayFabIDsFromPSNAccountIDs retrieves the unique PlayFab identifiers for the given set of PlayStation :tm: Network identifiers.
 // https://api.playfab.com/Documentation/Server/method/GetPlayFabIDsFromPSNAccountIDs
 func GetPlayFabIDsFromPSNAccountIDs(settings *playfab.Settings, postData *GetPlayFabIDsFromPSNAccountIDsRequestModel, developerSecretKey string) (*GetPlayFabIDsFromPSNAccountIDsResultModel, error) {
     if developerSecretKey == "" {
@@ -1712,6 +1749,44 @@ func GetPlayFabIDsFromSteamIDs(settings *playfab.Settings, postData *GetPlayFabI
     }
     
     result := &GetPlayFabIDsFromSteamIDsResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetPlayFabIDsFromTwitchIDs retrieves the unique PlayFab identifiers for the given set of Twitch identifiers. The Twitch identifiers are the IDs for
+// the user accounts, available as "_id" from the Twitch API methods (ex:
+// https://github.com/justintv/Twitch-API/blob/master/v3_resources/users.md#get-usersuser).
+// https://api.playfab.com/Documentation/Server/method/GetPlayFabIDsFromTwitchIDs
+func GetPlayFabIDsFromTwitchIDs(settings *playfab.Settings, postData *GetPlayFabIDsFromTwitchIDsRequestModel, developerSecretKey string) (*GetPlayFabIDsFromTwitchIDsResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/GetPlayFabIDsFromTwitchIDs", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetPlayFabIDsFromTwitchIDsResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -2563,7 +2638,79 @@ func GrantItemsToUsers(settings *playfab.Settings, postData *GrantItemsToUsersRe
     return result, nil
 }
 
-// LinkPSNAccount links the PlayStation Network account associated with the provided access code to the user's PlayFab account
+// LinkNintendoServiceAccount links the Nintendo account associated with the token to the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/LinkNintendoServiceAccount
+func LinkNintendoServiceAccount(settings *playfab.Settings, postData *LinkNintendoServiceAccountRequestModel, developerSecretKey string) (*EmptyResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LinkNintendoServiceAccount", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LinkNintendoSwitchDeviceId links the NintendoSwitchDeviceId to the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/LinkNintendoSwitchDeviceId
+func LinkNintendoSwitchDeviceId(settings *playfab.Settings, postData *LinkNintendoSwitchDeviceIdRequestModel, developerSecretKey string) (*LinkNintendoSwitchDeviceIdResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LinkNintendoSwitchDeviceId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LinkNintendoSwitchDeviceIdResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LinkPSNAccount links the PlayStation :tm: Network account associated with the provided access code to the user's PlayFab account
 // https://api.playfab.com/Documentation/Server/method/LinkPSNAccount
 func LinkPSNAccount(settings *playfab.Settings, postData *LinkPSNAccountRequestModel, developerSecretKey string) (*LinkPSNAccountResultModel, error) {
     if developerSecretKey == "" {
@@ -2684,6 +2831,43 @@ func LoginWithServerCustomId(settings *playfab.Settings, postData *LoginWithServ
     }
 
     sourceMap, err := playfab.Request(settings, b, "/Server/LoginWithServerCustomId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ServerLoginResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LoginWithSteamId signs the user in using an Steam ID, returning a session identifier that can subsequently be used for API calls which
+// require an authenticated user
+// https://api.playfab.com/Documentation/Server/method/LoginWithSteamId
+func LoginWithSteamId(settings *playfab.Settings, postData *LoginWithSteamIdRequestModel, developerSecretKey string) (*ServerLoginResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LoginWithSteamId", "X-SecretKey", developerSecretKey)
     if err != nil {
         return nil, err
     }
@@ -3981,7 +4165,79 @@ func SubtractUserVirtualCurrency(settings *playfab.Settings, postData *SubtractU
     return result, nil
 }
 
-// UnlinkPSNAccount unlinks the related PSN account from the user's PlayFab account
+// UnlinkNintendoServiceAccount unlinks the related Nintendo account from the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/UnlinkNintendoServiceAccount
+func UnlinkNintendoServiceAccount(settings *playfab.Settings, postData *UnlinkNintendoServiceAccountRequestModel, developerSecretKey string) (*EmptyResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/UnlinkNintendoServiceAccount", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &EmptyResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UnlinkNintendoSwitchDeviceId unlinks the related NintendoSwitchDeviceId from the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/UnlinkNintendoSwitchDeviceId
+func UnlinkNintendoSwitchDeviceId(settings *playfab.Settings, postData *UnlinkNintendoSwitchDeviceIdRequestModel, developerSecretKey string) (*UnlinkNintendoSwitchDeviceIdResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/UnlinkNintendoSwitchDeviceId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &UnlinkNintendoSwitchDeviceIdResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UnlinkPSNAccount unlinks the related PlayStation :tm: Network account from the user's PlayFab account
 // https://api.playfab.com/Documentation/Server/method/UnlinkPSNAccount
 func UnlinkPSNAccount(settings *playfab.Settings, postData *UnlinkPSNAccountRequestModel, developerSecretKey string) (*UnlinkPSNAccountResultModel, error) {
     if developerSecretKey == "" {

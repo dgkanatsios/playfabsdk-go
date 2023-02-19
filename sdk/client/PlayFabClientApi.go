@@ -491,6 +491,43 @@ func ConsumeMicrosoftStoreEntitlements(settings *playfab.Settings, postData *Con
     return result, nil
 }
 
+// ConsumePS5Entitlements checks for any new consumable entitlements. If any are found, they are consumed (if they're consumables) and added as
+// PlayFab items
+// https://api.playfab.com/Documentation/Client/method/ConsumePS5Entitlements
+func ConsumePS5Entitlements(settings *playfab.Settings, postData *ConsumePS5EntitlementsRequestModel, clientSessionTicket string) (*ConsumePS5EntitlementsResultModel, error) {
+    if clientSessionTicket == "" {
+        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Client/ConsumePS5Entitlements", "X-Authentication", clientSessionTicket)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ConsumePS5EntitlementsResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // ConsumePSNEntitlements checks for any new consumable entitlements. If any are found, they are consumed and added as PlayFab items
 // https://api.playfab.com/Documentation/Client/method/ConsumePSNEntitlements
 func ConsumePSNEntitlements(settings *playfab.Settings, postData *ConsumePSNEntitlementsRequestModel, clientSessionTicket string) (*ConsumePSNEntitlementsResultModel, error) {
@@ -603,7 +640,8 @@ func CreateSharedGroup(settings *playfab.Settings, postData *CreateSharedGroupRe
     return result, nil
 }
 
-// ExecuteCloudScript executes a CloudScript function, with the 'currentPlayerId' set to the PlayFab ID of the authenticated player.
+// ExecuteCloudScript executes a CloudScript function, with the 'currentPlayerId' set to the PlayFab ID of the authenticated player. The
+// PlayFab ID is the entity ID of the player's master_player_account entity.
 // https://api.playfab.com/Documentation/Client/method/ExecuteCloudScript
 func ExecuteCloudScript(settings *playfab.Settings, postData *ExecuteCloudScriptRequestModel, clientSessionTicket string) (*ExecuteCloudScriptResultModel, error) {
     if clientSessionTicket == "" {
@@ -1845,6 +1883,44 @@ func GetPlayFabIDsFromGoogleIDs(settings *playfab.Settings, postData *GetPlayFab
     return result, nil
 }
 
+// GetPlayFabIDsFromGooglePlayGamesPlayerIDs retrieves the unique PlayFab identifiers for the given set of Google Play Games identifiers. The Google Play Games
+// identifiers are the IDs for the user accounts, available as "playerId" in the Google Play Games Services - Players API
+// calls.
+// https://api.playfab.com/Documentation/Client/method/GetPlayFabIDsFromGooglePlayGamesPlayerIDs
+func GetPlayFabIDsFromGooglePlayGamesPlayerIDs(settings *playfab.Settings, postData *GetPlayFabIDsFromGooglePlayGamesPlayerIDsRequestModel, clientSessionTicket string) (*GetPlayFabIDsFromGooglePlayGamesPlayerIDsResultModel, error) {
+    if clientSessionTicket == "" {
+        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Client/GetPlayFabIDsFromGooglePlayGamesPlayerIDs", "X-Authentication", clientSessionTicket)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetPlayFabIDsFromGooglePlayGamesPlayerIDsResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // GetPlayFabIDsFromKongregateIDs retrieves the unique PlayFab identifiers for the given set of Kongregate identifiers. The Kongregate identifiers are the
 // IDs for the user accounts, available as "user_id" from the Kongregate API methods(ex:
 // http://developers.kongregate.com/docs/client/getUserId).
@@ -1883,7 +1959,43 @@ func GetPlayFabIDsFromKongregateIDs(settings *playfab.Settings, postData *GetPla
     return result, nil
 }
 
-// GetPlayFabIDsFromNintendoSwitchDeviceIds retrieves the unique PlayFab identifiers for the given set of Nintendo Switch identifiers.
+// GetPlayFabIDsFromNintendoServiceAccountIds retrieves the unique PlayFab identifiers for the given set of Nintendo Service Account identifiers.
+// https://api.playfab.com/Documentation/Client/method/GetPlayFabIDsFromNintendoServiceAccountIds
+func GetPlayFabIDsFromNintendoServiceAccountIds(settings *playfab.Settings, postData *GetPlayFabIDsFromNintendoServiceAccountIdsRequestModel, clientSessionTicket string) (*GetPlayFabIDsFromNintendoServiceAccountIdsResultModel, error) {
+    if clientSessionTicket == "" {
+        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Client/GetPlayFabIDsFromNintendoServiceAccountIds", "X-Authentication", clientSessionTicket)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetPlayFabIDsFromNintendoServiceAccountIdsResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// GetPlayFabIDsFromNintendoSwitchDeviceIds retrieves the unique PlayFab identifiers for the given set of Nintendo Switch Device identifiers.
 // https://api.playfab.com/Documentation/Client/method/GetPlayFabIDsFromNintendoSwitchDeviceIds
 func GetPlayFabIDsFromNintendoSwitchDeviceIds(settings *playfab.Settings, postData *GetPlayFabIDsFromNintendoSwitchDeviceIdsRequestModel, clientSessionTicket string) (*GetPlayFabIDsFromNintendoSwitchDeviceIdsResultModel, error) {
     if clientSessionTicket == "" {
@@ -1919,7 +2031,7 @@ func GetPlayFabIDsFromNintendoSwitchDeviceIds(settings *playfab.Settings, postDa
     return result, nil
 }
 
-// GetPlayFabIDsFromPSNAccountIDs retrieves the unique PlayFab identifiers for the given set of PlayStation Network identifiers.
+// GetPlayFabIDsFromPSNAccountIDs retrieves the unique PlayFab identifiers for the given set of PlayStation :tm: Network identifiers.
 // https://api.playfab.com/Documentation/Client/method/GetPlayFabIDsFromPSNAccountIDs
 func GetPlayFabIDsFromPSNAccountIDs(settings *playfab.Settings, postData *GetPlayFabIDsFromPSNAccountIDsRequestModel, clientSessionTicket string) (*GetPlayFabIDsFromPSNAccountIDsResultModel, error) {
     if clientSessionTicket == "" {
@@ -2572,40 +2684,6 @@ func GetUserReadOnlyData(settings *playfab.Settings, postData *GetUserDataReques
     return result, nil
 }
 
-// GetWindowsHelloChallenge requests a challenge from the server to be signed by Windows Hello Passport service to authenticate.
-// https://api.playfab.com/Documentation/Client/method/GetWindowsHelloChallenge
-func GetWindowsHelloChallenge(settings *playfab.Settings, postData *GetWindowsHelloChallengeRequestModel, ) (*GetWindowsHelloChallengeResponseModel, error) {
-
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Client/GetWindowsHelloChallenge", "", "")
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &GetWindowsHelloChallengeResponseModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
 // GrantCharacterToUser grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated
 // with the parent PlayFabId to guarantee uniqueness.
 // https://api.playfab.com/Documentation/Client/method/GrantCharacterToUser
@@ -2823,7 +2901,10 @@ func LinkFacebookInstantGamesId(settings *playfab.Settings, postData *LinkFacebo
     return result, nil
 }
 
-// LinkGameCenterAccount links the Game Center account associated with the provided Game Center ID to the user's PlayFab account
+// LinkGameCenterAccount links the Game Center account associated with the provided Game Center ID to the user's PlayFab account. Logging in with
+// a Game Center ID is insecure if you do not include the optional PublicKeyUrl, Salt, Signature, and Timestamp parameters
+// in this request. It is recommended you require these parameters on all Game Center calls by going to the Apple Add-ons
+// page in the PlayFab Game Manager and enabling the 'Require secure authentication only for this app' option.
 // https://api.playfab.com/Documentation/Client/method/LinkGameCenterAccount
 func LinkGameCenterAccount(settings *playfab.Settings, postData *LinkGameCenterAccountRequestModel, clientSessionTicket string) (*LinkGameCenterAccountResultModel, error) {
     if clientSessionTicket == "" {
@@ -2876,6 +2957,43 @@ func LinkGoogleAccount(settings *playfab.Settings, postData *LinkGoogleAccountRe
     }
     
     result := &LinkGoogleAccountResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LinkGooglePlayGamesServicesAccount links the currently signed-in user account to their Google Play Games account, using their Google Play Games account
+// credentials
+// https://api.playfab.com/Documentation/Client/method/LinkGooglePlayGamesServicesAccount
+func LinkGooglePlayGamesServicesAccount(settings *playfab.Settings, postData *LinkGooglePlayGamesServicesAccountRequestModel, clientSessionTicket string) (*LinkGooglePlayGamesServicesAccountResultModel, error) {
+    if clientSessionTicket == "" {
+        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Client/LinkGooglePlayGamesServicesAccount", "X-Authentication", clientSessionTicket)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LinkGooglePlayGamesServicesAccountResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -3076,7 +3194,7 @@ func LinkOpenIdConnect(settings *playfab.Settings, postData *LinkOpenIdConnectRe
     return result, nil
 }
 
-// LinkPSNAccount links the PlayStation Network account associated with the provided access code to the user's PlayFab account
+// LinkPSNAccount links the PlayStation :tm: Network account associated with the provided access code to the user's PlayFab account
 // https://api.playfab.com/Documentation/Client/method/LinkPSNAccount
 func LinkPSNAccount(settings *playfab.Settings, postData *LinkPSNAccountRequestModel, clientSessionTicket string) (*LinkPSNAccountResultModel, error) {
     if clientSessionTicket == "" {
@@ -3165,42 +3283,6 @@ func LinkTwitch(settings *playfab.Settings, postData *LinkTwitchAccountRequestMo
     }
     
     result := &LinkTwitchAccountResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
-// LinkWindowsHello link Windows Hello authentication to the current PlayFab Account
-// https://api.playfab.com/Documentation/Client/method/LinkWindowsHello
-func LinkWindowsHello(settings *playfab.Settings, postData *LinkWindowsHelloAccountRequestModel, clientSessionTicket string) (*LinkWindowsHelloAccountResponseModel, error) {
-    if clientSessionTicket == "" {
-        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Client/LinkWindowsHello", "X-Authentication", clientSessionTicket)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &LinkWindowsHelloAccountResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -3486,7 +3568,10 @@ func LoginWithFacebookInstantGamesId(settings *playfab.Settings, postData *Login
 }
 
 // LoginWithGameCenter signs the user in using an iOS Game Center player identifier, returning a session identifier that can subsequently be
-// used for API calls which require an authenticated user
+// used for API calls which require an authenticated user. Logging in with a Game Center ID is insecure if you do not
+// include the optional PublicKeyUrl, Salt, Signature, and Timestamp parameters in this request. It is recommended you
+// require these parameters on all Game Center calls by going to the Apple Add-ons page in the PlayFab Game Manager and
+// enabling the 'Require secure authentication only for this app' option.
 // https://api.playfab.com/Documentation/Client/method/LoginWithGameCenter
 func LoginWithGameCenter(settings *playfab.Settings, postData *LoginWithGameCenterRequestModel, ) (*LoginResultModel, error) {
     if postData != nil && postData.TitleId == "" { 
@@ -3536,6 +3621,43 @@ func LoginWithGoogleAccount(settings *playfab.Settings, postData *LoginWithGoogl
     }
 
     sourceMap, err := playfab.Request(settings, b, "/Client/LoginWithGoogleAccount", "", "")
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LoginResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// LoginWithGooglePlayGamesServices signs the user in using their Google Play Games account credentials
+// https://api.playfab.com/Documentation/Client/method/LoginWithGooglePlayGamesServices
+func LoginWithGooglePlayGamesServices(settings *playfab.Settings, postData *LoginWithGooglePlayGamesServicesRequestModel, ) (*LoginResultModel, error) {
+    if postData != nil && postData.TitleId == "" { 
+        postData.TitleId = settings.TitleId 
+    }
+
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Client/LoginWithGooglePlayGamesServices", "", "")
     if err != nil {
         return nil, err
     }
@@ -3788,8 +3910,8 @@ func LoginWithPlayFab(settings *playfab.Settings, postData *LoginWithPlayFabRequ
     return result, nil
 }
 
-// LoginWithPSN signs the user in using a PlayStation Network authentication code, returning a session identifier that can subsequently
-// be used for API calls which require an authenticated user
+// LoginWithPSN signs the user in using a PlayStation :tm: Network authentication code, returning a session identifier that can
+// subsequently be used for API calls which require an authenticated user
 // https://api.playfab.com/Documentation/Client/method/LoginWithPSN
 func LoginWithPSN(settings *playfab.Settings, postData *LoginWithPSNRequestModel, ) (*LoginResultModel, error) {
     if postData != nil && postData.TitleId == "" { 
@@ -3877,46 +3999,6 @@ func LoginWithTwitch(settings *playfab.Settings, postData *LoginWithTwitchReques
     }
 
     sourceMap, err := playfab.Request(settings, b, "/Client/LoginWithTwitch", "", "")
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &LoginResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
-// LoginWithWindowsHello completes the Windows Hello login flow by returning the signed value of the challange from GetWindowsHelloChallenge.
-// Windows Hello has a 2 step client to server authentication scheme. Step one is to request from the server a challenge
-// string. Step two is to request the user sign the string via Windows Hello and then send the signed value back to the
-// server.
-// https://api.playfab.com/Documentation/Client/method/LoginWithWindowsHello
-func LoginWithWindowsHello(settings *playfab.Settings, postData *LoginWithWindowsHelloRequestModel, ) (*LoginResultModel, error) {
-    if postData != nil && postData.TitleId == "" { 
-        postData.TitleId = settings.TitleId 
-    }
-
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Client/LoginWithWindowsHello", "", "")
     if err != nil {
         return nil, err
     }
@@ -4166,7 +4248,7 @@ func RedeemCoupon(settings *playfab.Settings, postData *RedeemCouponRequestModel
     return result, nil
 }
 
-// RefreshPSNAuthToken uses the supplied OAuth code to refresh the internally cached player PSN auth token
+// RefreshPSNAuthToken uses the supplied OAuth code to refresh the internally cached player PlayStation :tm: Network auth token
 // https://api.playfab.com/Documentation/Client/method/RefreshPSNAuthToken
 func RefreshPSNAuthToken(settings *playfab.Settings, postData *RefreshPSNAuthTokenRequestModel, clientSessionTicket string) (*EmptyResponseModel, error) {
     if clientSessionTicket == "" {
@@ -4257,44 +4339,6 @@ func RegisterPlayFabUser(settings *playfab.Settings, postData *RegisterPlayFabUs
     }
     
     result := &RegisterPlayFabUserResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
-// RegisterWithWindowsHello registers a new PlayFab user account using Windows Hello authentication, returning a session ticket that can
-// subsequently be used for API calls which require an authenticated user
-// https://api.playfab.com/Documentation/Client/method/RegisterWithWindowsHello
-func RegisterWithWindowsHello(settings *playfab.Settings, postData *RegisterWithWindowsHelloRequestModel, ) (*LoginResultModel, error) {
-    if postData != nil && postData.TitleId == "" { 
-        postData.TitleId = settings.TitleId 
-    }
-
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Client/RegisterWithWindowsHello", "", "")
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &LoginResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -4752,42 +4796,6 @@ func SetPlayerSecret(settings *playfab.Settings, postData *SetPlayerSecretReques
     return result, nil
 }
 
-// StartGame start a new game server with a given configuration, add the current player and return the connection information.
-// https://api.playfab.com/Documentation/Client/method/StartGame
-func StartGame(settings *playfab.Settings, postData *StartGameRequestModel, clientSessionTicket string) (*StartGameResultModel, error) {
-    if clientSessionTicket == "" {
-        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Client/StartGame", "X-Authentication", clientSessionTicket)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &StartGameResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
 // StartPurchase creates an order for a list of items from the title catalog
 // https://api.playfab.com/Documentation/Client/method/StartPurchase
 func StartPurchase(settings *playfab.Settings, postData *StartPurchaseRequestModel, clientSessionTicket string) (*StartPurchaseResultModel, error) {
@@ -5114,6 +5122,42 @@ func UnlinkGoogleAccount(settings *playfab.Settings, postData *UnlinkGoogleAccou
     return result, nil
 }
 
+// UnlinkGooglePlayGamesServicesAccount unlinks the related Google Play Games account from the user's PlayFab account.
+// https://api.playfab.com/Documentation/Client/method/UnlinkGooglePlayGamesServicesAccount
+func UnlinkGooglePlayGamesServicesAccount(settings *playfab.Settings, postData *UnlinkGooglePlayGamesServicesAccountRequestModel, clientSessionTicket string) (*UnlinkGooglePlayGamesServicesAccountResultModel, error) {
+    if clientSessionTicket == "" {
+        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Client/UnlinkGooglePlayGamesServicesAccount", "X-Authentication", clientSessionTicket)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &UnlinkGooglePlayGamesServicesAccountResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // UnlinkIOSDeviceID unlinks the related iOS device identifier from the user's PlayFab account
 // https://api.playfab.com/Documentation/Client/method/UnlinkIOSDeviceID
 func UnlinkIOSDeviceID(settings *playfab.Settings, postData *UnlinkIOSDeviceIDRequestModel, clientSessionTicket string) (*UnlinkIOSDeviceIDResultModel, error) {
@@ -5295,7 +5339,7 @@ func UnlinkOpenIdConnect(settings *playfab.Settings, postData *UnlinkOpenIdConne
     return result, nil
 }
 
-// UnlinkPSNAccount unlinks the related PSN account from the user's PlayFab account
+// UnlinkPSNAccount unlinks the related PlayStation :tm: Network account from the user's PlayFab account
 // https://api.playfab.com/Documentation/Client/method/UnlinkPSNAccount
 func UnlinkPSNAccount(settings *playfab.Settings, postData *UnlinkPSNAccountRequestModel, clientSessionTicket string) (*UnlinkPSNAccountResultModel, error) {
     if clientSessionTicket == "" {
@@ -5384,42 +5428,6 @@ func UnlinkTwitch(settings *playfab.Settings, postData *UnlinkTwitchAccountReque
     }
     
     result := &UnlinkTwitchAccountResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
-// UnlinkWindowsHello unlink Windows Hello authentication from the current PlayFab Account
-// https://api.playfab.com/Documentation/Client/method/UnlinkWindowsHello
-func UnlinkWindowsHello(settings *playfab.Settings, postData *UnlinkWindowsHelloAccountRequestModel, clientSessionTicket string) (*UnlinkWindowsHelloAccountResponseModel, error) {
-    if clientSessionTicket == "" {
-        return nil, playfab.NewCustomError("clientSessionTicket should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Client/UnlinkWindowsHello", "X-Authentication", clientSessionTicket)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &UnlinkWindowsHelloAccountResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,

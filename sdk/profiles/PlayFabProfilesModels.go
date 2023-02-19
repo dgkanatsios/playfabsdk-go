@@ -96,7 +96,7 @@ type EntityProfileBodyModel struct {
 
 // EntityProfileFileMetadata an entity file's meta data. To get a download URL call File/GetFiles API.
 type EntityProfileFileMetadataModel struct {
-    // Checksum checksum value for the file
+    // Checksum checksum value for the file, can be used to check if the file on the server has changed.
     Checksum string `json:"Checksum,omitempty"`
     // FileName name of the file
     FileName string `json:"FileName,omitempty"`
@@ -141,7 +141,7 @@ type GetEntityProfileRequestModel struct {
     // DataAsObject determines whether the objects will be returned as an escaped JSON string or as a un-escaped JSON object. Default is
 // JSON string.
     DataAsObject bool `json:"DataAsObject"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
 }
 
@@ -174,6 +174,8 @@ type GetEntityProfilesResponseModel struct {
 type GetGlobalPolicyRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
+    Entity *EntityKeyModel `json:"Entity,omitempty"`
 }
 
 // GetGlobalPolicyResponse 
@@ -245,7 +247,7 @@ type SetGlobalPolicyResponseModel struct {
 type SetProfileLanguageRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // ExpectedVersion the expected version of a profile to perform this update on
     ExpectedVersion int32 `json:"ExpectedVersion,omitempty"`

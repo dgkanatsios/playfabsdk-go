@@ -7,8 +7,8 @@ import "time"
 type AcceptGroupApplicationRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity optional. Type of the entity to accept as. If specified, must be the same entity as the claimant or an entity that is a
-// child of the claimant entity. Defaults to the claimant entity.
+    // Entity type of the entity to accept as. Must be the same entity as the claimant or an entity that is a child of the claimant
+// entity.
     Entity* EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
     Group* EntityKeyModel `json:"Group,omitempty"`
@@ -20,7 +20,7 @@ type AcceptGroupApplicationRequestModel struct {
 type AcceptGroupInvitationRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
     Group* EntityKeyModel `json:"Group,omitempty"`
@@ -51,7 +51,7 @@ type ApplyToGroupRequestModel struct {
     AutoAcceptOutstandingInvite bool `json:"AutoAcceptOutstandingInvite"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // Group the identifier of the group
     Group* EntityKeyModel `json:"Group,omitempty"`
@@ -102,7 +102,7 @@ type ChangeMemberRoleRequestModel struct {
 type CreateGroupRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
     // GroupName the name of the group. This is unique at the title level by default.
     GroupName string `json:"GroupName,omitempty"`
@@ -135,7 +135,7 @@ type CreateGroupRoleRequestModel struct {
     // Group the identifier of the group
     Group* EntityKeyModel `json:"Group,omitempty"`
     // RoleId the ID of the role. This must be unique within the group and cannot be changed. Role IDs must be between 1 and 64
-// characters long.
+// characters long and are restricted to a-Z, A-Z, 0-9, '(', ')', '_', '-' and '.'.
     RoleId string `json:"RoleId,omitempty"`
     // RoleName the name of the role. This must be unique within the group and can be changed later. Role names must be between 1 and
 // 100 characters long
@@ -402,7 +402,7 @@ type ListGroupMembersResponseModel struct {
 type ListMembershipOpportunitiesRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
 }
 
@@ -420,7 +420,7 @@ type ListMembershipOpportunitiesResponseModel struct {
 type ListMembershipRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
 }
 

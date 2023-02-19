@@ -161,8 +161,6 @@ type BanInfoModel struct {
     Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the IP address on which the ban was applied. May affect multiple players.
     IPAddress string `json:"IPAddress,omitempty"`
-    // MACAddress the MAC address on which the ban was applied. May affect multiple players.
-    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason why this ban was applied.
@@ -175,8 +173,6 @@ type BanRequestModel struct {
     DurationInHours uint32 `json:"DurationInHours,omitempty"`
     // IPAddress iP address to be banned. May affect multiple players.
     IPAddress string `json:"IPAddress,omitempty"`
-    // MACAddress mAC address to be banned. May affect multiple players.
-    MACAddress string `json:"MACAddress,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // Reason the reason for this ban. Maximum 140 characters.
@@ -324,6 +320,15 @@ type CharacterResultModel struct {
     CharacterType string `json:"CharacterType,omitempty"`
 }
 
+// ChurnRiskLevel 
+type ChurnRiskLevel string
+  
+const (
+     ChurnRiskLevelNoData ChurnRiskLevel = "NoData"
+     ChurnRiskLevelLowRisk ChurnRiskLevel = "LowRisk"
+     ChurnRiskLevelMediumRisk ChurnRiskLevel = "MediumRisk"
+     ChurnRiskLevelHighRisk ChurnRiskLevel = "HighRisk"
+      )
 // CloudScriptRevisionOption 
 type CloudScriptRevisionOption string
   
@@ -987,6 +992,17 @@ type ExecuteCloudScriptServerRequestModel struct {
     SpecificRevision int32 `json:"SpecificRevision,omitempty"`
 }
 
+// ExternalFriendSources 
+type ExternalFriendSources string
+  
+const (
+     ExternalFriendSourcesNone ExternalFriendSources = "None"
+     ExternalFriendSourcesSteam ExternalFriendSources = "Steam"
+     ExternalFriendSourcesFacebook ExternalFriendSources = "Facebook"
+     ExternalFriendSourcesXbox ExternalFriendSources = "Xbox"
+     ExternalFriendSourcesPsn ExternalFriendSources = "Psn"
+     ExternalFriendSourcesAll ExternalFriendSources = "All"
+      )
 // FacebookInstantGamesPlayFabIdPair 
 type FacebookInstantGamesPlayFabIdPairModel struct {
     // FacebookInstantGamesId unique Facebook Instant Games identifier for a user.
@@ -1013,7 +1029,8 @@ type FriendInfoModel struct {
     GameCenterInfo *UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // Profile the profile of the user, if requested.
     Profile *PlayerProfileModelModel `json:"Profile,omitempty"`
-    // PSNInfo available PSN information, if the user and PlayFab friend are both connected to PSN.
+    // PSNInfo available PlayStation :tm: Network information, if the user and PlayFab friend are both connected to PlayStation :tm:
+// Network.
     PSNInfo *UserPsnInfoModel `json:"PSNInfo,omitempty"`
     // SteamInfo available Steam information (if the user and PlayFab friend are also connected in Steam).
     SteamInfo *UserSteamInfoModel `json:"SteamInfo,omitempty"`
@@ -1520,7 +1537,7 @@ const (
      GenericErrorCodesEvaluationModePlayerCountExceeded GenericErrorCodes = "EvaluationModePlayerCountExceeded"
      GenericErrorCodesGetPlayersInSegmentRateLimitExceeded GenericErrorCodes = "GetPlayersInSegmentRateLimitExceeded"
      GenericErrorCodesCloudScriptFunctionNameSizeExceeded GenericErrorCodes = "CloudScriptFunctionNameSizeExceeded"
-     GenericErrorCodesInsightsManagementTitleInEvaluationMode GenericErrorCodes = "InsightsManagementTitleInEvaluationMode"
+     GenericErrorCodesPaidInsightsFeaturesNotEnabled GenericErrorCodes = "PaidInsightsFeaturesNotEnabled"
      GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError GenericErrorCodes = "CloudScriptAzureFunctionsQueueRequestError"
      GenericErrorCodesEvaluationModeTitleCountExceeded GenericErrorCodes = "EvaluationModeTitleCountExceeded"
      GenericErrorCodesInsightsManagementTitleNotInFlight GenericErrorCodes = "InsightsManagementTitleNotInFlight"
@@ -1539,6 +1556,47 @@ const (
      GenericErrorCodesDuplicateKeys GenericErrorCodes = "DuplicateKeys"
      GenericErrorCodesWasNotCreatedWithCloudRoot GenericErrorCodes = "WasNotCreatedWithCloudRoot"
      GenericErrorCodesLegacyMultiplayerServersDeprecated GenericErrorCodes = "LegacyMultiplayerServersDeprecated"
+     GenericErrorCodesVirtualCurrencyCurrentlyUnavailable GenericErrorCodes = "VirtualCurrencyCurrentlyUnavailable"
+     GenericErrorCodesSteamUserNotFound GenericErrorCodes = "SteamUserNotFound"
+     GenericErrorCodesElasticSearchOperationFailed GenericErrorCodes = "ElasticSearchOperationFailed"
+     GenericErrorCodesNotImplemented GenericErrorCodes = "NotImplemented"
+     GenericErrorCodesPublisherNotFound GenericErrorCodes = "PublisherNotFound"
+     GenericErrorCodesPublisherDeleted GenericErrorCodes = "PublisherDeleted"
+     GenericErrorCodesApiDisabledForMigration GenericErrorCodes = "ApiDisabledForMigration"
+     GenericErrorCodesResourceNameUpdateNotAllowed GenericErrorCodes = "ResourceNameUpdateNotAllowed"
+     GenericErrorCodesApiNotEnabledForTitle GenericErrorCodes = "ApiNotEnabledForTitle"
+     GenericErrorCodesDuplicateTitleNameForPublisher GenericErrorCodes = "DuplicateTitleNameForPublisher"
+     GenericErrorCodesAzureTitleCreationInProgress GenericErrorCodes = "AzureTitleCreationInProgress"
+     GenericErrorCodesTitleConstraintsPublisherDeletion GenericErrorCodes = "TitleConstraintsPublisherDeletion"
+     GenericErrorCodesInvalidPlayerAccountPoolId GenericErrorCodes = "InvalidPlayerAccountPoolId"
+     GenericErrorCodesPlayerAccountPoolNotFound GenericErrorCodes = "PlayerAccountPoolNotFound"
+     GenericErrorCodesPlayerAccountPoolDeleted GenericErrorCodes = "PlayerAccountPoolDeleted"
+     GenericErrorCodesTitleCleanupInProgress GenericErrorCodes = "TitleCleanupInProgress"
+     GenericErrorCodesAzureResourceConcurrentOperationInProgress GenericErrorCodes = "AzureResourceConcurrentOperationInProgress"
+     GenericErrorCodesTitlePublisherUpdateNotAllowed GenericErrorCodes = "TitlePublisherUpdateNotAllowed"
+     GenericErrorCodesAzureResourceManagerNotSupportedInStamp GenericErrorCodes = "AzureResourceManagerNotSupportedInStamp"
+     GenericErrorCodesApiNotIncludedInAzurePlayFabFeatureSet GenericErrorCodes = "ApiNotIncludedInAzurePlayFabFeatureSet"
+     GenericErrorCodesGoogleServiceAccountFailedAuth GenericErrorCodes = "GoogleServiceAccountFailedAuth"
+     GenericErrorCodesGoogleAPIServiceUnavailable GenericErrorCodes = "GoogleAPIServiceUnavailable"
+     GenericErrorCodesGoogleAPIServiceUnknownError GenericErrorCodes = "GoogleAPIServiceUnknownError"
+     GenericErrorCodesNoValidIdentityForAad GenericErrorCodes = "NoValidIdentityForAad"
+     GenericErrorCodesPlayerIdentityLinkNotFound GenericErrorCodes = "PlayerIdentityLinkNotFound"
+     GenericErrorCodesPhotonApplicationIdAlreadyInUse GenericErrorCodes = "PhotonApplicationIdAlreadyInUse"
+     GenericErrorCodesCloudScriptUnableToDeleteProductionRevision GenericErrorCodes = "CloudScriptUnableToDeleteProductionRevision"
+     GenericErrorCodesCustomIdNotFound GenericErrorCodes = "CustomIdNotFound"
+     GenericErrorCodesAutomationInvalidInput GenericErrorCodes = "AutomationInvalidInput"
+     GenericErrorCodesAutomationInvalidRuleName GenericErrorCodes = "AutomationInvalidRuleName"
+     GenericErrorCodesAutomationRuleAlreadyExists GenericErrorCodes = "AutomationRuleAlreadyExists"
+     GenericErrorCodesAutomationRuleLimitExceeded GenericErrorCodes = "AutomationRuleLimitExceeded"
+     GenericErrorCodesInvalidGooglePlayGamesServerAuthCode GenericErrorCodes = "InvalidGooglePlayGamesServerAuthCode"
+     GenericErrorCodesPlayStreamConnectionFailed GenericErrorCodes = "PlayStreamConnectionFailed"
+     GenericErrorCodesInvalidEventContents GenericErrorCodes = "InvalidEventContents"
+     GenericErrorCodesInsightsV1Deprecated GenericErrorCodes = "InsightsV1Deprecated"
+     GenericErrorCodesAnalysisSubscriptionNotFound GenericErrorCodes = "AnalysisSubscriptionNotFound"
+     GenericErrorCodesAnalysisSubscriptionFailed GenericErrorCodes = "AnalysisSubscriptionFailed"
+     GenericErrorCodesAnalysisSubscriptionFoundAlready GenericErrorCodes = "AnalysisSubscriptionFoundAlready"
+     GenericErrorCodesAnalysisSubscriptionManagementInvalidInput GenericErrorCodes = "AnalysisSubscriptionManagementInvalidInput"
+     GenericErrorCodesInvalidGameCenterId GenericErrorCodes = "InvalidGameCenterId"
      GenericErrorCodesMatchmakingEntityInvalid GenericErrorCodes = "MatchmakingEntityInvalid"
      GenericErrorCodesMatchmakingPlayerAttributesInvalid GenericErrorCodes = "MatchmakingPlayerAttributesInvalid"
      GenericErrorCodesMatchmakingQueueNotFound GenericErrorCodes = "MatchmakingQueueNotFound"
@@ -1560,9 +1618,15 @@ const (
      GenericErrorCodesMatchmakingQueueLimitExceeded GenericErrorCodes = "MatchmakingQueueLimitExceeded"
      GenericErrorCodesMatchmakingRequestTypeMismatch GenericErrorCodes = "MatchmakingRequestTypeMismatch"
      GenericErrorCodesMatchmakingBadRequest GenericErrorCodes = "MatchmakingBadRequest"
+     GenericErrorCodesPubSubFeatureNotEnabledForTitle GenericErrorCodes = "PubSubFeatureNotEnabledForTitle"
+     GenericErrorCodesPubSubTooManyRequests GenericErrorCodes = "PubSubTooManyRequests"
+     GenericErrorCodesPubSubConnectionNotFoundForEntity GenericErrorCodes = "PubSubConnectionNotFoundForEntity"
+     GenericErrorCodesPubSubConnectionHandleInvalid GenericErrorCodes = "PubSubConnectionHandleInvalid"
+     GenericErrorCodesPubSubSubscriptionLimitExceeded GenericErrorCodes = "PubSubSubscriptionLimitExceeded"
      GenericErrorCodesTitleConfigNotFound GenericErrorCodes = "TitleConfigNotFound"
      GenericErrorCodesTitleConfigUpdateConflict GenericErrorCodes = "TitleConfigUpdateConflict"
      GenericErrorCodesTitleConfigSerializationError GenericErrorCodes = "TitleConfigSerializationError"
+     GenericErrorCodesCatalogApiNotImplemented GenericErrorCodes = "CatalogApiNotImplemented"
      GenericErrorCodesCatalogEntityInvalid GenericErrorCodes = "CatalogEntityInvalid"
      GenericErrorCodesCatalogTitleIdMissing GenericErrorCodes = "CatalogTitleIdMissing"
      GenericErrorCodesCatalogPlayerIdMissing GenericErrorCodes = "CatalogPlayerIdMissing"
@@ -1600,9 +1664,28 @@ const (
      GenericErrorCodesExportCannotParseQuery GenericErrorCodes = "ExportCannotParseQuery"
      GenericErrorCodesExportControlCommandsNotAllowed GenericErrorCodes = "ExportControlCommandsNotAllowed"
      GenericErrorCodesExportQueryMissingTableReference GenericErrorCodes = "ExportQueryMissingTableReference"
+     GenericErrorCodesExportInsightsV1Deprecated GenericErrorCodes = "ExportInsightsV1Deprecated"
+     GenericErrorCodesExplorerBasicInvalidQueryName GenericErrorCodes = "ExplorerBasicInvalidQueryName"
+     GenericErrorCodesExplorerBasicInvalidQueryDescription GenericErrorCodes = "ExplorerBasicInvalidQueryDescription"
+     GenericErrorCodesExplorerBasicInvalidQueryConditions GenericErrorCodes = "ExplorerBasicInvalidQueryConditions"
+     GenericErrorCodesExplorerBasicInvalidQueryStartDate GenericErrorCodes = "ExplorerBasicInvalidQueryStartDate"
+     GenericErrorCodesExplorerBasicInvalidQueryEndDate GenericErrorCodes = "ExplorerBasicInvalidQueryEndDate"
+     GenericErrorCodesExplorerBasicInvalidQueryGroupBy GenericErrorCodes = "ExplorerBasicInvalidQueryGroupBy"
+     GenericErrorCodesExplorerBasicInvalidQueryAggregateType GenericErrorCodes = "ExplorerBasicInvalidQueryAggregateType"
+     GenericErrorCodesExplorerBasicInvalidQueryAggregateProperty GenericErrorCodes = "ExplorerBasicInvalidQueryAggregateProperty"
+     GenericErrorCodesExplorerBasicLoadQueriesError GenericErrorCodes = "ExplorerBasicLoadQueriesError"
+     GenericErrorCodesExplorerBasicLoadQueryError GenericErrorCodes = "ExplorerBasicLoadQueryError"
+     GenericErrorCodesExplorerBasicCreateQueryError GenericErrorCodes = "ExplorerBasicCreateQueryError"
+     GenericErrorCodesExplorerBasicDeleteQueryError GenericErrorCodes = "ExplorerBasicDeleteQueryError"
+     GenericErrorCodesExplorerBasicUpdateQueryError GenericErrorCodes = "ExplorerBasicUpdateQueryError"
+     GenericErrorCodesExplorerBasicSavedQueriesLimit GenericErrorCodes = "ExplorerBasicSavedQueriesLimit"
+     GenericErrorCodesExplorerBasicSavedQueryNotFound GenericErrorCodes = "ExplorerBasicSavedQueryNotFound"
+     GenericErrorCodesTenantShardMapperShardNotFound GenericErrorCodes = "TenantShardMapperShardNotFound"
      GenericErrorCodesTitleNotEnabledForParty GenericErrorCodes = "TitleNotEnabledForParty"
      GenericErrorCodesPartyVersionNotFound GenericErrorCodes = "PartyVersionNotFound"
      GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue GenericErrorCodes = "MultiplayerServerBuildReferencedByMatchmakingQueue"
+     GenericErrorCodesMultiplayerServerBuildReferencedByBuildAlias GenericErrorCodes = "MultiplayerServerBuildReferencedByBuildAlias"
+     GenericErrorCodesMultiplayerServerBuildAliasReferencedByMatchmakingQueue GenericErrorCodes = "MultiplayerServerBuildAliasReferencedByMatchmakingQueue"
      GenericErrorCodesExperimentationExperimentStopped GenericErrorCodes = "ExperimentationExperimentStopped"
      GenericErrorCodesExperimentationExperimentRunning GenericErrorCodes = "ExperimentationExperimentRunning"
      GenericErrorCodesExperimentationExperimentNotFound GenericErrorCodes = "ExperimentationExperimentNotFound"
@@ -1625,6 +1708,7 @@ const (
      GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity GenericErrorCodes = "ExperimentationExclusionGroupInsufficientCapacity"
      GenericErrorCodesExperimentationExclusionGroupCannotDelete GenericErrorCodes = "ExperimentationExclusionGroupCannotDelete"
      GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation GenericErrorCodes = "ExperimentationExclusionGroupInvalidTrafficAllocation"
+     GenericErrorCodesExperimentationExclusionGroupInvalidName GenericErrorCodes = "ExperimentationExclusionGroupInvalidName"
      GenericErrorCodesMaxActionDepthExceeded GenericErrorCodes = "MaxActionDepthExceeded"
      GenericErrorCodesTitleNotOnUpdatedPricingPlan GenericErrorCodes = "TitleNotOnUpdatedPricingPlan"
      GenericErrorCodesSegmentManagementTitleNotInFlight GenericErrorCodes = "SegmentManagementTitleNotInFlight"
@@ -1638,7 +1722,42 @@ const (
      GenericErrorCodesCreateSegmentRateLimitExceeded GenericErrorCodes = "CreateSegmentRateLimitExceeded"
      GenericErrorCodesUpdateSegmentRateLimitExceeded GenericErrorCodes = "UpdateSegmentRateLimitExceeded"
      GenericErrorCodesGetSegmentsRateLimitExceeded GenericErrorCodes = "GetSegmentsRateLimitExceeded"
+     GenericErrorCodesAsyncExportNotInFlight GenericErrorCodes = "AsyncExportNotInFlight"
+     GenericErrorCodesAsyncExportNotFound GenericErrorCodes = "AsyncExportNotFound"
+     GenericErrorCodesAsyncExportRateLimitExceeded GenericErrorCodes = "AsyncExportRateLimitExceeded"
      GenericErrorCodesSnapshotNotFound GenericErrorCodes = "SnapshotNotFound"
+     GenericErrorCodesInventoryApiNotImplemented GenericErrorCodes = "InventoryApiNotImplemented"
+     GenericErrorCodesLobbyDoesNotExist GenericErrorCodes = "LobbyDoesNotExist"
+     GenericErrorCodesLobbyRateLimitExceeded GenericErrorCodes = "LobbyRateLimitExceeded"
+     GenericErrorCodesLobbyPlayerAlreadyJoined GenericErrorCodes = "LobbyPlayerAlreadyJoined"
+     GenericErrorCodesLobbyNotJoinable GenericErrorCodes = "LobbyNotJoinable"
+     GenericErrorCodesLobbyMemberCannotRejoin GenericErrorCodes = "LobbyMemberCannotRejoin"
+     GenericErrorCodesLobbyCurrentPlayersMoreThanMaxPlayers GenericErrorCodes = "LobbyCurrentPlayersMoreThanMaxPlayers"
+     GenericErrorCodesLobbyPlayerNotPresent GenericErrorCodes = "LobbyPlayerNotPresent"
+     GenericErrorCodesLobbyBadRequest GenericErrorCodes = "LobbyBadRequest"
+     GenericErrorCodesLobbyPlayerMaxLobbyLimitExceeded GenericErrorCodes = "LobbyPlayerMaxLobbyLimitExceeded"
+     GenericErrorCodesLobbyNewOwnerMustBeConnected GenericErrorCodes = "LobbyNewOwnerMustBeConnected"
+     GenericErrorCodesLobbyCurrentOwnerStillConnected GenericErrorCodes = "LobbyCurrentOwnerStillConnected"
+     GenericErrorCodesLobbyMemberIsNotOwner GenericErrorCodes = "LobbyMemberIsNotOwner"
+     GenericErrorCodesEventSamplingInvalidRatio GenericErrorCodes = "EventSamplingInvalidRatio"
+     GenericErrorCodesEventSamplingInvalidEventNamespace GenericErrorCodes = "EventSamplingInvalidEventNamespace"
+     GenericErrorCodesEventSamplingInvalidEventName GenericErrorCodes = "EventSamplingInvalidEventName"
+     GenericErrorCodesEventSamplingRatioNotFound GenericErrorCodes = "EventSamplingRatioNotFound"
+     GenericErrorCodesEventSinkConnectionInvalid GenericErrorCodes = "EventSinkConnectionInvalid"
+     GenericErrorCodesEventSinkConnectionUnauthorized GenericErrorCodes = "EventSinkConnectionUnauthorized"
+     GenericErrorCodesEventSinkRegionInvalid GenericErrorCodes = "EventSinkRegionInvalid"
+     GenericErrorCodesEventSinkLimitExceeded GenericErrorCodes = "EventSinkLimitExceeded"
+     GenericErrorCodesEventSinkSasTokenInvalid GenericErrorCodes = "EventSinkSasTokenInvalid"
+     GenericErrorCodesEventSinkNotFound GenericErrorCodes = "EventSinkNotFound"
+     GenericErrorCodesEventSinkNameInvalid GenericErrorCodes = "EventSinkNameInvalid"
+     GenericErrorCodesEventSinkSasTokenPermissionInvalid GenericErrorCodes = "EventSinkSasTokenPermissionInvalid"
+     GenericErrorCodesEventSinkSecretInvalid GenericErrorCodes = "EventSinkSecretInvalid"
+     GenericErrorCodesEventSinkTenantNotFound GenericErrorCodes = "EventSinkTenantNotFound"
+     GenericErrorCodesEventSinkAadNotFound GenericErrorCodes = "EventSinkAadNotFound"
+     GenericErrorCodesEventSinkDatabaseNotFound GenericErrorCodes = "EventSinkDatabaseNotFound"
+     GenericErrorCodesOperationCanceled GenericErrorCodes = "OperationCanceled"
+     GenericErrorCodesInvalidDisplayNameRandomSuffixLength GenericErrorCodes = "InvalidDisplayNameRandomSuffixLength"
+     GenericErrorCodesAllowNonUniquePlayerDisplayNamesDisableNotAllowed GenericErrorCodes = "AllowNonUniquePlayerDisplayNamesDisableNotAllowed"
       )
 // GenericPlayFabIdPair 
 type GenericPlayFabIdPairModel struct {
@@ -1735,8 +1854,6 @@ type GetCharacterInventoryResultModel struct {
 
 // GetCharacterLeaderboardRequest 
 type GetCharacterLeaderboardRequestModel struct {
-    // CharacterType optional character type on which to filter the leaderboard entries.
-    CharacterType string `json:"CharacterType,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // StartPosition first entry in the leaderboard to be retrieved.
@@ -1792,6 +1909,9 @@ type GetContentDownloadUrlResultModel struct {
 type GetFriendLeaderboardRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
+// comma-separated list of platforms.
+    ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
     // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
     IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
@@ -1818,6 +1938,9 @@ type GetFriendLeaderboardRequestModel struct {
 type GetFriendsListRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
+// comma-separated list of platforms.
+    ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
     // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
     IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
     // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
@@ -1845,8 +1968,6 @@ type GetFriendsListResultModel struct {
 type GetLeaderboardAroundCharacterRequestModel struct {
     // CharacterId unique PlayFab assigned ID for a specific character owned by a user
     CharacterId string `json:"CharacterId,omitempty"`
-    // CharacterType optional character type on which to filter the leaderboard entries.
-    CharacterType string `json:"CharacterType,omitempty"`
     // MaxResultsCount maximum number of entries to retrieve.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
@@ -1893,8 +2014,6 @@ type GetLeaderboardAroundUserResultModel struct {
 
 // GetLeaderboardForUsersCharactersRequest 
 type GetLeaderboardForUsersCharactersRequestModel struct {
-    // MaxResultsCount maximum number of entries to retrieve.
-    MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // StatisticName unique identifier for the title-specific statistic for the leaderboard.
@@ -2061,7 +2180,12 @@ type GetPlayersInSegmentRequestModel struct {
     ContinuationToken string `json:"ContinuationToken,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // MaxBatchSize maximum number of profiles to load. Default is 1,000. Maximum is 10,000.
+    // GetProfilesAsync if set to true, the profiles are loaded asynchronously and the response will include a continuation token and
+// approximate profile count until the first batch of profiles is loaded. Use this parameter to help avoid network
+// timeouts.
+    GetProfilesAsync bool `json:"GetProfilesAsync"`
+    // MaxBatchSize maximum is 10,000. The value 0 will prevent loading any profiles and return only the count of profiles matching this
+// segment.
     MaxBatchSize uint32 `json:"MaxBatchSize,omitempty"`
     // SecondsToLive number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
 // results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
@@ -2145,7 +2269,8 @@ type GetPlayerTagsResultModel struct {
 
 // GetPlayFabIDsFromFacebookIDsRequest 
 type GetPlayFabIDsFromFacebookIDsRequestModel struct {
-    // FacebookIDs array of unique Facebook identifiers for which the title needs to get PlayFab identifiers.
+    // FacebookIDs array of unique Facebook identifiers for which the title needs to get PlayFab identifiers. The array cannot exceed 2,000
+// in length.
     FacebookIDs []string `json:"FacebookIDs,omitempty"`
 }
 
@@ -2157,7 +2282,8 @@ type GetPlayFabIDsFromFacebookIDsResultModel struct {
 
 // GetPlayFabIDsFromFacebookInstantGamesIdsRequest 
 type GetPlayFabIDsFromFacebookInstantGamesIdsRequestModel struct {
-    // FacebookInstantGamesIds array of unique Facebook Instant Games identifiers for which the title needs to get PlayFab identifiers.
+    // FacebookInstantGamesIds array of unique Facebook Instant Games identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 25 in length.
     FacebookInstantGamesIds []string `json:"FacebookInstantGamesIds,omitempty"`
 }
 
@@ -2180,9 +2306,23 @@ type GetPlayFabIDsFromGenericIDsResultModel struct {
     Data []GenericPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
+// GetPlayFabIDsFromNintendoServiceAccountIdsRequest 
+type GetPlayFabIDsFromNintendoServiceAccountIdsRequestModel struct {
+    // NintendoAccountIds array of unique Nintendo Switch Account identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
+    NintendoAccountIds []string `json:"NintendoAccountIds,omitempty"`
+}
+
+// GetPlayFabIDsFromNintendoServiceAccountIdsResult for Nintendo Service Account identifiers which have not been linked to PlayFab accounts, null will be returned.
+type GetPlayFabIDsFromNintendoServiceAccountIdsResultModel struct {
+    // Data mapping of Nintendo Switch Service Account identifiers to PlayFab identifiers.
+    Data []NintendoServiceAccountPlayFabIdPairModel `json:"Data,omitempty"`
+}
+
 // GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest 
 type GetPlayFabIDsFromNintendoSwitchDeviceIdsRequestModel struct {
-    // NintendoSwitchDeviceIds array of unique Nintendo Switch Device identifiers for which the title needs to get PlayFab identifiers.
+    // NintendoSwitchDeviceIds array of unique Nintendo Switch Device identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     NintendoSwitchDeviceIds []string `json:"NintendoSwitchDeviceIds,omitempty"`
 }
 
@@ -2194,21 +2334,23 @@ type GetPlayFabIDsFromNintendoSwitchDeviceIdsResultModel struct {
 
 // GetPlayFabIDsFromPSNAccountIDsRequest 
 type GetPlayFabIDsFromPSNAccountIDsRequestModel struct {
-    // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
+    // IssuerId id of the PlayStation :tm: Network issuer environment. If null, defaults to production environment.
     IssuerId int32 `json:"IssuerId,omitempty"`
-    // PSNAccountIDs array of unique PlayStation Network identifiers for which the title needs to get PlayFab identifiers.
+    // PSNAccountIDs array of unique PlayStation :tm: Network identifiers for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     PSNAccountIDs []string `json:"PSNAccountIDs,omitempty"`
 }
 
-// GetPlayFabIDsFromPSNAccountIDsResult for PlayStation Network identifiers which have not been linked to PlayFab accounts, null will be returned.
+// GetPlayFabIDsFromPSNAccountIDsResult for PlayStation :tm: Network identifiers which have not been linked to PlayFab accounts, null will be returned.
 type GetPlayFabIDsFromPSNAccountIDsResultModel struct {
-    // Data mapping of PlayStation Network identifiers to PlayFab identifiers.
+    // Data mapping of PlayStation :tm: Network identifiers to PlayFab identifiers.
     Data []PSNAccountPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
 // GetPlayFabIDsFromSteamIDsRequest 
 type GetPlayFabIDsFromSteamIDsRequestModel struct {
-    // SteamStringIDs array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
+    // SteamStringIDs array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers. The array
+// cannot exceed 2,000 in length.
     SteamStringIDs []string `json:"SteamStringIDs,omitempty"`
 }
 
@@ -2218,17 +2360,31 @@ type GetPlayFabIDsFromSteamIDsResultModel struct {
     Data []SteamPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
+// GetPlayFabIDsFromTwitchIDsRequest 
+type GetPlayFabIDsFromTwitchIDsRequestModel struct {
+    // TwitchIds array of unique Twitch identifiers (Twitch's _id) for which the title needs to get PlayFab identifiers. The array cannot
+// exceed 2,000 in length.
+    TwitchIds []string `json:"TwitchIds,omitempty"`
+}
+
+// GetPlayFabIDsFromTwitchIDsResult for Twitch identifiers which have not been linked to PlayFab accounts, null will be returned.
+type GetPlayFabIDsFromTwitchIDsResultModel struct {
+    // Data mapping of Twitch identifiers to PlayFab identifiers.
+    Data []TwitchPlayFabIdPairModel `json:"Data,omitempty"`
+}
+
 // GetPlayFabIDsFromXboxLiveIDsRequest 
 type GetPlayFabIDsFromXboxLiveIDsRequestModel struct {
     // Sandbox the ID of Xbox Live sandbox.
     Sandbox string `json:"Sandbox,omitempty"`
-    // XboxLiveAccountIDs array of unique Xbox Live account identifiers for which the title needs to get PlayFab identifiers.
+    // XboxLiveAccountIDs array of unique Xbox Live account identifiers for which the title needs to get PlayFab identifiers. The array cannot
+// exceed 2,000 in length.
     XboxLiveAccountIDs []string `json:"XboxLiveAccountIDs,omitempty"`
 }
 
 // GetPlayFabIDsFromXboxLiveIDsResult for XboxLive identifiers which have not been linked to PlayFab accounts, null will be returned.
 type GetPlayFabIDsFromXboxLiveIDsResultModel struct {
-    // Data mapping of PlayStation Network identifiers to PlayFab identifiers.
+    // Data mapping of Xbox Live identifiers to PlayFab identifiers.
     Data []XboxLiveAccountPlayFabIdPairModel `json:"Data,omitempty"`
 }
 
@@ -2656,19 +2812,48 @@ type LinkedPlatformAccountModelModel struct {
     Username string `json:"Username,omitempty"`
 }
 
+// LinkNintendoServiceAccountRequest 
+type LinkNintendoServiceAccountRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ForceLink if another user is already linked to a specific Nintendo Switch account, unlink the other user and re-link.
+    ForceLink bool `json:"ForceLink"`
+    // IdentityToken the JSON Web token (JWT) returned by Nintendo after login. Used to validate the request and find the user ID (Nintendo
+// Switch subject) to link with.
+    IdentityToken string `json:"IdentityToken,omitempty"`
+    // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// LinkNintendoSwitchDeviceIdRequest 
+type LinkNintendoSwitchDeviceIdRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ForceLink if another user is already linked to the Nintendo Switch Device ID, unlink the other user and re-link.
+    ForceLink bool `json:"ForceLink"`
+    // NintendoSwitchDeviceId nintendo Switch unique identifier for the user's device.
+    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId,omitempty"`
+    // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// LinkNintendoSwitchDeviceIdResult 
+type LinkNintendoSwitchDeviceIdResultModel struct {
+}
+
 // LinkPSNAccountRequest 
 type LinkPSNAccountRequestModel struct {
-    // AuthCode authentication code provided by the PlayStation Network.
+    // AuthCode authentication code provided by the PlayStation :tm: Network.
     AuthCode string `json:"AuthCode,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // ForceLink if another user is already linked to the account, unlink the other user and re-link.
     ForceLink bool `json:"ForceLink"`
-    // IssuerId id of the PSN issuer environment. If null, defaults to 256 (production)
+    // IssuerId id of the PlayStation :tm: Network issuer environment. If null, defaults to production environment.
     IssuerId int32 `json:"IssuerId,omitempty"`
     // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
     PlayFabId string `json:"PlayFabId,omitempty"`
-    // RedirectUri redirect URI supplied to PSN when requesting an auth code
+    // RedirectUri redirect URI supplied to PlayStation :tm: Network when requesting an auth code
     RedirectUri string `json:"RedirectUri,omitempty"`
 }
 
@@ -2767,6 +2952,7 @@ const (
      LoginIdentityProviderOpenIdConnect LoginIdentityProvider = "OpenIdConnect"
      LoginIdentityProviderApple LoginIdentityProvider = "Apple"
      LoginIdentityProviderNintendoSwitchAccount LoginIdentityProvider = "NintendoSwitchAccount"
+     LoginIdentityProviderGooglePlayGames LoginIdentityProvider = "GooglePlayGames"
       )
 // LoginWithServerCustomIdRequest 
 type LoginWithServerCustomIdRequestModel struct {
@@ -2780,6 +2966,23 @@ type LoginWithServerCustomIdRequestModel struct {
     PlayerSecret string `json:"PlayerSecret,omitempty"`
     // ServerCustomId the backend server identifier for this player.
     ServerCustomId string `json:"ServerCustomId,omitempty"`
+}
+
+// LoginWithSteamIdRequest if this is the first time a user has signed in with the Steam ID and CreateAccount is set to true, a new PlayFab account
+// will be created and linked to the Steam account. In this case, no email or username will be associated with the PlayFab
+// account. Otherwise, if no PlayFab account is linked to the Steam account, an error indicating this will be returned, so
+// that the title can guide the user through creation of a PlayFab account. Steam users that are not logged into the Steam
+// Client app will only have their Steam username synced, other data, such as currency and country will not be available
+// until they login while the Client is open.
+type LoginWithSteamIdRequestModel struct {
+    // CreateAccount automatically create a PlayFab account if one is not currently linked to this ID.
+    CreateAccount bool `json:"CreateAccount"`
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // InfoRequestParameters flags for which pieces of info to return for the user.
+    InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
+    // SteamId unique Steam identifier for a user
+    SteamId string `json:"SteamId,omitempty"`
 }
 
 // LoginWithXboxIdRequest if this is the first time a user has signed in with the Xbox ID and CreateAccount is set to true, a new PlayFab account
@@ -2929,6 +3132,15 @@ type MoveItemToUserFromCharacterRequestModel struct {
 type MoveItemToUserFromCharacterResultModel struct {
 }
 
+// NintendoServiceAccountPlayFabIdPair 
+type NintendoServiceAccountPlayFabIdPairModel struct {
+    // NintendoServiceAccountId unique Nintendo Switch Service Account identifier for a user.
+    NintendoServiceAccountId string `json:"NintendoServiceAccountId,omitempty"`
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Nintendo Switch Service Account
+// identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
 // NintendoSwitchPlayFabIdPair 
 type NintendoSwitchPlayFabIdPairModel struct {
     // NintendoSwitchDeviceId unique Nintendo Switch Device identifier for a user.
@@ -3010,6 +3222,8 @@ type PlayerProfileModel struct {
     AvatarUrl string `json:"AvatarUrl,omitempty"`
     // BannedUntil banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
     BannedUntil time.Time `json:"BannedUntil,omitempty"`
+    // ChurnPrediction the prediction of the player to churn within the next seven days.
+    ChurnPrediction ChurnRiskLevel `json:"ChurnPrediction,omitempty"`
     // ContactEmailAddresses array of contact email addresses associated with the player
     ContactEmailAddresses []ContactEmailInfoModel `json:"ContactEmailAddresses,omitempty"`
     // Created player record created
@@ -3062,7 +3276,9 @@ type PlayerProfileModelModel struct {
     Created time.Time `json:"Created,omitempty"`
     // DisplayName player display name
     DisplayName string `json:"DisplayName,omitempty"`
-    // ExperimentVariants list of experiment variants for the player.
+    // ExperimentVariants list of experiment variants for the player. Note that these variants are not guaranteed to be up-to-date when returned
+// during login because the player profile is updated only after login. Instead, use the LoginResult.TreatmentAssignment
+// property during login to get the correct variants and variables.
     ExperimentVariants []string `json:"ExperimentVariants,omitempty"`
     // LastLogin uTC time when the player most recently logged in to the title
     LastLogin time.Time `json:"LastLogin,omitempty"`
@@ -3161,9 +3377,10 @@ type PlayerStatisticVersionModel struct {
 
 // PSNAccountPlayFabIdPair 
 type PSNAccountPlayFabIdPairModel struct {
-    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the PlayStation Network identifier.
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the PlayStation :tm: Network
+// identifier.
     PlayFabId string `json:"PlayFabId,omitempty"`
-    // PSNAccountId unique PlayStation Network identifier for a user.
+    // PSNAccountId unique PlayStation :tm: Network identifier for a user.
     PSNAccountId string `json:"PSNAccountId,omitempty"`
 }
 
@@ -3885,6 +4102,36 @@ type TreatmentAssignmentModel struct {
     Variants []string `json:"Variants,omitempty"`
 }
 
+// TwitchPlayFabIdPair 
+type TwitchPlayFabIdPairModel struct {
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Twitch identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+    // TwitchId unique Twitch identifier for a user.
+    TwitchId string `json:"TwitchId,omitempty"`
+}
+
+// UnlinkNintendoServiceAccountRequest 
+type UnlinkNintendoServiceAccountRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// UnlinkNintendoSwitchDeviceIdRequest 
+type UnlinkNintendoSwitchDeviceIdRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // NintendoSwitchDeviceId nintendo Switch Device identifier for the user. If not specified, the most recently signed in device ID will be used.
+    NintendoSwitchDeviceId string `json:"NintendoSwitchDeviceId,omitempty"`
+    // PlayFabId unique PlayFab assigned ID of the user on whom the operation will be performed.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// UnlinkNintendoSwitchDeviceIdResult 
+type UnlinkNintendoSwitchDeviceIdResultModel struct {
+}
+
 // UnlinkPSNAccountRequest 
 type UnlinkPSNAccountRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
@@ -3986,8 +4233,6 @@ type UpdateBanRequestModel struct {
     Expires time.Time `json:"Expires,omitempty"`
     // IPAddress the updated IP address for the ban. Null for no change.
     IPAddress string `json:"IPAddress,omitempty"`
-    // MACAddress the updated MAC address for the ban. Null for no change.
-    MACAddress string `json:"MACAddress,omitempty"`
     // Permanent whether to make this ban permanent. Set to true to make this ban permanent. This will not modify Active state.
     Permanent bool `json:"Permanent"`
     // Reason the updated reason for the ban to be updated. Maximum 140 characters. Null for no change.
@@ -4173,6 +4418,8 @@ type UserAccountInfoModel struct {
     GameCenterInfo *UserGameCenterInfoModel `json:"GameCenterInfo,omitempty"`
     // GoogleInfo user Google account information, if a Google account has been linked
     GoogleInfo *UserGoogleInfoModel `json:"GoogleInfo,omitempty"`
+    // GooglePlayGamesInfo user Google Play Games account information, if a Google Play Games account has been linked
+    GooglePlayGamesInfo *UserGooglePlayGamesInfoModel `json:"GooglePlayGamesInfo,omitempty"`
     // IosDeviceInfo user iOS device information, if an iOS device has been linked
     IosDeviceInfo *UserIosDeviceInfoModel `json:"IosDeviceInfo,omitempty"`
     // KongregateInfo user Kongregate account information, if a Kongregate account has been linked
@@ -4187,7 +4434,7 @@ type UserAccountInfoModel struct {
     PlayFabId string `json:"PlayFabId,omitempty"`
     // PrivateInfo personal information for the user which is considered more sensitive
     PrivateInfo *UserPrivateAccountInfoModel `json:"PrivateInfo,omitempty"`
-    // PsnInfo user PSN account information, if a PSN account has been linked
+    // PsnInfo user PlayStation :tm: Network account information, if a PlayStation :tm: Network account has been linked
     PsnInfo *UserPsnInfoModel `json:"PsnInfo,omitempty"`
     // SteamInfo user Steam information, if a Steam account has been linked
     SteamInfo *UserSteamInfoModel `json:"SteamInfo,omitempty"`
@@ -4197,8 +4444,6 @@ type UserAccountInfoModel struct {
     TwitchInfo *UserTwitchInfoModel `json:"TwitchInfo,omitempty"`
     // Username user account name in the PlayFab service
     Username string `json:"Username,omitempty"`
-    // WindowsHelloInfo windows Hello account information, if a Windows Hello account has been linked
-    WindowsHelloInfo *UserWindowsHelloInfoModel `json:"WindowsHelloInfo,omitempty"`
     // XboxInfo user XBox account information, if a XBox account has been linked
     XboxInfo *UserXboxInfoModel `json:"XboxInfo,omitempty"`
 }
@@ -4274,6 +4519,16 @@ type UserGoogleInfoModel struct {
     GoogleName string `json:"GoogleName,omitempty"`
 }
 
+// UserGooglePlayGamesInfo 
+type UserGooglePlayGamesInfoModel struct {
+    // GooglePlayGamesPlayerAvatarImageUrl avatar image url of the Google Play Games player
+    GooglePlayGamesPlayerAvatarImageUrl string `json:"GooglePlayGamesPlayerAvatarImageUrl,omitempty"`
+    // GooglePlayGamesPlayerDisplayName display name of the Google Play Games player
+    GooglePlayGamesPlayerDisplayName string `json:"GooglePlayGamesPlayerDisplayName,omitempty"`
+    // GooglePlayGamesPlayerId google Play Games player ID
+    GooglePlayGamesPlayerId string `json:"GooglePlayGamesPlayerId,omitempty"`
+}
+
 // UserIosDeviceInfo 
 type UserIosDeviceInfoModel struct {
     // IosDeviceId iOS device ID
@@ -4331,13 +4586,13 @@ const (
      UserOriginationXboxLive UserOrigination = "XboxLive"
      UserOriginationParse UserOrigination = "Parse"
      UserOriginationTwitch UserOrigination = "Twitch"
-     UserOriginationWindowsHello UserOrigination = "WindowsHello"
      UserOriginationServerCustomId UserOrigination = "ServerCustomId"
      UserOriginationNintendoSwitchDeviceId UserOrigination = "NintendoSwitchDeviceId"
      UserOriginationFacebookInstantGamesId UserOrigination = "FacebookInstantGamesId"
      UserOriginationOpenIdConnect UserOrigination = "OpenIdConnect"
      UserOriginationApple UserOrigination = "Apple"
      UserOriginationNintendoSwitchAccount UserOrigination = "NintendoSwitchAccount"
+     UserOriginationGooglePlayGames UserOrigination = "GooglePlayGames"
       )
 // UserPrivateAccountInfo 
 type UserPrivateAccountInfoModel struct {
@@ -4347,9 +4602,9 @@ type UserPrivateAccountInfoModel struct {
 
 // UserPsnInfo 
 type UserPsnInfoModel struct {
-    // PsnAccountId pSN account ID
+    // PsnAccountId playStation :tm: Network account ID
     PsnAccountId string `json:"PsnAccountId,omitempty"`
-    // PsnOnlineId pSN online ID
+    // PsnOnlineId playStation :tm: Network online ID
     PsnOnlineId string `json:"PsnOnlineId,omitempty"`
 }
 
@@ -4407,18 +4662,12 @@ type UserTwitchInfoModel struct {
     TwitchUserName string `json:"TwitchUserName,omitempty"`
 }
 
-// UserWindowsHelloInfo 
-type UserWindowsHelloInfoModel struct {
-    // WindowsHelloDeviceName windows Hello Device Name
-    WindowsHelloDeviceName string `json:"WindowsHelloDeviceName,omitempty"`
-    // WindowsHelloPublicKeyHash windows Hello Public Key Hash
-    WindowsHelloPublicKeyHash string `json:"WindowsHelloPublicKeyHash,omitempty"`
-}
-
 // UserXboxInfo 
 type UserXboxInfoModel struct {
     // XboxUserId xBox user ID
     XboxUserId string `json:"XboxUserId,omitempty"`
+    // XboxUserSandbox xBox user sandbox
+    XboxUserSandbox string `json:"XboxUserSandbox,omitempty"`
 }
 
 // ValueToDateModel 

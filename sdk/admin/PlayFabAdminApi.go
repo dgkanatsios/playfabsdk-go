@@ -154,43 +154,6 @@ func AddPlayerTag(settings *playfab.Settings, postData *AddPlayerTagRequestModel
     return result, nil
 }
 
-// AddServerBuild adds the game server executable specified (previously uploaded - see GetServerBuildUploadUrl) to the set of those a
-// client is permitted to request in a call to StartGame
-// https://api.playfab.com/Documentation/Admin/method/AddServerBuild
-func AddServerBuild(settings *playfab.Settings, postData *AddServerBuildRequestModel, developerSecretKey string) (*AddServerBuildResultModel, error) {
-    if developerSecretKey == "" {
-        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Admin/AddServerBuild", "X-SecretKey", developerSecretKey)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &AddServerBuildResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
 // AddUserVirtualCurrency increments the specified virtual currency by the stated amount
 // https://api.playfab.com/Documentation/Admin/method/AddUserVirtualCurrency
 func AddUserVirtualCurrency(settings *playfab.Settings, postData *AddUserVirtualCurrencyRequestModel, developerSecretKey string) (*ModifyUserVirtualCurrencyResultModel, error) {
@@ -554,6 +517,43 @@ func CreatePlayerStatisticDefinition(settings *playfab.Settings, postData *Creat
     return result, nil
 }
 
+// CreateSegment creates a new player segment by defining the conditions on player properties. Also, create actions to target the player
+// segments for a title.
+// https://api.playfab.com/Documentation/Admin/method/CreateSegment
+func CreateSegment(settings *playfab.Settings, postData *CreateSegmentRequestModel, developerSecretKey string) (*CreateSegmentResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/CreateSegment", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &CreateSegmentResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // DeleteContent delete a content file from the title. When deleting a file that does not exist, it returns success.
 // https://api.playfab.com/Documentation/Admin/method/DeleteContent
 func DeleteContent(settings *playfab.Settings, postData *DeleteContentRequestModel, developerSecretKey string) (*BlankResultModel, error) {
@@ -607,6 +607,42 @@ func DeleteMasterPlayerAccount(settings *playfab.Settings, postData *DeleteMaste
     }
     
     result := &DeleteMasterPlayerAccountResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// DeleteMembershipSubscription deletes a player's subscription
+// https://api.playfab.com/Documentation/Admin/method/DeleteMembershipSubscription
+func DeleteMembershipSubscription(settings *playfab.Settings, postData *DeleteMembershipSubscriptionRequestModel, developerSecretKey string) (*DeleteMembershipSubscriptionResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/DeleteMembershipSubscription", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &DeleteMembershipSubscriptionResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -716,6 +752,42 @@ func DeletePlayerSharedSecret(settings *playfab.Settings, postData *DeletePlayer
     }
     
     result := &DeletePlayerSharedSecretResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// DeleteSegment deletes an existing player segment and its associated action(s) for a title.
+// https://api.playfab.com/Documentation/Admin/method/DeleteSegment
+func DeleteSegment(settings *playfab.Settings, postData *DeleteSegmentRequestModel, developerSecretKey string) (*DeleteSegmentsResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/DeleteSegment", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &DeleteSegmentsResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -896,6 +968,44 @@ func ExportMasterPlayerData(settings *playfab.Settings, postData *ExportMasterPl
     }
     
     result := &ExportMasterPlayerDataResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// ExportPlayersInSegment starts an export for the player profiles in a segment. This API creates a snapshot of all the player profiles which
+// match the segment definition at the time of the API call. Profiles which change while an export is in progress will not
+// be reflected in the results.
+// https://api.playfab.com/Documentation/Admin/method/ExportPlayersInSegment
+func ExportPlayersInSegment(settings *playfab.Settings, postData *ExportPlayersInSegmentRequestModel, developerSecretKey string) (*ExportPlayersInSegmentResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/ExportPlayersInSegment", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &ExportPlayersInSegmentResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1752,9 +1862,12 @@ func GetRandomResultTables(settings *playfab.Settings, postData *GetRandomResult
     return result, nil
 }
 
-// GetServerBuildInfo retrieves the build details for the specified game server executable
-// https://api.playfab.com/Documentation/Admin/method/GetServerBuildInfo
-func GetServerBuildInfo(settings *playfab.Settings, postData *GetServerBuildInfoRequestModel, developerSecretKey string) (*GetServerBuildInfoResultModel, error) {
+// GetSegmentExport retrieves the result of an export started by ExportPlayersInSegment API. If the ExportPlayersInSegment is successful and
+// complete, this API returns the IndexUrl from which the index file can be downloaded. The index file has a list of urls
+// from which the files containing the player profile data can be downloaded. Otherwise, it returns the current 'State' of
+// the export
+// https://api.playfab.com/Documentation/Admin/method/GetSegmentExport
+func GetSegmentExport(settings *playfab.Settings, postData *GetPlayersInSegmentExportRequestModel, developerSecretKey string) (*GetPlayersInSegmentExportResponseModel, error) {
     if developerSecretKey == "" {
         return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
     }
@@ -1763,12 +1876,12 @@ func GetServerBuildInfo(settings *playfab.Settings, postData *GetServerBuildInfo
         return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
     }
 
-    sourceMap, err := playfab.Request(settings, b, "/Admin/GetServerBuildInfo", "X-SecretKey", developerSecretKey)
+    sourceMap, err := playfab.Request(settings, b, "/Admin/GetSegmentExport", "X-SecretKey", developerSecretKey)
     if err != nil {
         return nil, err
     }
     
-    result := &GetServerBuildInfoResultModel{}
+    result := &GetPlayersInSegmentExportResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -1788,10 +1901,9 @@ func GetServerBuildInfo(settings *playfab.Settings, postData *GetServerBuildInfo
     return result, nil
 }
 
-// GetServerBuildUploadUrl retrieves the pre-authorized URL for uploading a game server package containing a build (does not enable the build for
-// use - see AddServerBuild)
-// https://api.playfab.com/Documentation/Admin/method/GetServerBuildUploadUrl
-func GetServerBuildUploadUrl(settings *playfab.Settings, postData *GetServerBuildUploadURLRequestModel, developerSecretKey string) (*GetServerBuildUploadURLResultModel, error) {
+// GetSegments get detail information of a segment and its associated definition(s) and action(s) for a title.
+// https://api.playfab.com/Documentation/Admin/method/GetSegments
+func GetSegments(settings *playfab.Settings, postData *GetSegmentsRequestModel, developerSecretKey string) (*GetSegmentsResponseModel, error) {
     if developerSecretKey == "" {
         return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
     }
@@ -1800,12 +1912,12 @@ func GetServerBuildUploadUrl(settings *playfab.Settings, postData *GetServerBuil
         return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
     }
 
-    sourceMap, err := playfab.Request(settings, b, "/Admin/GetServerBuildUploadUrl", "X-SecretKey", developerSecretKey)
+    sourceMap, err := playfab.Request(settings, b, "/Admin/GetSegments", "X-SecretKey", developerSecretKey)
     if err != nil {
         return nil, err
     }
     
-    result := &GetServerBuildUploadURLResultModel{}
+    result := &GetSegmentsResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -2473,42 +2585,6 @@ func ListOpenIdConnection(settings *playfab.Settings, postData *ListOpenIdConnec
     return result, nil
 }
 
-// ListServerBuilds retrieves the build details for all game server executables which are currently defined for the title
-// https://api.playfab.com/Documentation/Admin/method/ListServerBuilds
-func ListServerBuilds(settings *playfab.Settings, postData *ListBuildsRequestModel, developerSecretKey string) (*ListBuildsResultModel, error) {
-    if developerSecretKey == "" {
-        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Admin/ListServerBuilds", "X-SecretKey", developerSecretKey)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &ListBuildsResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
 // ListVirtualCurrencyTypes retuns the list of all defined virtual currencies for the title
 // https://api.playfab.com/Documentation/Admin/method/ListVirtualCurrencyTypes
 func ListVirtualCurrencyTypes(settings *playfab.Settings, postData *ListVirtualCurrencyTypesRequestModel, developerSecretKey string) (*ListVirtualCurrencyTypesResultModel, error) {
@@ -2526,42 +2602,6 @@ func ListVirtualCurrencyTypes(settings *playfab.Settings, postData *ListVirtualC
     }
     
     result := &ListVirtualCurrencyTypesResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
-// ModifyMatchmakerGameModes updates the game server mode details for the specified game server executable
-// https://api.playfab.com/Documentation/Admin/method/ModifyMatchmakerGameModes
-func ModifyMatchmakerGameModes(settings *playfab.Settings, postData *ModifyMatchmakerGameModesRequestModel, developerSecretKey string) (*ModifyMatchmakerGameModesResultModel, error) {
-    if developerSecretKey == "" {
-        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Admin/ModifyMatchmakerGameModes", "X-SecretKey", developerSecretKey)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &ModifyMatchmakerGameModesResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -2670,43 +2710,6 @@ func RemovePlayerTag(settings *playfab.Settings, postData *RemovePlayerTagReques
     }
     
     result := &RemovePlayerTagResultModel{}
-
-    config := mapstructure.DecoderConfig{
-        DecodeHook: playfab.StringToDateTimeHook,
-        Result:     result,
-    }
-    
-    decoder, errDecoding := mapstructure.NewDecoder(&config)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-   
-    errDecoding = decoder.Decode(sourceMap)
-    if errDecoding != nil {
-        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
-    }
-
-    return result, nil
-}
-
-// RemoveServerBuild removes the game server executable specified from the set of those a client is permitted to request in a call to
-// StartGame
-// https://api.playfab.com/Documentation/Admin/method/RemoveServerBuild
-func RemoveServerBuild(settings *playfab.Settings, postData *RemoveServerBuildRequestModel, developerSecretKey string) (*RemoveServerBuildResultModel, error) {
-    if developerSecretKey == "" {
-        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
-    }
-    b, errMarshal := json.Marshal(postData)
-    if errMarshal != nil {
-        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
-    }
-
-    sourceMap, err := playfab.Request(settings, b, "/Admin/RemoveServerBuild", "X-SecretKey", developerSecretKey)
-    if err != nil {
-        return nil, err
-    }
-    
-    result := &RemoveServerBuildResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,
@@ -3160,6 +3163,42 @@ func SetCatalogItems(settings *playfab.Settings, postData *UpdateCatalogItemsReq
     return result, nil
 }
 
+// SetMembershipOverride sets the override expiration for a membership subscription
+// https://api.playfab.com/Documentation/Admin/method/SetMembershipOverride
+func SetMembershipOverride(settings *playfab.Settings, postData *SetMembershipOverrideRequestModel, developerSecretKey string) (*SetMembershipOverrideResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/SetMembershipOverride", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &SetMembershipOverrideResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // SetPlayerSecret sets or resets the player's secret. Player secrets are used to sign API requests.
 // https://api.playfab.com/Documentation/Admin/method/SetPlayerSecret
 func SetPlayerSecret(settings *playfab.Settings, postData *SetPlayerSecretRequestModel, developerSecretKey string) (*SetPlayerSecretResultModel, error) {
@@ -3304,7 +3343,10 @@ func SetStoreItems(settings *playfab.Settings, postData *UpdateStoreItemsRequest
     return result, nil
 }
 
-// SetTitleData creates and updates the key-value store of custom title settings which can be read by the client
+// SetTitleData creates and updates the key-value store of custom title settings which can be read by the client. For example, a
+// developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths,
+// movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new
+// build.
 // https://api.playfab.com/Documentation/Admin/method/SetTitleData
 func SetTitleData(settings *playfab.Settings, postData *SetTitleDataRequestModel, developerSecretKey string) (*SetTitleDataResultModel, error) {
     if developerSecretKey == "" {
@@ -3376,7 +3418,8 @@ func SetTitleDataAndOverrides(settings *playfab.Settings, postData *SetTitleData
     return result, nil
 }
 
-// SetTitleInternalData updates the key-value store of custom title settings which cannot be read by the client
+// SetTitleInternalData updates the key-value store of custom title settings which cannot be read by the client. These values can be used to
+// tweak settings used by game servers and Cloud Scripts without the need to update and re-deploy.
 // https://api.playfab.com/Documentation/Admin/method/SetTitleInternalData
 func SetTitleInternalData(settings *playfab.Settings, postData *SetTitleDataRequestModel, developerSecretKey string) (*SetTitleDataResultModel, error) {
     if developerSecretKey == "" {
@@ -3757,6 +3800,42 @@ func UpdateRandomResultTables(settings *playfab.Settings, postData *UpdateRandom
     }
     
     result := &UpdateRandomResultTablesResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UpdateSegment updates an existing player segment and its associated definition(s) and action(s) for a title.
+// https://api.playfab.com/Documentation/Admin/method/UpdateSegment
+func UpdateSegment(settings *playfab.Settings, postData *UpdateSegmentRequestModel, developerSecretKey string) (*UpdateSegmentResponseModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Admin/UpdateSegment", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &UpdateSegmentResponseModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,

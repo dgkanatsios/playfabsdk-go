@@ -2,6 +2,36 @@ package authentication
 
 import "time"
                     
+// AuthenticateCustomIdRequest create or return a game_server entity token. Caller must be a title entity.
+type AuthenticateCustomIdRequestModel struct {
+    // CustomId the customId used to create and retrieve game_server entity tokens. This is unique at the title level. CustomId must be
+// between 32 and 100 characters.
+    CustomId string `json:"CustomId,omitempty"`
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+}
+
+// AuthenticateCustomIdResult 
+type AuthenticateCustomIdResultModel struct {
+    // EntityToken the token generated used to set X-EntityToken for game_server calls.
+    EntityToken *EntityTokenResponseModel `json:"EntityToken,omitempty"`
+    // NewlyCreated true if the account was newly created on this authentication.
+    NewlyCreated bool `json:"NewlyCreated"`
+}
+
+// DeleteRequest delete a game_server entity. The caller can be the game_server entity attempting to delete itself. Or a title entity
+// attempting to delete game_server entities for this title.
+type DeleteRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // Entity the game_server entity to be removed.
+    Entity* EntityKeyModel `json:"Entity,omitempty"`
+}
+
+// EmptyResponse 
+type EmptyResponseModel struct {
+}
+
 // EntityKey combined entity type and ID structure which uniquely identifies a single entity.
 type EntityKeyModel struct {
     // Id unique ID of the entity.
@@ -26,6 +56,16 @@ type EntityLineageModel struct {
     TitlePlayerAccountId string `json:"TitlePlayerAccountId,omitempty"`
 }
 
+// EntityTokenResponse 
+type EntityTokenResponseModel struct {
+    // Entity the entity id and type.
+    Entity *EntityKeyModel `json:"Entity,omitempty"`
+    // EntityToken the token used to set X-EntityToken for all entity based API calls.
+    EntityToken string `json:"EntityToken,omitempty"`
+    // TokenExpiration the time the token will expire, if it is an expiring token, in UTC.
+    TokenExpiration time.Time `json:"TokenExpiration,omitempty"`
+}
+
 // GetEntityTokenRequest this API must be called with X-SecretKey, X-Authentication or X-EntityToken headers. An optional EntityKey may be
 // included to attempt to set the resulting EntityToken to a specific entity, however the entity must be a relation of the
 // caller, such as the master_player_account of a character. If sending X-EntityToken the account will be marked as freshly
@@ -34,7 +74,7 @@ type EntityLineageModel struct {
 type GetEntityTokenRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // Entity the entity to perform this action on.
+    // Entity the optional entity to perform this action on. Defaults to the currently logged in entity.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
 }
 
@@ -81,6 +121,7 @@ const (
      LoginIdentityProviderOpenIdConnect LoginIdentityProvider = "OpenIdConnect"
      LoginIdentityProviderApple LoginIdentityProvider = "Apple"
      LoginIdentityProviderNintendoSwitchAccount LoginIdentityProvider = "NintendoSwitchAccount"
+     LoginIdentityProviderGooglePlayGames LoginIdentityProvider = "GooglePlayGames"
       )
 // ValidateEntityTokenRequest given an entity token, validates that it hasn't expired or been revoked and will return details of the owner.
 type ValidateEntityTokenRequestModel struct {
@@ -98,6 +139,8 @@ type ValidateEntityTokenResponseModel struct {
     IdentifiedDeviceType IdentifiedDeviceType `json:"IdentifiedDeviceType,omitempty"`
     // IdentityProvider the identity provider for this entity, for the given login
     IdentityProvider LoginIdentityProvider `json:"IdentityProvider,omitempty"`
+    // IdentityProviderIssuedId the ID issued by the identity provider, e.g. a XUID on Xbox Live
+    IdentityProviderIssuedId string `json:"IdentityProviderIssuedId,omitempty"`
     // Lineage the lineage of this profile.
     Lineage *EntityLineageModel `json:"Lineage,omitempty"`
 }
