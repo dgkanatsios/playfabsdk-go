@@ -1848,6 +1848,13 @@ const (
      GenericErrorCodesAnalysisSubscriptionFoundAlready GenericErrorCodes = "AnalysisSubscriptionFoundAlready"
      GenericErrorCodesAnalysisSubscriptionManagementInvalidInput GenericErrorCodes = "AnalysisSubscriptionManagementInvalidInput"
      GenericErrorCodesInvalidGameCenterId GenericErrorCodes = "InvalidGameCenterId"
+     GenericErrorCodesInvalidNintendoSwitchAccountId GenericErrorCodes = "InvalidNintendoSwitchAccountId"
+     GenericErrorCodesEntityAPIKeysNotSupported GenericErrorCodes = "EntityAPIKeysNotSupported"
+     GenericErrorCodesIpAddressBanned GenericErrorCodes = "IpAddressBanned"
+     GenericErrorCodesEntityLineageBanned GenericErrorCodes = "EntityLineageBanned"
+     GenericErrorCodesNamespaceMismatch GenericErrorCodes = "NamespaceMismatch"
+     GenericErrorCodesInvalidServiceConfiguration GenericErrorCodes = "InvalidServiceConfiguration"
+     GenericErrorCodesInvalidNamespaceMismatch GenericErrorCodes = "InvalidNamespaceMismatch"
      GenericErrorCodesMatchmakingEntityInvalid GenericErrorCodes = "MatchmakingEntityInvalid"
      GenericErrorCodesMatchmakingPlayerAttributesInvalid GenericErrorCodes = "MatchmakingPlayerAttributesInvalid"
      GenericErrorCodesMatchmakingQueueNotFound GenericErrorCodes = "MatchmakingQueueNotFound"
@@ -1976,6 +1983,7 @@ const (
      GenericErrorCodesAsyncExportNotInFlight GenericErrorCodes = "AsyncExportNotInFlight"
      GenericErrorCodesAsyncExportNotFound GenericErrorCodes = "AsyncExportNotFound"
      GenericErrorCodesAsyncExportRateLimitExceeded GenericErrorCodes = "AsyncExportRateLimitExceeded"
+     GenericErrorCodesAnalyticsSegmentCountOverLimit GenericErrorCodes = "AnalyticsSegmentCountOverLimit"
      GenericErrorCodesSnapshotNotFound GenericErrorCodes = "SnapshotNotFound"
      GenericErrorCodesInventoryApiNotImplemented GenericErrorCodes = "InventoryApiNotImplemented"
      GenericErrorCodesLobbyDoesNotExist GenericErrorCodes = "LobbyDoesNotExist"
@@ -1994,6 +2002,12 @@ const (
      GenericErrorCodesEventSamplingInvalidEventNamespace GenericErrorCodes = "EventSamplingInvalidEventNamespace"
      GenericErrorCodesEventSamplingInvalidEventName GenericErrorCodes = "EventSamplingInvalidEventName"
      GenericErrorCodesEventSamplingRatioNotFound GenericErrorCodes = "EventSamplingRatioNotFound"
+     GenericErrorCodesTelemetryKeyNotFound GenericErrorCodes = "TelemetryKeyNotFound"
+     GenericErrorCodesTelemetryKeyInvalidName GenericErrorCodes = "TelemetryKeyInvalidName"
+     GenericErrorCodesTelemetryKeyAlreadyExists GenericErrorCodes = "TelemetryKeyAlreadyExists"
+     GenericErrorCodesTelemetryKeyInvalid GenericErrorCodes = "TelemetryKeyInvalid"
+     GenericErrorCodesTelemetryKeyCountOverLimit GenericErrorCodes = "TelemetryKeyCountOverLimit"
+     GenericErrorCodesTelemetryKeyDeactivated GenericErrorCodes = "TelemetryKeyDeactivated"
      GenericErrorCodesEventSinkConnectionInvalid GenericErrorCodes = "EventSinkConnectionInvalid"
      GenericErrorCodesEventSinkConnectionUnauthorized GenericErrorCodes = "EventSinkConnectionUnauthorized"
      GenericErrorCodesEventSinkRegionInvalid GenericErrorCodes = "EventSinkRegionInvalid"
@@ -2009,6 +2023,16 @@ const (
      GenericErrorCodesOperationCanceled GenericErrorCodes = "OperationCanceled"
      GenericErrorCodesInvalidDisplayNameRandomSuffixLength GenericErrorCodes = "InvalidDisplayNameRandomSuffixLength"
      GenericErrorCodesAllowNonUniquePlayerDisplayNamesDisableNotAllowed GenericErrorCodes = "AllowNonUniquePlayerDisplayNamesDisableNotAllowed"
+     GenericErrorCodesPartitionedEventInvalid GenericErrorCodes = "PartitionedEventInvalid"
+     GenericErrorCodesPartitionedEventCountOverLimit GenericErrorCodes = "PartitionedEventCountOverLimit"
+     GenericErrorCodesPlayerCustomPropertiesPropertyNameTooLong GenericErrorCodes = "PlayerCustomPropertiesPropertyNameTooLong"
+     GenericErrorCodesPlayerCustomPropertiesPropertyNameIsInvalid GenericErrorCodes = "PlayerCustomPropertiesPropertyNameIsInvalid"
+     GenericErrorCodesPlayerCustomPropertiesStringPropertyValueTooLong GenericErrorCodes = "PlayerCustomPropertiesStringPropertyValueTooLong"
+     GenericErrorCodesPlayerCustomPropertiesValueIsInvalidType GenericErrorCodes = "PlayerCustomPropertiesValueIsInvalidType"
+     GenericErrorCodesPlayerCustomPropertiesVersionMismatch GenericErrorCodes = "PlayerCustomPropertiesVersionMismatch"
+     GenericErrorCodesPlayerCustomPropertiesPropertyCountTooHigh GenericErrorCodes = "PlayerCustomPropertiesPropertyCountTooHigh"
+     GenericErrorCodesPlayerCustomPropertiesDuplicatePropertyName GenericErrorCodes = "PlayerCustomPropertiesDuplicatePropertyName"
+     GenericErrorCodesPlayerCustomPropertiesPropertyDoesNotExist GenericErrorCodes = "PlayerCustomPropertiesPropertyDoesNotExist"
       )
 // GetActionsOnPlayersInSegmentTaskInstanceResult 
 type GetActionsOnPlayersInSegmentTaskInstanceResultModel struct {
@@ -2281,7 +2305,7 @@ type GetPlayersInSegmentRequestModel struct {
 // segment.
     MaxBatchSize uint32 `json:"MaxBatchSize,omitempty"`
     // SecondsToLive number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
-// results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
+// results. Default is 300 (5 minutes). Maximum is 5,400 (90 minutes).
     SecondsToLive uint32 `json:"SecondsToLive,omitempty"`
     // SegmentId unique identifier for this segment.
     SegmentId string `json:"SegmentId,omitempty"`

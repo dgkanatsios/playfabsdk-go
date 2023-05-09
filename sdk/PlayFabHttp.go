@@ -88,6 +88,7 @@ type Settings struct {
 	AdvertisingIdType        AdType
 	AdvertisingIdValue       string
 	DisableAdvertising       bool
+	TelemetryKey             string
 }
 
 // NewSettingsWithDefaultOptions  returns a pointer to a Settings struct that carries default values

@@ -2782,6 +2782,42 @@ func LinkServerCustomId(settings *playfab.Settings, postData *LinkServerCustomId
     return result, nil
 }
 
+// LinkSteamId links the Steam account associated with the provided Steam ID to the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/LinkSteamId
+func LinkSteamId(settings *playfab.Settings, postData *LinkSteamIdRequestModel, developerSecretKey string) (*LinkSteamIdResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/LinkSteamId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &LinkSteamIdResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // LinkXboxAccount links the Xbox Live account associated with the provided access code to the user's PlayFab account
 // https://api.playfab.com/Documentation/Server/method/LinkXboxAccount
 func LinkXboxAccount(settings *playfab.Settings, postData *LinkXboxAccountRequestModel, developerSecretKey string) (*LinkXboxAccountResultModel, error) {
@@ -4290,6 +4326,42 @@ func UnlinkServerCustomId(settings *playfab.Settings, postData *UnlinkServerCust
     }
     
     result := &UnlinkServerCustomIdResultModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
+// UnlinkSteamId unlinks the Steam account associated with the provided Steam ID to the user's PlayFab account
+// https://api.playfab.com/Documentation/Server/method/UnlinkSteamId
+func UnlinkSteamId(settings *playfab.Settings, postData *UnlinkSteamIdRequestModel, developerSecretKey string) (*UnlinkSteamIdResultModel, error) {
+    if developerSecretKey == "" {
+        return nil, playfab.NewCustomError("developerSecretKey should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Server/UnlinkSteamId", "X-SecretKey", developerSecretKey)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &UnlinkSteamIdResultModel{}
 
     config := mapstructure.DecoderConfig{
         DecodeHook: playfab.StringToDateTimeHook,

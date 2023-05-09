@@ -1597,6 +1597,13 @@ const (
      GenericErrorCodesAnalysisSubscriptionFoundAlready GenericErrorCodes = "AnalysisSubscriptionFoundAlready"
      GenericErrorCodesAnalysisSubscriptionManagementInvalidInput GenericErrorCodes = "AnalysisSubscriptionManagementInvalidInput"
      GenericErrorCodesInvalidGameCenterId GenericErrorCodes = "InvalidGameCenterId"
+     GenericErrorCodesInvalidNintendoSwitchAccountId GenericErrorCodes = "InvalidNintendoSwitchAccountId"
+     GenericErrorCodesEntityAPIKeysNotSupported GenericErrorCodes = "EntityAPIKeysNotSupported"
+     GenericErrorCodesIpAddressBanned GenericErrorCodes = "IpAddressBanned"
+     GenericErrorCodesEntityLineageBanned GenericErrorCodes = "EntityLineageBanned"
+     GenericErrorCodesNamespaceMismatch GenericErrorCodes = "NamespaceMismatch"
+     GenericErrorCodesInvalidServiceConfiguration GenericErrorCodes = "InvalidServiceConfiguration"
+     GenericErrorCodesInvalidNamespaceMismatch GenericErrorCodes = "InvalidNamespaceMismatch"
      GenericErrorCodesMatchmakingEntityInvalid GenericErrorCodes = "MatchmakingEntityInvalid"
      GenericErrorCodesMatchmakingPlayerAttributesInvalid GenericErrorCodes = "MatchmakingPlayerAttributesInvalid"
      GenericErrorCodesMatchmakingQueueNotFound GenericErrorCodes = "MatchmakingQueueNotFound"
@@ -1725,6 +1732,7 @@ const (
      GenericErrorCodesAsyncExportNotInFlight GenericErrorCodes = "AsyncExportNotInFlight"
      GenericErrorCodesAsyncExportNotFound GenericErrorCodes = "AsyncExportNotFound"
      GenericErrorCodesAsyncExportRateLimitExceeded GenericErrorCodes = "AsyncExportRateLimitExceeded"
+     GenericErrorCodesAnalyticsSegmentCountOverLimit GenericErrorCodes = "AnalyticsSegmentCountOverLimit"
      GenericErrorCodesSnapshotNotFound GenericErrorCodes = "SnapshotNotFound"
      GenericErrorCodesInventoryApiNotImplemented GenericErrorCodes = "InventoryApiNotImplemented"
      GenericErrorCodesLobbyDoesNotExist GenericErrorCodes = "LobbyDoesNotExist"
@@ -1743,6 +1751,12 @@ const (
      GenericErrorCodesEventSamplingInvalidEventNamespace GenericErrorCodes = "EventSamplingInvalidEventNamespace"
      GenericErrorCodesEventSamplingInvalidEventName GenericErrorCodes = "EventSamplingInvalidEventName"
      GenericErrorCodesEventSamplingRatioNotFound GenericErrorCodes = "EventSamplingRatioNotFound"
+     GenericErrorCodesTelemetryKeyNotFound GenericErrorCodes = "TelemetryKeyNotFound"
+     GenericErrorCodesTelemetryKeyInvalidName GenericErrorCodes = "TelemetryKeyInvalidName"
+     GenericErrorCodesTelemetryKeyAlreadyExists GenericErrorCodes = "TelemetryKeyAlreadyExists"
+     GenericErrorCodesTelemetryKeyInvalid GenericErrorCodes = "TelemetryKeyInvalid"
+     GenericErrorCodesTelemetryKeyCountOverLimit GenericErrorCodes = "TelemetryKeyCountOverLimit"
+     GenericErrorCodesTelemetryKeyDeactivated GenericErrorCodes = "TelemetryKeyDeactivated"
      GenericErrorCodesEventSinkConnectionInvalid GenericErrorCodes = "EventSinkConnectionInvalid"
      GenericErrorCodesEventSinkConnectionUnauthorized GenericErrorCodes = "EventSinkConnectionUnauthorized"
      GenericErrorCodesEventSinkRegionInvalid GenericErrorCodes = "EventSinkRegionInvalid"
@@ -1758,6 +1772,16 @@ const (
      GenericErrorCodesOperationCanceled GenericErrorCodes = "OperationCanceled"
      GenericErrorCodesInvalidDisplayNameRandomSuffixLength GenericErrorCodes = "InvalidDisplayNameRandomSuffixLength"
      GenericErrorCodesAllowNonUniquePlayerDisplayNamesDisableNotAllowed GenericErrorCodes = "AllowNonUniquePlayerDisplayNamesDisableNotAllowed"
+     GenericErrorCodesPartitionedEventInvalid GenericErrorCodes = "PartitionedEventInvalid"
+     GenericErrorCodesPartitionedEventCountOverLimit GenericErrorCodes = "PartitionedEventCountOverLimit"
+     GenericErrorCodesPlayerCustomPropertiesPropertyNameTooLong GenericErrorCodes = "PlayerCustomPropertiesPropertyNameTooLong"
+     GenericErrorCodesPlayerCustomPropertiesPropertyNameIsInvalid GenericErrorCodes = "PlayerCustomPropertiesPropertyNameIsInvalid"
+     GenericErrorCodesPlayerCustomPropertiesStringPropertyValueTooLong GenericErrorCodes = "PlayerCustomPropertiesStringPropertyValueTooLong"
+     GenericErrorCodesPlayerCustomPropertiesValueIsInvalidType GenericErrorCodes = "PlayerCustomPropertiesValueIsInvalidType"
+     GenericErrorCodesPlayerCustomPropertiesVersionMismatch GenericErrorCodes = "PlayerCustomPropertiesVersionMismatch"
+     GenericErrorCodesPlayerCustomPropertiesPropertyCountTooHigh GenericErrorCodes = "PlayerCustomPropertiesPropertyCountTooHigh"
+     GenericErrorCodesPlayerCustomPropertiesDuplicatePropertyName GenericErrorCodes = "PlayerCustomPropertiesDuplicatePropertyName"
+     GenericErrorCodesPlayerCustomPropertiesPropertyDoesNotExist GenericErrorCodes = "PlayerCustomPropertiesPropertyDoesNotExist"
       )
 // GenericPlayFabIdPair 
 type GenericPlayFabIdPairModel struct {
@@ -1912,10 +1936,6 @@ type GetFriendLeaderboardRequestModel struct {
     // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
 // comma-separated list of platforms.
     ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
-    // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
-    IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
-    // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
-    IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // MaxResultsCount maximum number of entries to retrieve.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId the player whose friend leaderboard to get
@@ -1941,10 +1961,6 @@ type GetFriendsListRequestModel struct {
     // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
 // comma-separated list of platforms.
     ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
-    // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
-    IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
-    // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
-    IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // PlayFabId playFab identifier of the player whose friend list to get.
     PlayFabId string `json:"PlayFabId,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
@@ -2188,7 +2204,7 @@ type GetPlayersInSegmentRequestModel struct {
 // segment.
     MaxBatchSize uint32 `json:"MaxBatchSize,omitempty"`
     // SecondsToLive number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
-// results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
+// results. Default is 300 (5 minutes). Maximum is 5,400 (90 minutes).
     SecondsToLive uint32 `json:"SecondsToLive,omitempty"`
     // SegmentId unique identifier for this segment.
     SegmentId string `json:"SegmentId,omitempty"`
@@ -2877,6 +2893,22 @@ type LinkServerCustomIdRequestModel struct {
 type LinkServerCustomIdResultModel struct {
 }
 
+// LinkSteamIdRequest 
+type LinkSteamIdRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // ForceLink if another user is already linked to the account, unlink the other user and re-link.
+    ForceLink bool `json:"ForceLink"`
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Xbox Live identifier.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+    // SteamId unique Steam identifier for a user.
+    SteamId string `json:"SteamId,omitempty"`
+}
+
+// LinkSteamIdResult 
+type LinkSteamIdResultModel struct {
+}
+
 // LinkXboxAccountRequest 
 type LinkXboxAccountRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
@@ -2981,7 +3013,7 @@ type LoginWithSteamIdRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // InfoRequestParameters flags for which pieces of info to return for the user.
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
-    // SteamId unique Steam identifier for a user
+    // SteamId unique Steam identifier for a user.
     SteamId string `json:"SteamId,omitempty"`
 }
 
@@ -2998,7 +3030,7 @@ type LoginWithXboxIdRequestModel struct {
     InfoRequestParameters *GetPlayerCombinedInfoRequestParamsModel `json:"InfoRequestParameters,omitempty"`
     // Sandbox the id of Xbox Live sandbox.
     Sandbox string `json:"Sandbox,omitempty"`
-    // XboxId unique Xbox identifier for a user
+    // XboxId unique Xbox identifier for a user.
     XboxId string `json:"XboxId,omitempty"`
 }
 
@@ -4156,6 +4188,18 @@ type UnlinkServerCustomIdRequestModel struct {
 
 // UnlinkServerCustomIdResult 
 type UnlinkServerCustomIdResultModel struct {
+}
+
+// UnlinkSteamIdRequest 
+type UnlinkSteamIdRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // PlayFabId unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam account.
+    PlayFabId string `json:"PlayFabId,omitempty"`
+}
+
+// UnlinkSteamIdResult 
+type UnlinkSteamIdResultModel struct {
 }
 
 // UnlinkXboxAccountRequest 

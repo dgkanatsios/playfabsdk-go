@@ -424,11 +424,13 @@ type CreateBuildWithCustomContainerRequestModel struct {
     RegionConfigurations []BuildRegionParamsModel `json:"RegionConfigurations,omitempty"`
     // ServerResourceConstraints the resource constraints to apply to each server on the VM (EXPERIMENTAL API)
     ServerResourceConstraints *ServerResourceConstraintParamsModel `json:"ServerResourceConstraints,omitempty"`
-    // UseStreamingForAssetDownloads when true, assets will be downloaded and uncompressed in memory, without the compressedversion being written first to
-// disc.
+    // UseStreamingForAssetDownloads dEPRECATED - this is always true. Assets are downloaded and uncompressed in memory, without the compressedversion being
+// written first to disc.
     UseStreamingForAssetDownloads bool `json:"UseStreamingForAssetDownloads"`
     // VmSize the VM size to create the build on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript for the build
+    VmStartupScriptConfiguration *VmStartupScriptParamsModel `json:"VmStartupScriptConfiguration,omitempty"`
 }
 
 // CreateBuildWithCustomContainerResponse 
@@ -475,6 +477,8 @@ type CreateBuildWithCustomContainerResponseModel struct {
     UseStreamingForAssetDownloads bool `json:"UseStreamingForAssetDownloads"`
     // VmSize the VM size the build was created on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript feature for the build
+    VmStartupScriptConfiguration *VmStartupScriptConfigurationModel `json:"VmStartupScriptConfiguration,omitempty"`
 }
 
 // CreateBuildWithManagedContainerRequest creates a multiplayer server build with a managed container and returns information about the build creation request.
@@ -512,11 +516,13 @@ type CreateBuildWithManagedContainerRequestModel struct {
     ServerResourceConstraints *ServerResourceConstraintParamsModel `json:"ServerResourceConstraints,omitempty"`
     // StartMultiplayerServerCommand the command to run when the multiplayer server is started, including any arguments.
     StartMultiplayerServerCommand string `json:"StartMultiplayerServerCommand,omitempty"`
-    // UseStreamingForAssetDownloads when true, assets will be downloaded and uncompressed in memory, without the compressedversion being written first to
-// disc.
+    // UseStreamingForAssetDownloads dEPRECATED - this is always true. Assets are downloaded and uncompressed in memory, without the compressedversion being
+// written first to disc.
     UseStreamingForAssetDownloads bool `json:"UseStreamingForAssetDownloads"`
     // VmSize the VM size to create the build on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript for the build
+    VmStartupScriptConfiguration *VmStartupScriptParamsModel `json:"VmStartupScriptConfiguration,omitempty"`
     // WindowsCrashDumpConfiguration the crash dump configuration for the build.
     WindowsCrashDumpConfiguration *WindowsCrashDumpConfigurationModel `json:"WindowsCrashDumpConfiguration,omitempty"`
 }
@@ -566,6 +572,8 @@ type CreateBuildWithManagedContainerResponseModel struct {
     UseStreamingForAssetDownloads bool `json:"UseStreamingForAssetDownloads"`
     // VmSize the VM size the build was created on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript feature for the build
+    VmStartupScriptConfiguration *VmStartupScriptConfigurationModel `json:"VmStartupScriptConfiguration,omitempty"`
 }
 
 // CreateBuildWithProcessBasedServerRequest creates a multiplayer server build with the game server running as a process and returns information about the build
@@ -606,11 +614,13 @@ type CreateBuildWithProcessBasedServerRequestModel struct {
     // StartMultiplayerServerCommand the command to run when the multiplayer server is started, including any arguments. The path to any executable should be
 // relative to the root asset folder when unzipped.
     StartMultiplayerServerCommand string `json:"StartMultiplayerServerCommand,omitempty"`
-    // UseStreamingForAssetDownloads when true, assets will be downloaded and uncompressed in memory, without the compressedversion being written first to
-// disc.
+    // UseStreamingForAssetDownloads dEPRECATED - this is always true. Assets are downloaded and uncompressed in memory, without the compressedversion being
+// written first to disc.
     UseStreamingForAssetDownloads bool `json:"UseStreamingForAssetDownloads"`
     // VmSize the VM size to create the build on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript for the build
+    VmStartupScriptConfiguration *VmStartupScriptParamsModel `json:"VmStartupScriptConfiguration,omitempty"`
 }
 
 // CreateBuildWithProcessBasedServerResponse 
@@ -660,6 +670,8 @@ type CreateBuildWithProcessBasedServerResponseModel struct {
     UseStreamingForAssetDownloads bool `json:"UseStreamingForAssetDownloads"`
     // VmSize the VM size the build was created on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript feature for the build
+    VmStartupScriptConfiguration *VmStartupScriptConfigurationModel `json:"VmStartupScriptConfiguration,omitempty"`
 }
 
 // CreateLobbyRequest request to create a lobby. A Server or client can create a lobby.
@@ -961,10 +973,6 @@ const (
 type FindFriendLobbiesRequestModel struct {
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
-    // ExcludeFacebookFriends controls whether this query should link to friends made on the Facebook network. Defaults to false
-    ExcludeFacebookFriends bool `json:"ExcludeFacebookFriends"`
-    // ExcludeSteamFriends controls whether this query should link to friends made on the Steam network. Defaults to false
-    ExcludeSteamFriends bool `json:"ExcludeSteamFriends"`
     // ExternalPlatformFriends indicates which other platforms' friends this query should link to.
     ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
     // Filter oData style string that contains one or more filters. Only the following operators are supported: "and" (logical and),
@@ -1160,6 +1168,8 @@ type GetBuildResponseModel struct {
     StartMultiplayerServerCommand string `json:"StartMultiplayerServerCommand,omitempty"`
     // VmSize the VM size the build was created on.
     VmSize AzureVmSize `json:"VmSize,omitempty"`
+    // VmStartupScriptConfiguration the configuration for the VmStartupScript feature for the build
+    VmStartupScriptConfiguration *VmStartupScriptConfigurationModel `json:"VmStartupScriptConfiguration,omitempty"`
 }
 
 // GetContainerRegistryCredentialsRequest gets credentials to the container registry where game developers can upload custom container images to before creating a
@@ -1209,7 +1219,8 @@ type GetMatchmakingTicketRequestModel struct {
 
 // GetMatchmakingTicketResult 
 type GetMatchmakingTicketResultModel struct {
-    // CancellationReasonString the reason why the current ticket was canceled. This field is only set if the ticket is in canceled state.
+    // CancellationReasonString the reason why the current ticket was canceled. This field is only set if the ticket is in canceled state. Please retry
+// if CancellationReason is RetryRequired.
     CancellationReasonString string `json:"CancellationReasonString,omitempty"`
     // ChangeNumber change number used for differentiating older matchmaking status updates from newer ones.
     ChangeNumber uint32 `json:"ChangeNumber,omitempty"`
@@ -2354,6 +2365,38 @@ type VirtualMachineSummaryModel struct {
     State string `json:"State,omitempty"`
     // VmId the virtual machine ID.
     VmId string `json:"VmId,omitempty"`
+}
+
+// VmStartupScriptConfiguration 
+type VmStartupScriptConfigurationModel struct {
+    // PortRequests optional port requests (name/protocol) that will be used by the VmStartupScript. Max of 5 requests.
+    PortRequests []VmStartupScriptPortRequestModel `json:"PortRequests,omitempty"`
+    // VmStartupScriptAssetReference asset which contains the VmStartupScript script and any other required files.
+    VmStartupScriptAssetReference* AssetReferenceModel `json:"VmStartupScriptAssetReference,omitempty"`
+}
+
+// VmStartupScriptParams 
+type VmStartupScriptParamsModel struct {
+    // PortRequests optional port requests (name/protocol) that will be used by the VmStartupScript. Max of 5 requests.
+    PortRequests []VmStartupScriptPortRequestParamsModel `json:"PortRequests,omitempty"`
+    // VmStartupScriptAssetReference asset which contains the VmStartupScript script and any other required files.
+    VmStartupScriptAssetReference* AssetReferenceParamsModel `json:"VmStartupScriptAssetReference,omitempty"`
+}
+
+// VmStartupScriptPortRequest 
+type VmStartupScriptPortRequestModel struct {
+    // Name the name for the port.
+    Name string `json:"Name,omitempty"`
+    // Protocol the protocol for the port.
+    Protocol ProtocolType `json:"Protocol,omitempty"`
+}
+
+// VmStartupScriptPortRequestParams 
+type VmStartupScriptPortRequestParamsModel struct {
+    // Name the name for the port.
+    Name string `json:"Name,omitempty"`
+    // Protocol the protocol for the port.
+    Protocol ProtocolType `json:"Protocol,omitempty"`
 }
 
 // WindowsCrashDumpConfiguration 

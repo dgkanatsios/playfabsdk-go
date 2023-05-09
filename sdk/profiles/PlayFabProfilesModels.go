@@ -202,6 +202,25 @@ type GetTitlePlayersFromMasterPlayerAccountIdsResponseModel struct {
     TitlePlayerAccounts map[string]EntityKeyModel `json:"TitlePlayerAccounts,omitempty"`
 }
 
+// GetTitlePlayersFromProviderIDsResponse 
+type GetTitlePlayersFromProviderIDsResponseModel struct {
+    // TitlePlayerAccounts dictionary of provider identifiers mapped to title_player_account lineage. Missing lineage indicates the player either
+// doesn't exist or doesn't play the requested title.
+    TitlePlayerAccounts map[string]EntityLineageModel `json:"TitlePlayerAccounts,omitempty"`
+}
+
+// GetTitlePlayersFromXboxLiveIDsRequest given a collection of Xbox IDs (XUIDs), returns all title player accounts.
+type GetTitlePlayersFromXboxLiveIDsRequestModel struct {
+    // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+    CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // Sandbox xbox Sandbox the players had on their Xbox tokens.
+    Sandbox string `json:"Sandbox,omitempty"`
+    // TitleId optional ID of title to get players from, required if calling using a master_player_account.
+    TitleId string `json:"TitleId,omitempty"`
+    // XboxLiveIds list of Xbox Live XUIDs
+    XboxLiveIds []string `json:"XboxLiveIds,omitempty"`
+}
+
 // OperationTypes 
 type OperationTypes string
   

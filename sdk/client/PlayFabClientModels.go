@@ -1344,10 +1344,6 @@ type GetFriendLeaderboardAroundPlayerRequestModel struct {
     // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
 // comma-separated list of platforms.
     ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
-    // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
-    IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
-    // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
-    IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // MaxResultsCount maximum number of entries to retrieve. Default 10, maximum 100.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // PlayFabId playFab unique identifier of the user to center the leaderboard around. If null will center on the logged in user.
@@ -1384,10 +1380,6 @@ type GetFriendLeaderboardRequestModel struct {
     // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
 // comma-separated list of platforms.
     ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
-    // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
-    IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
-    // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
-    IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // MaxResultsCount maximum number of entries to retrieve. Default 10, maximum 100.
     MaxResultsCount int32 `json:"MaxResultsCount,omitempty"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
@@ -1411,10 +1403,6 @@ type GetFriendsListRequestModel struct {
     // ExternalPlatformFriends indicates which other platforms' friends should be included in the response. In HTTP, it is represented as a
 // comma-separated list of platforms.
     ExternalPlatformFriends ExternalFriendSources `json:"ExternalPlatformFriends,omitempty"`
-    // IncludeFacebookFriends indicates whether Facebook friends should be included in the response. Default is true.
-    IncludeFacebookFriends bool `json:"IncludeFacebookFriends"`
-    // IncludeSteamFriends indicates whether Steam service friends should be included in the response. Default is true.
-    IncludeSteamFriends bool `json:"IncludeSteamFriends"`
     // ProfileConstraints if non-null, this determines which properties of the resulting player profiles to return. For API calls from the client,
 // only the allowed client profile properties for the title may be requested. These allowed properties are configured in
 // the Game Manager "Client Profile Options" tab in the "Settings" section.
@@ -2780,6 +2768,8 @@ type LoginWithGoogleAccountRequestModel struct {
     // ServerAuthCode oAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode()
 // (https://developers.google.com/identity/sign-in/android/offline-access) Google client API.
     ServerAuthCode string `json:"ServerAuthCode,omitempty"`
+    // SetEmail optional boolean to opt out of setting the MPA email when creating a Google account, defaults to true.
+    SetEmail bool `json:"SetEmail"`
     // TitleId unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
 // title has been selected.
     TitleId string `json:"TitleId,omitempty"`

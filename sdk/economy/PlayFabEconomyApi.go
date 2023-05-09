@@ -10,7 +10,7 @@ import (
     "github.com/mitchellh/mapstructure"
 )
 
-// AddInventoryItems add inventory items.
+// AddInventoryItems add inventory items. Up to 3500 stacks of items can be added to a single inventory collection. Stack size is uncapped.
 // https://api.playfab.com/Documentation/Economy/method/AddInventoryItems
 func AddInventoryItems(settings *playfab.Settings, postData *AddInventoryItemsRequestModel, entityToken string) (*AddInventoryItemsResponseModel, error) {
     if entityToken == "" {
@@ -82,7 +82,10 @@ func CreateDraftItem(settings *playfab.Settings, postData *CreateDraftItemReques
     return result, nil
 }
 
-// CreateUploadUrls creates one or more upload URLs which can be used by the client to upload raw file data.
+// CreateUploadUrls creates one or more upload URLs which can be used by the client to upload raw file data. Content URls and uploaded
+// content will be garbage collected after 24 hours if not attached to a draft or published item. Detailed pricing info
+// around uploading content can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/pricing/meters/catalog-meters
 // https://api.playfab.com/Documentation/Economy/method/CreateUploadUrls
 func CreateUploadUrls(settings *playfab.Settings, postData *CreateUploadUrlsRequestModel, entityToken string) (*CreateUploadUrlsResponseModel, error) {
     if entityToken == "" {
@@ -154,7 +157,8 @@ func DeleteEntityItemReviews(settings *playfab.Settings, postData *DeleteEntityI
     return result, nil
 }
 
-// DeleteInventoryCollection delete an Inventory Collection
+// DeleteInventoryCollection delete an Inventory Collection. More information about Inventory Collections can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/inventory/collections
 // https://api.playfab.com/Documentation/Economy/method/DeleteInventoryCollection
 func DeleteInventoryCollection(settings *playfab.Settings, postData *DeleteInventoryCollectionRequestModel, entityToken string) (*DeleteInventoryCollectionResponseModel, error) {
     if entityToken == "" {
@@ -262,7 +266,11 @@ func DeleteItem(settings *playfab.Settings, postData *DeleteItemRequestModel, en
     return result, nil
 }
 
-// ExecuteInventoryOperations execute a list of Inventory Operations
+// ExecuteInventoryOperations execute a list of Inventory Operations. A maximum list of 10 operations can be performed by a single request. There is
+// also a limit to 250 items that can be modified/added in a single request. For example, adding a bundle with 50 items
+// counts as 50 items modified. All operations must be done within a single inventory collection. This API has a reduced
+// RPS compared to an individual inventory operation with Player Entities limited to 15 requests in 90 seconds and Title
+// Entities limited to 500 requests in 10 seconds.
 // https://api.playfab.com/Documentation/Economy/method/ExecuteInventoryOperations
 func ExecuteInventoryOperations(settings *playfab.Settings, postData *ExecuteInventoryOperationsRequestModel, entityToken string) (*ExecuteInventoryOperationsResponseModel, error) {
     if entityToken == "" {
@@ -298,7 +306,9 @@ func ExecuteInventoryOperations(settings *playfab.Settings, postData *ExecuteInv
     return result, nil
 }
 
-// GetCatalogConfig gets the configuration for the catalog.
+// GetCatalogConfig gets the configuration for the catalog. Only Title Entities can call this API. There is a limit of 100 requests in 10
+// seconds for this API. More information about the Catalog Config can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/settings
 // https://api.playfab.com/Documentation/Economy/method/GetCatalogConfig
 func GetCatalogConfig(settings *playfab.Settings, postData *GetCatalogConfigRequestModel, entityToken string) (*GetCatalogConfigResponseModel, error) {
     if entityToken == "" {
@@ -334,7 +344,9 @@ func GetCatalogConfig(settings *playfab.Settings, postData *GetCatalogConfigRequ
     return result, nil
 }
 
-// GetDraftItem retrieves an item from the working catalog. This item represents the current working state of the item.
+// GetDraftItem retrieves an item from the working catalog. This item represents the current working state of the item. GetDraftItem
+// does not work off a cache of the Catalog and should be used when trying to get recent item updates. However, please note
+// that item references data is cached and may take a few moments for changes to propagate.
 // https://api.playfab.com/Documentation/Economy/method/GetDraftItem
 func GetDraftItem(settings *playfab.Settings, postData *GetDraftItemRequestModel, entityToken string) (*GetDraftItemResponseModel, error) {
     if entityToken == "" {
@@ -370,7 +382,8 @@ func GetDraftItem(settings *playfab.Settings, postData *GetDraftItemRequestModel
     return result, nil
 }
 
-// GetDraftItems retrieves a paginated list of the items from the draft catalog.
+// GetDraftItems retrieves a paginated list of the items from the draft catalog. Up to 50 IDs can be retrieved in a single request.
+// GetDraftItems does not work off a cache of the Catalog and should be used when trying to get recent item updates.
 // https://api.playfab.com/Documentation/Economy/method/GetDraftItems
 func GetDraftItems(settings *playfab.Settings, postData *GetDraftItemsRequestModel, entityToken string) (*GetDraftItemsResponseModel, error) {
     if entityToken == "" {
@@ -406,7 +419,9 @@ func GetDraftItems(settings *playfab.Settings, postData *GetDraftItemsRequestMod
     return result, nil
 }
 
-// GetEntityDraftItems retrieves a paginated list of the items from the draft catalog created by the Entity.
+// GetEntityDraftItems retrieves a paginated list of the items from the draft catalog created by the Entity. Up to 50 items can be returned at
+// once. You can use continuation tokens to paginate through results that return greater than the limit.
+// GetEntityDraftItems does not work off a cache of the Catalog and should be used when trying to get recent item updates.
 // https://api.playfab.com/Documentation/Economy/method/GetEntityDraftItems
 func GetEntityDraftItems(settings *playfab.Settings, postData *GetEntityDraftItemsRequestModel, entityToken string) (*GetEntityDraftItemsResponseModel, error) {
     if entityToken == "" {
@@ -442,7 +457,8 @@ func GetEntityDraftItems(settings *playfab.Settings, postData *GetEntityDraftIte
     return result, nil
 }
 
-// GetEntityItemReview gets the submitted review for the specified item by the authenticated entity.
+// GetEntityItemReview gets the submitted review for the specified item by the authenticated entity. Individual ratings and reviews data update
+// in near real time with delays within a few seconds.
 // https://api.playfab.com/Documentation/Economy/method/GetEntityItemReview
 func GetEntityItemReview(settings *playfab.Settings, postData *GetEntityItemReviewRequestModel, entityToken string) (*GetEntityItemReviewResponseModel, error) {
     if entityToken == "" {
@@ -478,7 +494,8 @@ func GetEntityItemReview(settings *playfab.Settings, postData *GetEntityItemRevi
     return result, nil
 }
 
-// GetInventoryCollectionIds get Inventory Collection Ids
+// GetInventoryCollectionIds get Inventory Collection Ids. Up to 50 Ids can be returned at once. You can use continuation tokens to paginate through
+// results that return greater than the limit. It can take a few seconds for new collection Ids to show up.
 // https://api.playfab.com/Documentation/Economy/method/GetInventoryCollectionIds
 func GetInventoryCollectionIds(settings *playfab.Settings, postData *GetInventoryCollectionIdsRequestModel, entityToken string) (*GetInventoryCollectionIdsResponseModel, error) {
     if entityToken == "" {
@@ -550,7 +567,9 @@ func GetInventoryItems(settings *playfab.Settings, postData *GetInventoryItemsRe
     return result, nil
 }
 
-// GetItem retrieves an item from the public catalog.
+// GetItem retrieves an item from the public catalog. GetItem does not work off a cache of the Catalog and should be used when
+// trying to get recent item updates. However, please note that item references data is cached and may take a few moments
+// for changes to propagate.
 // https://api.playfab.com/Documentation/Economy/method/GetItem
 func GetItem(settings *playfab.Settings, postData *GetItemRequestModel, entityToken string) (*GetItemResponseModel, error) {
     if entityToken == "" {
@@ -586,7 +605,10 @@ func GetItem(settings *playfab.Settings, postData *GetItemRequestModel, entityTo
     return result, nil
 }
 
-// GetItemContainers search for a given item and return a set of bundles and stores containing the item
+// GetItemContainers search for a given item and return a set of bundles and stores containing the item. Up to 50 items can be returned at
+// once. You can use continuation tokens to paginate through results that return greater than the limit. This API is
+// intended for tooling/automation scenarios and has a reduced RPS with Player Entities limited to 30 requests in 300
+// seconds and Title Entities limited to 100 requests in 10 seconds.
 // https://api.playfab.com/Documentation/Economy/method/GetItemContainers
 func GetItemContainers(settings *playfab.Settings, postData *GetItemContainersRequestModel, entityToken string) (*GetItemContainersResponseModel, error) {
     if entityToken == "" {
@@ -622,7 +644,8 @@ func GetItemContainers(settings *playfab.Settings, postData *GetItemContainersRe
     return result, nil
 }
 
-// GetItemModerationState gets the moderation state for an item, including the concern category and string reason.
+// GetItemModerationState gets the moderation state for an item, including the concern category and string reason. More information about
+// moderation states can be found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/ugc/moderation
 // https://api.playfab.com/Documentation/Economy/method/GetItemModerationState
 func GetItemModerationState(settings *playfab.Settings, postData *GetItemModerationStateRequestModel, entityToken string) (*GetItemModerationStateResponseModel, error) {
     if entityToken == "" {
@@ -694,7 +717,8 @@ func GetItemPublishStatus(settings *playfab.Settings, postData *GetItemPublishSt
     return result, nil
 }
 
-// GetItemReviews get a paginated set of reviews associated with the specified item.
+// GetItemReviews get a paginated set of reviews associated with the specified item. Individual ratings and reviews data update in near
+// real time with delays within a few seconds.
 // https://api.playfab.com/Documentation/Economy/method/GetItemReviews
 func GetItemReviews(settings *playfab.Settings, postData *GetItemReviewsRequestModel, entityToken string) (*GetItemReviewsResponseModel, error) {
     if entityToken == "" {
@@ -730,7 +754,8 @@ func GetItemReviews(settings *playfab.Settings, postData *GetItemReviewsRequestM
     return result, nil
 }
 
-// GetItemReviewSummary get a summary of all reviews associated with the specified item.
+// GetItemReviewSummary get a summary of all ratings and reviews associated with the specified item. Summary ratings data is cached with update
+// data coming within 15 minutes.
 // https://api.playfab.com/Documentation/Economy/method/GetItemReviewSummary
 func GetItemReviewSummary(settings *playfab.Settings, postData *GetItemReviewSummaryRequestModel, entityToken string) (*GetItemReviewSummaryResponseModel, error) {
     if entityToken == "" {
@@ -766,7 +791,9 @@ func GetItemReviewSummary(settings *playfab.Settings, postData *GetItemReviewSum
     return result, nil
 }
 
-// GetItems retrieves items from the public catalog.
+// GetItems retrieves items from the public catalog. Up to 50 items can be returned at once. GetItems does not work off a cache of
+// the Catalog and should be used when trying to get recent item updates. However, please note that item references data is
+// cached and may take a few moments for changes to propagate.
 // https://api.playfab.com/Documentation/Economy/method/GetItems
 func GetItems(settings *playfab.Settings, postData *GetItemsRequestModel, entityToken string) (*GetItemsResponseModel, error) {
     if entityToken == "" {
@@ -838,7 +865,10 @@ func GetMicrosoftStoreAccessTokens(settings *playfab.Settings, postData *GetMicr
     return result, nil
 }
 
-// GetTransactionHistory get transaction history.
+// GetTransactionHistory get transaction history for a player. Up to 50 Events can be returned at once. You can use continuation tokens to
+// paginate through results that return greater than the limit. Getting transaction history has a lower RPS limit than
+// getting a Player's inventory with Player Entities having a limit of 30 requests in 300 seconds and Title Entities having
+// a limit of 100 requests in 10 seconds.
 // https://api.playfab.com/Documentation/Economy/method/GetTransactionHistory
 func GetTransactionHistory(settings *playfab.Settings, postData *GetTransactionHistoryRequestModel, entityToken string) (*GetTransactionHistoryResponseModel, error) {
     if entityToken == "" {
@@ -874,7 +904,8 @@ func GetTransactionHistory(settings *playfab.Settings, postData *GetTransactionH
     return result, nil
 }
 
-// PublishDraftItem initiates a publish of an item from the working catalog to the public catalog.
+// PublishDraftItem initiates a publish of an item from the working catalog to the public catalog. You can use the GetItemPublishStatus API
+// to track the state of the item publish.
 // https://api.playfab.com/Documentation/Economy/method/PublishDraftItem
 func PublishDraftItem(settings *playfab.Settings, postData *PublishDraftItemRequestModel, entityToken string) (*PublishDraftItemResponseModel, error) {
     if entityToken == "" {
@@ -910,7 +941,8 @@ func PublishDraftItem(settings *playfab.Settings, postData *PublishDraftItemRequ
     return result, nil
 }
 
-// PurchaseInventoryItems purchase an item or bundle
+// PurchaseInventoryItems purchase an item or bundle. Up to 3500 stacks of items can be added to a single inventory collection. Stack size is
+// uncapped.
 // https://api.playfab.com/Documentation/Economy/method/PurchaseInventoryItems
 func PurchaseInventoryItems(settings *playfab.Settings, postData *PurchaseInventoryItemsRequestModel, entityToken string) (*PurchaseInventoryItemsResponseModel, error) {
     if entityToken == "" {
@@ -1234,7 +1266,9 @@ func ReportItemReview(settings *playfab.Settings, postData *ReportItemReviewRequ
     return result, nil
 }
 
-// ReviewItem creates or updates a review for the specified item.
+// ReviewItem creates or updates a review for the specified item. More information around the caching surrounding item ratings and
+// reviews can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/ratings#ratings-design-and-caching
 // https://api.playfab.com/Documentation/Economy/method/ReviewItem
 func ReviewItem(settings *playfab.Settings, postData *ReviewItemRequestModel, entityToken string) (*ReviewItemResponseModel, error) {
     if entityToken == "" {
@@ -1271,7 +1305,9 @@ func ReviewItem(settings *playfab.Settings, postData *ReviewItemRequestModel, en
 }
 
 // SearchItems executes a search against the public catalog using the provided search parameters and returns a set of paginated
-// results.
+// results. SearchItems uses a cache of the catalog with item updates taking up to a few minutes to propagate. You should
+// use the GetItem API for when trying to immediately get recent item updates. More information about the Search API can be
+// found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/search
 // https://api.playfab.com/Documentation/Economy/method/SearchItems
 func SearchItems(settings *playfab.Settings, postData *SearchItemsRequestModel, entityToken string) (*SearchItemsResponseModel, error) {
     if entityToken == "" {
@@ -1307,7 +1343,8 @@ func SearchItems(settings *playfab.Settings, postData *SearchItemsRequestModel, 
     return result, nil
 }
 
-// SetItemModerationState sets the moderation state for an item, including the concern category and string reason.
+// SetItemModerationState sets the moderation state for an item, including the concern category and string reason. More information about
+// moderation states can be found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/ugc/moderation
 // https://api.playfab.com/Documentation/Economy/method/SetItemModerationState
 func SetItemModerationState(settings *playfab.Settings, postData *SetItemModerationStateRequestModel, entityToken string) (*SetItemModerationStateResponseModel, error) {
     if entityToken == "" {
@@ -1451,7 +1488,9 @@ func TakedownItemReviews(settings *playfab.Settings, postData *TakedownItemRevie
     return result, nil
 }
 
-// TransferInventoryItems transfer inventory items.
+// TransferInventoryItems transfer inventory items. When transferring across collections, a 202 response indicates that the transfer is in
+// progress and will complete soon. More information about item transfer scenarios can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/inventory/?tabs=inventory-game-manager#transfer-inventory-items
 // https://api.playfab.com/Documentation/Economy/method/TransferInventoryItems
 func TransferInventoryItems(settings *playfab.Settings, postData *TransferInventoryItemsRequestModel, entityToken string) (*TransferInventoryItemsResponseModel, error) {
     if entityToken == "" {
@@ -1487,7 +1526,9 @@ func TransferInventoryItems(settings *playfab.Settings, postData *TransferInvent
     return result, nil
 }
 
-// UpdateCatalogConfig updates the configuration for the catalog.
+// UpdateCatalogConfig updates the configuration for the catalog. Only Title Entities can call this API. There is a limit of 10 requests in 10
+// seconds for this API. More information about the Catalog Config can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/settings
 // https://api.playfab.com/Documentation/Economy/method/UpdateCatalogConfig
 func UpdateCatalogConfig(settings *playfab.Settings, postData *UpdateCatalogConfigRequestModel, entityToken string) (*UpdateCatalogConfigResponseModel, error) {
     if entityToken == "" {

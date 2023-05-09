@@ -154,6 +154,42 @@ func GetTitlePlayersFromMasterPlayerAccountIds(settings *playfab.Settings, postD
     return result, nil
 }
 
+// GetTitlePlayersFromXboxLiveIDs retrieves the title player accounts associated with the given XUIDs.
+// https://api.playfab.com/Documentation/Profiles/method/GetTitlePlayersFromXboxLiveIDs
+func GetTitlePlayersFromXboxLiveIDs(settings *playfab.Settings, postData *GetTitlePlayersFromXboxLiveIDsRequestModel, entityToken string) (*GetTitlePlayersFromProviderIDsResponseModel, error) {
+    if entityToken == "" {
+        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
+    }
+    b, errMarshal := json.Marshal(postData)
+    if errMarshal != nil {
+        return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
+    }
+
+    sourceMap, err := playfab.Request(settings, b, "/Profile/GetTitlePlayersFromXboxLiveIDs", "X-EntityToken", entityToken)
+    if err != nil {
+        return nil, err
+    }
+    
+    result := &GetTitlePlayersFromProviderIDsResponseModel{}
+
+    config := mapstructure.DecoderConfig{
+        DecodeHook: playfab.StringToDateTimeHook,
+        Result:     result,
+    }
+    
+    decoder, errDecoding := mapstructure.NewDecoder(&config)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+   
+    errDecoding = decoder.Decode(sourceMap)
+    if errDecoding != nil {
+        return nil, playfab.NewCustomError(errDecoding.Error(), playfab.ErrorDecoding)
+    }
+
+    return result, nil
+}
+
 // SetGlobalPolicy sets the global title access policy
 // https://api.playfab.com/Documentation/Profiles/method/SetGlobalPolicy
 func SetGlobalPolicy(settings *playfab.Settings, postData *SetGlobalPolicyRequestModel, entityToken string) (*SetGlobalPolicyResponseModel, error) {

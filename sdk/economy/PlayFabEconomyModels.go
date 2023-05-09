@@ -6,6 +6,8 @@ import "time"
 type AddInventoryItemsOperationModel struct {
     // Amount the amount to add to the current item amount.
     Amount int32 `json:"Amount,omitempty"`
+    // DurationInSeconds the duration to add to the current item expiration date.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // Item the inventory item the operation applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
     // NewStackValues the values to apply to a stack newly created by this operation.
@@ -16,15 +18,20 @@ type AddInventoryItemsOperationModel struct {
 type AddInventoryItemsRequestModel struct {
     // Amount the amount to add for the current item.
     Amount int32 `json:"Amount,omitempty"`
-    // CollectionId the id of the entity's collection to perform this action on. (Default="default")
+    // CollectionId the id of the entity's collection to perform this action on. (Default="default"). The number of inventory collections is
+// unlimited.
     CollectionId string `json:"CollectionId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
+    // DurationInSeconds the duration to add to the current item expiration date.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
-    // IdempotencyId the Idempotency ID for this request.
+    // IdempotencyId the Idempotency ID for this request. Idempotency IDs can be used to prevent operation replay in the medium term but will
+// be garbage collected eventually.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
     // Item the inventory item the request applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
@@ -34,7 +41,8 @@ type AddInventoryItemsRequestModel struct {
 
 // AddInventoryItemsResponse 
 type AddInventoryItemsResponseModel struct {
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
     // IdempotencyId the idempotency id used in the request.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
@@ -60,13 +68,15 @@ type CatalogAlternateIdModel struct {
 
 // CatalogConfig 
 type CatalogConfigModel struct {
-    // AdminEntities a list of player entity keys that will have admin permissions.
+    // AdminEntities a list of player entity keys that will have admin permissions. There is a maximum of 64 entities that can be added.
     AdminEntities []EntityKeyModel `json:"AdminEntities,omitempty"`
     // Catalog the set of configuration that only applies to catalog items.
     Catalog *CatalogSpecificConfigModel `json:"Catalog,omitempty"`
-    // DeepLinkFormats a list of deep link formats.
+    // DeepLinkFormats a list of deep link formats. Up to 10 can be added.
     DeepLinkFormats []DeepLinkFormatModel `json:"DeepLinkFormats,omitempty"`
-    // DisplayPropertyIndexInfos a list of display properties to index.
+    // DisplayPropertyIndexInfos a list of display properties to index. Up to 5 mappings can be added per Display Property Type. More info on display
+// properties can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/content-types-tags-and-properties#displayproperties
     DisplayPropertyIndexInfos []DisplayPropertyIndexInfoModel `json:"DisplayPropertyIndexInfos,omitempty"`
     // File the set of configuration that only applies to Files.
     File *FileConfigModel `json:"File,omitempty"`
@@ -74,9 +84,10 @@ type CatalogConfigModel struct {
     Image *ImageConfigModel `json:"Image,omitempty"`
     // IsCatalogEnabled flag defining whether catalog is enabled.
     IsCatalogEnabled bool `json:"IsCatalogEnabled"`
-    // Platforms a list of Platforms that can be applied to catalog items.
+    // Platforms a list of Platforms that can be applied to catalog items. Each platform can have a maximum character length of 40 and up
+// to 128 platforms can be listed.
     Platforms []string `json:"Platforms,omitempty"`
-    // ReviewerEntities a set of player entity keys that are allowed to review content.
+    // ReviewerEntities a set of player entity keys that are allowed to review content. There is a maximum of 64 entities that can be added.
     ReviewerEntities []EntityKeyModel `json:"ReviewerEntities,omitempty"`
     // UserGeneratedContent the set of configuration that only applies to user generated contents.
     UserGeneratedContent *UserGeneratedContentSpecificConfigModel `json:"UserGeneratedContent,omitempty"`
@@ -84,9 +95,10 @@ type CatalogConfigModel struct {
 
 // CatalogItem 
 type CatalogItemModel struct {
-    // AlternateIds the alternate IDs associated with this item.
+    // AlternateIds the alternate IDs associated with this item. An alternate ID can be set to 'FriendlyId' or any of the supported
+// marketplace names.
     AlternateIds []CatalogAlternateIdModel `json:"AlternateIds,omitempty"`
-    // Contents the set of contents associated with this item.
+    // Contents the set of content/files associated with this item. Up to 100 files can be added to an item.
     Contents []ContentModel `json:"Contents,omitempty"`
     // ContentType the client-defined type of the item.
     ContentType string `json:"ContentType,omitempty"`
@@ -96,12 +108,17 @@ type CatalogItemModel struct {
     CreatorEntity *EntityKeyModel `json:"CreatorEntity,omitempty"`
     // DeepLinks the set of platform specific deep links for this item.
     DeepLinks []DeepLinkModel `json:"DeepLinks,omitempty"`
-    // Description a dictionary of localized descriptions. Key is language code and localized string is the value. The neutral locale is
-// required.
+    // DefaultStackId the Stack Id that will be used as default for this item in Inventory when an explicit one is not provided. This
+// DefaultStackId can be a static stack id or '{guid}', which will generate a unique stack id for the item. If null,
+// Inventory's default stack id will be used.
+    DefaultStackId string `json:"DefaultStackId,omitempty"`
+    // Description a dictionary of localized descriptions. Key is language code and localized string is the value. The NEUTRAL locale is
+// required. Descriptions have a 10000 character limit per country code.
     Description map[string]string `json:"Description,omitempty"`
-    // DisplayProperties game specific properties for display purposes. This is an arbitrary JSON blob.
+    // DisplayProperties game specific properties for display purposes. This is an arbitrary JSON blob. The Display Properties field has a 10000
+// byte limit per item.
     DisplayProperties interface{} `json:"DisplayProperties,omitempty"`
-    // DisplayVersion the user provided version of the item for display purposes.
+    // DisplayVersion the user provided version of the item for display purposes. Maximum character length of 50.
     DisplayVersion string `json:"DisplayVersion,omitempty"`
     // EndDate the date of when the item will cease to be available. If not provided then the product will be available indefinitely.
     EndDate time.Time `json:"EndDate,omitempty"`
@@ -109,13 +126,16 @@ type CatalogItemModel struct {
     ETag string `json:"ETag,omitempty"`
     // Id the unique ID of the item.
     Id string `json:"Id,omitempty"`
-    // Images the images associated with this item. Images can be thumbnails or screenshots.
+    // Images the images associated with this item. Images can be thumbnails or screenshots. Up to 100 images can be added to an item.
+// Only .png, .jpg, .gif, and .bmp file types can be uploaded
     Images []ImageModel `json:"Images,omitempty"`
     // IsHidden indicates if the item is hidden.
     IsHidden bool `json:"IsHidden"`
-    // ItemReferences the item references associated with this item.
+    // ItemReferences the item references associated with this item. For example, the items in a Bundle/Store/Subscription. Every item can
+// have up to 50 item references.
     ItemReferences []CatalogItemReferenceModel `json:"ItemReferences,omitempty"`
-    // Keywords a dictionary of localized keywords. Key is language code and localized list of keywords is the value.
+    // Keywords a dictionary of localized keywords. Key is language code and localized list of keywords is the value. Keywords have a 50
+// character limit per keyword and up to 32 keywords can be added per country code.
     Keywords map[string]KeywordSetModel `json:"Keywords,omitempty"`
     // LastModifiedDate the date and time this item was last updated.
     LastModifiedDate time.Time `json:"LastModifiedDate,omitempty"`
@@ -123,7 +143,7 @@ type CatalogItemModel struct {
     Moderation *ModerationStateModel `json:"Moderation,omitempty"`
     // Platforms the platforms supported by this item.
     Platforms []string `json:"Platforms,omitempty"`
-    // PriceOptions the base price of this item.
+    // PriceOptions the prices the item can be purchased for.
     PriceOptions *CatalogPriceOptionsModel `json:"PriceOptions,omitempty"`
     // Rating rating summary for this item.
     Rating *RatingModel `json:"Rating,omitempty"`
@@ -131,10 +151,10 @@ type CatalogItemModel struct {
     StartDate time.Time `json:"StartDate,omitempty"`
     // StoreDetails optional details for stores items.
     StoreDetails *StoreDetailsModel `json:"StoreDetails,omitempty"`
-    // Tags the list of tags that are associated with this item.
+    // Tags the list of tags that are associated with this item. Up to 32 tags can be added to an item.
     Tags []string `json:"Tags,omitempty"`
-    // Title a dictionary of localized titles. Key is language code and localized string is the value. The neutral locale is
-// required.
+    // Title a dictionary of localized titles. Key is language code and localized string is the value. The NEUTRAL locale is
+// required. Titles have a 512 character limit per country code.
     Title map[string]string `json:"Title,omitempty"`
     // Type the high-level type of the item. The following item types are supported: bundle, catalogItem, currency, store, ugc.
     Type string `json:"Type,omitempty"`
@@ -152,8 +172,10 @@ type CatalogItemReferenceModel struct {
 
 // CatalogPrice 
 type CatalogPriceModel struct {
-    // Amounts the amounts of the catalog item price.
+    // Amounts the amounts of the catalog item price. Each price can have up to 15 item amounts.
     Amounts []CatalogPriceAmountModel `json:"Amounts,omitempty"`
+    // UnitDurationInSeconds the per-unit duration this price can be used to purchase. The maximum duration is 100 years.
+    UnitDurationInSeconds float64 `json:"UnitDurationInSeconds,omitempty"`
 }
 
 // CatalogPriceAmount 
@@ -177,7 +199,7 @@ type CatalogPriceAmountOverrideModel struct {
 
 // CatalogPriceOptions 
 type CatalogPriceOptionsModel struct {
-    // Prices prices of the catalog item.
+    // Prices prices of the catalog item. An item can have up to 15 prices
     Prices []CatalogPriceModel `json:"Prices,omitempty"`
 }
 
@@ -195,9 +217,11 @@ type CatalogPriceOverrideModel struct {
 
 // CatalogSpecificConfig 
 type CatalogSpecificConfigModel struct {
-    // ContentTypes the set of content types that will be used for validation.
+    // ContentTypes the set of content types that will be used for validation. Each content type can have a maximum character length of 40
+// and up to 128 types can be listed.
     ContentTypes []string `json:"ContentTypes,omitempty"`
-    // Tags the set of tags that will be used for validation.
+    // Tags the set of tags that will be used for validation. Each tag can have a maximum character length of 32 and up to 1024 tags
+// can be listed.
     Tags []string `json:"Tags,omitempty"`
 }
 
@@ -220,13 +244,16 @@ const (
 type ContentModel struct {
     // Id the content unique ID.
     Id string `json:"Id,omitempty"`
-    // MaxClientVersion the maximum client version that this content is compatible with.
+    // MaxClientVersion the maximum client version that this content is compatible with. Client Versions can be up to 3 segments separated by
+// periods(.) and each segment can have a maximum value of 65535.
     MaxClientVersion string `json:"MaxClientVersion,omitempty"`
-    // MinClientVersion the minimum client version that this content is compatible with.
+    // MinClientVersion the minimum client version that this content is compatible with. Client Versions can be up to 3 segments separated by
+// periods(.) and each segment can have a maximum value of 65535.
     MinClientVersion string `json:"MinClientVersion,omitempty"`
-    // Tags the list of tags that are associated with this content.
+    // Tags the list of tags that are associated with this content. Tags must be defined in the Catalog Config before being used in
+// content.
     Tags []string `json:"Tags,omitempty"`
-    // Type the client-defined type of the content.
+    // Type the client-defined type of the content. Content Types must be defined in the Catalog Config before being used.
     Type string `json:"Type,omitempty"`
     // Url the Azure CDN URL for retrieval of the catalog item binary content.
     Url string `json:"Url,omitempty"`
@@ -496,7 +523,7 @@ type CreateDraftItemRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Item metadata describing the new catalog item to be created.
     Item *CatalogItemModel `json:"Item,omitempty"`
-    // Publish whether the item should be published immediately.
+    // Publish whether the item should be published immediately. This value is optional, defaults to false.
     Publish bool `json:"Publish"`
 }
 
@@ -558,7 +585,8 @@ type DeleteInventoryCollectionRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity the request is about. Set to the caller by default.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
 }
 
@@ -574,15 +602,18 @@ type DeleteInventoryItemsOperationModel struct {
 
 // DeleteInventoryItemsRequest given an entity type, entity identifier and container details, will delete the entity's inventory items
 type DeleteInventoryItemsRequestModel struct {
-    // CollectionId the id of the entity's collection to perform this action on. (Default="default")
+    // CollectionId the id of the entity's collection to perform this action on. (Default="default"). The number of inventory collections is
+// unlimited.
     CollectionId string `json:"CollectionId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
-    // IdempotencyId the Idempotency ID for this request.
+    // IdempotencyId the Idempotency ID for this request. Idempotency IDs can be used to prevent operation replay in the medium term but will
+// be garbage collected eventually.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
     // Item the inventory item the request applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
@@ -642,24 +673,28 @@ type EntityKeyModel struct {
 
 // ExecuteInventoryOperationsRequest execute a list of Inventory Operations for an Entity
 type ExecuteInventoryOperationsRequestModel struct {
-    // CollectionId the id of the entity's collection to perform this action on. (Default="default")
+    // CollectionId the id of the entity's collection to perform this action on. (Default="default"). The number of inventory collections is
+// unlimited.
     CollectionId string `json:"CollectionId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
-    // IdempotencyId the Idempotency ID for this request.
+    // IdempotencyId the Idempotency ID for this request. Idempotency IDs can be used to prevent operation replay in the medium term but will
+// be garbage collected eventually.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
     // Operations the operations to run transactionally. The operations will be executed in-order sequentially and will succeed or fail as
-// a batch.
+// a batch. Up to 10 operations can be added.
     Operations []InventoryOperationModel `json:"Operations,omitempty"`
 }
 
 // ExecuteInventoryOperationsResponse 
 type ExecuteInventoryOperationsResponseModel struct {
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
     // IdempotencyId the idempotency id used in the request.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
@@ -669,15 +704,18 @@ type ExecuteInventoryOperationsResponseModel struct {
 
 // FileConfig 
 type FileConfigModel struct {
-    // ContentTypes the set of content types that will be used for validation.
+    // ContentTypes the set of content types that will be used for validation. Each content type can have a maximum character length of 40
+// and up to 128 types can be listed.
     ContentTypes []string `json:"ContentTypes,omitempty"`
-    // Tags the set of tags that will be used for validation.
+    // Tags the set of tags that will be used for validation. Each tag can have a maximum character length of 32 and up to 1024 tags
+// can be listed.
     Tags []string `json:"Tags,omitempty"`
 }
 
 // FilterOptions 
 type FilterOptionsModel struct {
-    // Filter the OData filter utilized. Mutually exclusive with 'IncludeAllItems'.
+    // Filter the OData filter utilized. Mutually exclusive with 'IncludeAllItems'. More info about Filter Complexity limits can be
+// found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/search#limits
     Filter string `json:"Filter,omitempty"`
     // IncludeAllItems the flag that overrides the filter and allows for returning all catalog items. Mutually exclusive with 'Filter'.
     IncludeAllItems bool `json:"IncludeAllItems"`
@@ -738,13 +776,14 @@ type GetEntityDraftItemsRequestModel struct {
     // ContinuationToken an opaque token used to retrieve the next page of items created by the caller, if any are available. Should be null on
 // initial request.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. Maximum page size is 10.
+    // Count number of items to retrieve. This value is optional. Default value is 10.
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // Filter oData Filter to specify ItemType.
+    // Filter oData Filter to refine the items returned. CatalogItem properties 'type' can be used in the filter. For example: "type
+// eq 'ugc'"
     Filter string `json:"Filter,omitempty"`
 }
 
@@ -778,7 +817,7 @@ type GetEntityItemReviewResponseModel struct {
 type GetInventoryCollectionIdsRequestModel struct {
     // ContinuationToken an opaque token used to retrieve the next page of collection ids, if any are available.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. (Default = 10)
+    // Count number of items to retrieve. This value is optional. The default value is 10
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
@@ -801,13 +840,14 @@ type GetInventoryItemsRequestModel struct {
     // ContinuationToken an opaque token used to retrieve the next page of items in the inventory, if any are available. Should be null on
 // initial request.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. Maximum page size is 50. (Default=10)
+    // Count number of items to retrieve. This value is optional. Maximum page size is 50. The default value is 10
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // Filter the filters to limit what is returned to the client.
+    // Filter oData Filter to refine the items returned. InventoryItem properties 'type', 'id', and 'stackId' can be used in the
+// filter. For example: "type eq 'currency'"
     Filter string `json:"Filter,omitempty"`
 }
 
@@ -815,7 +855,8 @@ type GetInventoryItemsRequestModel struct {
 type GetInventoryItemsResponseModel struct {
     // ContinuationToken an opaque token used to retrieve the next page of items, if any are available.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
     // Items the requested inventory items.
     Items []InventoryItemModel `json:"Items,omitempty"`
@@ -828,7 +869,7 @@ type GetItemContainersRequestModel struct {
     // ContinuationToken an opaque token used to retrieve the next page of items in the inventory, if any are available. Should be null on
 // initial request.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. Maximum page size is 25.
+    // Count number of items to retrieve. This value is optional. Default value is 10.
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
@@ -906,13 +947,14 @@ type GetItemReviewsRequestModel struct {
     AlternateId *CatalogAlternateIdModel `json:"AlternateId,omitempty"`
     // ContinuationToken an opaque token used to retrieve the next page of items, if any are available.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. Maximum page size is 200. If not specified, defaults to 10.
+    // Count number of items to retrieve. This value is optional. Default value is 10.
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Id the unique ID of the item.
     Id string `json:"Id,omitempty"`
-    // OrderBy an OData orderBy used to order the results of the query.
+    // OrderBy an OData orderBy used to order the results of the query. Possible values are Helpfulness, Rating, and Submitted (For
+// example: "Submitted desc")
     OrderBy string `json:"OrderBy,omitempty"`
 }
 
@@ -985,13 +1027,14 @@ type GetTransactionHistoryRequestModel struct {
     CollectionId string `json:"CollectionId,omitempty"`
     // ContinuationToken an opaque token used to retrieve the next page of items, if any are available. Should be null on initial request.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. (Default = 10)
+    // Count number of items to retrieve. This value is optional. The default value is 10
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // Filter an OData filter used to refine the query.
+    // Filter an OData filter used to refine the TransactionHistory. Transaction property 'timestamp' can be used in the filter. For
+// example: "timestamp ge 'timestamp ge'" By default, a 6 month timespan from the current date is used.
     Filter string `json:"Filter,omitempty"`
 }
 
@@ -1023,9 +1066,10 @@ const (
 type ImageModel struct {
     // Id the image unique ID.
     Id string `json:"Id,omitempty"`
-    // Tag the client-defined tag associated with this image.
+    // Tag the client-defined tag associated with this image. Tags must be defined in the Catalog Config before being used in
+// images
     Tag string `json:"Tag,omitempty"`
-    // Type the client-defined type of this image.
+    // Type images can be defined as either a "thumbnail" or "screenshot". There can only be one "thumbnail" image per item.
     Type string `json:"Type,omitempty"`
     // Url the URL for retrieval of the image.
     Url string `json:"Url,omitempty"`
@@ -1033,13 +1077,14 @@ type ImageModel struct {
 
 // ImageConfig 
 type ImageConfigModel struct {
-    // Tags the set of tags that will be used for validation.
+    // Tags the set of tags that will be used for validation. Each tag can have a maximum character length of 32 and up to 1024 tags
+// can be listed.
     Tags []string `json:"Tags,omitempty"`
 }
 
 // InitialValues 
 type InitialValuesModel struct {
-    // DisplayProperties game specific properties for display purposes.
+    // DisplayProperties game specific properties for display purposes. The Display Properties field has a 1000 byte limit.
     DisplayProperties interface{} `json:"DisplayProperties,omitempty"`
 }
 
@@ -1047,8 +1092,11 @@ type InitialValuesModel struct {
 type InventoryItemModel struct {
     // Amount the amount of the item.
     Amount int32 `json:"Amount,omitempty"`
-    // DisplayProperties game specific properties for display purposes. This is an arbitrary JSON blob.
+    // DisplayProperties game specific properties for display purposes. This is an arbitrary JSON blob. The Display Properties field has a 1000
+// byte limit.
     DisplayProperties interface{} `json:"DisplayProperties,omitempty"`
+    // ExpirationDate only used for subscriptions. The date of when the item will expire in UTC.
+    ExpirationDate time.Time `json:"ExpirationDate,omitempty"`
     // Id the id of the item. This should correspond to the item id in the catalog.
     Id string `json:"Id,omitempty"`
     // StackId the stack id of the item.
@@ -1150,6 +1198,8 @@ type PurchaseInventoryItemsOperationModel struct {
     // DeleteEmptyStacks indicates whether stacks reduced to an amount of 0 during the operation should be deleted from the inventory. (Default =
 // false)
     DeleteEmptyStacks bool `json:"DeleteEmptyStacks"`
+    // DurationInSeconds the duration to purchase.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // Item the inventory item the operation applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
     // NewStackValues the values to apply to a stack newly created by this operation.
@@ -1165,18 +1215,23 @@ type PurchaseInventoryItemsOperationModel struct {
 type PurchaseInventoryItemsRequestModel struct {
     // Amount the amount to purchase.
     Amount int32 `json:"Amount,omitempty"`
-    // CollectionId the id of the entity's collection to perform this action on. (Default="default")
+    // CollectionId the id of the entity's collection to perform this action on. (Default="default"). The number of inventory collections is
+// unlimited.
     CollectionId string `json:"CollectionId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // DeleteEmptyStacks indicates whether stacks reduced to an amount of 0 during the request should be deleted from the inventory.
 // (Default=false)
     DeleteEmptyStacks bool `json:"DeleteEmptyStacks"`
+    // DurationInSeconds the duration to purchase.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
-    // IdempotencyId the Idempotency ID for this request.
+    // IdempotencyId the Idempotency ID for this request. Idempotency IDs can be used to prevent operation replay in the medium term but will
+// be garbage collected eventually.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
     // Item the inventory item the request applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
@@ -1191,7 +1246,8 @@ type PurchaseInventoryItemsRequestModel struct {
 
 // PurchaseInventoryItemsResponse 
 type PurchaseInventoryItemsResponseModel struct {
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
     // IdempotencyId the idempotency id used in the request.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
@@ -1323,7 +1379,7 @@ type RedeemNintendoEShopInventoryItemsResponseModel struct {
 
 // RedeemPlayStationStoreInventoryItemsRequest redeem items from the PlayStation Store.
 type RedeemPlayStationStoreInventoryItemsRequestModel struct {
-    // AuthorizationCode authorization code provided by the PlayStation OAuth provider.
+    // AuthorizationCode auth code returned by PlayStation :tm: Network OAuth system.
     AuthorizationCode string `json:"AuthorizationCode,omitempty"`
     // CollectionId the id of the entity's collection to perform this action on. (Default="default")
     CollectionId string `json:"CollectionId,omitempty"`
@@ -1331,6 +1387,8 @@ type RedeemPlayStationStoreInventoryItemsRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
+    // RedirectUri redirect URI supplied to PlayStation :tm: Network when requesting an auth code
+    RedirectUri string `json:"RedirectUri,omitempty"`
     // ServiceLabel optional Service Label to pass into the request.
     ServiceLabel string `json:"ServiceLabel,omitempty"`
 }
@@ -1497,15 +1555,16 @@ type ScanResultModel struct {
 type SearchItemsRequestModel struct {
     // ContinuationToken an opaque token used to retrieve the next page of items, if any are available.
     ContinuationToken string `json:"ContinuationToken,omitempty"`
-    // Count number of items to retrieve. Maximum page size is 50. Default value is 10.
+    // Count number of items to retrieve. This value is optional. Maximum page size is 50. Default value is 10.
     Count int32 `json:"Count,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // Filter an OData filter used to refine the search query.
+    // Filter an OData filter used to refine the search query (For example: "type eq 'ugc'"). More info about Filter Complexity limits
+// can be found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/search#limits
     Filter string `json:"Filter,omitempty"`
-    // OrderBy an OData orderBy used to order the results of the search query.
+    // OrderBy an OData orderBy used to order the results of the search query. For example: "rating/average asc"
     OrderBy string `json:"OrderBy,omitempty"`
     // Search the text to search for.
     Search string `json:"Search,omitempty"`
@@ -1591,6 +1650,8 @@ type SubtractInventoryItemsOperationModel struct {
     // DeleteEmptyStacks indicates whether stacks reduced to an amount of 0 during the request should be deleted from the inventory. (Default =
 // false).
     DeleteEmptyStacks bool `json:"DeleteEmptyStacks"`
+    // DurationInSeconds the duration to subtract from the current item expiration date.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // Item the inventory item the operation applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
 }
@@ -1599,18 +1660,23 @@ type SubtractInventoryItemsOperationModel struct {
 type SubtractInventoryItemsRequestModel struct {
     // Amount the amount to subtract for the current item.
     Amount int32 `json:"Amount,omitempty"`
-    // CollectionId the id of the entity's collection to perform this action on. (Default="default")
+    // CollectionId the id of the entity's collection to perform this action on. (Default="default"). The number of inventory collections is
+// unlimited.
     CollectionId string `json:"CollectionId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // DeleteEmptyStacks indicates whether stacks reduced to an amount of 0 during the request should be deleted from the inventory.
 // (Default=false)
     DeleteEmptyStacks bool `json:"DeleteEmptyStacks"`
+    // DurationInSeconds the duration to subtract from the current item expiration date.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
-    // IdempotencyId the Idempotency ID for this request.
+    // IdempotencyId the Idempotency ID for this request. Idempotency IDs can be used to prevent operation replay in the medium term but will
+// be garbage collected eventually.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
     // Item the inventory item the request applies to.
     Item *InventoryItemReferenceModel `json:"Item,omitempty"`
@@ -1618,7 +1684,8 @@ type SubtractInventoryItemsRequestModel struct {
 
 // SubtractInventoryItemsResponse 
 type SubtractInventoryItemsResponseModel struct {
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
     // IdempotencyId the idempotency id used in the request.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
@@ -1665,6 +1732,8 @@ type TransactionModel struct {
 type TransactionOperationModel struct {
     // Amount the amount of items in this transaction.
     Amount int32 `json:"Amount,omitempty"`
+    // DurationInSeconds the duration modified in this transaction.
+    DurationInSeconds float64 `json:"DurationInSeconds,omitempty"`
     // ItemId the item id of the items in this transaction.
     ItemId string `json:"ItemId,omitempty"`
     // ItemType the type of item that the operation occurred on.
@@ -1733,7 +1802,8 @@ type TransferInventoryItemsRequestModel struct {
     GivingCollectionId string `json:"GivingCollectionId,omitempty"`
     // GivingEntity the entity the request is transferring from. Set to the caller by default.
     GivingEntity *EntityKeyModel `json:"GivingEntity,omitempty"`
-    // GivingETag eTags are used for concurrency checking when updating resources (before transferring from).
+    // GivingETag eTags are used for concurrency checking when updating resources (before transferring from). More information about using
+// ETags can be found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     GivingETag string `json:"GivingETag,omitempty"`
     // GivingItem the inventory item the request is transferring from.
     GivingItem *InventoryItemReferenceModel `json:"GivingItem,omitempty"`
@@ -1751,7 +1821,8 @@ type TransferInventoryItemsRequestModel struct {
 
 // TransferInventoryItemsResponse 
 type TransferInventoryItemsResponseModel struct {
-    // GivingETag eTags are used for concurrency checking when updating resources (after transferring from).
+    // GivingETag eTags are used for concurrency checking when updating resources (after transferring from). More information about using
+// ETags can be found here: https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     GivingETag string `json:"GivingETag,omitempty"`
     // GivingTransactionIds the ids of transactions that occurred as a result of the request's giving action.
     GivingTransactionIds []string `json:"GivingTransactionIds,omitempty"`
@@ -1779,7 +1850,7 @@ type UpdateDraftItemRequestModel struct {
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Item updated metadata describing the catalog item to be updated.
     Item *CatalogItemModel `json:"Item,omitempty"`
-    // Publish whether the item should be published immediately.
+    // Publish whether the item should be published immediately. This value is optional, defaults to false.
     Publish bool `json:"Publish"`
 }
 
@@ -1797,15 +1868,18 @@ type UpdateInventoryItemsOperationModel struct {
 
 // UpdateInventoryItemsRequest given an entity type, entity identifier and container details, will update the entity's inventory items
 type UpdateInventoryItemsRequestModel struct {
-    // CollectionId the id of the entity's collection to perform this action on. (Default="default")
+    // CollectionId the id of the entity's collection to perform this action on. (Default="default"). The number of inventory collections is
+// unlimited.
     CollectionId string `json:"CollectionId,omitempty"`
     // CustomTags the optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
     CustomTags map[string]string `json:"CustomTags,omitempty"`
     // Entity the entity to perform this action on.
     Entity *EntityKeyModel `json:"Entity,omitempty"`
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
-    // IdempotencyId the Idempotency ID for this request.
+    // IdempotencyId the Idempotency ID for this request. Idempotency IDs can be used to prevent operation replay in the medium term but will
+// be garbage collected eventually.
     IdempotencyId string `json:"IdempotencyId,omitempty"`
     // Item the inventory item to update with the specified values.
     Item *InventoryItemModel `json:"Item,omitempty"`
@@ -1813,7 +1887,8 @@ type UpdateInventoryItemsRequestModel struct {
 
 // UpdateInventoryItemsResponse 
 type UpdateInventoryItemsResponseModel struct {
-    // ETag eTags are used for concurrency checking when updating resources.
+    // ETag eTags are used for concurrency checking when updating resources. More information about using ETags can be found here:
+// https://learn.microsoft.com/en-us/gaming/playfab/features/economy-v2/catalog/etags
     ETag string `json:"ETag,omitempty"`
     // IdempotencyId the idempotency id used in the request.
     IdempotencyId string `json:"IdempotencyId,omitempty"`

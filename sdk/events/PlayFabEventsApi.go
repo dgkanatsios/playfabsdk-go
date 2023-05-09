@@ -50,15 +50,20 @@ func WriteEvents(settings *playfab.Settings, postData *WriteEventsRequestModel, 
 // with 'custom.'
 // https://api.playfab.com/Documentation/Events/method/WriteTelemetryEvents
 func WriteTelemetryEvents(settings *playfab.Settings, postData *WriteEventsRequestModel, entityToken string) (*WriteEventsResponseModel, error) {
-    if entityToken == "" {
-        return nil, playfab.NewCustomError("entityToken should not be an empty string", playfab.ErrorGeneric)
-    }
+    var authKey, authValue string
+    if entityToken != "" { 
+        authKey = "X-EntityToken" 
+        authValue = entityToken 
+    } else if settings.TelemetryKey != "" { 
+        authKey = "X-TelemetryKey" 
+        authValue = settings.TelemetryKey 
+    } 
     b, errMarshal := json.Marshal(postData)
     if errMarshal != nil {
         return nil, playfab.NewCustomError(errMarshal.Error(), playfab.ErrorMarshal)
     }
 
-    sourceMap, err := playfab.Request(settings, b, "/Event/WriteTelemetryEvents", "X-EntityToken", entityToken)
+    sourceMap, err := playfab.Request(settings, b, "/Event/WriteTelemetryEvents", authKey, authValue)
     if err != nil {
         return nil, err
     }
